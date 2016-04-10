@@ -1,0 +1,29 @@
+<!--
+    Application     : Explorateur de fichiers
+    Type            : Squelette de l'application (HTML)
+    Version         : 1.0.0
+    Auteur          : Romain Claveau
+    Native          : Oui
+-->
+
+<!-- Barre de navigation -->
+<div id="navBar">
+    <div id="path">
+        <p class="directory">Home</p>
+        <p class="separator">&gt;</p>
+        <p class="directory">Test</p>
+    </div>
+    <div id="defaultActions">
+        <p>
+            <img src="apps/app_explorer/images/actions/newFile.svg" title="Nouveau fichier" onclick="app_explorer.actions.createFile();" />
+            <img src="apps/app_explorer/images/actions/newFolder.svg" title="Nouveau dossier" />
+            <img src="apps/app_explorer/images/actions/upload.svg" title="Upload" />
+        </p>
+    </div>
+</div>
+
+<!-- Liste des fichiers et dossiers -->
+<div id="listArea">
+    <div id="list">
+    </div>
+</div>

@@ -1,0 +1,37 @@
+/* SETTINGS : Sélection d'une couleur */
+span.colorPickerBlock
+{
+    transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    
+    padding-left: 1.7vh;
+    
+    margin-right: 2vw;
+    
+    border-radius: 3px;
+    
+    cursor: pointer;
+}
+
+span.colorPickerBlock.selected
+{
+	box-shadow: 0 0 2px blue;
+}
+
+span.colorPickerBlock:hover
+{
+    box-shadow: 0 0 2px #000000;
+}
+
+select
+{
+    width: 15vw;
+    height: 3vh;
+    
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    
+    border-radius: 3px;
+}

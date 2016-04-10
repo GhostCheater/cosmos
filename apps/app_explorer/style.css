@@ -1,0 +1,206 @@
+/*
+    Application     : Explorateur de fichiers
+    Type            : Design de l'application (CSS)
+    Version         : 1.0.0
+    Auteur          : Romain Claveau
+    Native          : Oui
+*/
+
+/* Barre de navigation */
+div#app_explorer div#navBar
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 10%;
+    width: 100%;
+    
+    background-color: #ebebeb;
+    
+    border-top: 1px solid #bfbfbf;
+}
+
+div#app_explorer div#navBar div#path
+{
+    display: table;
+    
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    max-width: 80%;
+}
+
+div#app_explorer div#navBar div#path p
+{
+    display: table-cell;
+    vertical-align: middle;
+    
+    text-align: center;
+}
+
+div#app_explorer div#navBar div#path p.directory
+{
+    transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    
+    width: 10vw;
+    
+    cursor: pointer;
+}
+div#app_explorer div#navBar div#path p.directory:hover
+{
+    color: orange;
+    background-color: #e6e6e6;
+}
+
+div#app_explorer div#navBar div#path p.separator
+{
+    width: 3vw;
+    
+    font-weight: bold;
+    
+    text-shadow: 1px 1px 1px black;
+}
+
+div#app_explorer div#navBar div#defaultActions
+{
+    display: table;
+    
+    position: absolute;
+    top: 0;
+    left: 80%;
+    height: 100%;
+    width: 20%;
+    
+    border-left: 1px solid #bfbfbf;
+}
+
+div#app_explorer div#navBar div#defaultActions p
+{
+    display: table-cell;
+    vertical-align: middle;
+    
+    text-align: center;
+}
+
+div#app_explorer div#navBar div#defaultActions p img
+{
+    transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    
+    height: 3.5vh;
+    
+    cursor: pointer;
+}
+
+div#app_explorer div#navBar div#defaultActions p img:hover
+{
+    background-color: rgba(0, 147, 255, 0.2);
+    
+    border-radius: 3px;
+}
+
+div#app_explorer div#navBar div#defaultActions p img:not(:first-child)
+{
+    margin-left: 1vw;
+}
+
+
+/* Liste des fichiers et des dossiers */
+div#app_explorer div#listArea
+{
+    position: absolute;
+    top: 10%;
+    left: 0;
+    height: 90%;
+    width: 100%;
+    
+    overflow: auto;
+}
+
+div#app_explorer div#listArea div#list
+{
+    display: table;
+    
+    position: absolute;
+    top: 0;
+    left: 0;
+    max-width: 100%;
+}
+
+div#app_explorer div#listArea div#list div.line
+{
+    display: table-row;
+    
+    text-align: center;
+    
+    height: 16.66vh;
+}
+
+div#app_explorer div#listArea div#list div.line div.element
+{
+    transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    
+    display: table-cell;
+    vertical-align: middle;
+    
+    width: 16.66vw;
+    
+    cursor: pointer;
+}
+
+div#app_explorer div#listArea div#list div.line div.element p
+{
+    transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    
+    opacity: 0;
+}
+
+div#app_explorer div#listArea div#list div.line div.element img:not(.action)
+{
+    height: 5vh;
+}
+
+div#app_explorer div#listArea div#list div.line div.element img.action
+{
+    transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    
+    height: 1.8vh;
+}
+
+div#app_explorer div#listArea div#list div.line div.element img.action:hover
+{
+    background-color: rgba(0, 0, 0, 0.1);
+    
+    border-radius: 2px;
+}
+
+div#app_explorer div#listArea div#list div.line div.element:hover
+{    
+    background-color: rgba(255, 165, 0, 0.15);
+    color: #a76c00;
+}
+
+div#app_explorer div#listArea div#list div.line div.element:hover p
+{
+    opacity: 1;
+}

@@ -1,0 +1,8 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" enable-background="new 0 0 48 48" xml:space="preserve">
+    <polygon fill="white" stroke="#a3a3a3" stroke-width=".5" points="34,41 6,41 6,3 25,3 34,12 "></polygon>
+    <path fill="#4cb551" stroke="#007c00" stroke-width=".5" d="M42,35c0,5.523-4.477,10-10,10s-10-4.477-10-10s4.477-10,10-10S42,29.477,42,35"></path>
+    <g>
+        <rect x="30" y="29" fill="#FFFFFF" width="4" height="12"></rect>
+        <rect x="26" y="33" fill="#FFFFFF" width="12" height="4"></rect>
+    </g>
+</svg>

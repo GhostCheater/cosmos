@@ -1,0 +1,143 @@
+/*
+* GENERAL
+*/
+
+*:not(input):not(textarea)
+{
+    margin: 0;
+    padding: 0;
+    
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    -ms-user-select: none;
+}
+
+html
+{
+    font-family: Tahoma;
+    font-size: 13px;
+}
+
+body
+{
+/*    background-color: rgb(240, 240, 240);*/
+    
+    background: url("../images/bg/bg_red.png");
+    background-size: cover;
+    
+    overflow: hidden;
+}
+
+
+/*
+* HEADER
+*/
+
+header
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 7%;
+    width: 100%;
+    
+    background: rgba(0, 0, 0, 0.6) url("../images/logo.svg") no-repeat 1%;
+}
+
+header div#apps
+{
+    display: table;
+    
+    position: absolute;
+    top: 0;
+    left: 6%;
+    max-width: 60%;
+    height: 100%;
+}
+
+header div#apps p
+{
+    transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    
+    display: table-cell;
+    vertical-align: middle;
+    
+    text-align: center;
+    
+    width: 7vh;
+    
+    cursor: pointer;
+}
+
+header div#apps p.open
+{
+    background-color: rgba(127, 255, 161, 0.2);
+}
+header div#apps p.reduce
+{
+   background-color: rgba(127, 176, 255, 0.2); 
+}
+
+header div#apps p:hover
+{
+    background-color: rgba(255, 108, 0, 0.2);
+}
+
+header div#apps p img
+{
+    height: 3vh;
+}
+
+header div#rightArea
+{
+    display: table;
+    
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    min-width: 25%;
+}
+
+header div#rightArea p
+{
+    transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    
+    display: table-cell;
+    vertical-align: middle;
+    
+    text-align: center;
+    
+    cursor: pointer;
+    
+    color: white;
+    
+    width: 13vh;
+}
+
+header div#rightArea p.selected
+{
+    background-color: rgba(0, 235, 255, 0.2);
+    color: #00b1ff;
+}
+
+header div#rightArea p:hover
+{
+    background-color: rgba(255, 108, 0, 0.2);
+    color: orange;
+}
+
+header div#rightArea p img
+{
+    height: 3vh;
+}
