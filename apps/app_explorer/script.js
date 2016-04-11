@@ -212,8 +212,11 @@ var app_explorer =
         
         createFile: function()
         {
-            var name = document.querySelector("div#popup_createFile input#input_createFile_1").value;
-            var extension = document.querySelector("div#popup_createFile input#input_createFile_2").value;
+            var name = document.querySelector("section#popup_createFile input#input_createFile_1").value;
+            var extension = document.querySelector("section#popup_createFile input#input_createFile_2").value;
+            
+            var returnArea = document.querySelector("#return_createFile");
+            returnArea.innerHTML = "<img src='images/loader.png' style='height: 1.5vh;' />";
             
             if(extension == "")
             {
@@ -234,12 +237,15 @@ var app_explorer =
                         {
                             case "ok":
                                 app_explorer.actions.list();
-                                break;
+                                returnArea.innerHTML = "Le fichier <b>" + name + "." + extension + "</b> a été créé avec succès.";
                                 
-                            case "empty":
+                                setTimeout(function(){
+                                    popup.close("popup_createFile");
+                                }, 1000);
                                 break;
                                 
                             default:
+                                returnArea.innerHTML = "Une erreur est survenue lors de la création du fichier <b>" + name + "." + extension + "</b>.";
                                 break;
                         }
                 }
