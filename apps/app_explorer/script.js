@@ -18,7 +18,7 @@ var app_explorer =
             
             xhr.onreadystatechange = function()
             {
-                if(xhr.status == 200 && xhr.readyState == 4)
+                if(xhr.status === 200 && xhr.readyState === 4)
                 {
                     var state = xhr.responseText.split("~||]]", 1)[0];
                     var data = xhr.responseText.split("~||]]", 2)[1];
@@ -38,7 +38,7 @@ var app_explorer =
                                     
                                     for(element_key in content[line_key])
                                     {
-                                        if(content[line_key][element_key][0][2] == "folder")
+                                        if(content[line_key][element_key][0][2] === "folder")
                                         {
                                             toAppend += "<div class='element' data-name='" + content[line_key][element_key][0][0] + "' data-hash='" + content[line_key][element_key][0][1] + "' data-type='" + content[line_key][element_key][0][2] + "'>";
                                         }
@@ -50,7 +50,7 @@ var app_explorer =
                                         
                                         toAppend += "<img src='apps/app_explorer/images/types/" + content[line_key][element_key][0][2] + ".svg' onclick='app_explorer.actions.open(this)' /><br /><br />";
                                         
-                                        if(content[line_key][element_key][0][2] == "folder")
+                                        if(content[line_key][element_key][0][2] === "folder")
                                         {
                                             toAppend += content[line_key][element_key][0][0];
                                         }
@@ -109,7 +109,7 @@ var app_explorer =
 
                 xhr.onreadystatechange = function()
                 {
-                    if(xhr.status == 200 && xhr.readyState == 4)
+                    if(xhr.status === 200 && xhr.readyState === 4)
                     {
                         var state = xhr.responseText.split("~||]]", 1)[0];
                         var data = xhr.responseText.split("~||]]", 2)[1];
@@ -144,7 +144,7 @@ var app_explorer =
             
             xhr.onreadystatechange = function()
             {
-                if(xhr.status == 200 && xhr.readyState == 4)
+                if(xhr.status === 200 && xhr.readyState === 4)
                 {
                     var state = xhr.responseText.split("~||]]", 1)[0];
                     var data = xhr.responseText.split("~||]]", 2)[1];
@@ -218,7 +218,7 @@ var app_explorer =
             var returnArea = document.querySelector("#return_createFile");
             returnArea.innerHTML = "<img src='images/loader.png' style='height: 1.5vh;' />";
             
-            if(extension == "")
+            if(extension === "")
             {
                 extension = "txt";
             }
@@ -228,7 +228,7 @@ var app_explorer =
             
             xhr.onreadystatechange = function()
             {
-                if(xhr.status == 200 && xhr.readyState == 4)
+                if(xhr.status === 200 && xhr.readyState === 4)
                 {
                     var state = xhr.responseText.split("~||]]", 1)[0];
                         var data = xhr.responseText.split("~||]]", 2)[1];

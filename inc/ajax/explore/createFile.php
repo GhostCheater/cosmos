@@ -35,6 +35,10 @@
             $type = "text";
         }
         
+        
+        /*
+        * Insertion dans la base de données
+        */
         $req = $bdd->prepare("INSERT INTO elements (id, name, hash, user, type, extension, location, date, lastDate, favorite, private, count) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $req->execute(array(
             "",
@@ -50,6 +54,15 @@
             1,
             0
         ));
+        
+        
+        /*
+        * Création du fichier dans le "workspace" de l'utilisateur
+        */
+        if(!file_exists("../../../workspace/files/{$_SESSION['session']['user']}/{$hash}.data"))
+        {
+            fopen("../../../workspace/files/{$_SESSION['session']['user']}/{$hash}.data", "w");
+        }
         
         die("ok~||]]");
     }

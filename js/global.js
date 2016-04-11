@@ -35,6 +35,43 @@ var COSMOS =
     },
     
     /*
+    * Eléments constants et susceptibles d'être utilisés plusieurs fois
+    */
+    constants:
+    {
+        colors: function()
+        {
+            return [
+                    ["rgba(255, 0, 0, 0.6)", "<br /><br />"],
+                    ["rgba(255, 0, 88, 0.6)", ""],
+                    ["rgba(255, 0, 157, 0.6)", "<br /><br />"],
+                    ["rgba(255, 0, 245, 0.6)", ""],
+                    ["rgba(167, 0, 255, 0.6)", ""],
+                    ["rgba(78, 0, 255, 0.6)", "<br /><br />"],
+                    ["rgba(0, 10, 255, 0.6)", ""],
+                    ["rgba(0, 157, 255, 0.6)", ""],
+                    ["rgba(0, 216, 255, 0.6)", ""],
+                    ["rgba(217, 217, 217, 0.6)", "<br /><br />"],
+                    ["rgba(124, 124, 124, 0.6)", ""],
+                    ["rgba(67, 67, 67, 0.6)", ""],
+                    ["rgba(0, 0, 0, 0.6)", ""],
+                    ["rgba(36, 36, 36, 0.6)", ""],
+                    ["rgba(178, 178, 178, 0.6)", "<br /><br />"],
+                    ["rgba(0, 255, 196, 0.6)", ""],
+                    ["rgba(0, 255, 128, 0.6)", ""],
+                    ["rgba(0, 255, 98, 0.6)", ""],
+                    ["rgba(0, 255, 10, 0.6)", ""],
+                    ["rgba(98, 255, 0, 0.6)", ""],
+                    ["rgba(206, 255, 0, 0.6)", "<br /><br />"],
+                    ["rgba(255, 167, 0, 0.6)", ""],
+                    ["rgba(255, 88, 0, 0.6)", ""],
+                    ["rgba(255, 0, 0, 0.6)", ""],
+                    ["rgba(173, 0, 0, 0.6)", ""]
+                ];
+        }
+    },
+    
+    /*
     * Fonction d'initialisation de l'interface
     */
     init: function()
@@ -63,7 +100,7 @@ var COSMOS =
                 var content_rightPanel = COSMOS.elements.rightPanel.content();
                 
                 // Ouverture ou fermeture du panneau
-                if(rightPanel.className.indexOf(tab) != -1)
+                if(rightPanel.className.indexOf(tab) !== -1)
                 {
                     rightPanel.className = "close"; // Fermeture
                 }
@@ -82,7 +119,7 @@ var COSMOS =
                 switch(tab)
                 {
                     case "apps":                        
-                        if(rightPanel.className.indexOf("apps") != -1)
+                        if(rightPanel.className.indexOf("apps") !== -1)
                         {
                             header_rightPanel.innerHTML = "<img src='images/header/apps.svg' /><br />Applications";
                             content_rightPanel.innerHTML = "<p style='text-align: center'><br /><img src='images/loader.png' style='width: 32px;' /></p>";
@@ -94,7 +131,7 @@ var COSMOS =
                     
                             xhr.onreadystatechange = function()
                             {
-                                if(xhr.status == 200 && xhr.readyState == 4)
+                                if(xhr.status === 200 && xhr.readyState === 4)
                                 {
                                     var state = xhr.responseText.split("~||]]", 1)[0];
                                     var data = xhr.responseText.split("~||]]", 2)[1];
@@ -114,7 +151,7 @@ var COSMOS =
                                                 
                                                 toAppend += "</table>";
                                                 
-                                                if(rightPanel.className.indexOf("apps") != -1)
+                                                if(rightPanel.className.indexOf("apps") !== -1)
                                                 {
                                                     content_rightPanel.innerHTML = toAppend;
                                                 }
@@ -124,14 +161,6 @@ var COSMOS =
                                                 console.error("Error parsing json");
                                             }
                                             
-                                            break;
-
-                                        case "invalidSession":
-                                            console.log("Error session :(");
-                                            break;
-
-                                        case "error":
-                                            console.log("Error :(");
                                             break;
 
                                         default:
@@ -146,7 +175,7 @@ var COSMOS =
                         break;
                         
                     case "search":
-                        if(rightPanel.className.indexOf("search") != -1)
+                        if(rightPanel.className.indexOf("search") !== -1)
                         {
                             COSMOS.elements.header.button.search().className = "selected";
                             header_rightPanel.innerHTML = "<img src='images/header/search.svg' /><br />Recherche";
@@ -164,7 +193,7 @@ var COSMOS =
                         break;
                         
                     case "profil":
-                        if(rightPanel.className.indexOf("profil") != -1)
+                        if(rightPanel.className.indexOf("profil") !== -1)
                         {
                             header_rightPanel.innerHTML = "<img src='images/header/profil.svg' /><br />Utilisateur";
                             content_rightPanel.innerHTML = "<p style='text-align: center'><br /><img src='images/loader.png' style='width: 32px;' /></p>";
@@ -176,7 +205,7 @@ var COSMOS =
                     
                             xhr.onreadystatechange = function()
                             {
-                                if(xhr.status == 200 && xhr.readyState == 4)
+                                if(xhr.status === 200 && xhr.readyState === 4)
                                 {
                                     var state = xhr.responseText.split("~||]]", 1)[0];
                                     var data = xhr.responseText.split("~||]]", 2)[1];
@@ -184,18 +213,10 @@ var COSMOS =
                                     switch(state)
                                     {
                                         case "ok":
-                                            if(rightPanel.className.indexOf("profil") != -1)
+                                            if(rightPanel.className.indexOf("profil") !== -1)
                                             {
                                                 content_rightPanel.innerHTML = data;
                                             }
-                                            break;
-
-                                        case "invalidSession":
-                                            console.log("Error session :(");
-                                            break;
-
-                                        case "error":
-                                            console.log("Error :(");
                                             break;
 
                                         default:
@@ -210,7 +231,7 @@ var COSMOS =
                         break;
                         
                     case "settings":
-                        if(rightPanel.className.indexOf("settings") != -1)
+                        if(rightPanel.className.indexOf("settings") !== -1)
                         {
                             header_rightPanel.innerHTML = "<img src='images/header/settings.svg' /><br />Paramètres";
                             content_rightPanel.innerHTML = "<p style='text-align: center'><br /><img src='images/loader.png' style='width: 32px;' /></p>";
@@ -222,7 +243,7 @@ var COSMOS =
                     
                             xhr.onreadystatechange = function()
                             {
-                                if(xhr.status == 200 && xhr.readyState == 4)
+                                if(xhr.status === 200 && xhr.readyState === 4)
                                 {
                                     var state = xhr.responseText.split("~||]]", 1)[0];
                                     var data = xhr.responseText.split("~||]]", 2)[1];
@@ -230,18 +251,10 @@ var COSMOS =
                                     switch(state)
                                     {
                                         case "ok":
-                                            if(rightPanel.className.indexOf("settings") != -1)
+                                            if(rightPanel.className.indexOf("settings") !== -1)
                                             {
                                                 content_rightPanel.innerHTML = data;
                                             }
-                                            break;
-
-                                        case "invalidSession":
-                                            console.log("Error session :(");
-                                            break;
-
-                                        case "error":
-                                            console.log("Error :(");
                                             break;
 
                                         default:
@@ -256,7 +269,7 @@ var COSMOS =
                         break;
                         
                     case "logout":
-                        if(rightPanel.className.indexOf("logout") != -1)
+                        if(rightPanel.className.indexOf("logout") !== -1)
                         {
                             header_rightPanel.innerHTML = "<img src='images/header/logout.svg' /><br />Déconnexion";
                             content_rightPanel.innerHTML = 
@@ -288,11 +301,11 @@ var COSMOS =
             {
                 var evt = e || window.Event;
                 
-                if(evt.key != "Tab" && evt.key != "Control" && evt.key != "Shift" && evt.key != "Alt")
+                if(evt.key !== "Tab" && evt.key !== "Control" && evt.key !== "Shift" && evt.key !== "Alt")
                 {
                     var patternToSearch = document.querySelector("input#area_search_input").value;
 
-                    if(patternToSearch != "")
+                    if(patternToSearch !== "")
                     {
                         document.querySelector("div#contentResults div#loader p").innerHTML = "Recherche en cours... &nbsp; <img src='images/loader.png' />";
                         
@@ -301,12 +314,10 @@ var COSMOS =
 
                         xhr.onreadystatechange = function()
                         {
-                            if(xhr.status == 200 && xhr.readyState == 4)
+                            if(xhr.status === 200 && xhr.readyState === 4)
                             {
                                 var state = xhr.responseText.split("~||]]", 1)[0];
                                 var data = xhr.responseText.split("~||]]", 2)[1];
-
-                                console.log(xhr.responseText);
 
                                 switch(state)
                                 {
@@ -322,7 +333,7 @@ var COSMOS =
                                             {
                                                 toAppend += "<tr class='noHighlight'><th colspan='2'>" + key + "</th></tr>";
                                                 
-                                                if(json[key].length == 0)
+                                                if(json[key].length === 0)
                                                 {
                                                     toAppend += "<tr class='noHighlight'><td colspan='2'>Aucun résultat</td></tr>";
                                                 }
@@ -330,11 +341,11 @@ var COSMOS =
                                                 {
                                                     for(item in json[key])
                                                     {
-                                                        if(key == "Applications")
+                                                        if(key === "Applications")
                                                         {
                                                             toAppend += "<tr onclick='WINDOW.trigger(\""+json[key][item][1]+"\", \""+json[key][item][2]+"\")'><td><img src='apps/" + json[key][item][1] + "/app.svg' /></td><td>" + json[key][item][0] + "</td></tr>";
                                                         }
-                                                        else if(key == "Fichiers")
+                                                        else if(key === "Fichiers")
                                                         {
                                                             toAppend += "<tr><td><img src='apps/app_explorer/images/types/" + json[key][item][2] + ".svg' /></td><td>" + json[key][item][0] + "<br /><sub>" + json[key][item][3] + "</sub></td></tr>";
                                                         }
@@ -353,14 +364,6 @@ var COSMOS =
                                         {
                                             console.error("Error parsing json");
                                         }
-                                        break;
-
-                                    case "invalidSession":
-                                        console.log("Error session :(");
-                                        break;
-
-                                    case "error":
-                                        console.log("Error");
                                         break;
 
                                     default:
@@ -440,14 +443,14 @@ var COSMOS =
 						
 						returnArea.innerHTML = "<img src='images/loader.png' style='height: 1.5vh;' />";
                         
-                        if(newName != "")
+                        if(newName !== "")
                         {
                             var xhr = new XMLHttpRequest();
                             xhr.open("GET", "inc/ajax/rightPanel/profil/edit_sessionName.php?name="+encodeURI(newName), true);
                             
                             xhr.onreadystatechange = function()
                             {
-                                if(xhr.status == 200 && xhr.readyState == 4)
+                                if(xhr.status === 200 && xhr.readyState === 4)
                                 {
 									var state = xhr.responseText.split("~||]]", 1)[0];
 									
@@ -456,7 +459,7 @@ var COSMOS =
                                         case "ok":
 											returnArea.innerHTML = "Votre nom de session est maintenant <b>"+encodeURI(newName)+"</b> !";
 											
-											if(rightPanel.className.indexOf("profil") != -1)
+											if(rightPanel.className.indexOf("profil") !== -1)
 											{
 												document.querySelectorAll("#resultProfil tr td")[1].innerHTML = encodeURI(newName) + " &nbsp; <img src='images/rightPanel/profil/edit.svg' style='height: 1.5vh;' onclick='COSMOS.rightPanel.trigger.profil.editSessionName();' class='action' />";
 											}
@@ -465,14 +468,6 @@ var COSMOS =
 										case "length":
 											returnArea.innerHTML = "Désolé mais votre nom de session est trop long";
 											break;
-                                            
-                                        case "invalidSession":
-											returnArea.innerHTML = "Erreur au niveau de votre session. Déconnexion...";
-                                            break;
-                                            
-                                        case "error":
-											returnArea.innerHTML = "Erreur lors du changement de votre nom de session";
-                                            break;
                                             
                                         case "empty":
 											returnArea.innerHTML = "Votre nom de session est vide";
@@ -500,14 +495,14 @@ var COSMOS =
 						
 						returnArea.innerHTML = "<img src='images/loader.png' style='height: 1.5vh;' />";
                         
-                        if(newMail != "")
+                        if(newMail !== "")
                         {
                             var xhr = new XMLHttpRequest();
                             xhr.open("GET", "inc/ajax/rightPanel/profil/edit_mail.php?mail="+encodeURI(newMail), true);
                             
                             xhr.onreadystatechange = function()
                             {
-                                if(xhr.status == 200 && xhr.readyState == 4)
+                                if(xhr.status === 200 && xhr.readyState === 4)
                                 {                                    
 									var state = xhr.responseText.split("~||]]", 1)[0];
 									
@@ -516,7 +511,7 @@ var COSMOS =
                                         case "ok":
 											returnArea.innerHTML = "Votre adresse mail est maintenant <b>"+encodeURI(newMail)+"</b> !";
 											
-											if(rightPanel.className.indexOf("profil") != -1)
+											if(rightPanel.className.indexOf("profil") !== -1)
 											{
 												document.querySelectorAll("#resultProfil tr td")[3].innerHTML = encodeURI(newMail) + " &nbsp; <img src='images/rightPanel/profil/edit.svg' style='height: 1.5vh;' onclick='COSMOS.rightPanel.trigger.profil.editMail();' class='action' />";
 											}
@@ -530,20 +525,12 @@ var COSMOS =
                                             returnArea.innerHTML = "Mauvais format de votre adresse mail";
                                             break;
                                             
-                                        case "invalidSession":
-											returnArea.innerHTML = "Erreur au niveau de votre session. Déconnexion...";
-                                            break;
-                                            
-                                        case "error":
-											returnArea.innerHTML = "Erreur lors du changement de votre adresse mail";
-                                            break;
-                                            
                                         case "empty":
 											returnArea.innerHTML = "Votre adresse mail est vide";
                                             break;
                                             
                                         default:
-											returnArea.innerHTML = "Une erreur inconnue est survenue";
+											returnArea.innerHTML = "Une erreur est survenue.";
                                             break;
                                     }
                                 }
@@ -564,7 +551,7 @@ var COSMOS =
                         var repeatPassword = document.querySelector("#edit_password_repeat").value;
                         var button = document.querySelector("#button_edit_password");
                         
-                        if(oldPassword != "" && newPassword != "" && repeatPassword != "" && typeof oldPassword == "string" && typeof newPassword == "string" && typeof repeatPassword == "string")
+                        if(oldPassword !== "" && newPassword !== "" && repeatPassword !== "" && typeof oldPassword === "string" && typeof newPassword === "string" && typeof repeatPassword === "string")
                         {
                             button.value = "Chargement...";
                             
@@ -577,7 +564,7 @@ var COSMOS =
                             
                             xhr.onreadystatechange = function()
                             {
-                                if(xhr.status == 200 && xhr.readyState == 4)
+                                if(xhr.status === 200 && xhr.readyState === 4)
                                 {
                                     console.log(xhr.responseText);
                                     
@@ -593,24 +580,17 @@ var COSMOS =
                                             button.value = "Champ(s) vide(s) !";
                                             break;
                                             
-                                        case "badLength":
-                                            button.value = "Erreur hash !";
-                                            break;
-                                            
                                         case "mismatchNewPassword":
                                             button.value = "Mots de passe différents !";
                                             break;
                                             
-                                        case "error":
-                                            button.value = "Erreur !";
-                                            break;
                                             
                                         case "oldPasswordBad":
                                             button.value = "Mauvais mot de passe !";
                                             break;
                                             
                                         default:
-                                            button.value = "Erreur inconnue !";
+                                            button.value = "Une erreur est survenue.";
                                             break;
                                     }
                                     
@@ -634,7 +614,7 @@ var COSMOS =
                         
                         xhr.onreadystatechange = function()
                         {
-                            if(xhr.status == 200 && xhr.readyState == 4)
+                            if(xhr.status === 200 && xhr.readyState === 4)
                             {
                                 document.querySelector("#content_viewPublicKey").innerHTML = xhr.responseText;
                             }
@@ -650,7 +630,7 @@ var COSMOS =
                         
                         xhr.onreadystatechange = function()
                         {
-                            if(xhr.status == 200 && xhr.readyState == 4)
+                            if(xhr.status === 200 && xhr.readyState === 4)
                             {
                                 document.querySelector("#content_viewPrivateKey").innerHTML = xhr.responseText;
                             }
@@ -666,7 +646,7 @@ var COSMOS =
                         
                         xhr.onreadystatechange = function()
                         {
-                            if(xhr.status == 200 && xhr.readyState == 4)
+                            if(xhr.status === 200 && xhr.readyState === 4)
                             {
                                 document.location.href = "index.php";
                             }
@@ -722,13 +702,13 @@ var COSMOS =
 
                     xhr.onreadystatechange = function()
                     {
-                        if(xhr.status == 200 && xhr.readyState == 4)
+                        if(xhr.status === 200 && xhr.readyState === 4)
                         {
                             var elements = document.querySelectorAll("div#settingsContent table#resultSettings tr td img.disposition");
                             
                             for(var i = 0; i < elements.length; i++)
                             {
-                                if(elements[i].id == disposition)
+                                if(elements[i].id === disposition)
                                 {
                                     elements[i].className = "disposition selected";
                                 }
@@ -752,7 +732,7 @@ var COSMOS =
 						
 						xhr.onreadystatechange = function()
 						{
-							if(xhr.status == 200 && xhr.readyState == 4)
+							if(xhr.status === 200 && xhr.readyState === 4)
 							{
 								var state = xhr.responseText.split("~||]]", 1)[0];
                                 var data = xhr.responseText.split("~||]]", 2)[1];
@@ -769,37 +749,11 @@ var COSMOS =
 											
 											var toAppend = "";
                         
-											var content = [
-												["rgba(255, 0, 0, 0.6)", "<br /><br />"],
-												["rgba(255, 0, 88, 0.6)", ""],
-												["rgba(255, 0, 157, 0.6)", "<br /><br />"],
-												["rgba(255, 0, 245, 0.6)", ""],
-												["rgba(167, 0, 255, 0.6)", ""],
-												["rgba(78, 0, 255, 0.6)", "<br /><br />"],
-												["rgba(0, 10, 255, 0.6)", ""],
-												["rgba(0, 157, 255, 0.6)", ""],
-												["rgba(0, 216, 255, 0.6)", ""],
-												["rgba(217, 217, 217, 0.6)", "<br /><br />"],
-												["rgba(124, 124, 124, 0.6)", ""],
-												["rgba(67, 67, 67, 0.6)", ""],
-												["rgba(0, 0, 0, 0.6)", ""],
-												["rgba(36, 36, 36, 0.6)", ""],
-												["rgba(178, 178, 178, 0.6)", "<br /><br />"],
-												["rgba(0, 255, 196, 0.6)", ""],
-												["rgba(0, 255, 128, 0.6)", ""],
-												["rgba(0, 255, 98, 0.6)", ""],
-												["rgba(0, 255, 10, 0.6)", ""],
-												["rgba(98, 255, 0, 0.6)", ""],
-												["rgba(206, 255, 0, 0.6)", "<br /><br />"],
-												["rgba(255, 167, 0, 0.6)", ""],
-												["rgba(255, 88, 0, 0.6)", ""],
-												["rgba(255, 0, 0, 0.6)", ""],
-												["rgba(173, 0, 0, 0.6)", ""]
-											];
+											var content = COSMOS.constants.colors();
 											
 											for(var i = 0; i < content.length; i++)
 											{
-												if(content[i][0].indexOf(currentBackground) != -1)
+												if(content[i][0].indexOf(currentBackground) !== -1)
 												{
 													toAppend += "<span class='colorPickerBlock selected' style='background-color: "+content[i][0]+"' onclick='COSMOS.rightPanel.trigger.settings.submit.preview_headerBackground(this);'></span>" + content[i][1];
 												}
@@ -833,87 +787,6 @@ var COSMOS =
                     
                     load_currentBackgroundDesktop: function()
                     {
-                        var xhr = new XMLHttpRequest();
-						xhr.open("GET", "inc/ajax/general/load_preferences.php", true);
-						
-						xhr.onreadystatechange = function()
-						{
-							if(xhr.status == 200 && xhr.readyState == 4)
-							{
-								var state = xhr.responseText.split("~||]]", 1)[0];
-                                var data = xhr.responseText.split("~||]]", 2)[1];
-								
-								switch(state)
-								{
-									case "ok":
-										try
-										{
-											var parsedJSON = JSON.parse(data);
-											
-											var currentBackground = parsedJSON["preferences"]["desktopBackground"];
-											
-											var toAppend = "";
-                        
-											var content = [
-												["rgba(255, 0, 0, 0.6)", "<br /><br />"],
-												["rgba(255, 0, 88, 0.6)", ""],
-												["rgba(255, 0, 157, 0.6)", "<br /><br />"],
-												["rgba(255, 0, 245, 0.6)", ""],
-												["rgba(167, 0, 255, 0.6)", ""],
-												["rgba(78, 0, 255, 0.6)", "<br /><br />"],
-												["rgba(0, 10, 255, 0.6)", ""],
-												["rgba(0, 157, 255, 0.6)", ""],
-												["rgba(0, 216, 255, 0.6)", ""],
-												["rgba(217, 217, 217, 0.6)", "<br /><br />"],
-												["rgba(124, 124, 124, 0.6)", ""],
-												["rgba(67, 67, 67, 0.6)", ""],
-												["rgba(0, 0, 0, 0.6)", ""],
-												["rgba(36, 36, 36, 0.6)", ""],
-												["rgba(178, 178, 178, 0.6)", "<br /><br />"],
-												["rgba(0, 255, 196, 0.6)", ""],
-												["rgba(0, 255, 128, 0.6)", ""],
-												["rgba(0, 255, 98, 0.6)", ""],
-												["rgba(0, 255, 10, 0.6)", ""],
-												["rgba(98, 255, 0, 0.6)", ""],
-												["rgba(206, 255, 0, 0.6)", "<br /><br />"],
-												["rgba(255, 167, 0, 0.6)", ""],
-												["rgba(255, 88, 0, 0.6)", ""],
-												["rgba(255, 0, 0, 0.6)", ""],
-												["rgba(173, 0, 0, 0.6)", ""]
-											];
-											
-											for(var i = 0; i < content.length; i++)
-											{
-												if(content[i][0].indexOf(currentBackground) != -1)
-												{
-													toAppend += "<span class='colorPickerBlock selected' style='background-color: "+content[i][0]+"' onclick='COSMOS.rightPanel.trigger.settings.submit.preview_desktopBackground(this);'></span>" + content[i][1];
-												}
-												else
-												{
-													toAppend += "<span class='colorPickerBlock' style='background-color: "+content[i][0]+"' onclick='COSMOS.rightPanel.trigger.settings.submit.preview_desktopBackground(this);'></span>" + content[i][1];
-												}
-											}
-											
-											document.querySelector("#popup_changeColorDesktop div.content p").innerHTML = toAppend;
-										}
-										catch(err)
-										{
-											console.log("error");
-										}
-										break;
-										
-									case "error":
-										console.log("error");
-										break;
-										
-									default:
-										console.log("error");
-										break;
-								}
-							}
-						}
-						
-						xhr.send(null);
                     },
                     
                     load_currentFontSize: function()
@@ -923,7 +796,7 @@ var COSMOS =
 						
 						xhr.onreadystatechange = function()
 						{
-							if(xhr.status == 200 && xhr.readyState == 4)
+							if(xhr.status === 200 && xhr.readyState === 4)
 							{
 								var state = xhr.responseText.split("~||]]", 1)[0];
                                 var data = xhr.responseText.split("~||]]", 2)[1];
@@ -943,7 +816,7 @@ var COSMOS =
                                             
                                             for(var i = 0; i < sizes.length; i++)
                                             {
-                                                if(currentSize.indexOf(sizes[i]+"px") != -1)
+                                                if(currentSize.indexOf(sizes[i]+"px") !== -1)
                                                 {
                                                     toAppend += "<option selected style='font-size: "+sizes[i]+"px;'>"+sizes[i]+"px</option>";
                                                 }
@@ -963,10 +836,6 @@ var COSMOS =
 										}
 										break;
 										
-									case "error":
-										console.log("error");
-										break;
-										
 									default:
 										console.log("error");
 										break;
@@ -983,37 +852,11 @@ var COSMOS =
 						
 						var toAppend = "";
                         
-						var content = [
-							["rgba(255, 0, 0, 0.6)", "<br /><br />"],
-							["rgba(255, 0, 88, 0.6)", ""],
-							["rgba(255, 0, 157, 0.6)", "<br /><br />"],
-							["rgba(255, 0, 245, 0.6)", ""],
-							["rgba(167, 0, 255, 0.6)", ""],
-							["rgba(78, 0, 255, 0.6)", "<br /><br />"],
-							["rgba(0, 10, 255, 0.6)", ""],
-							["rgba(0, 157, 255, 0.6)", ""],
-							["rgba(0, 216, 255, 0.6)", ""],
-							["rgba(217, 217, 217, 0.6)", "<br /><br />"],
-							["rgba(124, 124, 124, 0.6)", ""],
-							["rgba(67, 67, 67, 0.6)", ""],
-							["rgba(0, 0, 0, 0.6)", ""],
-							["rgba(36, 36, 36, 0.6)", ""],
-							["rgba(178, 178, 178, 0.6)", "<br /><br />"],
-							["rgba(0, 255, 196, 0.6)", ""],
-							["rgba(0, 255, 128, 0.6)", ""],
-							["rgba(0, 255, 98, 0.6)", ""],
-							["rgba(0, 255, 10, 0.6)", ""],
-							["rgba(98, 255, 0, 0.6)", ""],
-							["rgba(206, 255, 0, 0.6)", "<br /><br />"],
-							["rgba(255, 167, 0, 0.6)", ""],
-							["rgba(255, 88, 0, 0.6)", ""],
-							["rgba(255, 0, 0, 0.6)", ""],
-							["rgba(173, 0, 0, 0.6)", ""]
-						];
+						var content = COSMOS.constants.colors();
 						
 						for(var i = 0; i < content.length; i++)
 						{
-							if(content[i][0].indexOf(color) != -1)
+							if(content[i][0].indexOf(color) !== -1)
 							{
 								toAppend += "<span class='colorPickerBlock selected' style='background-color: "+content[i][0]+"' onclick='COSMOS.rightPanel.trigger.settings.submit.preview_headerBackground(this);'></span>" + content[i][1];
 							}
@@ -1032,7 +875,7 @@ var COSMOS =
                         
                         xhr.onreadystatechange = function()
                         {
-                            if(xhr.status == 200 && xhr.readyState == 4)
+                            if(xhr.status === 200 && xhr.readyState === 4)
                             {
                                 document.querySelectorAll("div#settingsContent table#resultSettings tr td b")[0].innerHTML = color;      
                             }
@@ -1043,66 +886,6 @@ var COSMOS =
                     
                     preview_desktopBackground: function(element)
                     {
-                        var color = element.style.backgroundColor;
-						
-						var toAppend = "";
-                        
-						var content = [
-							["rgba(255, 0, 0, 0.6)", "<br /><br />"],
-							["rgba(255, 0, 88, 0.6)", ""],
-							["rgba(255, 0, 157, 0.6)", "<br /><br />"],
-							["rgba(255, 0, 245, 0.6)", ""],
-							["rgba(167, 0, 255, 0.6)", ""],
-							["rgba(78, 0, 255, 0.6)", "<br /><br />"],
-							["rgba(0, 10, 255, 0.6)", ""],
-							["rgba(0, 157, 255, 0.6)", ""],
-							["rgba(0, 216, 255, 0.6)", ""],
-							["rgba(217, 217, 217, 0.6)", "<br /><br />"],
-							["rgba(124, 124, 124, 0.6)", ""],
-							["rgba(67, 67, 67, 0.6)", ""],
-							["rgba(0, 0, 0, 0.6)", ""],
-							["rgba(36, 36, 36, 0.6)", ""],
-							["rgba(178, 178, 178, 0.6)", "<br /><br />"],
-							["rgba(0, 255, 196, 0.6)", ""],
-							["rgba(0, 255, 128, 0.6)", ""],
-							["rgba(0, 255, 98, 0.6)", ""],
-							["rgba(0, 255, 10, 0.6)", ""],
-							["rgba(98, 255, 0, 0.6)", ""],
-							["rgba(206, 255, 0, 0.6)", "<br /><br />"],
-							["rgba(255, 167, 0, 0.6)", ""],
-							["rgba(255, 88, 0, 0.6)", ""],
-							["rgba(255, 0, 0, 0.6)", ""],
-							["rgba(173, 0, 0, 0.6)", ""]
-						];
-						
-						for(var i = 0; i < content.length; i++)
-						{
-							if(content[i][0].indexOf(color) != -1)
-							{
-								toAppend += "<span class='colorPickerBlock selected' style='background-color: "+content[i][0]+"' onclick='COSMOS.rightPanel.trigger.settings.submit.preview_desktopBackground(this);'></span>" + content[i][1];
-							}
-							else
-							{
-								toAppend += "<span class='colorPickerBlock' style='background-color: "+content[i][0]+"' onclick='COSMOS.rightPanel.trigger.settings.submit.preview_desktopBackground(this);'></span>" + content[i][1];
-							}
-						}
-						
-						document.querySelector("#popup_changeColorDesktop div.content p").innerHTML = toAppend;
-											
-                        document.querySelector("body").style.backgroundColor = color;
-						
-						var xhr = new XMLHttpRequest();
-						xhr.open("GET", "inc/ajax/general/put_preferences.php?change=desktopBackground&content="+color, true);
-                        
-                        xhr.onreadystatechange = function()
-                        {
-                            if(xhr.status == 200 && xhr.readyState == 4)
-                            {
-                                document.querySelectorAll("div#settingsContent table#resultSettings tr td b")[1].innerHTML = color;      
-                            }
-                        }
-                        
-						xhr.send(null);
                     },
                     
                     preview_fontSize: function(element)
@@ -1116,7 +899,7 @@ var COSMOS =
                         
                         xhr.onreadystatechange = function()
                         {
-                            if(xhr.status == 200 && xhr.readyState == 4)
+                            if(xhr.status === 200 && xhr.readyState === 4)
                             {
                                 document.querySelectorAll("div#settingsContent table#resultSettings tr td b")[2].innerHTML = currentSize;      
                             }
@@ -1163,7 +946,7 @@ var COSMOS =
                         
                         xhr.onreadystatechange = function()
                         {
-                            if(xhr.status == 200 && xhr.readyState == 4)
+                            if(xhr.status === 200 && xhr.readyState === 4)
                             {
                                 document.location.href = "index.php?message=success_logout";
                             }

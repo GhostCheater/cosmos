@@ -48,7 +48,7 @@ var WINDOW =
             html.open("GET", "apps/"+app_id+"/application.html?rand="+Math.random(), true);
             html.onreadystatechange = function()
             {
-                if(html.status == 200 && html.readyState == 4)
+                if(html.status === 200 && html.readyState === 4)
                 {
 					element_content.innerHTML = html.responseText;
                     loadHTML = true;
@@ -62,7 +62,7 @@ var WINDOW =
 			
 			css.onreadystatechange = function()
 			{
-				if(css.status == 200 && css.readyState == 4)
+				if(css.status === 200 && css.readyState === 4)
 				{
                     var includeCSS = document.createElement("style");
                     includeCSS.setAttribute("rel", "stylesheet");
@@ -84,7 +84,7 @@ var WINDOW =
 			
 			js.onreadystatechange = function()
 			{
-				if(js.status == 200 && js.readyState == 4)
+				if(js.status === 200 && js.readyState === 4)
 				{
                     var includeJS = document.createElement("script");
                     includeJS.setAttribute("type", "text/javascript");
@@ -107,7 +107,7 @@ var WINDOW =
             xhr_manifest.open("GET", "apps/"+app_id+"/manifest.json", true);
             xhr_manifest.onreadystatechange = function()
             {
-                if(xhr_manifest.status == 200 && xhr_manifest.readyState == 4)
+                if(xhr_manifest.status === 200 && xhr_manifest.readyState === 4)
                 {
                     try
                     {
@@ -165,7 +165,7 @@ var WINDOW =
             */
             COSMOS.header.trigger.panel("apps");
             
-            if(document.querySelector("section#rightPanel").className == "open apps")
+            if(document.querySelector("section#rightPanel").className === "open apps")
             {
                 COSMOS.header.trigger.panel("apps");
             }
