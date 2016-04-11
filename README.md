@@ -1,4 +1,4 @@
-![Image Alt](https://codeclimate.com/github/Ne0blast/cosmos/badges/gpa.svg)
+![Image](https://codeclimate.com/github/Ne0blast/cosmos/badges/gpa.svg)
 ![Image Alt](https://codeclimate.com/github/Ne0blast/cosmos/badges/coverage.svg)
 ![Image Alt](https://codeclimate.com/github/Ne0blast/cosmos/badges/issue_count.svg)
 
