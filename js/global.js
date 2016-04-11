@@ -146,7 +146,10 @@ var COSMOS =
                                                 
                                                 for(key in json)
                                                 {
-                                                    toAppend += "<tr onclick='WINDOW.trigger(\"" + json[key]["id"] + "\", \""+json[key]["color"]+"\");'><td><img src='apps/" + json[key]["id"] + "/app.svg' /></td><td>" + json[key]["name"] + "</td></tr>";
+                                                    if({}.hasOwnProperty.call(json, key))
+                                                    {
+                                                        toAppend += "<tr onclick='WINDOW.trigger(\"" + json[key]["id"] + "\", \""+json[key]["color"]+"\");'><td><img src='apps/" + json[key]["id"] + "/app.svg' /></td><td>" + json[key]["name"] + "</td></tr>";    
+                                                    }
                                                 }
                                                 
                                                 toAppend += "</table>";
@@ -156,7 +159,7 @@ var COSMOS =
                                                     content_rightPanel.innerHTML = toAppend;
                                                 }
                                             }
-                                            catch(e)
+                                            catch(err)
                                             {
                                                 console.error("Error parsing json");
                                             }
@@ -200,15 +203,15 @@ var COSMOS =
                             
                             COSMOS.elements.header.button.user().className = "selected";
                             
-                            var xhr = new XMLHttpRequest();
-                            xhr.open("GET", "inc/ajax/rightPanel/profil.php", true);
+                            var xhr2 = new XMLHttpRequest();
+                            xhr2.open("GET", "inc/ajax/rightPanel/profil.php", true);
                     
                             xhr.onreadystatechange = function()
                             {
-                                if(xhr.status === 200 && xhr.readyState === 4)
+                                if(xhr2.status === 200 && xhr2.readyState === 4)
                                 {
-                                    var state = xhr.responseText.split("~||]]", 1)[0];
-                                    var data = xhr.responseText.split("~||]]", 2)[1];
+                                    var state = xhr2.responseText.split("~||]]", 1)[0];
+                                    var data = xhr2.responseText.split("~||]]", 2)[1];
                                     
                                     switch(state)
                                     {
@@ -226,7 +229,7 @@ var COSMOS =
                                 }
                             }
                             
-                            xhr.send(null);
+                            xhr2.send(null);
                         }
                         break;
                         
@@ -238,15 +241,15 @@ var COSMOS =
                             
                             COSMOS.elements.header.button.settings().className = "selected";
                             
-                            var xhr = new XMLHttpRequest();
-                            xhr.open("GET", "inc/ajax/rightPanel/settings.php", true);
+                            var xhr3 = new XMLHttpRequest();
+                            xhr3.open("GET", "inc/ajax/rightPanel/settings.php", true);
                     
-                            xhr.onreadystatechange = function()
+                            xhr3.onreadystatechange = function()
                             {
-                                if(xhr.status === 200 && xhr.readyState === 4)
+                                if(xhr3.status === 200 && xhr3.readyState === 4)
                                 {
-                                    var state = xhr.responseText.split("~||]]", 1)[0];
-                                    var data = xhr.responseText.split("~||]]", 2)[1];
+                                    var state = xhr3.responseText.split("~||]]", 1)[0];
+                                    var data = xhr3.responseText.split("~||]]", 2)[1];
                                     
                                     switch(state)
                                     {
@@ -264,7 +267,7 @@ var COSMOS =
                                 }
                             }
                             
-                            xhr.send(null);
+                            xhr3.send(null);
                         }
                         break;
                         
@@ -304,35 +307,35 @@ var COSMOS =
                 if(evt.key !== "Tab" && evt.key !== "Control" && evt.key !== "Shift" && evt.key !== "Alt")
                 {
                     var patternToSearch = document.querySelector("input#area_search_input").value;
+                    
+                    document.querySelector("div#contentResults div#loader p").innerHTML = "Recherche en cours... &nbsp; <img src='images/loader.png' />";
 
-                    if(patternToSearch !== "")
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("GET", "inc/ajax/rightPanel/search.php?patternToSearch="+patternToSearch, true);
+
+                    xhr.onreadystatechange = function()
                     {
-                        document.querySelector("div#contentResults div#loader p").innerHTML = "Recherche en cours... &nbsp; <img src='images/loader.png' />";
-                        
-                        var xhr = new XMLHttpRequest();
-                        xhr.open("GET", "inc/ajax/rightPanel/search.php?patternToSearch="+patternToSearch, true);
-
-                        xhr.onreadystatechange = function()
+                        if(xhr.status === 200 && xhr.readyState === 4)
                         {
-                            if(xhr.status === 200 && xhr.readyState === 4)
-                            {
-                                var state = xhr.responseText.split("~||]]", 1)[0];
-                                var data = xhr.responseText.split("~||]]", 2)[1];
+                            var state = xhr.responseText.split("~||]]", 1)[0];
+                            var data = xhr.responseText.split("~||]]", 2)[1];
 
-                                switch(state)
-                                {
-                                    case "ok":
-                                        try
+                            switch(state)
+                            {
+                                case "ok":
+                                    try
+                                    {
+                                        var json = JSON.parse(data);
+                                        var toAppend = "";
+
+                                        document.querySelector("div#contentResults div#loader p").innerHTML = "<b>" + (json["Applications"].length + json["Fichiers"].length + json["Dossiers"].length) + "</b> élément(s) trouvé(s)";
+
+                                        for(key in json)
                                         {
-                                            var json = JSON.parse(data);
-                                            var toAppend = "";
-                                            
-                                            document.querySelector("div#contentResults div#loader p").innerHTML = "<b>" + (json["Applications"].length + json["Fichiers"].length + json["Dossiers"].length) + "</b> élément(s) trouvé(s)";
-                                            
-                                            for(key in json)
+                                            if({}.hasOwnProperty.call(json, key))
                                             {
                                                 toAppend += "<tr class='noHighlight'><th colspan='2'>" + key + "</th></tr>";
-                                                
+
                                                 if(json[key].length === 0)
                                                 {
                                                     toAppend += "<tr class='noHighlight'><td colspan='2'>Aucun résultat</td></tr>";
@@ -356,25 +359,25 @@ var COSMOS =
                                                     }
                                                 }
                                             }
-                                            
-                                            document.querySelector("table#resultSearch").innerHTML = toAppend;
-                                            
                                         }
-                                        catch(e)
-                                        {
-                                            console.error("Error parsing json");
-                                        }
-                                        break;
 
-                                    default:
-                                        console.log("Unexcepted error :(");
-                                        break;
-                                }
+                                        document.querySelector("table#resultSearch").innerHTML = toAppend;
+
+                                    }
+                                    catch(err)
+                                    {
+                                        console.error("Error parsing json");
+                                    }
+                                    break;
+
+                                default:
+                                    console.log("Unexcepted error :(");
+                                    break;
                             }
                         }
-
-                        xhr.send(null);
                     }
+
+                    xhr.send(null);
                 }
             },
             
@@ -490,58 +493,39 @@ var COSMOS =
                     
                     editMail: function()
                     {
-                        var newMail = document.querySelector("#input_editMail").value;
-						var returnArea = document.querySelector("#return_editMail");
-						
-						returnArea.innerHTML = "<img src='images/loader.png' style='height: 1.5vh;' />";
-                        
-                        if(newMail !== "")
+                    var newMail = document.querySelector("#input_editMail").value;
+                    var returnArea = document.querySelector("#return_editMail");
+
+                    returnArea.innerHTML = "<img src='images/loader.png' style='height: 1.5vh;' />";
+
+                        var xhr = new XMLHttpRequest();
+                        xhr.open("GET", "inc/ajax/rightPanel/profil/edit_mail.php?mail="+encodeURI(newMail), true);
+
+                        xhr.onreadystatechange = function()
                         {
-                            var xhr = new XMLHttpRequest();
-                            xhr.open("GET", "inc/ajax/rightPanel/profil/edit_mail.php?mail="+encodeURI(newMail), true);
-                            
-                            xhr.onreadystatechange = function()
-                            {
-                                if(xhr.status === 200 && xhr.readyState === 4)
-                                {                                    
-									var state = xhr.responseText.split("~||]]", 1)[0];
-									
-                                    switch(state)
-                                    {
-                                        case "ok":
-											returnArea.innerHTML = "Votre adresse mail est maintenant <b>"+encodeURI(newMail)+"</b> !";
-											
-											if(rightPanel.className.indexOf("profil") !== -1)
-											{
-												document.querySelectorAll("#resultProfil tr td")[3].innerHTML = encodeURI(newMail) + " &nbsp; <img src='images/rightPanel/profil/edit.svg' style='height: 1.5vh;' onclick='COSMOS.rightPanel.trigger.profil.editMail();' class='action' />";
-											}
-                                            break;
-											
-										case "length":
-											returnArea.innerHTML = "Désolé mais votre adresse mail est trop longue";
-											break;
-                                            
-                                        case "format":
-                                            returnArea.innerHTML = "Mauvais format de votre adresse mail";
-                                            break;
-                                            
-                                        case "empty":
-											returnArea.innerHTML = "Votre adresse mail est vide";
-                                            break;
-                                            
-                                        default:
-											returnArea.innerHTML = "Une erreur est survenue.";
-                                            break;
-                                    }
+                            if(xhr.status === 200 && xhr.readyState === 4)
+                            {                                    
+                                var state = xhr.responseText.split("~||]]", 1)[0];
+
+                                switch(state)
+                                {
+                                    case "ok":
+                                        returnArea.innerHTML = "Votre adresse mail est maintenant <b>"+encodeURI(newMail)+"</b> !";
+
+                                        if(rightPanel.className.indexOf("profil") !== -1)
+                                        {
+                                            document.querySelectorAll("#resultProfil tr td")[3].innerHTML = encodeURI(newMail) + " &nbsp; <img src='images/rightPanel/profil/edit.svg' style='height: 1.5vh;' onclick='COSMOS.rightPanel.trigger.profil.editMail();' class='action' />";
+                                        }
+                                        break;
+
+                                    default:
+                                        returnArea.innerHTML = "Une erreur est survenue.";
+                                        break;
                                 }
                             }
-                            
-                            xhr.send(null);
                         }
-                        else
-                        {
-                            document.querySelector("#return_editSessionName").innerHTML = "Votre adresse mail est vide";
-                        }
+
+                        xhr.send(null);
                     },
                     
                     saveNewPassword: function()
@@ -573,20 +557,7 @@ var COSMOS =
                                     switch(state)
                                     {
                                         case "ok":
-                                            button.value = "Succès !";
-                                            break;
-                                            
-                                        case "empty":
-                                            button.value = "Champ(s) vide(s) !";
-                                            break;
-                                            
-                                        case "mismatchNewPassword":
-                                            button.value = "Mots de passe différents !";
-                                            break;
-                                            
-                                            
-                                        case "oldPasswordBad":
-                                            button.value = "Mauvais mot de passe !";
+                                            button.value = "Votre mot de passe a été modifié avec succès.";
                                             break;
                                             
                                         default:
