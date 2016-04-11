@@ -34,56 +34,59 @@ var app_explorer =
                                 
                                 for(line_key in content)
                                 {
-                                    toAppend += "<div class='line'>";
-                                    
-                                    for(element_key in content[line_key])
+                                    if({}.hasOwnProperty.call(content, line_key))
                                     {
-                                        if(content[line_key][element_key][0][2] === "folder")
+                                        toAppend += "<div class='line'>";
+
+                                        for(element_key in content[line_key])
                                         {
-                                            toAppend += "<div class='element' data-name='" + content[line_key][element_key][0][0] + "' data-hash='" + content[line_key][element_key][0][1] + "' data-type='" + content[line_key][element_key][0][2] + "'>";
+                                            if({}.hasOwnProperty.call(content[line_key], element_key))
+                                            {
+                                                if(content[line_key][element_key][0][2] === "folder")
+                                                {
+                                                    toAppend += "<div class='element' data-name='" + content[line_key][element_key][0][0] + "' data-hash='" + content[line_key][element_key][0][1] + "' data-type='" + content[line_key][element_key][0][2] + "'>";
+                                                }
+                                                else
+                                                {
+                                                    toAppend += "<div class='element' data-name='" + content[line_key][element_key][0][0] + "." + content[line_key][element_key][0][3] + "' data-hash='" + content[line_key][element_key][0][1] + "' data-type='" + content[line_key][element_key][0][2] + "'>";
+                                                }
+
+
+                                                toAppend += "<img src='apps/app_explorer/images/types/" + content[line_key][element_key][0][2] + ".svg' onclick='app_explorer.actions.open(this)' /><br /><br />";
+
+                                                if(content[line_key][element_key][0][2] === "folder")
+                                                {
+                                                    toAppend += content[line_key][element_key][0][0];
+                                                }
+                                                else
+                                                {
+                                                    toAppend += content[line_key][element_key][0][0] + "." + content[line_key][element_key][0][3];
+                                                }
+
+                                                toAppend += "<br /><br />";
+
+                                                toAppend += "<p>"+
+                                                                "<img src='apps/app_explorer/images/actions/delete.svg' class='action' onclick='app_explorer.actions.delete(this)' />&nbsp;"+
+                                                                "<img src='apps/app_explorer/images/actions/rename.svg' class='action' onclick='app_explorer.actions.rename(this)' />&nbsp;"+
+                                                                "<img src='apps/app_explorer/images/actions/properties.svg' class='action' onclick='app_explorer.actions.infos(this)' />&nbsp;"+
+                                                                "<img src='apps/app_explorer/images/actions/download.svg' class='action' onclick='app_explorer.actions.download(this)' />&nbsp;"+
+                                                                "<img src='apps/app_explorer/images/actions/zip.svg' class='action' onclick='app_explorer.actions.zip(this)' />"+
+                                                            "</p>";
+
+                                                toAppend += "</div>";
+                                            }
                                         }
-                                        else
-                                        {
-                                            toAppend += "<div class='element' data-name='" + content[line_key][element_key][0][0] + "." + content[line_key][element_key][0][3] + "' data-hash='" + content[line_key][element_key][0][1] + "' data-type='" + content[line_key][element_key][0][2] + "'>";
-                                        }
-                                        
-                                        
-                                        toAppend += "<img src='apps/app_explorer/images/types/" + content[line_key][element_key][0][2] + ".svg' onclick='app_explorer.actions.open(this)' /><br /><br />";
-                                        
-                                        if(content[line_key][element_key][0][2] === "folder")
-                                        {
-                                            toAppend += content[line_key][element_key][0][0];
-                                        }
-                                        else
-                                        {
-                                            toAppend += content[line_key][element_key][0][0] + "." + content[line_key][element_key][0][3];
-                                        }
-                                        
-                                        toAppend += "<br /><br />";
-                                        
-                                        toAppend += "<p>"+
-                                                        "<img src='apps/app_explorer/images/actions/delete.svg' class='action' onclick='app_explorer.actions.delete(this)' />&nbsp;"+
-                                                        "<img src='apps/app_explorer/images/actions/rename.svg' class='action' onclick='app_explorer.actions.rename(this)' />&nbsp;"+
-                                                        "<img src='apps/app_explorer/images/actions/properties.svg' class='action' onclick='app_explorer.actions.infos(this)' />&nbsp;"+
-                                                        "<img src='apps/app_explorer/images/actions/download.svg' class='action' onclick='app_explorer.actions.download(this)' />&nbsp;"+
-                                                        "<img src='apps/app_explorer/images/actions/zip.svg' class='action' onclick='app_explorer.actions.zip(this)' />"+
-                                                    "</p>";
-                                        
+                                    
                                         toAppend += "</div>";
                                     }
-                                    
-                                    toAppend += "</div>";
                                 }
                                 
                                 document.querySelector("div#app_explorer div#listArea div#list").innerHTML = toAppend;
                             }
-                            catch(e)
+                            catch(err)
                             {
                                 console.log("Error parsing json.");
                             }
-                            break;
-                            
-                        case "error":
                             break;
                             
                         default:
@@ -105,25 +108,18 @@ var app_explorer =
             if(idDirectory != "")
             {
                 var xhr = new XMLHttpRequest();
-                xhr.open("GET", "inc/ajax/explore/changeDirectoryNavBar.php?directoryID="+directory, true);
+                xhr.open("GET", "inc/ajax/explore/changeDirectoryNavBar.php?directoryID="+idDirectory, true);
 
                 xhr.onreadystatechange = function()
                 {
                     if(xhr.status === 200 && xhr.readyState === 4)
                     {
                         var state = xhr.responseText.split("~||]]", 1)[0];
-                        var data = xhr.responseText.split("~||]]", 2)[1];
                     
                         switch(state)
                         {
                             case "ok":
                                 app_explorer.actions.list();
-                                break;
-                                
-                            case "exists":
-                                break;
-                                
-                            case "error":
                                 break;
                                 
                             default:
@@ -137,28 +133,21 @@ var app_explorer =
         },
 
         /* Changement de répertoire : sélection d'un dossier dans la barre de navigation */
-        changeDirectoryNavBar: function(directory)
+        changeDirectoryNavBar: function(idDirectory)
         {
             var xhr = new XMLHttpRequest();
-            xhr.open("GET", "inc/ajax/explore/changeDirectoryNavBar.php?directoryID="+directory, true);
+            xhr.open("GET", "inc/ajax/explore/changeDirectoryNavBar.php?directoryID="+idDirectory, true);
             
             xhr.onreadystatechange = function()
             {
                 if(xhr.status === 200 && xhr.readyState === 4)
                 {
                     var state = xhr.responseText.split("~||]]", 1)[0];
-                    var data = xhr.responseText.split("~||]]", 2)[1];
 
                     switch(state)
                     {
                         case "ok":
                             app_explorer.actions.list();
-                            break;
-
-                        case "exists":
-                            break;
-
-                        case "error":
                             break;
 
                         default:

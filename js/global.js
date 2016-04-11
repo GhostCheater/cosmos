@@ -144,7 +144,7 @@ var COSMOS =
                                                 var json = JSON.parse(data);
                                                 var toAppend = "<table id='apps'>";
                                                 
-                                                for(key in json)
+                                                for(var key in json)
                                                 {
                                                     if({}.hasOwnProperty.call(json, key))
                                                     {
@@ -206,7 +206,7 @@ var COSMOS =
                             var xhr2 = new XMLHttpRequest();
                             xhr2.open("GET", "inc/ajax/rightPanel/profil.php", true);
                     
-                            xhr.onreadystatechange = function()
+                            xhr2.onreadystatechange = function()
                             {
                                 if(xhr2.status === 200 && xhr2.readyState === 4)
                                 {
@@ -344,17 +344,20 @@ var COSMOS =
                                                 {
                                                     for(item in json[key])
                                                     {
-                                                        if(key === "Applications")
+                                                        if({}.hasOwnProperty.call(json[key], item))
                                                         {
-                                                            toAppend += "<tr onclick='WINDOW.trigger(\""+json[key][item][1]+"\", \""+json[key][item][2]+"\")'><td><img src='apps/" + json[key][item][1] + "/app.svg' /></td><td>" + json[key][item][0] + "</td></tr>";
-                                                        }
-                                                        else if(key === "Fichiers")
-                                                        {
-                                                            toAppend += "<tr><td><img src='apps/app_explorer/images/types/" + json[key][item][2] + ".svg' /></td><td>" + json[key][item][0] + "<br /><sub>" + json[key][item][3] + "</sub></td></tr>";
-                                                        }
-                                                        else
-                                                        {
-                                                            toAppend += "<tr><td><img src='apps/app_explorer/images/types/folder.svg' /></td><td>" + json[key][item][0] + "<br /><sub>" + json[key][item][3] + "</sub></td></tr>";
+                                                            if(key === "Applications")
+                                                            {
+                                                                toAppend += "<tr onclick='WINDOW.trigger(\""+json[key][item][1]+"\", \""+json[key][item][2]+"\")'><td><img src='apps/" + json[key][item][1] + "/app.svg' /></td><td>" + json[key][item][0] + "</td></tr>";
+                                                            }
+                                                            else if(key === "Fichiers")
+                                                            {
+                                                                toAppend += "<tr><td><img src='apps/app_explorer/images/types/" + json[key][item][2] + ".svg' /></td><td>" + json[key][item][0] + "<br /><sub>" + json[key][item][3] + "</sub></td></tr>";
+                                                            }
+                                                            else
+                                                            {
+                                                                toAppend += "<tr><td><img src='apps/app_explorer/images/types/folder.svg' /></td><td>" + json[key][item][0] + "<br /><sub>" + json[key][item][3] + "</sub></td></tr>";
+                                                            }
                                                         }
                                                     }
                                                 }
@@ -466,14 +469,6 @@ var COSMOS =
 											{
 												document.querySelectorAll("#resultProfil tr td")[1].innerHTML = encodeURI(newName) + " &nbsp; <img src='images/rightPanel/profil/edit.svg' style='height: 1.5vh;' onclick='COSMOS.rightPanel.trigger.profil.editSessionName();' class='action' />";
 											}
-                                            break;
-											
-										case "length":
-											returnArea.innerHTML = "Désolé mais votre nom de session est trop long";
-											break;
-                                            
-                                        case "empty":
-											returnArea.innerHTML = "Votre nom de session est vide";
                                             break;
                                             
                                         default:
@@ -715,7 +710,6 @@ var COSMOS =
 										{
 											var parsedJSON = JSON.parse(data);
 											
-											console.log(parsedJSON);
 											var currentBackground = parsedJSON["preferences"]["headerBackground"];
 											
 											var toAppend = "";
