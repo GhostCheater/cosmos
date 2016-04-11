@@ -2,7 +2,7 @@
 ![Image Alt](https://codeclimate.com/github/Ne0blast/cosmos/badges/coverage.svg)
 ![Image Alt](https://codeclimate.com/github/Ne0blast/cosmos/badges/issue_count.svg)
 
-<img style="text-align: center;" src="https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/logo245.png">
+<div style="text-align: center;"><img src="https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/logo245.png" /></div>
 
 ## A propos
 CosmOS est un WebOS vous permettant d'accéder à vos fichiers et de les manipuler à votre guise sans à avoir certaines applications spécifiques
