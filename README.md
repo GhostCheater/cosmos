@@ -4,7 +4,7 @@
 
 <div align="center"><img src="https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/logo245.png" /></div>
 
-<div align="center" style="font-size:24px">CosmOS</div>
+<div align="center" style="font-size:32px;">CosmOS</div>
 
 ## A propos
 CosmOS est un WebOS vous permettant d'accéder à vos fichiers et de les manipuler à votre guise sans à avoir certaines applications spécifiques
