@@ -7,7 +7,7 @@
         $req->execute(array(
             $_GET['directoryID'],
             $_SESSION['session']['user'],
-            "dir"
+            "folder"
         ));
 
         if($req->rowCount() == 1)

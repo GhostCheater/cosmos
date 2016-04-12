@@ -3,9 +3,11 @@
 
     if(isset($_GET['directoryID']))
     {
-        if($_GET['directoryID'] == "")
+        if($_GET['directoryID'] == "Home")
         {
-            $_SESSION['directoryID'] = "/";
+            $_SESSION['directory'] = "/";
+            
+            die("ok~||]]");
         }
         else
         {
@@ -13,7 +15,7 @@
             $req->execute(array(
                 $_GET['directoryID'],
                 $_SESSION['session']['user'],
-                "dir"
+                "folder"
             ));
             
             if($req->rowCount() == 1)

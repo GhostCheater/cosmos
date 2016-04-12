@@ -3,6 +3,26 @@ var app_explorer =
     init: function()
     {
         app_explorer.actions.list();
+        app_explorer.actions.nav();
+    },
+    
+    load:
+    {
+        show: function()
+        {
+            if(document.querySelector("div#app_explorer div#loaderArea"))
+            {
+                document.querySelector("div#app_explorer div#loaderArea").className = "show";  
+            }
+        },
+        
+        hide: function()
+        {
+            if(document.querySelector("div#app_explorer div#loaderArea"))
+            {
+                document.querySelector("div#app_explorer div#loaderArea").className = "";  
+            }
+        }
     },
     
     /* 
@@ -13,6 +33,8 @@ var app_explorer =
         /* Permet le listage du répertoire courant */
         list: function()
         {
+            app_explorer.load.show();
+            
             var xhr = new XMLHttpRequest();
             xhr.open("GET", "inc/ajax/explore/list.php", true);
             
@@ -28,6 +50,8 @@ var app_explorer =
                         case "ok":
                             try
                             {
+                                app_explorer.load.hide();
+                                
                                 var content = JSON.parse(data);
                                 
                                 var toAppend = "";
@@ -45,33 +69,32 @@ var app_explorer =
                                                 if(content[line_key][element_key][0][2] === "folder")
                                                 {
                                                     toAppend += "<div class='element' data-name='" + content[line_key][element_key][0][0] + "' data-hash='" + content[line_key][element_key][0][1] + "' data-type='" + content[line_key][element_key][0][2] + "'>";
+                                                    toAppend += "<img src='apps/app_explorer/images/types/" + content[line_key][element_key][0][2] + ".svg' onclick='app_explorer.actions.changeDirectoryWorkspace(\""+content[line_key][element_key][0][1]+"\");' /><br /><br />";
+                                                    toAppend += "<span onclick='app_explorer.actions.changeDirectoryWorkspace(\""+content[line_key][element_key][0][1]+"\");'>" + content[line_key][element_key][0][0] + "</span>";
+                                                    
+                                                    toAppend += "<br /><br />";
+                                                    
+                                                    toAppend += "<p>"+
+                                                                    "<img src='apps/app_explorer/images/actions/delete.svg' class='action' onclick='app_explorer.actions.delete(this)' />&nbsp;"+
+                                                                    "<img src='apps/app_explorer/images/actions/rename.svg' class='action' onclick='app_explorer.actions.rename(this)' />&nbsp;"+
+                                                                    "<img src='apps/app_explorer/images/actions/properties.svg' class='action' onclick='app_explorer.actions.infos(this)' />&nbsp;"+
+                                                                "</p>";
                                                 }
                                                 else
                                                 {
                                                     toAppend += "<div class='element' data-name='" + content[line_key][element_key][0][0] + "." + content[line_key][element_key][0][3] + "' data-hash='" + content[line_key][element_key][0][1] + "' data-type='" + content[line_key][element_key][0][2] + "'>";
+                                                    toAppend += "<img src='apps/app_explorer/images/types/" + content[line_key][element_key][0][2] + ".svg' onclick='app_explorer.actions.open(this)' /><br /><br />";
+                                                    toAppend += "<span onclick='app_explorer.actions.open(this);'>" + content[line_key][element_key][0][0] + "." + content[line_key][element_key][0][3] + "</span>";
+                                                    
+                                                    toAppend += "<br /><br />";
+                                                    
+                                                    toAppend += "<p>"+
+                                                                    "<img src='apps/app_explorer/images/actions/delete.svg' class='action' onclick='app_explorer.actions.delete(this)' />&nbsp;"+
+                                                                    "<img src='apps/app_explorer/images/actions/rename.svg' class='action' onclick='app_explorer.actions.rename(this)' />&nbsp;"+
+                                                                    "<img src='apps/app_explorer/images/actions/properties.svg' class='action' onclick='app_explorer.actions.infos(this)' />&nbsp;"+
+                                                                    "<img src='apps/app_explorer/images/actions/download.svg' class='action' onclick='app_explorer.actions.download(this)' />&nbsp;"+
+                                                                "</p>";
                                                 }
-
-
-                                                toAppend += "<img src='apps/app_explorer/images/types/" + content[line_key][element_key][0][2] + ".svg' onclick='app_explorer.actions.open(this)' /><br /><br />";
-
-                                                if(content[line_key][element_key][0][2] === "folder")
-                                                {
-                                                    toAppend += content[line_key][element_key][0][0];
-                                                }
-                                                else
-                                                {
-                                                    toAppend += content[line_key][element_key][0][0] + "." + content[line_key][element_key][0][3];
-                                                }
-
-                                                toAppend += "<br /><br />";
-
-                                                toAppend += "<p>"+
-                                                                "<img src='apps/app_explorer/images/actions/delete.svg' class='action' onclick='app_explorer.actions.delete(this)' />&nbsp;"+
-                                                                "<img src='apps/app_explorer/images/actions/rename.svg' class='action' onclick='app_explorer.actions.rename(this)' />&nbsp;"+
-                                                                "<img src='apps/app_explorer/images/actions/properties.svg' class='action' onclick='app_explorer.actions.infos(this)' />&nbsp;"+
-                                                                "<img src='apps/app_explorer/images/actions/download.svg' class='action' onclick='app_explorer.actions.download(this)' />&nbsp;"+
-                                                                "<img src='apps/app_explorer/images/actions/zip.svg' class='action' onclick='app_explorer.actions.zip(this)' />"+
-                                                            "</p>";
 
                                                 toAppend += "</div>";
                                             }
@@ -98,6 +121,37 @@ var app_explorer =
             xhr.send(null);
         },
         
+        nav: function()
+        {
+            app_explorer.load.show();
+            
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "inc/ajax/explore/nav.php", true);
+            
+            xhr.onreadystatechange = function()
+            {
+                if(xhr.status === 200 && xhr.readyState === 4)
+                {
+                    var state = xhr.responseText.split("~||]]", 1)[0];
+                    var data = xhr.responseText.split("~||]]", 2)[1];
+                    
+                    switch(state)
+                    {
+                        case "ok":
+                            app_explorer.load.hide();
+                            
+                            document.querySelector("div#navBar div#path").innerHTML = data;
+                            break;
+                            
+                        default:
+                            break;
+                    }
+                }
+            }
+            
+            xhr.send(null);
+        },
+        
         open: function(call)
         {
         },
@@ -105,36 +159,39 @@ var app_explorer =
         /* Changement de répertoire : sélection d'un dossier dans le WorkSpace */
         changeDirectoryWorkspace: function(idDirectory)
         {
-            if(idDirectory != "")
-            {
-                var xhr = new XMLHttpRequest();
-                xhr.open("GET", "inc/ajax/explore/changeDirectoryNavBar.php?directoryID="+idDirectory, true);
+            app_explorer.load.show();
+            
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "inc/ajax/explore/changeDirectoryWorkspace.php?directoryID="+idDirectory, true);
 
-                xhr.onreadystatechange = function()
+            xhr.onreadystatechange = function()
+            {
+                if(xhr.status === 200 && xhr.readyState === 4)
                 {
-                    if(xhr.status === 200 && xhr.readyState === 4)
+                    var state = xhr.responseText.split("~||]]", 1)[0];
+
+                    switch(state)
                     {
-                        var state = xhr.responseText.split("~||]]", 1)[0];
-                    
-                        switch(state)
-                        {
-                            case "ok":
-                                app_explorer.actions.list();
-                                break;
-                                
-                            default:
-                                break;
-                        }
+                        case "ok":                            
+                            app_explorer.actions.list();
+                            app_explorer.actions.nav();
+                            
+                            break;
+
+                        default:
+                            break;
                     }
                 }
-
-                xhr.send(null);
             }
+
+            xhr.send(null);
         },
 
         /* Changement de répertoire : sélection d'un dossier dans la barre de navigation */
         changeDirectoryNavBar: function(idDirectory)
         {
+            app_explorer.load.show();
+            
             var xhr = new XMLHttpRequest();
             xhr.open("GET", "inc/ajax/explore/changeDirectoryNavBar.php?directoryID="+idDirectory, true);
             
@@ -148,6 +205,7 @@ var app_explorer =
                     {
                         case "ok":
                             app_explorer.actions.list();
+                            app_explorer.actions.nav();
                             break;
 
                         default:
@@ -173,15 +231,25 @@ var app_explorer =
         /* Création d'un dossier */
         createFolder: function()
         {
-            
+            popup.open(
+                "popup_createFolder",
+                "Création d'un nouveau dossier",
+                "<input type='text' placeholder='Nom du nouveau dossier' id='input_createFolder' /><br /><br /><span id='return_createFolder'></span>",
+                "<input type='button' value='Créer' class='button' onclick='app_explorer.ajaxRequest.createFolder();' />"
+            );
         },
         
         /* Upload d'un ou plusieurs fichiers */
         upload:
         {
             
-        }
+        },
         
+        /* Suppression d'un élément */
+        delete: function(callButton)
+        {
+            var element = callButton.parentNode.parentNode;
+        }
     },
     
     /*
@@ -220,23 +288,22 @@ var app_explorer =
                 if(xhr.status === 200 && xhr.readyState === 4)
                 {
                     var state = xhr.responseText.split("~||]]", 1)[0];
-                        var data = xhr.responseText.split("~||]]", 2)[1];
                     
-                        switch(state)
-                        {
-                            case "ok":
-                                app_explorer.actions.list();
-                                returnArea.innerHTML = "Le fichier <b>" + name + "." + extension + "</b> a été créé avec succès.";
-                                
-                                setTimeout(function(){
-                                    popup.close("popup_createFile");
-                                }, 1000);
-                                break;
-                                
-                            default:
-                                returnArea.innerHTML = "Une erreur est survenue lors de la création du fichier <b>" + name + "." + extension + "</b>.";
-                                break;
-                        }
+                    switch(state)
+                    {
+                        case "ok":
+                            app_explorer.actions.list();
+                            returnArea.innerHTML = "Le fichier <b>" + name + "." + extension + "</b> a été créé avec succès.";
+
+                            setTimeout(function(){
+                                popup.close("popup_createFile");
+                            }, 1000);
+                            break;
+
+                        default:
+                            returnArea.innerHTML = "Une erreur est survenue lors de la création du fichier <b>" + name + "." + extension + "</b>.";
+                            break;
+                    }
                 }
             }
             
@@ -245,7 +312,39 @@ var app_explorer =
         
         createFolder: function(name)
         {
+            var name = document.querySelector("section#popup_createFolder input#input_createFolder").value;
             
+            var returnArea = document.querySelector("#return_createFolder");
+            returnArea.innerHTML = "<img src='images/loader.png' style='height: 1.5vh;' />";
+            
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "inc/ajax/explore/createFolder.php?name="+name, true);
+            
+            xhr.onreadystatechange = function()
+            {
+                if(xhr.status === 200 && xhr.readyState === 4)
+                {
+                    var state = xhr.responseText.split("~||]]", 1)[0];
+                    
+                    switch(state)
+                    {
+                        case "ok":
+                            app_explorer.actions.list();
+                            returnArea.innerHTML = "Le dossier <b>" + name + "</b> a été créé avec succès.";
+
+                            setTimeout(function(){
+                                popup.close("popup_createFolder");
+                            }, 1000);
+                            break;
+
+                        default:
+                            returnArea.innerHTML = "Une erreur est survenue lors de la création du dossier <b>" + name + "</b>.";
+                            break;
+                    }
+                }
+            }
+            
+            xhr.send(null);
         }
     }
 }

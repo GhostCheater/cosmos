@@ -1,6 +1,12 @@
 /*
 * GENERAL
 */
+@font-face 
+{
+    font-family: roboto;
+    src: url("roboto.ttf");
+}
+
 
 *:not(input):not(textarea)
 {
@@ -16,8 +22,8 @@
 
 html
 {
-    font-family: Tahoma;
-    font-size: 13px;
+    font-family: roboto;
+    font-size: 13.5px;
 }
 
 body

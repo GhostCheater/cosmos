@@ -32,7 +32,7 @@ var WINDOW =
             */
             var element_load = document.createElement("div");
             element_load.className = "load";
-            element_load.innerHTML = "<p><img src='apps/"+app_id+"/app.svg' /><br /><br /><img src='images/loader_app.png' style='height: 3vh;' class='img_loader' /></p>";
+            element_load.innerHTML = "<p><img src='apps/"+app_id+"/app.svg' /><br /><br /><img src='images/loader.png' style='height: 3vh;' class='img_loader' /></p>";
             element.appendChild(element_load);
             
             /*

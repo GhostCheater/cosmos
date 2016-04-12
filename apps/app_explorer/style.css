@@ -155,7 +155,7 @@ div#app_explorer div#listArea div#list div.line div.element
     display: table-cell;
     vertical-align: middle;
     
-    width: 16.66vw;
+    width: 15vw;
     
     cursor: pointer;
 }
@@ -201,6 +201,35 @@ div#app_explorer div#listArea div#list div.line div.element:hover
 }
 
 div#app_explorer div#listArea div#list div.line div.element:hover p
+{
+    opacity: 1;
+}
+
+
+/* Zone de chargement */
+div#loaderArea
+{
+    transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 5vh;
+    width: 5vh;
+    
+    opacity: 0;
+}
+
+div#loaderArea img
+{
+    height: 4vh;
+}
+
+div#loaderArea.show
 {
     opacity: 1;
 }

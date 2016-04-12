@@ -37,6 +37,24 @@
         
         
         /*
+        * Test de l'existence du fichier
+        */
+        $req = $bdd->prepare("SELECT name FROM elements WHERE name = ? AND location = ? AND type = ? AND extension = ? AND user = ?");
+        $req->execute(array(
+            $_GET['name'],
+            $_SESSION['directory'],
+            $type,
+            $extension,
+            $_SESSION['session']['user']
+        ));
+        
+        if($req->rowCount() != "" || $req->rowCount() != 0)
+        {
+            die("error~||]]");
+        }
+        
+        
+        /*
         * Insertion dans la base de données
         */
         $req = $bdd->prepare("INSERT INTO elements (id, name, hash, user, type, extension, location, date, lastDate, favorite, private, count) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
@@ -62,9 +80,13 @@
         if(!file_exists("../../../workspace/files/{$_SESSION['session']['user']}/{$hash}.data"))
         {
             fopen("../../../workspace/files/{$_SESSION['session']['user']}/{$hash}.data", "w");
+            
+            die("ok~||]]");
         }
-        
-        die("ok~||]]");
+        else
+        {
+            die("error~||]]");
+        }
     }
     else
     {

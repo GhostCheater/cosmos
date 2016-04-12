@@ -8,15 +8,15 @@
 
 <!-- Barre de navigation -->
 <div id="navBar">
+    <!-- Chemin du dossier courant -->
     <div id="path">
-        <p class="directory">Home</p>
-        <p class="separator">&gt;</p>
-        <p class="directory">Test</p>
     </div>
+    
+    <!-- Actions générales -->
     <div id="defaultActions">
         <p>
             <img src="apps/app_explorer/images/actions/newFile.svg" title="Nouveau fichier" onclick="app_explorer.actions.createFile();" />
-            <img src="apps/app_explorer/images/actions/newFolder.svg" title="Nouveau dossier" />
+            <img src="apps/app_explorer/images/actions/newFolder.svg" title="Nouveau dossier" onclick="app_explorer.actions.createFolder();" />
             <img src="apps/app_explorer/images/actions/upload.svg" title="Upload" />
         </p>
     </div>
@@ -27,3 +27,6 @@
     <div id="list">
     </div>
 </div>
+
+<!-- Zone de chargement -->
+<div id="loaderArea"><img src="images/loader.png" /></div>
