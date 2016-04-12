@@ -24,3 +24,6 @@ ratings:
     - "**.css"
     - "**.html"
     - "**.js"
+exclude_paths:
+- "js/lib/openpgp.min.js"
+- "js/lib/sha512.js"
