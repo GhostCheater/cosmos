@@ -249,6 +249,28 @@ var app_explorer =
         delete: function(callButton)
         {
             var element = callButton.parentNode.parentNode;
+            
+            var hash = element.getAttribute("data-hash");
+            var name = element.getAttribute("data-name");
+            var type = element.getAttribute("data-type");
+            
+            var toShow;
+            
+            if(type === "folder")
+            {
+                toShow = "Êtes-vous sûr(e) de vouloir supprimer le dossier <b>" + name + "</b> ?";
+            }
+            else
+            {
+                toShow = "Êtes-vous sûr(e) de vouloir supprimer le fichier <b>" + name + "</b> ?"
+            }
+            
+            popup.open(
+                "popup_delete_" + hash,
+                "Suppression d'un élément",
+                toShow + "<br /><br /><span id='return_delete_"+hash+"'></span>",
+                "<input type='button' value='Supprimer' class='button' onclick='app_explorer.ajaxRequest.delete(\""+name+"\", \""+type+"\", \""+hash+"\")' />"
+            );
         }
     },
     
@@ -339,6 +361,56 @@ var app_explorer =
 
                         default:
                             returnArea.innerHTML = "Une erreur est survenue lors de la création du dossier <b>" + name + "</b>.";
+                            break;
+                    }
+                }
+            }
+            
+            xhr.send(null);
+        },
+        
+        delete: function(name, type, hash)
+        {
+            var returnArea = document.querySelector("#return_delete_"+hash);
+            returnArea.innerHTML = "<img src='images/loader.png' style='height: 1.5vh;' />";
+            
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "inc/ajax/explore/deleteElement.php?type="+type+"&hash="+hash, true);
+            
+            xhr.onreadystatechange = function()
+            {
+                if(xhr.status === 200 && xhr.readyState === 4)
+                {
+                    var state = xhr.responseText.split("~||]]", 1)[0];
+                    
+                    switch(state)
+                    {
+                        case "ok":
+                            app_explorer.actions.list();
+                            
+                            if(type === "folder")
+                            {
+                                returnArea.innerHTML = "Le dossier <b>" + name + "</b> a été supprimé avec succès.";
+                            }
+                            else
+                            {
+                                returnArea.innerHTML = "Le fichier <b>" + name + "</b> a été supprimé avec succès.";
+                            }
+
+                            setTimeout(function(){
+                                popup.close("popup_delete_"+hash);
+                            }, 1000);
+                            break;
+
+                        default:
+                            if(type === "folder")
+                            {
+                                returnArea.innerHTML = "Une erreur est survenue lors de la suppression du dossier <b>" + name + "</b>";
+                            }
+                            else
+                            {
+                                returnArea.innerHTML = "Une erreur est survenue lors de la suppression du fichier <b>" + name + "</b>";
+                            }
                             break;
                     }
                 }
