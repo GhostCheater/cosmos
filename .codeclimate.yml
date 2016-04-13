@@ -11,6 +11,8 @@ engines:
     checks:
      max-statements:
       enabled: false
+     complexity:
+        enabled: false
   csslint:
     enabled: true
   duplication:

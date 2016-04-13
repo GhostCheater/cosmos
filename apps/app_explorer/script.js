@@ -8,19 +8,17 @@ var app_explorer =
     
     load:
     {
-        show: function()
+        trigger: function(toDo)
         {
-            if(document.querySelector("div#app_explorer div#loaderArea"))
+            var element = document.querySelector("div#app_explorer div#loaderArea");
+            
+            if(toDo == "show")
             {
-                document.querySelector("div#app_explorer div#loaderArea").className = "show";  
+                element.className = "show";
             }
-        },
-        
-        hide: function()
-        {
-            if(document.querySelector("div#app_explorer div#loaderArea"))
+            else
             {
-                document.querySelector("div#app_explorer div#loaderArea").className = "";  
+                element.className = "";
             }
         }
     },
@@ -33,7 +31,7 @@ var app_explorer =
         /* Permet le listage du répertoire courant */
         list: function()
         {
-            app_explorer.load.show();
+            app_explorer.load.trigger("show");
             
             var xhr = new XMLHttpRequest();
             xhr.open("GET", "inc/ajax/explore/list.php", true);
@@ -50,7 +48,7 @@ var app_explorer =
                         case "ok":
                             try
                             {
-                                app_explorer.load.hide();
+                                app_explorer.load.trigger("hide");
                                 
                                 var content = JSON.parse(data);
                                 
@@ -123,7 +121,7 @@ var app_explorer =
         
         nav: function()
         {
-            app_explorer.load.show();
+            app_explorer.load.trigger("show");
             
             var xhr = new XMLHttpRequest();
             xhr.open("GET", "inc/ajax/explore/nav.php", true);
@@ -138,7 +136,7 @@ var app_explorer =
                     switch(state)
                     {
                         case "ok":
-                            app_explorer.load.hide();
+                            app_explorer.load.trigger("hide");
                             
                             document.querySelector("div#navBar div#path").innerHTML = data;
                             break;
@@ -159,7 +157,7 @@ var app_explorer =
         /* Changement de répertoire : sélection d'un dossier dans le WorkSpace */
         changeDirectoryWorkspace: function(idDirectory)
         {
-            app_explorer.load.show();
+            app_explorer.load.trigger("show");
             
             var xhr = new XMLHttpRequest();
             xhr.open("GET", "inc/ajax/explore/changeDirectoryWorkspace.php?directoryID="+idDirectory, true);
@@ -190,7 +188,7 @@ var app_explorer =
         /* Changement de répertoire : sélection d'un dossier dans la barre de navigation */
         changeDirectoryNavBar: function(idDirectory)
         {
-            app_explorer.load.show();
+            app_explorer.load.trigger("show");
             
             var xhr = new XMLHttpRequest();
             xhr.open("GET", "inc/ajax/explore/changeDirectoryNavBar.php?directoryID="+idDirectory, true);
