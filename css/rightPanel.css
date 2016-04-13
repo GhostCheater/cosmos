@@ -1,7 +1,7 @@
 /*
 * RIGHT PANEL
 */
-section#rightPanel
+#rightPanel
 {
     z-index: 96;
     
@@ -21,18 +21,18 @@ section#rightPanel
     box-shadow: 0 0 2px grey;
 }
 
-section#rightPanel.open
+#rightPanel.open
 {
     width: 25%;
 }
 
-section#rightPanel.close
+#rightPanel.close
 {
     width: 0;
     font-size: 0;
 }
 
-section#rightPanel div#header
+#rightPanel #header
 {
     display: table;
     
@@ -42,10 +42,10 @@ section#rightPanel div#header
     height: 15%;
     width: 100%;
     
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: #d1d1d1 rgba(0, 0, 0, 0.3);
 }
 
-section#rightPanel div#header p
+#rightPanel #header p
 {
     display: table-cell;
     vertical-align: middle;
@@ -59,12 +59,12 @@ section#rightPanel div#header p
     font-size: 3vh;
 }
 
-section#rightPanel div#header p img
+#rightPanel #header p img
 {
     height: 6vh;
 }
 
-section#rightPanel div#content
+#rightPanel #content
 {
     position: absolute;
     top: 15%;
@@ -78,7 +78,7 @@ section#rightPanel div#content
 
 
 /* HEADER : Applications */
-section#rightPanel div#content table#apps
+#rightPanel #content #apps
 {
     position: absolute;
     top: 3%;
@@ -88,7 +88,7 @@ section#rightPanel div#content table#apps
     border-collapse: collapse;
 }
 
-section#rightPanel div#content table#apps tr
+#rightPanel #content #apps tr
 {
     transition: all .3s ease;
     -webkit-transition: all .3s ease;
@@ -103,25 +103,25 @@ section#rightPanel div#content table#apps tr
     border-radius: 3px;
 }
 
-section#rightPanel div#content table#apps tr:hover
+#rightPanel #content #apps tr:hover
 {
-    background-color: rgba(255, 165, 0, 0.2);
+    background-color: #fff5e1 rgba(255, 165, 0, 0.2);
     color: #885800;
 }
 
-section#rightPanel div#content table#apps tr td:first-child
+#rightPanel #content #apps tr td:first-child
 {    
     text-align: center;
 }
 
-section#rightPanel div#content table#apps tr td img
+#rightPanel #content #apps tr td img
 {
     height: 3.5vh;
 }
 
 
 /* HEADER : Recherche */
-section#rightPanel div#content div#searchBar
+#rightPanel #content #searchBar
 {
     display: table;
     
@@ -132,7 +132,7 @@ section#rightPanel div#content div#searchBar
     width: 100%;
 }
 
-section#rightPanel div#content div#searchBar p
+#rightPanel #content #searchBar p
 {
     display: table-cell;
     vertical-align: middle;
@@ -140,7 +140,7 @@ section#rightPanel div#content div#searchBar p
     text-align: center;
 }
 
-section#rightPanel div#content div#searchBar p input
+#rightPanel #content #searchBar p input
 {
     padding-left: 1vw;
     width: 15vw;
@@ -151,12 +151,12 @@ section#rightPanel div#content div#searchBar p input
     border-radius: 3px;
 }
 
-section#rightPanel div#content div#searchBar p input:focus
+#rightPanel #content #searchBar p input:focus
 {
     border: 1px solid #0076ff;
 }
 
-section#rightPanel div#content div#contentResults
+#rightPanel #content #contentResults
 {
     position: absolute;
     top: 10%;
@@ -167,7 +167,7 @@ section#rightPanel div#content div#contentResults
     overflow: auto;
 }
 
-section#rightPanel div#content div#contentResults div#loader
+#rightPanel #content #contentResults #loader
 {
     display: table;
     
@@ -178,7 +178,7 @@ section#rightPanel div#content div#contentResults div#loader
     width: 100%;
 }
 
-section#rightPanel div#content div#contentResults div#loader p
+#rightPanel #content #contentResults #loader p
 {
     display: table-cell;
     vertical-align: middle;
@@ -189,12 +189,12 @@ section#rightPanel div#content div#contentResults div#loader p
     color: grey;
 }
 
-section#rightPanel div#content div#contentResults div#loader p img
+#rightPanel #content #contentResults #loader p img
 {
     height: 1vh;
 }
 
-section#rightPanel div#content div#contentResults table#resultSearch
+#rightPanel #content #contentResults #resultSearch
 {
     position: absolute;
     top: 5%;
@@ -204,7 +204,7 @@ section#rightPanel div#content div#contentResults table#resultSearch
     border-collapse: collapse;
 }
 
-section#rightPanel div#content div#contentResults table#resultSearch tr
+#rightPanel #content #contentResults #resultSearch tr
 {
     transition: all .3s ease;
     -webkit-transition: all .3s ease;
@@ -219,13 +219,13 @@ section#rightPanel div#content div#contentResults table#resultSearch tr
     border-radius: 3px;
 }
 
-section#rightPanel div#content div#contentResults table#resultSearch tr:hover:not(.noHighlight)
+#rightPanel #content #contentResults #resultSearch tr:hover:not(.noHighlight)
 {
-    background-color: rgba(255, 165, 0, 0.2);
+    background-color: #fff5e1 rgba(255, 165, 0, 0.2);
     color: #885800;
 }
 
-section#rightPanel div#content div#contentResults table#resultSearch tr th
+#rightPanel #content #contentResults #resultSearch tr th
 {
     text-align: left;
     font-weight: normal;
@@ -233,20 +233,20 @@ section#rightPanel div#content div#contentResults table#resultSearch tr th
     font-size: 16px;
 }
 
-section#rightPanel div#content div#contentResults table#resultSearch tr td:first-child
+#rightPanel #content #contentResults #resultSearch tr td:first-child
 {    
     text-align: center;
     width: 8vh;
 }
 
-section#rightPanel div#content div#contentResults table#resultSearch tr td img
+#rightPanel #content #contentResults #resultSearch tr td img
 {
     height: 3.5vh;
 }
 
 
 /* HEADER : Profil */
-section#rightPanel div#content div#profilContent
+#rightPanel #content #profilContent
 {
     position: absolute;
     top: 0;
@@ -257,7 +257,7 @@ section#rightPanel div#content div#profilContent
     overflow: auto;
 }
 
-section#rightPanel div#content div#profilContent table#resultProfil
+#rightPanel #content #profilContent #resultProfil
 {
     position: absolute;
     top: 0;
@@ -267,7 +267,7 @@ section#rightPanel div#content div#profilContent table#resultProfil
     border-collapse: collapse;
 }
 
-section#rightPanel div#content div#profilContent table#resultProfil tr
+#rightPanel #content #profilContent #resultProfil tr
 {    
     height: 5vh;
     
@@ -276,7 +276,7 @@ section#rightPanel div#content div#profilContent table#resultProfil tr
     border-radius: 3px;
 }
 
-section#rightPanel div#content div#profilContent table#resultProfil tr th
+#rightPanel #content #profilContent #resultProfil tr th
 {
     text-align: left;
     font-weight: normal;
@@ -284,7 +284,7 @@ section#rightPanel div#content div#profilContent table#resultProfil tr th
     font-size: 16px;
 }
 
-section#rightPanel div#content div#profilContent table#resultProfil tr td input[type="password"]
+#rightPanel #content #profilContent #resultProfil tr td input[type="password"]
 {    
     width: 9vw;
     height: 2.3vh;
@@ -295,7 +295,7 @@ section#rightPanel div#content div#profilContent table#resultProfil tr td input[
     border: none;
 }
 
-section#rightPanel div#content div#profilContent table#resultProfil tr td input[type="button"]
+#rightPanel #content #profilContent #resultProfil tr td input[type="button"]
 {
     transition: all .3s ease;
     -webkit-transition: all .3s ease;
@@ -314,13 +314,13 @@ section#rightPanel div#content div#profilContent table#resultProfil tr td input[
     
     cursor: pointer;
 }
-section#rightPanel div#content div#profilContent table#resultProfil tr td input[type="button"]:hover
+#rightPanel #content #profilContent #resultProfil tr td input[type="button"]:hover
 {
     background-color: rgb(50, 50, 50);
     color: white;
 }
 
-section#rightPanel div#content div#profilContent table#resultProfil tr td:first-child
+#rightPanel #content #profilContent #resultProfil tr td:first-child
 {    
     text-align: center;
     width: 10vh;
@@ -336,16 +336,17 @@ section#rightPanel div#content div#profilContent table#resultProfil tr td img
     
     height: 3.5vh;
 }
-section#rightPanel div#content div#profilContent table#resultProfil4 tr td img.action:hover
+
+#rightPanel #content #profilContent #resultProfil tr td img.action:hover
 {
-    background-color: rgba(255, 165, 0, 0.3);
+    background-color: #fff5e1 rgba(255, 165, 0, 0.3);
     
     border-radius: 3px;
 }
 
 
 /* HEADER : Paramètres */
-section#rightPanel div#content div#settingsContent
+#rightPanel #content #settingsContent
 {
     position: absolute;
     top: 0;
@@ -356,7 +357,7 @@ section#rightPanel div#content div#settingsContent
     overflow: auto;
 }
 
-section#rightPanel div#content div#settingsContent table#resultSettings
+#rightPanel #content #settingsContent #resultSettings
 {
     position: absolute;
     top: 0;
@@ -366,7 +367,7 @@ section#rightPanel div#content div#settingsContent table#resultSettings
     border-collapse: collapse;
 }
 
-section#rightPanel div#content div#settingsContent table#resultSettings tr
+#rightPanel #content #settingsContent #resultSettings tr
 {    
     height: 5vh;
     
@@ -375,7 +376,7 @@ section#rightPanel div#content div#settingsContent table#resultSettings tr
     border-radius: 3px;
 }
 
-section#rightPanel div#content div#settingsContent table#resultSettings tr th
+#rightPanel #content #settingsContent #resultSettings tr th
 {
     text-align: left;
     font-weight: normal;
@@ -383,13 +384,13 @@ section#rightPanel div#content div#settingsContent table#resultSettings tr th
     font-size: 16px;
 }
 
-section#rightPanel div#content div#settingsContent table#resultSettings tr td:first-child
+#rightPanel #content #settingsContent #resultSettings tr td:first-child
 {    
     text-align: center;
     width: 10vh;
 }
 
-section#rightPanel div#content div#settingsContent table#resultSettings tr td img
+#rightPanel #content #settingsContent #resultSettings tr td img
 {
     transition: all .3s ease;
     -webkit-transition: all .3s ease;
@@ -400,7 +401,7 @@ section#rightPanel div#content div#settingsContent table#resultSettings tr td im
     height: 3.5vh;
 }
 
-section#rightPanel div#content div#settingsContent table#resultSettings tr td img.disposition:hover
+#rightPanel #content #settingsContent #resultSettings tr td img.disposition:hover
 {
     transition: all .3s ease;
     -webkit-transition: all .3s ease;
@@ -411,16 +412,16 @@ section#rightPanel div#content div#settingsContent table#resultSettings tr td im
     box-shadow: 0 0 2px rgb(0, 118, 255);
 }
 
-section#rightPanel div#content div#settingsContent table#resultSettings tr td img.selected
+#rightPanel #content #settingsContent #resultSettings tr td img.selected
 {
-    box-shadow: 0 0 2px rgba(255, 0, 0, 1);
+    box-shadow: 0 0 2px rgb(255, 0, 0);
     
     border-radius: 2px;
 }
 
 
 /* HEADER : Se déconnecter */
-section#rightPanel div#content div#settingsContent
+#rightPanel #content #logoutContent
 {
     position: absolute;
     top: 0;
@@ -431,7 +432,7 @@ section#rightPanel div#content div#settingsContent
     overflow: auto;
 }
 
-section#rightPanel div#content div#logoutContent table#resultsLogout
+#rightPanel #content #logoutContent #resultsLogout
 {
     position: absolute;
     top: 0;
@@ -441,7 +442,7 @@ section#rightPanel div#content div#logoutContent table#resultsLogout
     border-collapse: collapse;
 }
 
-section#rightPanel div#content div#logoutContent table#resultsLogout tr
+#rightPanel #content #logoutContent #resultsLogout tr
 {
     transition: all .3s ease;
     -webkit-transition: all .3s ease;
@@ -456,12 +457,12 @@ section#rightPanel div#content div#logoutContent table#resultsLogout tr
     border-radius: 5px;
 }
 
-section#rightPanel div#content div#logoutContent table#resultsLogout tr:not(:first-child):hover
+#rightPanel #content #logoutContent #resultsLogout tr:not(:first-child):hover
 {
-    background-color: rgba(255, 165, 0, 0.2);
+    background-color: #fff5e1 rgba(255, 165, 0, 0.2);
 }
 
-section#rightPanel div#content div#logoutContent table#resultsLogout tr th
+#rightPanel #content #logoutContent #resultsLogout tr th
 {
     text-align: left;
     font-weight: normal;
@@ -469,13 +470,13 @@ section#rightPanel div#content div#logoutContent table#resultsLogout tr th
     font-size: 16px;
 }
 
-section#rightPanel div#content div#logoutContent table#resultsLogout tr td:first-child
+#rightPanel #content #logoutContent #resultsLogout tr td:first-child
 {    
     text-align: center;
     width: 10vh;
 }
 
-section#rightPanel div#content div#logoutContent table#resultsLogout tr td img
+#rightPanel #content #logoutContent #resultsLogout tr td img
 {
     transition: all .3s ease;
     -webkit-transition: all .3s ease;

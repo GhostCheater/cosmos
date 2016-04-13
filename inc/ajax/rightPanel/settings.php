@@ -57,27 +57,15 @@
                 <?php
                     for($i = 0; $i < count($dispositions); $i++)
                     {
-                        if($i < count($dispositions) -1)
+                        $margin = ($i == count($dispositions)-1) ? "0" : "2vw";
+                        
+                        if($dispositions[$i] == $parsed_data["preferences"]["windowDisposition"])
                         {
-                            if($dispositions[$i] == $parsed_data["preferences"]["windowDisposition"])
-                            {
-                                echo "<img src='images/rightPanel/settings/{$dispositions[$i]}.svg' style='margin-right: 2vw;' class='disposition selected' id='{$dispositions[$i]}' onclick='COSMOS.rightPanel.trigger.settings.changeDisposition(\"{$dispositions[$i]}\");' />";
-                            }
-                            else
-                            {
-                                echo "<img src='images/rightPanel/settings/{$dispositions[$i]}.svg' style='margin-right: 2vw;' class='disposition' id='{$dispositions[$i]}' onclick='COSMOS.rightPanel.trigger.settings.changeDisposition(\"{$dispositions[$i]}\");' />";
-                            }
+                            echo "<img src='images/rightPanel/settings/{$dispositions[$i]}.svg' style='margin-right: {$margin};' class='disposition selected' id='{$dispositions[$i]}' onclick='COSMOS.rightPanel.trigger.settings.changeDisposition(\"{$dispositions[$i]}\");' />";
                         }
                         else
                         {
-                            if($dispositions[$i] == $parsed_data["preferences"]["windowDisposition"])
-                            {
-                                echo "<img src='images/rightPanel/settings/{$dispositions[$i]}.svg' class='disposition selected' id='{$dispositions[$i]}' onclick='COSMOS.rightPanel.trigger.settings.changeDisposition(\"{$dispositions[$i]}\");' />";
-                            }
-                            else
-                            {
-                                echo "<img src='images/rightPanel/settings/{$dispositions[$i]}.svg' class='disposition' id='{$dispositions[$i]}' onclick='COSMOS.rightPanel.trigger.settings.changeDisposition(\"{$dispositions[$i]}\");' />";
-                            }
+                            echo "<img src='images/rightPanel/settings/{$dispositions[$i]}.svg' style='margin-right: {$margin};' class='disposition' id='{$dispositions[$i]}' onclick='COSMOS.rightPanel.trigger.settings.changeDisposition(\"{$dispositions[$i]}\");' />";
                         }
                     }
                 ?>

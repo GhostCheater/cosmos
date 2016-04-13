@@ -7,7 +7,7 @@
 */
 
 /* Barre de navigation */
-div#app_explorer div#navBar
+#app_explorer #navBar
 {
     position: absolute;
     top: 0;
@@ -20,7 +20,7 @@ div#app_explorer div#navBar
     border-top: 1px solid #bfbfbf;
 }
 
-div#app_explorer div#navBar div#path
+#app_explorer #navBar #path
 {
     display: table;
     
@@ -31,7 +31,7 @@ div#app_explorer div#navBar div#path
     max-width: 80%;
 }
 
-div#app_explorer div#navBar div#path p
+#app_explorer #navBar #path p
 {
     display: table-cell;
     vertical-align: middle;
@@ -39,7 +39,7 @@ div#app_explorer div#navBar div#path p
     text-align: center;
 }
 
-div#app_explorer div#navBar div#path p.directory
+#app_explorer #navBar #path p.directory
 {
     transition: all .3s ease;
     -webkit-transition: all .3s ease;
@@ -51,13 +51,13 @@ div#app_explorer div#navBar div#path p.directory
     
     cursor: pointer;
 }
-div#app_explorer div#navBar div#path p.directory:hover
+#app_explorer #navBar #path p.directory:hover
 {
     color: orange;
     background-color: #e6e6e6;
 }
 
-div#app_explorer div#navBar div#path p.separator
+#app_explorer #navBar #path p.separator
 {
     width: 3vw;
     
@@ -66,7 +66,7 @@ div#app_explorer div#navBar div#path p.separator
     text-shadow: 1px 1px 1px black;
 }
 
-div#app_explorer div#navBar div#defaultActions
+#app_explorer #navBar #defaultActions
 {
     display: table;
     
@@ -79,7 +79,7 @@ div#app_explorer div#navBar div#defaultActions
     border-left: 1px solid #bfbfbf;
 }
 
-div#app_explorer div#navBar div#defaultActions p
+#app_explorer #navBar #defaultActions p
 {
     display: table-cell;
     vertical-align: middle;
@@ -87,7 +87,7 @@ div#app_explorer div#navBar div#defaultActions p
     text-align: center;
 }
 
-div#app_explorer div#navBar div#defaultActions p img
+#app_explorer #navBar #defaultActions p img
 {
     transition: all .3s ease;
     -webkit-transition: all .3s ease;
@@ -100,21 +100,21 @@ div#app_explorer div#navBar div#defaultActions p img
     cursor: pointer;
 }
 
-div#app_explorer div#navBar div#defaultActions p img:hover
+#app_explorer #navBar #defaultActions p img:hover
 {
-    background-color: rgba(0, 147, 255, 0.2);
+    background-color: #e4e4ff rgba(0, 147, 255, 0.2);
     
     border-radius: 3px;
 }
 
-div#app_explorer div#navBar div#defaultActions p img:not(:first-child)
+#app_explorer #navBar #defaultActions p img:not(:first-child)
 {
     margin-left: 1vw;
 }
 
 
 /* Liste des fichiers et des dossiers */
-div#app_explorer div#listArea
+#app_explorer #listArea
 {
     position: absolute;
     top: 10%;
@@ -125,7 +125,7 @@ div#app_explorer div#listArea
     overflow: auto;
 }
 
-div#app_explorer div#listArea div#list
+#app_explorer #listArea #list
 {
     display: table;
     
@@ -135,7 +135,7 @@ div#app_explorer div#listArea div#list
     max-width: 100%;
 }
 
-div#app_explorer div#listArea div#list div.line
+#app_explorer #listArea #list div.line
 {
     display: table-row;
     
@@ -144,7 +144,7 @@ div#app_explorer div#listArea div#list div.line
     height: 16.66vh;
 }
 
-div#app_explorer div#listArea div#list div.line div.element
+#app_explorer #listArea #list div.line div.element
 {
     transition: all .3s ease;
     -webkit-transition: all .3s ease;
@@ -160,7 +160,7 @@ div#app_explorer div#listArea div#list div.line div.element
     cursor: pointer;
 }
 
-div#app_explorer div#listArea div#list div.line div.element p
+#app_explorer #listArea #list div.line div.element p
 {
     transition: all .3s ease;
     -webkit-transition: all .3s ease;
@@ -171,12 +171,12 @@ div#app_explorer div#listArea div#list div.line div.element p
     opacity: 0;
 }
 
-div#app_explorer div#listArea div#list div.line div.element img:not(.action)
+#app_explorer #listArea #list div.line div.element img:not(.action)
 {
     height: 5vh;
 }
 
-div#app_explorer div#listArea div#list div.line div.element img.action
+#app_explorer #listArea #list div.line div.element img.action
 {
     transition: all .3s ease;
     -webkit-transition: all .3s ease;
@@ -187,27 +187,27 @@ div#app_explorer div#listArea div#list div.line div.element img.action
     height: 1.8vh;
 }
 
-div#app_explorer div#listArea div#list div.line div.element img.action:hover
+#app_explorer #listArea #list div.line div.element img.action:hover
 {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: #f4f4f4 rgba(0, 0, 0, 0.1);
     
     border-radius: 2px;
 }
 
-div#app_explorer div#listArea div#list div.line div.element:hover
+#app_explorer #listArea #list div.line div.element:hover
 {    
-    background-color: rgba(255, 165, 0, 0.15);
+    background-color: #ffa500 rgba(255, 165, 0, 0.15);
     color: #a76c00;
 }
 
-div#app_explorer div#listArea div#list div.line div.element:hover p
+#app_explorer #listArea #list div.line div.element:hover p
 {
     opacity: 1;
 }
 
 
 /* Zone de chargement */
-div#loaderArea
+#loaderArea
 {
     transition: all .3s ease;
     -webkit-transition: all .3s ease;
@@ -224,12 +224,12 @@ div#loaderArea
     opacity: 0;
 }
 
-div#loaderArea img
+#loaderArea img
 {
     height: 4vh;
 }
 
-div#loaderArea.show
+#loaderArea.show
 {
     opacity: 1;
 }
