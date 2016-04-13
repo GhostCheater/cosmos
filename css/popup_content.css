@@ -1,5 +1,5 @@
 /* SETTINGS : Sélection d'une couleur */
-.colorPickerBlock
+span.colorPickerBlock
 {
     transition: all .3s ease;
     -webkit-transition: all .3s ease;
@@ -16,7 +16,7 @@
     cursor: pointer;
 }
 
-.selected
+span.selected
 {
 	box-shadow: 0 0 2px blue;
 }

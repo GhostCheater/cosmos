@@ -1,11 +1,13 @@
 var app_explorer = 
 {
+    /* Initialisation de l'application */
     init: function()
     {
         app_explorer.actions.list();
         app_explorer.actions.nav();
     },
     
+    /* Affichage ou non du loader */
     load:
     {
         trigger: function(toDo)
@@ -23,9 +25,7 @@ var app_explorer =
         }
     },
     
-    /* 
-    * Clic sur un élément 
-    */
+    /* Actions sur les éléments de l'application */
     actions:
     {
         /* Permet le listage du répertoire courant */
@@ -53,17 +53,12 @@ var app_explorer =
                                 var content = JSON.parse(data);
                                 
                                 var toAppend = "";
-                                
                                 var name = "";
-                                
                                 var actions = "";
-                                
                                 var actionsFolder = "<img src='apps/app_explorer/images/actions/delete.svg' class='action' onclick='app_explorer.actions.delete(this)' />&nbsp;"+
                                                     "<img src='apps/app_explorer/images/actions/rename.svg' class='action' onclick='app_explorer.actions.rename(this)' />&nbsp;"+
                                                     "<img src='apps/app_explorer/images/actions/properties.svg' class='action' onclick='app_explorer.actions.infos(this)' />&nbsp;";
-                                
                                 var actionFile = actionsFolder + "<img src='apps/app_explorer/images/actions/download.svg' class='action' onclick='app_explorer.actions.download(this)' />&nbsp;";
-                                
                                 var onclickAction = "";
                                 
                                 for(line_key in content)
@@ -90,9 +85,9 @@ var app_explorer =
                                                 }
                                             
                                                 toAppend += "<div class='element' data-name='" + name + "' data-hash='" + content[line_key][element_key][0][1] + "' data-type='" + content[line_key][element_key][0][2] + "'>";
-                                                toAppend += "<img src='apps/app_explorer/images/types/" + content[line_key][element_key][0][2] + ".svg' onclick='"+onclickAction+"' /><br /><br />";
-                                                toAppend += "<span>"+name+"</span>";
-                                                toAppend += "<br /><br />";
+                                                toAppend += "<img src='apps/app_explorer/images/types/" + content[line_key][element_key][0][2] + ".svg' onclick='app_explorer.select.trigger(this);' ondblclick='"+onclickAction+"' /><br />";
+                                                toAppend += "<div onclick='app_explorer.select.trigger(this);' ondblclick'"+onclickAction+"'>"+name+"</div>";
+                                                toAppend += "<br />";
                                                 toAppend += "<p>"+actions+"</p>";
                                                 toAppend += "</div>";
                                             }
@@ -119,6 +114,7 @@ var app_explorer =
             xhr.send(null);
         },
         
+        /* Affichage de l'arborescence du répertoire courant */
         nav: function()
         {
             app_explorer.load.trigger("show");
@@ -150,6 +146,7 @@ var app_explorer =
             xhr.send(null);
         },
         
+        /* Ouverture d'un fichier */
         open: function(call)
         {
         },
@@ -249,21 +246,10 @@ var app_explorer =
         }
     },
     
-    /*
-    * Envoi des requêtes et récupération des données
-    */
+    /* Envoi des requêtes et récupération des données */
     ajaxRequest:
     {
-        changeDirectoryWorkspace: function(idDirectory)
-        {
-            
-        },
-        
-        changeDirectoryNavBar: function(idDirectory)
-        {
-            
-        },
-        
+        /* Création d'un fichier */
         createFile: function()
         {
             var nameFile = document.querySelector("section#popup_createFile input#input_createFile_1").value;
@@ -307,6 +293,7 @@ var app_explorer =
             xhr.send(null);
         },
         
+        /* Création d'un dossier */
         createFolder: function()
         {
             var nameFolder = document.querySelector("section#popup_createFolder input#input_createFolder").value;
@@ -344,6 +331,7 @@ var app_explorer =
             xhr.send(null);
         },
         
+        /* Suppression d'un élément */
         delete: function(name, type, hash)
         {
             var returnArea = document.querySelector("#return_delete_"+hash);
@@ -378,6 +366,69 @@ var app_explorer =
             }
             
             xhr.send(null);
+        }
+    },
+    
+    select:
+    {
+        /* Sélection d'un élément */
+        trigger: function(element)
+        {
+            // Affichage des éléments sélectionnés
+            var globalElement = element.parentNode;
+            
+            if(globalElement.className === "element")
+            {
+                globalElement.className = "element selected";
+            }
+            else
+            {
+                globalElement.className = "element";
+            }
+            
+            app_explorer.select.showInfo();
+        },
+        
+        /* Affiche les informations sur la sélection */
+        showInfo: function()
+        {
+            // Nombre d'éléments sélectionnés
+            var elements = document.querySelectorAll("#listArea #list .element.selected");
+            
+            var nbFiles = 0;
+            var nbFolders = 0;
+            
+            for(key in elements)
+            {
+                if({}.hasOwnProperty.call(elements, key))
+                {
+                    if(elements[key].getAttribute("data-type") === "folder")
+                    {
+                        nbFolders++;
+                    }
+                    else
+                    {
+                        nbFiles++;
+                    }
+                }
+            }
+            
+            if(nbFiles === 0 && nbFolders === 0)
+            {
+                document.querySelector("#app_explorer #bandActions span.firstLine p").innerHTML = "Aucun élément sélectionné";
+            }
+            else
+            {
+                document.querySelector("#app_explorer #bandActions span.firstLine p").innerHTML = nbFiles + " fichier(s) et " + nbFolders + " dossier(s) sélectionné(s)";                
+            }
+            
+            app_explorer.select.showActions(nbFiles, nbFolders);
+        },
+        
+        /* Affiche les actions spécifiques à la sélection */
+        showActions: function(nbFiles, nbFolders)
+        {
+            
         }
     }
 }
