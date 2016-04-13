@@ -350,13 +350,20 @@ var COSMOS =
                                                             {
                                                                 toAppend += "<tr onclick='WINDOW.trigger(\""+json[key][item][1]+"\", \""+json[key][item][2]+"\")'><td><img src='apps/" + json[key][item][1] + "/app.svg' /></td><td>" + json[key][item][0] + "</td></tr>";
                                                             }
-                                                            else if(key === "Fichiers")
+                                                            else()
                                                             {
-                                                                toAppend += "<tr><td><img src='apps/app_explorer/images/types/" + json[key][item][2] + ".svg' /></td><td>" + json[key][item][0] + "<br /><sub>" + json[key][item][3] + "</sub></td></tr>";
-                                                            }
-                                                            else
-                                                            {
-                                                                toAppend += "<tr><td><img src='apps/app_explorer/images/types/folder.svg' /></td><td>" + json[key][item][0] + "<br /><sub>" + json[key][item][3] + "</sub></td></tr>";
+                                                                var type = "";
+                                                                
+                                                                if(key === "Fichiers")
+                                                                {
+                                                                    type = json[key][item][2];
+                                                                }
+                                                                else
+                                                                {
+                                                                    type = "folder";
+                                                                }
+                                                                
+                                                                toAppend += "<tr><td><img src='apps/app_explorer/images/types/" + type + ".svg' /></td><td>" + json[key][item][0] + "<br /><sub>" + json[key][item][3] + "</sub></td></tr>";
                                                             }
                                                         }
                                                     }
