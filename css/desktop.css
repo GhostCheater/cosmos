@@ -47,7 +47,7 @@ header
     height: 7%;
     width: 100%;
     
-    background-color: #505050;
+    background: #505050 url("../images/logo.svg") no-repeat 1%;
     background: rgba(0, 0, 0, 0.6) url("../images/logo.svg") no-repeat 1%;
 }
 
@@ -82,15 +82,18 @@ header div#apps p
 
 header #apps .open
 {
+    background-color: #e0ffe0;
     background-color: rgba(127, 255, 161, 0.2);
 }
 header #apps .reduce
 {
-   background-color: rgba(127, 176, 255, 0.2); 
+    background-color: rgb(227, 238, 255);
+    background-color: rgba(127, 176, 255, 0.2); 
 }
 
 header #apps p:hover
 {
+    background-color: #fff4df;
     background-color: rgba(255, 108, 0, 0.2);
 }
 
@@ -132,12 +135,14 @@ header #rightArea p
 
 header #rightArea .selected
 {
+    background-color: rgb(207, 251, 255);
     background-color: rgba(0, 235, 255, 0.2);
     color: #00b1ff;
 }
 
 header #rightArea p:hover
 {
+    background-color: #fff2d9;
     background-color: rgba(255, 108, 0, 0.2);
     color: orange;
 }

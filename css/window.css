@@ -97,10 +97,10 @@ div.window div.title p
     text-align: center;
 }
 
-div.window div.title p.title_icon { width: 10%; }
-div.window div.title p.title_icon img { height: 4vh; }
-div.window div.title p.title_name { width: 80%; }
-div.window div.title p.title_actions { width: 10%; }
+div.window div.title .title_icon { width: 10%; }
+div.window div.title .title_icon img { height: 4vh; }
+div.window div.title .title_name { width: 80%; }
+div.window div.title .title_actions { width: 10%; }
 
 div.window div.title p.title_actions img 
 {
