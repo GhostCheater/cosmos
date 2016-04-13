@@ -4,8 +4,7 @@
 @font-face 
 {
     font-family: roboto;
-    src:    local("Roboto"),
-            url("roboto.ttf");
+    src: url("roboto.ttf") format('truetype');
 }
 
 

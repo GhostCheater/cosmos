@@ -1,4 +1,4 @@
-section#desktop
+#desktop
 {
     position: absolute;
     top: 7%;
@@ -117,7 +117,7 @@ div.window div.title p.title_actions img
 
 div.window div.title p.title_actions img:hover { box-shadow: 0 0 2px black; }
 
-div.window div.content
+div.window .content
 {
 	position: absolute;
 	top: 5vh;
