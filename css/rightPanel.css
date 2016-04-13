@@ -42,7 +42,8 @@
     height: 15%;
     width: 100%;
     
-    background-color: #d1d1d1 rgba(0, 0, 0, 0.3);
+    background-color: #d1d1d1;
+    background-color: rgba(0, 0, 0, 0.3);
 }
 
 #rightPanel #header p
@@ -105,7 +106,8 @@
 
 #rightPanel #content #apps tr:hover
 {
-    background-color: #fff5e1 rgba(255, 165, 0, 0.2);
+    background-color: #fff5e1;
+    background-color: rgba(255, 165, 0, 0.2);
     color: #885800;
 }
 
@@ -221,7 +223,8 @@
 
 #rightPanel #content #contentResults #resultSearch tr:hover:not(.noHighlight)
 {
-    background-color: #fff5e1 rgba(255, 165, 0, 0.2);
+    background-color: #fff5e1;
+    background-color: rgba(255, 165, 0, 0.2);
     color: #885800;
 }
 
@@ -326,7 +329,7 @@
     width: 10vh;
 }
 
-section#rightPanel div#content div#profilContent table#resultProfil tr td img
+#rightPanel #content #profilContent #resultProfil tr td img
 {
     transition: all .3s ease;
     -webkit-transition: all .3s ease;
@@ -337,9 +340,10 @@ section#rightPanel div#content div#profilContent table#resultProfil tr td img
     height: 3.5vh;
 }
 
-#rightPanel #content #profilContent #resultProfil tr td img.action:hover
+#rightPanel #content #profilContent #resultProfil tr td .action:hover
 {
-    background-color: #fff5e1 rgba(255, 165, 0, 0.3);
+    background-color: #fff5e1;
+    background-color: rgba(255, 165, 0, 0.3);
     
     border-radius: 3px;
 }
@@ -401,7 +405,7 @@ section#rightPanel div#content div#profilContent table#resultProfil tr td img
     height: 3.5vh;
 }
 
-#rightPanel #content #settingsContent #resultSettings tr td img.disposition:hover
+#rightPanel #content #settingsContent #resultSettings tr td .disposition:hover
 {
     transition: all .3s ease;
     -webkit-transition: all .3s ease;
@@ -412,7 +416,7 @@ section#rightPanel div#content div#profilContent table#resultProfil tr td img
     box-shadow: 0 0 2px rgb(0, 118, 255);
 }
 
-#rightPanel #content #settingsContent #resultSettings tr td img.selected
+#rightPanel #content #settingsContent #resultSettings tr td .selected
 {
     box-shadow: 0 0 2px rgb(255, 0, 0);
     
@@ -459,7 +463,8 @@ section#rightPanel div#content div#profilContent table#resultProfil tr td img
 
 #rightPanel #content #logoutContent #resultsLogout tr:not(:first-child):hover
 {
-    background-color: #fff5e1 rgba(255, 165, 0, 0.2);
+    background-color: #fff5e1;
+    background-color: rgba(255, 165, 0, 0.2);
 }
 
 #rightPanel #content #logoutContent #resultsLogout tr th

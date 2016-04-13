@@ -291,7 +291,7 @@ var app_explorer =
         
         createFile: function()
         {
-            var name = document.querySelector("section#popup_createFile input#input_createFile_1").value;
+            var nameFile = document.querySelector("section#popup_createFile input#input_createFile_1").value;
             var extension = document.querySelector("section#popup_createFile input#input_createFile_2").value;
             
             var returnArea = document.querySelector("#return_createFile");
@@ -303,7 +303,7 @@ var app_explorer =
             }
             
             var xhr = new XMLHttpRequest();
-            xhr.open("GET", "inc/ajax/explore/createFile.php?name="+name+"&extension="+extension, true);
+            xhr.open("GET", "inc/ajax/explore/createFile.php?name="+nameFile+"&extension="+extension, true);
             
             xhr.onreadystatechange = function()
             {
@@ -315,7 +315,7 @@ var app_explorer =
                     {
                         case "ok":
                             app_explorer.actions.list();
-                            returnArea.innerHTML = "Le fichier <b>" + name + "." + extension + "</b> a été créé avec succès.";
+                            returnArea.innerHTML = "Le fichier <b>" + nameFile + "." + extension + "</b> a été créé avec succès.";
 
                             setTimeout(function(){
                                 popup.close("popup_createFile");
@@ -323,7 +323,7 @@ var app_explorer =
                             break;
 
                         default:
-                            returnArea.innerHTML = "Une erreur est survenue lors de la création du fichier <b>" + name + "." + extension + "</b>.";
+                            returnArea.innerHTML = "Une erreur est survenue lors de la création du fichier <b>" + nameFile + "." + extension + "</b>.";
                             break;
                     }
                 }
@@ -332,15 +332,15 @@ var app_explorer =
             xhr.send(null);
         },
         
-        createFolder: function(name)
+        createFolder: function()
         {
-            var name = document.querySelector("section#popup_createFolder input#input_createFolder").value;
+            var nameFolder = document.querySelector("section#popup_createFolder input#input_createFolder").value;
             
             var returnArea = document.querySelector("#return_createFolder");
             returnArea.innerHTML = "<img src='images/loader.png' style='height: 1.5vh;' />";
             
             var xhr = new XMLHttpRequest();
-            xhr.open("GET", "inc/ajax/explore/createFolder.php?name="+name, true);
+            xhr.open("GET", "inc/ajax/explore/createFolder.php?name="+nameFolder, true);
             
             xhr.onreadystatechange = function()
             {
@@ -352,7 +352,7 @@ var app_explorer =
                     {
                         case "ok":
                             app_explorer.actions.list();
-                            returnArea.innerHTML = "Le dossier <b>" + name + "</b> a été créé avec succès.";
+                            returnArea.innerHTML = "Le dossier <b>" + nameFolder + "</b> a été créé avec succès.";
 
                             setTimeout(function(){
                                 popup.close("popup_createFolder");
@@ -360,7 +360,7 @@ var app_explorer =
                             break;
 
                         default:
-                            returnArea.innerHTML = "Une erreur est survenue lors de la création du dossier <b>" + name + "</b>.";
+                            returnArea.innerHTML = "Une erreur est survenue lors de la création du dossier <b>" + nameFolder + "</b>.";
                             break;
                     }
                 }
