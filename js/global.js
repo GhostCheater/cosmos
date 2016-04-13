@@ -350,7 +350,7 @@ var COSMOS =
                                                             {
                                                                 toAppend += "<tr onclick='WINDOW.trigger(\""+json[key][item][1]+"\", \""+json[key][item][2]+"\")'><td><img src='apps/" + json[key][item][1] + "/app.svg' /></td><td>" + json[key][item][0] + "</td></tr>";
                                                             }
-                                                            else()
+                                                            else
                                                             {
                                                                 var type = "";
                                                                 

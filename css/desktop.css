@@ -27,9 +27,7 @@ html
 }
 
 body
-{
-/*    background-color: rgb(240, 240, 240);*/
-    
+{    
     background: url("../images/bg/bg_red.png");
     background-size: cover;
     
@@ -49,10 +47,11 @@ header
     height: 7%;
     width: 100%;
     
+    background-color: #505050;
     background: rgba(0, 0, 0, 0.6) url("../images/logo.svg") no-repeat 1%;
 }
 
-header div#apps
+header #apps
 {
     display: table;
     
@@ -81,26 +80,26 @@ header div#apps p
     cursor: pointer;
 }
 
-header div#apps p.open
+header #apps .open
 {
     background-color: rgba(127, 255, 161, 0.2);
 }
-header div#apps p.reduce
+header #apps .reduce
 {
    background-color: rgba(127, 176, 255, 0.2); 
 }
 
-header div#apps p:hover
+header #apps p:hover
 {
     background-color: rgba(255, 108, 0, 0.2);
 }
 
-header div#apps p img
+header #apps p img
 {
     height: 3vh;
 }
 
-header div#rightArea
+header #rightArea
 {
     display: table;
     
@@ -111,7 +110,7 @@ header div#rightArea
     min-width: 25%;
 }
 
-header div#rightArea p
+header #rightArea p
 {
     transition: all .3s ease;
     -webkit-transition: all .3s ease;
@@ -131,19 +130,19 @@ header div#rightArea p
     width: 13vh;
 }
 
-header div#rightArea p.selected
+header #rightArea .selected
 {
     background-color: rgba(0, 235, 255, 0.2);
     color: #00b1ff;
 }
 
-header div#rightArea p:hover
+header #rightArea p:hover
 {
     background-color: rgba(255, 108, 0, 0.2);
     color: orange;
 }
 
-header div#rightArea p img
+header #rightArea p img
 {
     height: 3vh;
 }
