@@ -12,7 +12,7 @@ var app_explorer =
         {
             var element = document.querySelector("div#app_explorer div#loaderArea");
             
-            if(toDo == "show")
+            if(toDo === "show")
             {
                 element.className = "show";
             }
@@ -54,6 +54,18 @@ var app_explorer =
                                 
                                 var toAppend = "";
                                 
+                                var name = "";
+                                
+                                var actions = "";
+                                
+                                var actionsFolder = "<img src='apps/app_explorer/images/actions/delete.svg' class='action' onclick='app_explorer.actions.delete(this)' />&nbsp;"+
+                                                    "<img src='apps/app_explorer/images/actions/rename.svg' class='action' onclick='app_explorer.actions.rename(this)' />&nbsp;"+
+                                                    "<img src='apps/app_explorer/images/actions/properties.svg' class='action' onclick='app_explorer.actions.infos(this)' />&nbsp;";
+                                
+                                var actionFile = actionsFolder + "<img src='apps/app_explorer/images/actions/download.svg' class='action' onclick='app_explorer.actions.download(this)' />&nbsp;";
+                                
+                                var onclickAction = "";
+                                
                                 for(line_key in content)
                                 {
                                     if({}.hasOwnProperty.call(content, line_key))
@@ -66,34 +78,22 @@ var app_explorer =
                                             {
                                                 if(content[line_key][element_key][0][2] === "folder")
                                                 {
-                                                    toAppend += "<div class='element' data-name='" + content[line_key][element_key][0][0] + "' data-hash='" + content[line_key][element_key][0][1] + "' data-type='" + content[line_key][element_key][0][2] + "'>";
-                                                    toAppend += "<img src='apps/app_explorer/images/types/" + content[line_key][element_key][0][2] + ".svg' onclick='app_explorer.actions.changeDirectoryWorkspace(\""+content[line_key][element_key][0][1]+"\");' /><br /><br />";
-                                                    toAppend += "<span onclick='app_explorer.actions.changeDirectoryWorkspace(\""+content[line_key][element_key][0][1]+"\");'>" + content[line_key][element_key][0][0] + "</span>";
-                                                    
-                                                    toAppend += "<br /><br />";
-                                                    
-                                                    toAppend += "<p>"+
-                                                                    "<img src='apps/app_explorer/images/actions/delete.svg' class='action' onclick='app_explorer.actions.delete(this)' />&nbsp;"+
-                                                                    "<img src='apps/app_explorer/images/actions/rename.svg' class='action' onclick='app_explorer.actions.rename(this)' />&nbsp;"+
-                                                                    "<img src='apps/app_explorer/images/actions/properties.svg' class='action' onclick='app_explorer.actions.infos(this)' />&nbsp;"+
-                                                                "</p>";
+                                                    name = content[line_key][element_key][0][0];
+                                                    actions = actionsFolder;
+                                                    onclickAction = "app_explorer.actions.changeDirectory(\"workspace\", \""+content[line_key][element_key][0][1]+"\")";
                                                 }
                                                 else
                                                 {
-                                                    toAppend += "<div class='element' data-name='" + content[line_key][element_key][0][0] + "." + content[line_key][element_key][0][3] + "' data-hash='" + content[line_key][element_key][0][1] + "' data-type='" + content[line_key][element_key][0][2] + "'>";
-                                                    toAppend += "<img src='apps/app_explorer/images/types/" + content[line_key][element_key][0][2] + ".svg' onclick='app_explorer.actions.open(this)' /><br /><br />";
-                                                    toAppend += "<span onclick='app_explorer.actions.open(this);'>" + content[line_key][element_key][0][0] + "." + content[line_key][element_key][0][3] + "</span>";
-                                                    
-                                                    toAppend += "<br /><br />";
-                                                    
-                                                    toAppend += "<p>"+
-                                                                    "<img src='apps/app_explorer/images/actions/delete.svg' class='action' onclick='app_explorer.actions.delete(this)' />&nbsp;"+
-                                                                    "<img src='apps/app_explorer/images/actions/rename.svg' class='action' onclick='app_explorer.actions.rename(this)' />&nbsp;"+
-                                                                    "<img src='apps/app_explorer/images/actions/properties.svg' class='action' onclick='app_explorer.actions.infos(this)' />&nbsp;"+
-                                                                    "<img src='apps/app_explorer/images/actions/download.svg' class='action' onclick='app_explorer.actions.download(this)' />&nbsp;"+
-                                                                "</p>";
+                                                    name = content[line_key][element_key][0][0] + "." + content[line_key][element_key][0][3];
+                                                    actions = actionFile;
+                                                    onclickAction = "app_explorer.actions.open(this);";
                                                 }
-
+                                            
+                                                toAppend += "<div class='element' data-name='" + name + "' data-hash='" + content[line_key][element_key][0][1] + "' data-type='" + content[line_key][element_key][0][2] + "'>";
+                                                toAppend += "<img src='apps/app_explorer/images/types/" + content[line_key][element_key][0][2] + ".svg' onclick='"+onclickAction+"' /><br /><br />";
+                                                toAppend += "<span>"+name+"</span>";
+                                                toAppend += "<br /><br />";
+                                                toAppend += "<p>"+actions+"</p>";
                                                 toAppend += "</div>";
                                             }
                                         }
@@ -154,44 +154,21 @@ var app_explorer =
         {
         },
         
-        /* Changement de répertoire : sélection d'un dossier dans le WorkSpace */
-        changeDirectoryWorkspace: function(idDirectory)
+        /* Changement de répertoire */
+        changeDirectory: function(state, idDirectory)
         {
             app_explorer.load.trigger("show");
             
             var xhr = new XMLHttpRequest();
-            xhr.open("GET", "inc/ajax/explore/changeDirectoryWorkspace.php?directoryID="+idDirectory, true);
-
-            xhr.onreadystatechange = function()
+            
+            if(state === "workspace")
             {
-                if(xhr.status === 200 && xhr.readyState === 4)
-                {
-                    var state = xhr.responseText.split("~||]]", 1)[0];
-
-                    switch(state)
-                    {
-                        case "ok":                            
-                            app_explorer.actions.list();
-                            app_explorer.actions.nav();
-                            
-                            break;
-
-                        default:
-                            break;
-                    }
-                }
+                xhr.open("GET", "inc/ajax/explore/changeDirectoryWorkspace.php?directoryID="+idDirectory, true);
             }
-
-            xhr.send(null);
-        },
-
-        /* Changement de répertoire : sélection d'un dossier dans la barre de navigation */
-        changeDirectoryNavBar: function(idDirectory)
-        {
-            app_explorer.load.trigger("show");
-            
-            var xhr = new XMLHttpRequest();
-            xhr.open("GET", "inc/ajax/explore/changeDirectoryNavBar.php?directoryID="+idDirectory, true);
+            else
+            {
+                xhr.open("GET", "inc/ajax/explore/changeDirectoryNavBar.php?directoryID="+idDirectory, true);
+            }
             
             xhr.onreadystatechange = function()
             {
@@ -386,14 +363,7 @@ var app_explorer =
                         case "ok":
                             app_explorer.actions.list();
                             
-                            if(type === "folder")
-                            {
-                                returnArea.innerHTML = "Le dossier <b>" + name + "</b> a été supprimé avec succès.";
-                            }
-                            else
-                            {
-                                returnArea.innerHTML = "Le fichier <b>" + name + "</b> a été supprimé avec succès.";
-                            }
+                            returnArea.innerHTML = "<b>" + name + "</b> a été supprimé avec succès.";
 
                             setTimeout(function(){
                                 popup.close("popup_delete_"+hash);
@@ -401,14 +371,7 @@ var app_explorer =
                             break;
 
                         default:
-                            if(type === "folder")
-                            {
-                                returnArea.innerHTML = "Une erreur est survenue lors de la suppression du dossier <b>" + name + "</b>";
-                            }
-                            else
-                            {
-                                returnArea.innerHTML = "Une erreur est survenue lors de la suppression du fichier <b>" + name + "</b>";
-                            }
+                            returnArea.innerHTML = "Une erreur est survenue lors de la suppression de <b>" + name + "</b>";
                             break;
                     }
                 }

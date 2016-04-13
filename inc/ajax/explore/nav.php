@@ -48,12 +48,12 @@
         }
     }
 
-    $toAppend = "<p class='directory' onclick='app_explorer.actions.changeDirectoryNavBar(\"Home\");'>Home</p>";
+    $toAppend = "<p class='directory' onclick='app_explorer.actions.changeDirectory(\"navBar\", \"Home\");'>Home</p>";
 
     for($i = 0; $i < count($list); $i++)
     {
         $toAppend .= "<p class='separator'>&gt;</p>";
-        $toAppend .= "<p class='directory' onclick='app_explorer.actions.changeDirectoryNavBar(\"".$list[$i][2]."\");'>".$list[$i][0]."</p>";
+        $toAppend .= "<p class='directory' onclick='app_explorer.actions.changeDirectory(\"navBar\", \"".$list[$i][2]."\");'>".$list[$i][0]."</p>";
     }
 
     echo "ok~||]]";
