@@ -1,4 +1,5 @@
 <a href="https://codeclimate.com/github/Ne0blast/cosmos"><img src="https://codeclimate.com/github/Ne0blast/cosmos/badges/gpa.svg" /></a>
+<a href="https://codeclimate.com/github/Ne0blast/cosmos"><img src="https://codeclimate.com/github/Ne0blast/cosmos/badges/issue_count.svg" /></a>
 
 <div align="center"><img src="https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/logo245.png" /></div>
 
