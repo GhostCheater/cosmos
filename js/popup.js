@@ -22,7 +22,7 @@ var popup =
             /* Bas de la popup */
             var footer = document.createElement("div");
             footer.className = "footer";
-            footer.innerHTML = "<p>" + bottom + "&nbsp;&nbsp;<input type='button' value='Fermer' class='close' onclick='popup.close(\""+id+"\");' />" + "</p>";
+            footer.innerHTML = "<p>" + bottom + "&nbsp;&nbsp;<input type='button' value='Fermer' class='close' onclick='popup.close(\""+id+"\");' /></p>";
 
             /* Attachement des éléments à la popup */
             element.appendChild(header);

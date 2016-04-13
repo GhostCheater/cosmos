@@ -4,7 +4,8 @@
 @font-face 
 {
     font-family: roboto;
-    src: url("roboto.ttf");
+    src:    local("Roboto"),
+            url("roboto.ttf");
 }
 
 
@@ -62,7 +63,7 @@ header #apps
     height: 100%;
 }
 
-header div#apps p
+header #apps p
 {
     transition: all .3s ease;
     -webkit-transition: all .3s ease;

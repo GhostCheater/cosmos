@@ -16,7 +16,7 @@
     cursor: pointer;
 }
 
-span.selected
+.selected
 {
 	box-shadow: 0 0 2px blue;
 }
