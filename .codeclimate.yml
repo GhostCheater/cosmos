@@ -6,8 +6,6 @@ engines:
        enabled: false
   golint:
     enabled: true
-  phpcodesniffer:
-    enabled: true
   phpmd:
     enabled: true
   eslint:
@@ -25,6 +23,7 @@ engines:
     - 8041cf293b665783523b6b498a128bf7
     - 07b3734de0fd9bbe0ff49d3fbb377f7d
     - dca27ded53320ef979eb1b3aea439d9c
+    - f8ca8f9431eddf7e846e4d7838a64fdb
     config:
       languages:
       - php
