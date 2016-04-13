@@ -15,7 +15,7 @@
     height: 10%;
     width: 100%;
     
-    background-color: #ebebeb;
+    background: #ebebeb;
     
     border-top: 1px solid #bfbfbf;
 }
@@ -54,10 +54,10 @@
 #app_explorer #navBar #path p.directory:hover
 {
     color: orange;
-    background-color: #e6e6e6;
+    background: #e6e6e6;
 }
 
-#app_explorer #navBar #path p.separator
+#app_explorer #navBar #path .separator
 {
     width: 3vw;
     
@@ -102,7 +102,8 @@
 
 #app_explorer #navBar #defaultActions p img:hover
 {
-    background-color: #e4e4ff rgba(0, 147, 255, 0.2);
+    background-color: #e4e4ff;
+    background-color: rgba(0, 147, 255, 0.2);
     
     border-radius: 3px;
 }
@@ -189,14 +190,16 @@
 
 #app_explorer #listArea #list div.line div.element img.action:hover
 {
-    background-color: #f4f4f4 rgba(0, 0, 0, 0.1);
+    background-color: #f4f4f4;
+    background-color: rgba(0, 0, 0, 0.1);
     
     border-radius: 2px;
 }
 
 #app_explorer #listArea #list div.line div.element:hover
 {    
-    background-color: #ffa500 rgba(255, 165, 0, 0.15);
+    background-color: #ffa500;
+    background-color: rgba(255, 165, 0, 0.15);
     color: #a76c00;
 }
 
