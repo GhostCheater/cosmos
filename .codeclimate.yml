@@ -1,20 +1,20 @@
 engines:
-    rubocop:
-        enabled: true
-        checks:
-            Rubocop/Metrics/ClassLength:
-                enabled: false
-        golint:
-            enabled: true
-    eslint:
-        enabled: true
-        checks:
-            max-statements:
-                enabled: false
-    csslint:
-        enabled: true
-    duplication:
-        enabled: true
+  rubocop:
+    enabled: true
+    checks:
+     Rubocop/Metrics/ClassLength:
+       enabled: false
+  golint:
+    enabled: true
+  eslint:
+    enabled: true
+    checks:
+     max-statements:
+      enabled: false
+  csslint:
+    enabled: true
+  duplication:
+    enabled: true
     config:
       languages:
       - php
