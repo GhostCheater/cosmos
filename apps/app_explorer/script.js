@@ -165,11 +165,11 @@ var app_explorer =
             
             if(state === "workspace")
             {
-                xhr.open("GET", "inc/ajax/explore/changeDirectoryWorkspace.php?directoryID="+encodeURI(idDirectory), true);
+                xhr.open("GET", "inc/ajax/explore/changeDirectoryWorkspace.php?directoryID="+encodeURIComponent(idDirectory), true);
             }
             else
             {
-                xhr.open("GET", "inc/ajax/explore/changeDirectoryNavBar.php?directoryID="+encodeURI(idDirectory), true);
+                xhr.open("GET", "inc/ajax/explore/changeDirectoryNavBar.php?directoryID="+encodeURIComponent(idDirectory), true);
             }
             
             xhr.onreadystatechange = function()
@@ -288,13 +288,23 @@ var app_explorer =
         /* Couper un élément */
         cut: function(callButton)
         {
-            
+			
         },
         
         /* Coller un élément */
         paste: function()
         {
             
+        },
+
+        /* Afficher les informations sur un élément */
+        infos: function(callButton)
+        {
+			app_explorer.load.trigger("show");
+			
+			var hash = callButton.parentNode.parentNode.getAttribute("data-hash");
+            
+        	app_explorer.ajaxRequest.infos(hash);
         }
     },
     
@@ -316,7 +326,7 @@ var app_explorer =
             }
             
             var xhr = new XMLHttpRequest();
-            xhr.open("GET", "inc/ajax/explore/createFile.php?name="+encodeURI(nameFile)+"&extension="+encodeURI(extension), true);
+            xhr.open("GET", "inc/ajax/explore/createFile.php?name="+encodeURIComponent(nameFile)+"&extension="+encodeURIComponent(extension), true);
             
             xhr.onreadystatechange = function()
             {
@@ -354,7 +364,7 @@ var app_explorer =
             returnArea.innerHTML = "<img src='images/loader.png' style='height: 1.5vh;' />";
             
             var xhr = new XMLHttpRequest();
-            xhr.open("GET", "inc/ajax/explore/createFolder.php?name="+encodeURI(nameFolder), true);
+            xhr.open("GET", "inc/ajax/explore/createFolder.php?name="+encodeURIComponent(nameFolder), true);
             
             xhr.onreadystatechange = function()
             {
@@ -390,7 +400,7 @@ var app_explorer =
             returnArea.innerHTML = "<img src='images/loader.png' style='height: 1.5vh;' />";
             
             var xhr = new XMLHttpRequest();
-            xhr.open("GET", "inc/ajax/explore/deleteElement.php?type="+encodeURI(type)+"&hash="+encodeURI(hash), true);
+            xhr.open("GET", "inc/ajax/explore/deleteElement.php?type="+encodeURIComponent(type)+"&hash="+encodeURIComponent(hash), true);
             
             xhr.onreadystatechange = function()
             {
@@ -433,13 +443,13 @@ var app_explorer =
             
             if(type === "folder")
             {
-                 xhr.open("GET", "inc/ajax/explore/rename.php?hash="+encodeURI(hash)+"&name="+encodeURI(name), true);
+                 xhr.open("GET", "inc/ajax/explore/rename.php?hash="+encodeURIComponent(hash)+"&name="+encodeURIComponent(name), true);
             }
             else
             {
                 var extension = element.querySelectorAll("input")[1].value;
                 
-                xhr.open("GET", "inc/ajax/explore/rename.php?hash="+encodeURI(hash)+"&name="+(name)+"&extension="+(extension), true);
+                xhr.open("GET", "inc/ajax/explore/rename.php?hash="+encodeURIComponent(hash)+"&name="+(name)+"&extension="+encodeURIComponent(extension), true);
             }
             
             xhr.onreadystatechange = function()
@@ -482,7 +492,70 @@ var app_explorer =
             }
             
             xhr.send(null);
-        }
+        },
+		
+		/* Afficher les informations sur un élément */
+		infos: function(hash)
+        {
+            var element = document.querySelector("div#app_explorer div#infos_popup");
+            
+			var xhr = new XMLHttpRequest();
+			xhr.open("GET", "inc/ajax/explore/infos.php?hash="+encodeURIComponent(hash), true);
+			
+			xhr.onreadystatechange = function()
+			{
+				if(xhr.status === 200 && xhr.readyState === 4)
+				{
+					var state = xhr.responseText.split("~||]]", 1)[0];
+                    var data = xhr.responseText.split("~||]]", 2)[1];
+					
+					app_explorer.load.trigger("hide");
+					
+					switch(state)
+					{
+                        case "ok":
+                            element.style.display = "block";
+                            
+                            try
+                            {
+                                var response = JSON.parse(data);
+
+                                if (response[0]["type"] !== "folder")
+                                {
+                                    var name = response[0]["name"] + "." + response[0]["extension"];    
+                                }
+                                else
+                                {
+                                    var name = response[0]["name"];
+                                }
+
+                                var favorite = (response[0]["favorite"] === "0") ? "Non" : "Oui";
+                                var private = (response[0]["private"] === "0") ? "Non" : "Oui";
+                                
+                                element.querySelector("div.header_infos").innerHTML = "<p><img src='apps/app_explorer/images/types/" + response[0]["type"] + ".svg' /><br /><br />" + name + "</p>";
+
+                                element.querySelector("div.content_infos").innerHTML = "Nom du fichier : <b>" + name + "</b><br /><br />" +
+                                    "Type du fichier : <b>" + response[0]["type"] + "</b><br /><br />" +
+                                    "Localisation : <b>" + response[0]["location"] + "</b><br /><br />" +
+                                    "Date de création : <b>" + response[0]["date"] + "</b><br /><br />" +
+                                    "Dernière utilisation : <b>" + response[0]["lastDate"] + "</b><br /><br />" +
+                                    "Favoris ? <b>" + favorite + "</b><br /><br />" +
+                                    "Privé ? <b>" + private + "</b>";
+                            }
+                            catch (err)
+                            {
+                                console.log("Error parsing json.");
+                            }
+							break;
+							
+						default:
+							break;
+					}
+				}
+			}
+			
+			xhr.send(null);
+		}
     },
     
     select:

@@ -276,7 +276,7 @@
     background-color: #ebebeb;
 }
 
-#bandActions span.firstLine
+#bandActions .firstLine
 {
     display: table;
     
@@ -287,7 +287,7 @@
     width: 100%;
 }
 
-#bandActions span.secondLine
+#bandActions .secondLine
 {
     display: table;
     
@@ -331,4 +331,104 @@
     border-radius: 3px;
     
     cursor: pointer;
+}
+
+
+/* Popup permettant la visualisation d'informations sur un élément */
+#infos_popup
+{
+    display: none;
+    
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    
+    background-color: rgb(10, 10, 10);
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+#infos_popup .cross_close
+{
+    transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    
+    z-index: 2;
+    
+    position: absolute;
+    top: 1vh;
+    right: 1vh;
+    height: 5vh;
+    width: 5vh;
+    
+    cursor: pointer
+}
+#infos_popup .cross_close:hover
+{
+    height: 7vh;
+    width: 7vh;
+}
+
+#infos_popup #content_infos_popup
+{
+    position: absolute;
+    top: 5%;
+    left: 30%;
+    height: 90%;
+    width: 40%;
+    
+    background-color: white;
+    
+    border-radius: 3px;
+}
+
+#infos_popup #content_infos_popup .header_infos
+{
+    display: table;
+    
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 40%;
+    width: 100%;
+    
+    border-bottom: 1px dotted rgb(200, 200, 200);
+}
+
+#infos_popup #content_infos_popup .header_infos p
+{
+    display: table-cell;
+    vertical-align: middle;
+    
+    text-align: center;
+    
+    color: rgb(50, 50, 50);
+    
+    font-size: 24px;
+}
+
+#infos_popup #content_infos_popup .header_infos p img
+{
+    height: 10vh;
+    
+    border: 5px solid rgb(50, 50, 50);
+    
+    padding: 2vh;
+    
+    border-radius: 10vh;
+}
+
+#infos_popup #content_infos_popup .content_infos
+{
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    width: 80%;
+    height: 40%;
+    
+    overflow: auto;
 }
