@@ -165,11 +165,11 @@ var app_explorer =
             
             if(state === "workspace")
             {
-                xhr.open("GET", "inc/ajax/explore/changeDirectoryWorkspace.php?directoryID="+idDirectory, true);
+                xhr.open("GET", "inc/ajax/explore/changeDirectoryWorkspace.php?directoryID="+encodeURI(idDirectory), true);
             }
             else
             {
-                xhr.open("GET", "inc/ajax/explore/changeDirectoryNavBar.php?directoryID="+idDirectory, true);
+                xhr.open("GET", "inc/ajax/explore/changeDirectoryNavBar.php?directoryID="+encodeURI(idDirectory), true);
             }
             
             xhr.onreadystatechange = function()
@@ -250,6 +250,7 @@ var app_explorer =
             );
         },
         
+        /* Renommer un élément */
         rename: function(callButton)
         {
             var element = callButton.parentNode.parentNode;
@@ -263,11 +264,11 @@ var app_explorer =
             
             if(type === "folder")
             {
-                show = "<input type='text' placeholder='"+baseName+"' id='input_"+hash+"_1' />";
+                show = "<input type='text' placeholder='"+baseName+"' id='input_rename_"+hash+"_1' />";
             }
             else
             {
-                show = "<input type='text' placeholder='"+baseName+"' id='input_"+hash+"_1' /> . <input type='text' placeholder='"+extension+"' id='input_rename_"+hash+"_2' style='width: 5vw;' />";
+                show = "<input type='text' placeholder='"+baseName+"' id='input_rename_"+hash+"_1' /> . <input type='text' placeholder='"+extension+"' id='input_rename_"+hash+"_2' style='width: 5vw;' />";
             }
             
             popup.open(
@@ -278,12 +279,20 @@ var app_explorer =
             );
         },
         
+        /* Copier un élément */
         copy: function(callButton)
         {
             
         },
         
+        /* Couper un élément */
         cut: function(callButton)
+        {
+            
+        },
+        
+        /* Coller un élément */
+        paste: function()
         {
             
         }
@@ -307,7 +316,7 @@ var app_explorer =
             }
             
             var xhr = new XMLHttpRequest();
-            xhr.open("GET", "inc/ajax/explore/createFile.php?name="+nameFile+"&extension="+extension, true);
+            xhr.open("GET", "inc/ajax/explore/createFile.php?name="+encodeURI(nameFile)+"&extension="+encodeURI(extension), true);
             
             xhr.onreadystatechange = function()
             {
@@ -345,7 +354,7 @@ var app_explorer =
             returnArea.innerHTML = "<img src='images/loader.png' style='height: 1.5vh;' />";
             
             var xhr = new XMLHttpRequest();
-            xhr.open("GET", "inc/ajax/explore/createFolder.php?name="+nameFolder, true);
+            xhr.open("GET", "inc/ajax/explore/createFolder.php?name="+encodeURI(nameFolder), true);
             
             xhr.onreadystatechange = function()
             {
@@ -381,7 +390,7 @@ var app_explorer =
             returnArea.innerHTML = "<img src='images/loader.png' style='height: 1.5vh;' />";
             
             var xhr = new XMLHttpRequest();
-            xhr.open("GET", "inc/ajax/explore/deleteElement.php?type="+type+"&hash="+hash, true);
+            xhr.open("GET", "inc/ajax/explore/deleteElement.php?type="+encodeURI(type)+"&hash="+encodeURI(hash), true);
             
             xhr.onreadystatechange = function()
             {
@@ -414,21 +423,23 @@ var app_explorer =
         /* Renommer un élément */
         rename: function(hash, type)
         {
-            var popup = document.querySelector("section#popup_rename_"+hash);
+            var element = document.querySelector("section#popup_rename_"+hash);
+            var name = element.querySelectorAll("input")[0].value;
             
-            var name = popup.querySelector("div.content input_"+hash+"_1").value;
+            var returnArea = element.querySelector("#return_rename_"+hash);
+            returnArea.innerHTML = "<img src='images/loader.png' style='height: 1.5vh;' />";
             
             var xhr = new XMLHttpRequest();
             
             if(type === "folder")
             {
-                 xhr.open("GET", "inc/ajax/explore/rename.php?hash="+hash+"&name="+name, true);
+                 xhr.open("GET", "inc/ajax/explore/rename.php?hash="+encodeURI(hash)+"&name="+encodeURI(name), true);
             }
             else
             {
-                var extension = popup.querySelector("div.content input_"+hash+"_2").value;
+                var extension = element.querySelectorAll("input")[1].value;
                 
-                xhr.open("GET", "inc/ajax/explore/rename.php?hash="+hash+"&name="+name+"&extension="+extension, true);
+                xhr.open("GET", "inc/ajax/explore/rename.php?hash="+encodeURI(hash)+"&name="+(name)+"&extension="+(extension), true);
             }
             
             xhr.onreadystatechange = function()
@@ -442,7 +453,14 @@ var app_explorer =
                         case "ok":
                             app_explorer.actions.list();
                             
-                            returnArea.innerHTML = "L'élément a été renommé avec succès en <b>" + name + "</b>";
+                            if(type === "folder")
+                            {
+                                returnArea.innerHTML = "L'élément a été renommé avec succès en <b>" + name + "</b>";   
+                            }
+                            else
+                            {
+                                returnArea.innerHTML = "L'élément a été renommé avec succès en <b>" + name + "." + extension + "</b>";
+                            }
 
                             setTimeout(function(){
                                 popup.close("popup_rename_"+hash);
@@ -450,7 +468,14 @@ var app_explorer =
                             break;
 
                         default:
-                            returnArea.innerHTML = "Une erreur est survenue lors du renommage de l'élément en <b>" + name + "</b>";
+                            if(type === "folder")
+                            {
+                                returnArea.innerHTML = "Une erreur est survenue lors du renommage de l'élément en <b>" + name + "</b>";   
+                            }
+                            else
+                            {
+                                returnArea.innerHTML = "Une erreur est survenue lors du renommage de l'élément en <b>" + name + "." + extension + "</b>";
+                            }
                             break;
                     }
                 }
