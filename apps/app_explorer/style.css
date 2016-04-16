@@ -161,7 +161,7 @@
     cursor: pointer;
 }
 
-#app_explorer #listArea #list div.line div.selected
+#app_explorer #listArea #list div.line .selected
 {    
     color: #d98d00;
     
@@ -183,11 +183,7 @@
 {
     height: 5vh;
     
-    padding-left: calc(50% - 2.5vh);
-    padding-right: calc(50% - 2.5vh);
-    
-    padding-top: 2vh;
-    padding-bottom: 2vh;
+    padding: 2vh calc(50% - 2.5vh) 2vh calc(50% - 2.5vh);
 }
 
 #app_explorer #listArea #list div.line div.element div

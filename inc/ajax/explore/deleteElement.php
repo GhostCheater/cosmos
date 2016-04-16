@@ -1,13 +1,13 @@
 <?php
     require_once("checkCurrentDirectory.php");
 
-    function deleteElement($bdd, $hash, $type)
+    function deleteElement($bdd, $hash, $type, $user)
     {
         $req = $bdd->prepare("DELETE FROM elements WHERE hash = ? AND type = ? AND user = ?");
         $req->execute(array(
             $hash,
             $type,
-            $_SESSION['session']['user']
+            $user
         ));
         
         if($type != "folder")
@@ -48,14 +48,14 @@
                 }
                 
                 // Suppression du dossier
-                deleteElement($bdd, $_GET['hash'], $_GET['type']);
+                deleteElement($bdd, $_GET['hash'], $_GET['type'], $_SESSION['session']['user']);
                 
                 die("ok~||]]");
             }
             else
             {
                 
-                deleteElement($bdd, $_GET['hash'], $_GET['type']);
+                deleteElement($bdd, $_GET['hash'], $_GET['type'], $_SESSION['session']['user']);
                 
                 die("ok~||]]");
             }
