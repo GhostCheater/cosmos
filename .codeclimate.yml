@@ -6,6 +6,8 @@ engines:
        enabled: false
   golint:
     enabled: true
+  phan:
+    enabled: true
   phpmd:
     enabled: true
   eslint:
