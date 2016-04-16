@@ -282,7 +282,44 @@ var app_explorer =
         /* Copier un élément */
         copy: function(callButton)
         {
+            app_explorer.load.trigger("show");
             
+            var element = callButton.parentNode.parentNode;
+            var hash = element.getAttribute("data-hash");
+            
+            var defaultActions = document.querySelector("div#app_explorer div#defaultActions p");
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "inc/ajax/explore/copy.php?hash=" + encodeURIComponent(hash), true);
+
+            xhr.onreadystatechange = function ()
+            {
+                if (xhr.status === 200 && xhr.readyState === 4)
+                {
+                    app_explorer.load.trigger("hide");
+                    
+                    var state = xhr.responseText.split("~||]]", 1)[0];
+                    
+                    switch(state)
+                    {
+                        case "ok":
+                            if(defaultActions.querySelectorAll("img").length === 3)
+                            {
+                                var image = document.createElement("img");
+                                image.src = "apps/app_explorer/images/actions/paste.svg";
+                                image.setAttribute("onclick", "app_explorer.actions.paste();");
+                                
+                                defaultActions.appendChild(image);
+                            }
+                            break;
+                            
+                        default:
+                            break;
+                    }
+                }    
+            }
+
+            xhr.send(null);
         },
         
         /* Couper un élément */
@@ -529,8 +566,8 @@ var app_explorer =
                                     var name = response[0]["name"];
                                 }
 
-                                var favorite = (response[0]["favorite"] === "0") ? "Non" : "Oui";
-                                var private = (response[0]["private"] === "0") ? "Non" : "Oui";
+                                var state_favorite = (response[0]["favorite"] === "0") ? "Non" : "Oui";
+                                var state_private = (response[0]["private"] === "0") ? "Non" : "Oui";
                                 
                                 element.querySelector("div.header_infos").innerHTML = "<p><img src='apps/app_explorer/images/types/" + response[0]["type"] + ".svg' /><br /><br />" + name + "</p>";
 
@@ -539,8 +576,8 @@ var app_explorer =
                                     "Localisation : <b>" + response[0]["location"] + "</b><br /><br />" +
                                     "Date de création : <b>" + response[0]["date"] + "</b><br /><br />" +
                                     "Dernière utilisation : <b>" + response[0]["lastDate"] + "</b><br /><br />" +
-                                    "Favoris ? <b>" + favorite + "</b><br /><br />" +
-                                    "Privé ? <b>" + private + "</b>";
+                                    "Favoris ? <b>" + state_favorite + "</b><br /><br />" +
+                                    "Privé ? <b>" + state_private + "</b>";
                             }
                             catch (err)
                             {

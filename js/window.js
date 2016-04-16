@@ -1,3 +1,10 @@
+var app_list = [
+    "app_code",     // Editeur de codes
+    "app_document", // Editeur de documents
+    "app_explorer", // Explorateur de fichiers
+    "app_pdf"       // Visionneuse de PDF
+];
+
 var WINDOW = 
 {
     trigger: function(app_id, app_color)
@@ -96,7 +103,10 @@ var WINDOW =
                     
 					loadJS = true;
                     
-                    eval(app_id+ ".init()");
+                    if(app_list.indexOf(app_id) !== -1)
+                    {
+                        eval(app_id + ".init()");
+                    }
 				}
 			}
 			
