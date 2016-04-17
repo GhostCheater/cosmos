@@ -1,7 +1,7 @@
 <a href="https://codeclimate.com/github/Ne0blast/cosmos"><img src="https://codeclimate.com/github/Ne0blast/cosmos/badges/gpa.svg" /></a>
 <a href="https://codeclimate.com/github/Ne0blast/cosmos"><img src="https://codeclimate.com/github/Ne0blast/cosmos/badges/issue_count.svg" /></a>
 
-<div align="center"><img src="https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/logo245.png" /></div>
+<div align="center"><img src="http://img11.hostingpics.net/pics/152407logo.png" /></div>
 
 <div align="center" font-size="32px"><b>CosmOS</b></div>
 
