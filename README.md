@@ -6,13 +6,17 @@
 <div align="center" font-size="32px"><b>CosmOS</b></div>
 
 ## A propos
-CosmOS est un WebOS vous permettant d'accéder à vos fichiers et de les manipuler à votre guise sans à avoir certaines applications spécifiques
+CosmOS est un WebOS vous permettant d'accéder à vos fichiers et de les manipuler à votre guise sans à avoir certaines applications spécifiques.
 
 ## Avancement
-Pour l'instant, seule une toute petite partie de l'interface est disponible et il me reste pas mal de travail au niveau de la "lourdeur" du code ;)
+- Interface globale : 90 %
+- Application "Explorateur de fichiers" : 70%
 
 ## Version
 Pré-alpha
+
+## Sortie
+Première version stable prévue pour fin juillet
 
 ## License
 Ce projet est régit par la license Apache 2.0
