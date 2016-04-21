@@ -36,3 +36,48 @@ select
     
     border-radius: 3px;
 }
+
+/* SETTINGS : Sélection d'un fond */
+#popup_changebackgroundDesktop .content .content_backgroundPicker
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    overflow-x: auto;
+}
+
+#popup_changebackgroundDesktop .content .content_backgroundPicker .backgroundPickerBlock
+{
+    transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    
+    position: relative;
+    
+    width: 75%;
+    height: 25%;
+    left: 12.5%;
+    
+    margin-top: 1vh;
+    
+    border-radius: 3px;
+    
+    background-size: cover;
+    
+    cursor: pointer;
+}
+
+#popup_changebackgroundDesktop .content .content_backgroundPicker .selected
+{
+    box-shadow: 0 0 5px blue;
+}
+
+#popup_changebackgroundDesktop .content .content_backgroundPicker .backgroundPickerBlock:hover
+{
+    box-shadow: 0 0 5px black;
+}

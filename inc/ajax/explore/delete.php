@@ -12,20 +12,32 @@
         
         if($type != "folder")
         {
-            unlink("../../../workspace/files/{$_SESSION['session']['user']}/{$hash}.data");   
+            unlink("../../../workspace/files/{$user}/{$hash}.data");  
         }
     }
 
-    if(isset($_GET['type']) && !empty($_GET['type']) && isset($_GET['hash']) && !empty($_GET['hash']))
+    if(isset($_GET['hash']) && !empty($_GET['hash']))
     {
-        if(strlen($_GET['hash']) == 64)
+        $hashs = explode(",", $_GET['hash']);
+        
+        foreach($hashs as $hash)
         {
-            if($_GET['type'] == "folder")
+            $req = $bdd->prepare("SELECT type FROM elements WHERE hash = ? AND user = ?");
+            $req->execute(array(
+                $hash,
+                $_SESSION['session']['user']
+            ));
+            
+            if($req->rowCount() != 1) die("error~||]]");
+            
+            $type = $req->fetch()["type"];
+            
+            if($type == "folder")
             {
                 // Récupération du nom du dossier
                 $req_name = $bdd->prepare("SELECT name FROM elements WHERE hash = ? AND user = ? AND type = ?");
                 $req_name->execute(array(
-                    $_GET['hash'],
+                    $hash,
                     $_SESSION['session']['user'],
                     "folder"
                 ));
@@ -44,26 +56,20 @@
                 // Suppression des éléments contenus dans le dossier en cours de suppression
                 foreach($list as $element)
                 {
-                    deleteElement($bdd, $element["hash"], $element["type"]);
+                    deleteElement($bdd, $element["hash"], $element["type"], $_SESSION['session']['user']);
                 }
                 
                 // Suppression du dossier
-                deleteElement($bdd, $_GET['hash'], $_GET['type'], $_SESSION['session']['user']);
-                
-                die("ok~||]]");
+                deleteElement($bdd, $hash, $type, $_SESSION['session']['user']);
             }
             else
             {
-                
-                deleteElement($bdd, $_GET['hash'], $_GET['type'], $_SESSION['session']['user']);
-                
-                die("ok~||]]");
+                // Suppression du fichier
+                deleteElement($bdd, $hash, $type, $_SESSION['session']['user']);
             }
         }
-        else
-        {
-            die("badLength~||]]");
-        }
+        
+        die("ok~||]]");
     }
     else
     {

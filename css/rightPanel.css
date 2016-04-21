@@ -294,8 +294,9 @@
     
     padding-left: .5vw;
     
+    border: 1px solid rgb(150, 150, 150);
+    
     border-radius: 3px;
-    border: none;
 }
 
 #rightPanel #content #profilContent #resultProfil tr td input[type="button"]

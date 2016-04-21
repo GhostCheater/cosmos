@@ -647,7 +647,7 @@ var COSMOS =
                 editDesktopBackground: function()
                 {
                     popup.open(
-                        "popup_changeColorDesktop",
+                        "popup_changebackgroundDesktop",
                         "Changement du fond de l'interface",
                         "Chargement...",
                         ""
@@ -716,11 +716,8 @@ var COSMOS =
 										try
 										{
 											var parsedJSON = JSON.parse(data);
-											
 											var currentBackground = parsedJSON["preferences"]["headerBackground"];
-											
 											var toAppend = "";
-                        
 											var content = COSMOS.constants.colors();
 											
 											for(var i = 0; i < content.length; i++)
@@ -743,10 +740,6 @@ var COSMOS =
 										}
 										break;
 										
-									case "error":
-										console.log("error");
-										break;
-										
 									default:
 										console.log("error");
 										break;
@@ -759,6 +752,70 @@ var COSMOS =
                     
                     load_currentBackgroundDesktop: function()
                     {
+                        var backgrounds = [
+                            "bg_black.png",
+                            "bg_blue.png",
+                            "bg_green.png",
+                            "bg_grey.png",
+                            "bg_orange.png",
+                            "bg_pink.png",
+                            "bg_purple.png",
+                            "bg_red.png",
+                            "bg_white.png",
+                            "bg_yellow.png"
+                        ];
+                        
+                        var xhr = new XMLHttpRequest();
+                        xhr.open("GET", "inc/ajax/general/load_preferences.php", true);
+                        
+                        xhr.onreadystatechange = function()
+                        {
+                            if(xhr.status === 200 && xhr.readyState === 4)
+                            {
+                                var state = xhr.responseText.split("~||]]", 1)[0];
+                                var data = xhr.responseText.split("~||]]", 2)[1];
+                                
+                                console.log(JSON.parse(data));
+								
+								switch(state)
+								{
+									case "ok":
+										try
+										{
+											var parsedJSON = JSON.parse(data);
+											var currentBackground = parsedJSON["preferences"]["desktopBackground"];
+											var toAppend = "<div class='content_backgroundPicker'>";
+											
+											for(var i = 0; i < backgrounds.length; i++)
+											{
+												if(backgrounds[i] === currentBackground)
+												{
+													toAppend += "<div class='backgroundPickerBlock selected' style='background-image:url(\"images/bg/"+backgrounds[i]+"\")' onclick='COSMOS.rightPanel.trigger.settings.submit.preview_desktopBackground(this, \""+backgrounds[i]+"\");'></div>";
+												}
+												else
+												{
+													toAppend += "<div class='backgroundPickerBlock' style='background-image:url(\"images/bg/"+backgrounds[i]+"\")' onclick='COSMOS.rightPanel.trigger.settings.submit.preview_desktopBackground(this, \""+backgrounds[i]+"\");'></div>";
+												}
+											}
+                                            
+                                            toAppend += "</div>";
+											
+											document.querySelector("#popup_changebackgroundDesktop div.content").innerHTML = toAppend;
+										}
+										catch(err)
+										{
+											console.log(err);
+										}
+										break;
+										
+									default:
+										console.log("error");
+										break;
+								}
+                            }
+                        }
+                        
+                        xhr.send(null);
                     },
                     
                     load_currentFontSize: function()
@@ -856,8 +913,25 @@ var COSMOS =
 						xhr.send(null);
                     },
                     
-                    preview_desktopBackground: function(element)
-                    {
+                    preview_desktopBackground: function(element, background)
+                    {                        
+                        document.querySelector("#popup_changebackgroundDesktop div.content div.selected").className = "backgroundPickerBlock";
+                        element.className = "backgroundPickerBlock selected";
+                        
+                        document.body.style = "background-image: url('images/bg/"+background+"');";
+                        
+                        var xhr = new XMLHttpRequest();
+						xhr.open("GET", "inc/ajax/general/put_preferences.php?change=desktopBackground&content="+background, true);
+                        
+                        xhr.onreadystatechange = function()
+                        {
+                            if(xhr.status === 200 && xhr.readyState === 4)
+                            {
+                                document.querySelectorAll("div#settingsContent table#resultSettings tr td b")[1].innerHTML = background;      
+                            }
+                        }
+                        
+						xhr.send(null);
                     },
                     
                     preview_fontSize: function(element)

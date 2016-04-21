@@ -42,7 +42,7 @@
         <script type="text/javascript">
             window.onload = function()
             {
-                WINDOW.trigger("app_explorer", "orange");
+                // WINDOW.trigger("app_explorer", "orange");
             }
         </script>
     </body>
