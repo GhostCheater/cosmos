@@ -8,6 +8,9 @@ engines:
     enabled: true
   phpmd:
     enabled: true
+    checks:
+      Naming/LongVariable:
+        enabled: false
   eslint:
     enabled: true
     checks:
