@@ -325,12 +325,51 @@ var app_explorer =
 		/* Couper un élément */
 		cut: function(callButton)
 		{
+			app_explorer.load.trigger("show");
 			
+			var element = callButton.parentNode.parentNode;
+			var hash = element.getAttribute("data-hash");
+			
+			var defaultActions = document.querySelector("div#app_explorer div#defaultActions p");
+
+			var xhr = new XMLHttpRequest();
+			xhr.open("GET", "inc/ajax/explore/cut.php?hash=" + encodeURIComponent(hash), true);
+
+			xhr.onreadystatechange = function ()
+			{
+				if (xhr.status === 200 && xhr.readyState === 4)
+				{
+					app_explorer.load.trigger("hide");
+					
+					var state = xhr.responseText.split("~||]]", 1)[0];
+					
+					switch(state)
+					{
+						case "ok":
+							if(defaultActions.querySelectorAll("img").length === 3)
+							{
+								var image = document.createElement("img");
+								image.src = "apps/app_explorer/images/actions/paste.svg";
+								image.setAttribute("onclick", "app_explorer.actions.paste();");
+								
+								defaultActions.appendChild(image);
+							}
+							break;
+							
+						default:
+							break;
+					}
+				}    
+			}
+
+			xhr.send(null);
 		},
 		
 		/* Coller un élément */
 		paste: function()
 		{
+			var defaultActions = document.querySelector("div#app_explorer div#defaultActions p");
+			
 			app_explorer.load.trigger("show");
 			
 			var xhr = new XMLHttpRequest();
@@ -348,6 +387,8 @@ var app_explorer =
 					{
 						case "ok":
 							app_explorer.actions.list();
+							
+							defaultActions.removeChild(defaultActions.querySelectorAll("img")[3]);
 							break;
 							
 						default:
@@ -367,6 +408,67 @@ var app_explorer =
 			var hash = callButton.parentNode.parentNode.getAttribute("data-hash");
 			
 			app_explorer.ajaxRequest.infos(hash);
+		}
+	},
+	
+	/* Actions sur plusieurs éléments */
+	groupAction:
+	{
+		/* Suppression de plusieurs éléments */
+		delete: function()
+		{
+			popup.open(
+				"popup_deleteGroup",
+				"Suppression d'éléments",
+				"Êtes-vous sûr(e) de vouloir supprimer ces éléments ?<br /><br /><span id='return_deleteGroup'></span>",
+				"<input type='button' value='Supprimer' class='button' onclick='app_explorer.ajaxRequest.deleteGroup();' />"
+			);
+		},
+		
+		copy: function()
+		{
+			var defaultActions = document.querySelector("div#app_explorer div#defaultActions p");
+					
+			var hashs = [];
+			var elements = document.querySelectorAll("#app_explorer div.element.selected");
+			
+			for(key in elements)
+			{
+				if({}.hasOwnProperty.call(elements, key))
+				{
+					hashs.push(elements[key].getAttribute("data-hash"));
+				}
+			}
+			
+			var xhr = new XMLHttpRequest();
+			xhr.open("GET", "inc/ajax/explore/copy.php?hash="+(hashs.toString()), true);
+			
+			xhr.onreadystatechange = function()
+			{
+				if(xhr.status === 200 && xhr.readyState == 4)
+				{
+					var state = xhr.responseText.split("~||]]", 1)[0];
+					
+					switch(state)
+					{
+						case "ok":
+							if(defaultActions.querySelectorAll("img").length === 3)
+							{
+								var image = document.createElement("img");
+								image.src = "apps/app_explorer/images/actions/paste.svg";
+								image.setAttribute("onclick", "app_explorer.actions.paste();");
+								
+								defaultActions.appendChild(image);
+							}
+							break;
+							
+						default:
+							break;
+					}
+				}
+			}
+			
+			xhr.send(null);
 		}
 	},
 	
@@ -484,6 +586,54 @@ var app_explorer =
 
 						default:
 							returnArea.innerHTML = "Une erreur est survenue lors de la suppression de <b>" + name + "</b>";
+							break;
+					}
+				}
+			}
+			
+			xhr.send(null);
+		},
+		
+		/* Suppression de plusieurs éléments */
+		deleteGroup: function()
+		{
+			var returnArea = document.querySelector("#return_deleteGroup");
+			returnArea.innerHTML = "<img src='images/loader.png' style='height: 1.5vh;' />";
+			
+			var hashs = [];
+			var elements = document.querySelectorAll("#app_explorer div.element.selected");
+			
+			for(key in elements)
+			{
+				if({}.hasOwnProperty.call(elements, key))
+				{
+					hashs.push(elements[key].getAttribute("data-hash"));
+				}
+			}
+			
+			var xhr = new XMLHttpRequest();
+			xhr.open("GET", "inc/ajax/explore/delete.php?hash="+(hashs.toString()), true);
+			
+			xhr.onreadystatechange = function()
+			{
+				if(xhr.status === 200 && xhr.readyState == 4)
+				{
+					var state = xhr.responseText.split("~||]]", 1)[0];
+					
+					switch(state)
+					{
+						case "ok":
+							app_explorer.actions.list();
+						
+							returnArea.innerHTML = "Les éléments ont bien été supprimés";
+							
+							setTimeout(function(){
+								popup.close("popup_deleteGroup");
+							}, 1000);
+							break;
+							
+						default:
+							returnArea.innerHTML = "Une erreur est survenue lors de la suppression des éléments";
 							break;
 					}
 				}
@@ -681,9 +831,9 @@ var app_explorer =
 		{
 			if(nbFiles + nbFolders > 1)
 			{
-				document.querySelector("#app_explorer #bandActions span.secondLine").innerHTML =    "<p class='action'><img src='apps/app_explorer/images/actions/delete.svg' /></p>"+
-																									"<p class='action'><img src='apps/app_explorer/images/actions/copy.svg' /></p>"+
-																									"<p class='action'><img src='apps/app_explorer/images/actions/cut.svg' /></p>";
+				document.querySelector("#app_explorer #bandActions span.secondLine").innerHTML =    "<p class='action' onclick='app_explorer.groupAction.delete();'><img src='apps/app_explorer/images/actions/delete.svg' /></p>"+
+																									"<p class='action' onclick='app_explorer.groupAction.copy();'><img src='apps/app_explorer/images/actions/copy.svg' /></p>"+
+																									"<p class='action' onclick='app_explorer.groupAction.cut();'><img src='apps/app_explorer/images/actions/cut.svg' /></p>";
 			}
 			else
 			{

@@ -9,6 +9,7 @@
         <link rel="stylesheet" type="text/css" href="css/popup.css" />
         <link rel="stylesheet" type="text/css" href="css/popup_content.css" />
         <link rel="stylesheet" type="text/css" href="css/window.css" />
+        <link rel="stylesheet" type="text/css" href="css/lockMode.css" />
         <script type="text/javascript" src="js/global.js" async></script>
         <script type="text/javascript" src="js/window.js" async></script>
         <script type="text/javascript" src="js/errorMessages.js" async></script>
@@ -42,7 +43,9 @@
         <script type="text/javascript">
             window.onload = function()
             {
-                // WINDOW.trigger("app_explorer", "orange");
+                WINDOW.trigger("app_explorer", "orange");
+                
+                // COSMOS.rightPanel.trigger.logout.submit.lock();
             }
         </script>
     </body>

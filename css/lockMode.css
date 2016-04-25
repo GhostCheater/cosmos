@@ -1,0 +1,216 @@
+#lockMode
+{
+    z-index: 98;
+    
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    
+    background-image: url("../images/bg/lock_bg_1.jpg");
+    
+    background-position: center;
+    
+    color: white;
+    text-shadow: 1px 1px 1px orange;
+}
+
+#lockMode img
+{
+    height: 7vh;
+}
+
+#lockMode .time
+{
+    display: table;
+    
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 25%;
+    width: 35%;
+}
+
+#lockMode .time p
+{
+    display: table-cell;
+    vertical-align: middle;
+    
+    padding-left: 2vw;
+    
+    font-size: 6vh;
+}
+
+#lockMode .tasks
+{
+    transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    
+    display: table;
+    
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 10%;
+    width: 7%;
+}
+#lockMode .tasks:hover
+{
+    background-color: rgba(250, 150, 0, 0.3);
+    
+    border-radius: 3px;
+    
+    cursor: pointer;
+}
+
+#lockMode .tasks p
+{
+    display: table-cell;
+    vertical-align: middle;
+    
+    text-align: center;
+    width: 30%;
+    
+    font-size: 3vh;
+}
+
+#lockMode .tasks p:first-child
+{
+    width: 70%;
+}
+
+#lockMode .actions
+{
+    transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    
+    display: table;
+    
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 10%;
+    width: 6vw;
+}
+#lockMode .actions:hover
+{
+    background-color: rgba(250, 150, 0, 0.3);
+    
+    border-radius: 3px;
+    
+    cursor: pointer;
+}
+
+#lockMode .actions p
+{
+    display: table-cell;
+    vertical-align: middle;
+    
+    text-align: right;
+    
+    padding-right: 1vw;
+}
+
+#lockMode .login
+{
+    position: absolute;
+    top: 25%;
+    left: 35%;
+    width: 30%;
+    height: 50%;
+    
+    border-radius: 5px;
+    
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+#lockMode .login .header
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 30%;
+    width: 100%;
+    
+    background: url("../images/lockMode/unlock.svg") no-repeat;
+    background-position: center;
+    background-size: 10vh;
+}
+
+#lockMode .login .body
+{
+    display: table;
+    
+    position: absolute;
+    top: 30%;
+    left: 0;
+    height: 40%;
+    width: 100%;
+}
+
+#lockMode .login .footer
+{
+    display: table;
+    
+    position: absolute;
+    top: 70%;
+    left: 0;
+    height: 30%;
+    width: 100%;
+}
+
+#lockMode .login p
+{
+    display: table-cell;
+    vertical-align: middle;
+    
+    text-align: center;
+}
+
+#lockMode .login p input[type="password"]
+{
+    box-shadow: 0 0 3px black;
+    
+    border: none;
+    border-radius: 3px;
+    
+    height: 4vh;
+    width: 20vw;
+    
+    padding: 0 0 0 1vw;
+    
+    color: black;
+}
+
+#lockMode .login p input[type="button"]
+{
+    transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    
+    border: 3px solid black;
+    border-radius: 3px;
+    
+    color: black;
+    
+    height: 5vh;
+    width: 10vw;
+    
+    background-color: transparent;
+    
+    cursor: pointer;
+}
+#lockMode .login p input[type="button"]:hover
+{
+    background-color: black;
+    color: white;
+}

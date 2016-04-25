@@ -55,7 +55,7 @@
     try
     {
         echo "ok~||]]";
-        echo json_encode(array_chunk($list, 6));
+        echo json_encode(array_chunk($list, 7));
     }
     catch(Exception $e)
     {
