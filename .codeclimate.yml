@@ -11,6 +11,8 @@ engines:
     checks:
       Naming/LongVariable:
         enabled: false
+      Controversial/CamelCaseVariableName:
+        enabled: false
   eslint:
     enabled: true
     checks:
