@@ -78,6 +78,14 @@ var COSMOS =
 	{
 		
 	},
+    
+    /*
+    * Récupération des raccourcis clavier
+    */
+    getKeyBoardEvent: function(event)
+    {
+        
+    },
 	
 	/*
 	* Interaction entre l'utilisateur et le header

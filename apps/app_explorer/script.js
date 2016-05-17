@@ -6,6 +6,13 @@ var app_explorer =
 		app_explorer.actions.list();
 		app_explorer.actions.nav();
 	},
+    
+    /* Récupération des raccourcis clavier */
+    keyBoardListener: function(e)
+    {
+        console.log("couocu");
+        e.preventDefault();
+    },
 	
 	/* Affichage ou non du loader */
 	load:
@@ -469,7 +476,53 @@ var app_explorer =
 			}
 			
 			xhr.send(null);
-		}
+		},
+        
+        cut: function()
+        {
+            var defaultActions = document.querySelector("div#app_explorer div#defaultActions p");
+					
+			var hashs = [];
+			var elements = document.querySelectorAll("#app_explorer div.element.selected");
+			
+			for(key in elements)
+			{
+				if({}.hasOwnProperty.call(elements, key))
+				{
+					hashs.push(elements[key].getAttribute("data-hash"));
+				}
+			}
+			
+			var xhr = new XMLHttpRequest();
+			xhr.open("GET", "inc/ajax/explore/cut.php?hash="+(hashs.toString()), true);
+			
+			xhr.onreadystatechange = function()
+			{
+				if(xhr.status === 200 && xhr.readyState == 4)
+				{
+					var state = xhr.responseText.split("~||]]", 1)[0];
+					
+					switch(state)
+					{
+						case "ok":
+							if(defaultActions.querySelectorAll("img").length === 3)
+							{
+								var image = document.createElement("img");
+								image.src = "apps/app_explorer/images/actions/paste.svg";
+								image.setAttribute("onclick", "app_explorer.actions.paste();");
+								
+								defaultActions.appendChild(image);
+							}
+							break;
+							
+						default:
+							break;
+					}
+				}
+			}
+			
+			xhr.send(null);
+        }
 	},
 	
 	/* Envoi des requêtes et récupération des données */

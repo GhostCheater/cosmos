@@ -17,6 +17,8 @@ var WINDOW =
             var element = document.createElement("div");
             element.id = app_id;
             element.className = "window " + app_color;
+            element.setAttribute("data-status", "active");
+            element.setAttribute("onclick", "WINDOW.setActiveWindow('"+app_id+"')");
             
             /*
             * Définition du header de la fenêtre
@@ -105,7 +107,9 @@ var WINDOW =
                     
                     if(app_list.indexOf(app_id) !== -1)
                     {
-                        eval(app_id + ".init()");
+                        setTimeout(function(){
+                            eval(app_id + ".init()");
+                        }, 500);
                     }
 				}
 			}
@@ -180,6 +184,21 @@ var WINDOW =
                 COSMOS.header.trigger.panel("apps");
             }
         }
+    },
+    
+    setActiveWindow: function(app_id)
+    {
+        // Liste des applications ouvertes
+        var elements = document.querySelectorAll("section#desktop div.window");
+        
+        // Passage de toutes les applications en tant qu'inactives
+        for(var i = 0; i < elements.length; i++)
+        {
+            elements[i].setAttribute("data-status", "inactive");
+        }
+        
+        // Activation de l'application
+        document.querySelector("div#"+app_id).setAttribute("data-status", "active");
     },
 	
 	close: function(app_id)
