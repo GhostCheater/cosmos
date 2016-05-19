@@ -6,13 +6,6 @@ var app_explorer =
 		app_explorer.actions.list();
 		app_explorer.actions.nav();
 	},
-    
-    /* Récupération des raccourcis clavier */
-    keyBoardListener: function(e)
-    {
-        console.log("couocu");
-        e.preventDefault();
-    },
 	
 	/* Affichage ou non du loader */
 	load:
@@ -226,7 +219,74 @@ var app_explorer =
 		/* Upload d'un ou plusieurs fichiers */
 		upload:
 		{
-			
+			show: function()
+            {
+                popup.open(
+                    "popup_upload",
+                    "Upload d'un ou plusieurs fichiers",
+                    "<input type='file' id='input_upload' multiple /><br /><br /><span id='return_upload'></span>",
+                    "<input type='button' value='Upload' class='button' onclick='app_explorer.actions.upload.init();' />"
+                );
+            },
+            
+            computeSize: function(input)
+            {
+                var output;
+                
+                if(input / Math.pow(2, 10) >= 1) 
+                {
+                    if(input / Math.pow(2, 20) >= 1)
+                    {
+                        if(input / Math.pow(2, 30) >= 1) // Go
+                        {
+                            output = Math.round(input / Math.pow(2, 30)) + " Go";
+                        }
+                        else // Mo
+                        {
+                            output = Math.round(input / Math.pow(2, 20)) + " Mo";
+                        }
+                    }
+                    else // Ko
+                    {
+                        output = Math.round(input / Math.pow(2, 10)) + " Ko";
+                    }
+                }
+                else // o
+                {
+                    output = Math.round(input) + " octets";
+                }
+                
+                return output;  
+            },
+            
+            init: function()
+            {
+                var files = document.querySelector("#popup_upload #input_upload").files;
+                
+                var toAppend = "<table style='width: 100%;text-align: center;'>";
+                toAppend += "<tr><th style='width: 20%;'>Statut</th><th style='width: 20%;'>Nom</th><th style='width: 20%;'>Taille</th><th style='width: 20%;'>Chiffrement</th><th style='width: 20%;'>Upload</th></tr>";
+                
+                for(var i = 0; i < files.length; i++)
+                {
+                    toAppend += "<tr><td>Wait...</td><td>"+files[i].name+"</td><td>"+app_explorer.actions.upload.computeSize(files[i].size)+"</td><td><progress style='height: 1vh;width: 3vw;' value='0' min='0' max='0' id='progress_upload_encrypt_"+i+"'></progress></td><td><progress style='height: 1vh;width: 3vw;' value='0' min='0' max='0' id='progress_upload_upload_"+i+"'></progress></td></tr>";
+                }
+                
+                toAppend += "</table>";
+                
+                document.querySelector("#popup_upload .content").innerHTML = toAppend;
+                
+                this.go(files);
+            },
+            
+            go: function(files)
+            {
+                var file_key = 0;
+                
+                if(file_key < files.length && file_key >= 0)
+                {
+                    console.log(files[file_key]);
+                }
+            }
 		},
 		
 		/* Suppression d'un élément */

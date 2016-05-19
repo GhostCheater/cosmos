@@ -43,9 +43,9 @@
         <script type="text/javascript">
             window.onload = function()
             {
-                WINDOW.trigger("app_explorer", "orange");
+                COSMOS.init();
                 
-                // COSMOS.rightPanel.trigger.logout.submit.lock();
+                WINDOW.trigger("app_explorer", "orange");
             }
         </script>
     </body>

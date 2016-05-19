@@ -76,7 +76,11 @@ var COSMOS =
 	*/
 	init: function()
 	{
-		
+		localStorage.setItem("pass", "motdepasse");
+        
+        document.body.addEventListener("keypress", function(e){
+            console.log("coucou");
+        }, false);
 	},
     
     /*
@@ -84,7 +88,7 @@ var COSMOS =
     */
     getKeyBoardEvent: function(event)
     {
-        
+        console.log(event);
     },
 	
 	/*
