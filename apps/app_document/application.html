@@ -1,0 +1,57 @@
+<!--
+    Application     : Editeur de textes et de documents
+    Type            : Squelette de l'application (HTML)
+    Version         : 1.0.0
+    Auteur          : Romain Claveau
+    Native          : Oui
+-->
+
+<div id="navBar">
+	<div id="tabs">
+		<div class="tab">
+			<span>F</span>
+			<span>Fichier</span>
+		</div>
+		<div class="tab">
+			<span>E</span>
+			<span>Edition</span>
+		</div>
+		<div class="tab">
+			<span>I</span>
+			<span>Insertion</span>
+		</div>
+	</div>
+	
+	<div id="contentTabs">
+		<div class="contentTab" id="contentTab_file">
+			<div class="cT_basics tab">
+				<div class="up">
+					<span>
+						<img src="apps/app_document/images/basic/copy.svg" style="height: 6vh;" />&nbsp;
+						<img src="apps/app_document/images/basic/cut.svg" style="height: 6vh;" />&nbsp;
+						<img src="apps/app_document/images/basic/paste.svg" style="height: 6vh;" />
+					</span>
+				</div>
+				<div class="down"><span>Basique</span></div>
+			</div>
+			<div class="cT_save tab">
+				<div class="up"><span>SAVE SAVE-AS</span></div>
+				<div class="down"><span>Sauvegarde</span></div>
+			</div>
+			<div class="cT_export tab">
+				<div class="up"><span>DOC PDF HTML TXT</span></div>
+				<div class="down"><span>Exportation</span></div>
+			</div>
+			<div class="cT_settings tab">
+				<div class="up"><span>SETTINGS</span></div>
+				<div class="down"><span>Options</span></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="content">
+	<div id="page" contenteditable="true"></div>	
+</div>
+
+<div id="loaderArea"><img src="images/loader.png" /></div>

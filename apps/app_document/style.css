@@ -1,0 +1,204 @@
+/*
+	Application     : Editeur de textes et de documents
+	Type            : Design de l'application (CSS)
+	Version         : 1.0.0
+	Auteur          : Romain Claveau
+	Native          : Oui
+*/
+
+/* Barre de navigation */
+#app_document #navBar
+{
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 20%;
+	width: 100%;
+	
+	background-color: rgb(130, 130, 130);
+	color: white;
+}
+
+#app_document #navBar #tabs
+{
+	display: table;
+	
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 15%;
+}
+
+#app_document #navBar #tabs .tab
+{
+	transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+	
+	display: table-row;
+	
+	cursor: pointer;
+}
+
+#app_document #navBar #tabs .tab:hover
+{
+	transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+	
+	background-color: rgb(255, 100, 100);
+}
+
+
+#app_document #navBar #tabs .tab span
+{
+	display: table-cell;
+	
+	vertical-align: middle;
+}
+
+#app_document #navBar #contentTabs
+{
+	position: absolute;
+	top: 0;
+	left: 15%;
+	height: 100%;
+	width: 85%;
+}
+
+#app_document #navBar #contentTabs .contentTab
+{
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+}
+#app_document #navBar #contentTabs .contentTab .tab
+{
+	display: table;
+}
+
+#app_document #navBar #contentTabs .contentTab .tab img
+{
+	cursor: pointer;
+}
+
+#app_document #navBar #contentTabs .contentTab .up
+{
+	display: table-row;
+	
+	height: 70%;
+}
+
+#app_document #navBar #contentTabs .contentTab .down
+{
+	display: table-row;
+	
+	height: 30%;
+}
+
+#app_document #navBar #contentTabs .contentTab span
+{
+	display: table-cell;
+	vertical-align: middle;
+	
+	text-align: center;
+}
+
+/* Contenu des onglets */
+#app_document #navBar #contentTabs #contentTab_file .cT_basics
+{	
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 41.65%;
+	
+	background-color: red;
+}
+
+#app_document #navBar #contentTabs #contentTab_file .cT_save
+{	
+	position: absolute;
+	top: 0;
+	left: 41.65%;
+	height: 100%;
+	width: 16.66%;
+	
+	background-color: blue;
+}
+
+#app_document #navBar #contentTabs #contentTab_file .cT_export
+{
+	position: absolute;
+	top: 0;
+	left: 58.31%;
+	height: 100%;
+	width: 33.32%;
+	
+	background-color: green;
+}
+
+#app_document #navBar #contentTabs #contentTab_file .cT_settings
+{
+	position: absolute;
+	top: 0;
+	left: 91.63%;
+	height: 100%;
+	width: 8.37%;
+	
+	background-color: black;
+}
+
+/* Reste de l'application (contiendra le contenu du document) */
+#app_document #content
+{
+	position: absolute;
+	top: 20%;
+	left: 0;
+	height: 80%;
+	width: 100%;
+	
+	background-color: rgb(230, 230, 230);
+	
+	overflow: auto;
+}
+
+#app_document #loaderArea
+{
+	position: absolute;
+	bottom: 1vw;
+	left: 1vw;
+	height: 2.5vw;
+	width: 2.5vw;
+}
+
+#app_document #loaderArea img
+{
+	height: 100%;
+	width: 100%;
+}
+
+#app_document #content #page
+{
+	position: absolute;
+	top: 0;
+	left: 15%;
+	min-height: 200%;
+	width: 70%;
+	
+	background-color: white;
+	
+	border-top: 6vh solid rgb(230, 230, 230);
+	border-bottom: 6vh solid rgb(230, 230, 230);
+	
+	border-radius: 5px;
+	
+	padding: 1vw;
+}

@@ -76,7 +76,7 @@ var COSMOS =
 	*/
 	init: function()
 	{
-		localStorage.setItem("pass", "motdepasse");
+		localStorage.setItem("pass", btoa("motdepasse"));
         
         document.body.addEventListener("keypress", function(e){
             console.log("coucou");

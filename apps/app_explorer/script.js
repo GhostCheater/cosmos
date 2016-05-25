@@ -258,35 +258,142 @@ var app_explorer =
                 
                 return output;  
             },
+			
+			shortName: function(input)
+			{
+				var extension;
+				var name;
+				var output;
+				
+				extension = input.substring(input.lastIndexOf(".") + 1, input.length);
+				name = input.substring(0, input.lastIndexOf("."));
+				
+				
+				if(name.length > 15)
+				{
+					output = name.substring(0, 14) + "..." + extension;
+				}
+				else
+				{
+					output = name + "." + extension;
+				}
+				
+				return output;
+			},
             
             init: function()
             {
                 var files = document.querySelector("#popup_upload #input_upload").files;
                 
-                var toAppend = "<table style='width: 100%;text-align: center;'>";
-                toAppend += "<tr><th style='width: 20%;'>Statut</th><th style='width: 20%;'>Nom</th><th style='width: 20%;'>Taille</th><th style='width: 20%;'>Chiffrement</th><th style='width: 20%;'>Upload</th></tr>";
+                var toAppend = "<div style='position: absolute;top:0;left:0;height:100%;width:100%;overflow:auto;'><table style='width: 100%;text-align: center;'>";
+                toAppend += "<tr><th style='width: 25%;'>Statut</th><th style='width: 25%;'>Nom</th><th style='width: 25%;'>Taille</th><th style='width: 25%;'>Progression</th></tr>";
                 
                 for(var i = 0; i < files.length; i++)
                 {
-                    toAppend += "<tr><td>Wait...</td><td>"+files[i].name+"</td><td>"+app_explorer.actions.upload.computeSize(files[i].size)+"</td><td><progress style='height: 1vh;width: 3vw;' value='0' min='0' max='0' id='progress_upload_encrypt_"+i+"'></progress></td><td><progress style='height: 1vh;width: 3vw;' value='0' min='0' max='0' id='progress_upload_upload_"+i+"'></progress></td></tr>";
+                    toAppend += "<tr style='height: 5vh' id='upload_file_"+i+"'><td><img src='images/status/wait.svg' style='height: 2.5vh' /></td><td>"+this.shortName(files[i].name)+"</td><td>"+this.computeSize(files[i].size)+"</td><td><progress style='height: 1vh;width: 4vw;' value='0' min='0' max='100'></progress></td><td></td></tr>";
                 }
                 
-                toAppend += "</table>";
+                toAppend += "</table></div>";
                 
                 document.querySelector("#popup_upload .content").innerHTML = toAppend;
                 
-                this.go(files);
+                this.encrypt(files, 0); // On chiffre le premier fichier
             },
             
-            go: function(files)
+            encrypt: function(files, file_key)
             {
-                var file_key = 0;
-                
-                if(file_key < files.length && file_key >= 0)
-                {
-                    console.log(files[file_key]);
-                }
-            }
+				if(files.length > file_key)
+				{
+					// Changement du statut du fichier
+					document.querySelector("#popup_upload .content #upload_file_"+file_key+" img").src = "images/status/encrypt.svg";
+					
+					var worker = new Worker("js/lib/aeJs.worker.js");
+					
+					worker.postMessage({
+						action: "encrypt",
+						file: files[file_key],
+						password: atob(localStorage.getItem("pass")),
+						bits: 128
+					});
+					
+					worker.onmessage = function(e)
+					{
+						switch(e.data.action)
+						{
+							case "encryptFile":
+								if(e.data.progress === "end") // Chiffrement terminé
+								{
+									document.querySelector("#popup_upload .content #upload_file_"+file_key+" progress").value = 100;
+									
+									// Lorsque le chiffrement est terminé, on peut uploader le contenu du fichier
+									
+									app_explorer.actions.upload.upload(files, file_key, e.data.ciphertext);
+									
+									file_key++;
+									
+									setTimeout(function(){app_explorer.actions.upload.encrypt(files, file_key)}, 500);
+								}
+								else // Chiffrement en cours
+								{
+									document.querySelector("#popup_upload .content #upload_file_"+file_key+" progress").value = e.data.progress;
+								}
+								break;
+								
+							default:
+								break;
+						}
+					}
+				}
+            },
+			
+			upload: function(files, file_key, ciphertext)
+			{				
+				if(files.length > file_key)
+				{
+					document.querySelector("#popup_upload .content #upload_file_"+file_key+" img").src = "images/status/upload.svg";
+					document.querySelector("#popup_upload .content #upload_file_"+file_key+" progress").value = 0;
+					
+					// Création du blob
+					var blob = new Blob([ciphertext], {type: 'application/octet-binary'});
+					var formData = new FormData();
+					
+					formData.append(files[file_key].name, blob);
+					
+					var xhr = new XMLHttpRequest();
+					
+					xhr.open("POST", "inc/ajax/explore/upload.php", true);
+					xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+					
+					xhr.upload.addEventListener("progress", function(e){
+						app_explorer.actions.upload.progress(file_key, e);
+					}, false);
+					
+					xhr.addEventListener("readyStateChange", function(e){
+						app_explorer.actions.upload.readyStateChange(file_key, e);
+					}, false);
+					
+					xhr.send(formData);
+				}
+			},
+			
+			progress: function(file_key, e)
+			{				
+				if(e.lengthComputable)
+				{
+					var percent = (e.loaded / e.total) * 100;
+					
+					document.querySelector("#popup_upload .content #upload_file_"+file_key+" progress").value = percent;
+				}
+			},
+			
+			readyStateChange: function(file_key,e)
+			{
+				if(e.readyState === 4)
+				{
+					document.querySelector("#popup_upload .content #upload_file_"+file_key+" progress").value = 100;
+					document.querySelector("#popup_upload .content #upload_file_"+file_key+" img").src = "images/status/ok.svg";
+				}
+			}
 		},
 		
 		/* Suppression d'un élément */
