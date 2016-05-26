@@ -7,47 +7,189 @@
 -->
 
 <div id="navBar">
-	<div id="tabs">
-		<div class="tab">
-			<span>F</span>
-			<span>Fichier</span>
-		</div>
-		<div class="tab">
-			<span>E</span>
-			<span>Edition</span>
-		</div>
-		<div class="tab">
-			<span>I</span>
-			<span>Insertion</span>
-		</div>
-	</div>
-	
-	<div id="contentTabs">
-		<div class="contentTab" id="contentTab_file">
-			<div class="cT_basics tab">
-				<div class="up">
-					<span>
-						<img src="apps/app_document/images/basic/copy.svg" style="height: 6vh;" />&nbsp;
-						<img src="apps/app_document/images/basic/cut.svg" style="height: 6vh;" />&nbsp;
-						<img src="apps/app_document/images/basic/paste.svg" style="height: 6vh;" />
-					</span>
-				</div>
-				<div class="down"><span>Basique</span></div>
-			</div>
-			<div class="cT_save tab">
-				<div class="up"><span>SAVE SAVE-AS</span></div>
-				<div class="down"><span>Sauvegarde</span></div>
-			</div>
-			<div class="cT_export tab">
-				<div class="up"><span>DOC PDF HTML TXT</span></div>
-				<div class="down"><span>Exportation</span></div>
-			</div>
-			<div class="cT_settings tab">
-				<div class="up"><span>SETTINGS</span></div>
-				<div class="down"><span>Options</span></div>
-			</div>
-		</div>
-	</div>
+    <div id="tabs">
+        <div class="tab" id="tab_edit" onclick="app_document.tab.load('edit');">&Eacute;dition</div>
+        <div class="tab" id="tab_insert" onclick="app_document.tab.load('insert');">Insertion</div>
+        <div class="tab" id="tab_layout" onclick="app_document.tab.load('layout');">Mise en page</div>
+        <div class="tab" id="tab_export" onclick="app_document.tab.load('export');">Exportation</div>
+    </div>
+    <div id="contentTabs">
+        <div class="contentTab" id="cT_edit">
+            <!-- Actions : Annuler, Refaire -->
+            <div class="part" style="width: 5vw;border-right: 1px solid rgb(180, 180, 180);">
+                <img src="apps/app_document/images/edit/actions/undo.svg" style="height: 2.5vh;" /><br />
+                <img src="apps/app_document/images/edit/actions/redo.svg" style="height: 2.5vh;" />
+            </div>
+            
+            <!-- Presse-papiers : Copier, Couper, Coller -->
+            <div class="part" style="width: 12vw;border-right: 1px solid rgb(180, 180, 180);">
+                <img src="apps/app_document/images/edit/clipboard/paste.svg" style="height: 2.5vh;margin-right: 1vw;" />
+                <img src="apps/app_document/images/edit/clipboard/copy.svg" style="height: 2.5vh;margin-right: 1vw;" />
+                <img src="apps/app_document/images/edit/clipboard/cut.svg" style="height: 2.5vh;margin-right: 1vw;" />
+                <img src="apps/app_document/images/edit/clipboard/select.svg" style="height: 2.5vh;" />
+            </div>
+            
+            <!-- Police : Police, Taille -->
+            <div class="part" style="width: 18vw;border-right: 1px solid rgb(180, 180, 180);">
+                <select class="input" style="width: 10vw;height: 2.5vh;">
+                    <option style="font-family: Arial">Arial</option>
+                    <option style="font-family: Arial Black">Arial Black</option>
+                    <option style="font-family: Arimo">Arimo</option>
+                    <option style="font-family: Calibri">Calibri</option>
+                    <option style="font-family: Calibri Light">Calibri Light</option>
+                    <option style="font-family: Cambria">Cambria</option>
+                    <option style="font-family: Cambria Math">Cambria Math</option>
+                    <option style="font-family: Candara">Candara</option>
+                    <option style="font-family: Comic Sans MS">Comic Sans MS</option>
+                    <option style="font-family: Consolas">Consolas</option>
+                    <option style="font-family: Constantia">Constantia</option>
+                    <option style="font-family: Corbel">Corbel</option>
+                    <option style="font-family: Courier New">Courier New</option>
+                    <option style="font-family: DejaVu Sans">DejaVu Sans</option>
+                    <option style="font-family: DejaVu Sans Condensed">DejaVu Sans Condensed</option>
+                    <option style="font-family: DejaVu Sans Light">DejaVu Sans Light</option>
+                    <option style="font-family: DejaVu Sans Mono">DejaVu Sans Mono</option>
+                    <option style="font-family: DejaVu Serif">DejaVu Serif</option>
+                    <option style="font-family: DejaVu Serif Condensed">DejaVu Serif Condensed</option>
+                    <option style="font-family: Ebrima">Ebrima</option>
+                    <option style="font-family: Franklin Gothic Medium">Franklin Gothic Medium</option>
+                    <option style="font-family: Gabriola">Gabriola</option>
+                    <option style="font-family: Gabugi">Gabugi</option>
+                    <option style="font-family: Gentium Basic">Gentium Basic</option>
+                    <option style="font-family: Gentium Book Basic">Gentium Book Basic</option>
+                    <option style="font-family: Georgia">Georgia</option>
+                    <option style="font-family: Impact">Impact</option>
+                    <option style="font-family: Javanese Text">Javanese Text</option>
+                    <option style="font-family: Leelawadee UI">Leelawadee UI</option>
+                    <option style="font-family: Leelawadee UI Semilight">Leelawadee UI Semilight</option>
+                    <option style="font-family: Lucida Console">Lucida Console</option>
+                    <option style="font-family: Lucida Sans Unicode">Lucida Sans Unicode</option>
+                    <option style="font-family: Malgun Gothic">Malgun Gothic</option>
+                    <option style="font-family: Malgun Gothic Semilight">Malgun Gothic Semilight</option>
+                    <option style="font-family: Marlett">Marlett</option>
+                    <option style="font-family: Modern">Modern</option>
+                    <option style="font-family: Mongolian Baiti">Mongolian Baiti</option>
+                    <option style="font-family: MV Boli">MV Boli</option>
+                    <option style="font-family: Myanmar Text">Myanmar Text</option>
+                    <option style="font-family: Nirmala UI">Nirmala UI</option>
+                    <option style="font-family: Nirmala UI Semilight">Nirmala UI Semilight</option>
+                    <option style="font-family: NSimSun">NSimSun</option>
+                    <option style="font-family: OpenSymbol">OpenSymbol</option>
+                    <option style="font-family: Palatino Linotype">Palatino Linotype</option>
+                    <option style="font-family: Roman">Roman</option>
+                    <option style="font-family: Script">Script</option>
+                    <option style="font-family: Segoe Print">Segoe Print</option>
+                    <option style="font-family: Segoe Script">Segoe Script</option>
+                    <option style="font-family: Segoe UI">Segoe UI</option>
+                    <option style="font-family: Segoe UI Black">Segoe UI Black</option>
+                    <option style="font-family: Segoe UI Emoji">Segoe UI Emoji</option>
+                    <option style="font-family: Segoe UI Historic">Segoe UI Historic</option>
+                    <option style="font-family: Segoe UI Light">Segoe UI Light</option>
+                    <option style="font-family: Segoe UI Semibold">Segoe UI Semibold</option>
+                    <option style="font-family: Segoe UI Semilight">Segoe UI Semilight</option>
+                    <option style="font-family: Segoe UI Symbol">Segoe UI Symbol</option>
+                    <option style="font-family: SimSun">SimSun</option>
+                    <option style="font-family: Sitka Banner">Sitka Banner</option>
+                    <option style="font-family: Sitka Display">Sitka Display</option>
+                    <option style="font-family: Sitka Heading">Sitka Heading</option>
+                    <option style="font-family: Sitka Small">Sitka Small</option>
+                    <option style="font-family: Sitka Subheading">Sitka Subheading</option>
+                    <option style="font-family: Sitka Text">Sitka Text</option>
+                    <option style="font-family: Sylfaen">Sylfaen</option>
+                    <option style="font-family: Tahoma">Tahoma</option>
+                    <option style="font-family: Times New Roman">Times New Roman</option>
+                    <option style="font-family: Trebuchet MS">Trebuchet MS</option>
+                    <option style="font-family: Verdana">Verdana</option>
+                    <option style="font-family: Yu Gothic">Yu Gothic</option>
+                    <option style="font-family: Yu Gothic Light">Yu Gothic Light</option>
+                    <option style="font-family: Yu Gothic Medium">Yu Gothic Medium</option>
+                    <option style="font-family: Yu Gothic UI">Yu Gothic UI</option>
+                    <option style="font-family: Yu Gothic UI Light">Yu Gothic UI Light</option>
+                    <option style="font-family: Yu Gothic UI Semibold">Yu Gothic UI Semibold</option>
+                    <option style="font-family: Yu Gothic UI Semilight">Yu Gothic UI Semilight</option>
+                </select>&nbsp;
+                <select class="input" style="width: 5vw;height: 2.5vh;margin-bottom: 1vh;">
+                    <option style="font-size: 8px;">8</option>
+                    <option style="font-size: 9px;">9</option>
+                    <option style="font-size: 10px;">10</option>
+                    <option style="font-size: 11px;">11</option>
+                    <option style="font-size: 12px;" selected>12</option>
+                    <option style="font-size: 14px;">14</option>
+                    <option style="font-size: 16px;">16</option>
+                    <option style="font-size: 18px;">18</option>
+                    <option style="font-size: 20px;">20</option>
+                    <option style="font-size: 24px;">24</option>
+                    <option style="font-size: 28px;">28</option>
+                    <option style="font-size: 32px;">32</option>
+                    <option style="font-size: 38px;">38</option>
+                    <option style="font-size: 44px;">44</option>
+                    <option style="font-size: 50px;">50</option>
+                    <option style="font-size: 58px;">58</option>
+                    <option style="font-size: 66px;">66</option>
+                    <option style="font-size: 74px;">74</option>
+                    <option style="font-size: 82px;">82</option>
+                    <option style="font-size: 92px;">92</option>
+                </select><br />
+                
+                <img src="apps/app_document/images/edit/font/bold.svg" style="height: 2.5vh;margin-right: 1vw;" />
+                <img src="apps/app_document/images/edit/font/italic.svg" style="height: 2.5vh;margin-right: 1vw;" />
+                <img src="apps/app_document/images/edit/font/underline.svg" style="height: 2.5vh;margin-right: 1vw;" />
+                <img src="apps/app_document/images/edit/font/stroke.svg" style="height: 2.5vh;margin-right: 1vw;" />
+                <img src="apps/app_document/images/edit/font/subscript.svg" style="height: 2.5vh;margin-right: 1vw;" />
+                <img src="apps/app_document/images/edit/font/supscript.svg" style="height: 2.5vh;" />
+            </div>
+            
+            <!-- Style : Couleur, Saturation -->
+            <div class="part" style="width: 10vw;border-right: 1px solid rgb(180, 180, 180);">
+                <img src="apps/app_document/images/edit/style/fill.svg" style="height: 2.5vh;margin-right: 1vw;" />
+                <img src="apps/app_document/images/edit/style/highlight.svg" style="height: 2.5vh;margin-right: 1vw;" />
+                <img src="apps/app_document/images/edit/style/color.svg" style="height: 2.5vh;" />
+            </div>
+            
+            <!-- Paragraphe : Alignement -->
+            <div class="part" style="width: 14vw;border-right: 1px solid rgb(180, 180, 180);">
+                <img src="apps/app_document/images/edit/paragraph/list.svg" style="height: 2.5vh;margin-right: 1vw;" />
+                <img src="apps/app_document/images/edit/paragraph/left.svg" style="height: 2.5vh;margin-right: 1vw;" />
+                <img src="apps/app_document/images/edit/paragraph/center.svg" style="height: 2.5vh;margin-right: 1vw;" />
+                <img src="apps/app_document/images/edit/paragraph/right.svg" style="height: 2.5vh;margin-right: 1vw;" />
+                <img src="apps/app_document/images/edit/paragraph/justify.svg" style="height: 2.5vh;" />
+            </div>
+            
+            <!-- Préformaté -->
+            <div class="part" style="width: 25vw;border-right: 1px solid rgb(180, 180, 180);">
+                <input type="text" value="Corps de texte" class="preformatedText" style="margin-bottom: 1vh;" readonly />&nbsp;
+                <input type="text" value="Titre 1" class="preformatedText" readonly />&nbsp;
+                <input type="text" value="Titre 2" class="preformatedText" readonly />&nbsp;
+                <input type="text" value="Titre 3" class="preformatedText" readonly /><br />
+                <input type="text" value="Titre 4" class="preformatedText" readonly />&nbsp;
+                <input type="text" value="Titre 5" class="preformatedText" readonly />&nbsp;
+                <input type="text" value="Titre 6" class="preformatedText" readonly />&nbsp;
+                <input type="text" value="Titre 7" class="preformatedText" readonly />
+            </div>
+            
+            <div class="part" style="width: 6vw;">
+                <img src="apps/app_document/images/edit/modification/find.svg" style="height: 2.5vh;" /><br />
+                <img src="apps/app_document/images/edit/modification/find_replace.svg" style="height: 2.5vh;" />
+            </div>
+        </div>
+        <div vlass="contentTab" id="cT_insert"></div>
+        <div vlass="contentTab" id="cT_layout"></div>
+        <div vlass="contentTab" id="cT_export"></div>
+    </div>
+    <div id="titlesTabs">
+        <div class="titlesTab" id="tT_edit">
+            <div class="part" style="width: 5vw;">Actions</div>
+            <div class="part" style="width: 12vw;">Presse-papiers</div>
+            <div class="part" style="width: 18vw;">Police</div>
+            <div class="part" style="width: 10vw;">Style</div>
+            <div class="part" style="width: 14vw;">Paragraphe</div>
+            <div class="part" style="width: 25vw;">Section</div>
+            <div class="part" style="width: 6vw;">Modification</div>
+        </div>
+        <div class="titlesTab" id="tT_insert"></div>
+        <div class="titlesTab" id="tT_layout"></div>
+        <div class="titlesTab" id="tT_export"></div>
+    </div>
 </div>
 
 <div id="content">
@@ -55,3 +197,5 @@
 </div>
 
 <div id="loaderArea"><img src="images/loader.png" /></div>
+
+<div id="quickAccess"><span>+</span></div>

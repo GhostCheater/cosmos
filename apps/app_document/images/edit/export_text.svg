@@ -1,0 +1,19 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 80 80" style="enable-background:new 0 0 80 80;" xml:space="preserve">
+    <g>
+        <rect x="12.5" y="4.5" style="fill:#ebebeb;" width="55" height="71"></rect>
+        <g>
+            <path style="fill:#7b7b7b;" d="M67,5v70H13V5H67 M68,4H12v72h56V4L68,4z"></path>
+        </g>
+    </g>
+    <polygon style="fill:#ebebeb;" points="68,24 62,17.925 62,62.075 68,56"></polygon>
+    <g>
+        <rect x="32" y="36" style="fill:#6c6c6c;" width="32" height="8"></rect>
+    </g>
+    <g>
+        <polygon style="fill:#6c6c6c;" points="78,40 60,24.571 60,55.429"></polygon>
+    </g>
+    
+    <text style="fill:#6c6c6c;font-family:Tahoma;font-size:20px;" x="15" y="72">T</text>
+    <text style="fill:#6c6c6c;font-family:Tahoma;font-size:20px;" x="30" y="72">X</text>
+    <text style="fill:#6c6c6c;font-family:Tahoma;font-size:20px;" x="45" y="72">T</text>
+</svg>
