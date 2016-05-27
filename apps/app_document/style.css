@@ -139,6 +139,24 @@
     text-align: center;
 }
 
+#app_document #navBar #contentTabs .contentTab img
+{
+    transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    
+    border-radius: 3px;
+    
+    padding: 2px;
+}
+
+#app_document #navBar #contentTabs .contentTab .selected
+{
+    background-color: rgba(255, 0, 0, 0.15);
+}
+
 #app_document #navBar #contentTabs .input
 {
     border: none;
@@ -156,8 +174,10 @@
     border: 1px solid rgb(180, 180, 180);
     border-radius: 3px;
     
-    height: 3vh;
-    width: 5vw;
+    height: 7vh;
+    width: 4.5vw;
+    
+    overflow: hidden;
     
     user-select: none;
     -webkit-user-select: none;
@@ -256,6 +276,8 @@
 	width: 60%;
 	
 	background-color: white;
+    
+    border: none;
 	
 	border-top: 3vh solid rgb(200, 200, 200);
 	border-bottom: 3vh solid rgb(200, 200, 200);
@@ -263,4 +285,36 @@
 	border-radius: 5px;
 	
 	padding: 1vw;
+    
+    user-select: text;
+    -webkit-user-select: text;
+    -o-user-select: text;
+    -ms-user-select: text;
+    -moz-user-select: text;
+}
+
+#app_document #popup
+{
+    position: absolute;
+    top: 17.2vh;
+    height: 20vh;
+    width: 10vw;
+    
+    background-color: grey;
+    
+    border-radius: 3px;
+    
+    opacity: .9;
+}
+
+#app_document .pos_edit_highlight{ left: 32vw; }
+#app_document .pos_edit_color{ left: 35vw; }
+
+#app_document #popup img.arrow
+{
+    width: 5vw;
+    
+    position: absolute;
+    top: -5.2vh;
+    left: 2.5vw;
 }

@@ -12,6 +12,7 @@
         <div class="tab" id="tab_insert" onclick="app_document.tab.load('insert');">Insertion</div>
         <div class="tab" id="tab_layout" onclick="app_document.tab.load('layout');">Mise en page</div>
         <div class="tab" id="tab_export" onclick="app_document.tab.load('export');">Exportation</div>
+        <div class="tab" id="tab_settings" onclick="app_document.tab.load('settings');">Options</div>
     </div>
     <div id="contentTabs">
         <div class="contentTab" id="cT_edit">
@@ -131,40 +132,36 @@
                     <option style="font-size: 92px;">92</option>
                 </select><br />
                 
-                <img src="apps/app_document/images/edit/font/bold.svg" style="height: 2.5vh;margin-right: 1vw;" />
-                <img src="apps/app_document/images/edit/font/italic.svg" style="height: 2.5vh;margin-right: 1vw;" />
-                <img src="apps/app_document/images/edit/font/underline.svg" style="height: 2.5vh;margin-right: 1vw;" />
+                <img onclick="app_document.edit.setBold();" src="apps/app_document/images/edit/font/bold.svg" style="height: 2.5vh;margin-right: 1vw;" />
+                <img onclick="app_document.edit.setItalic();" src="apps/app_document/images/edit/font/italic.svg" style="height: 2.5vh;margin-right: 1vw;" />
+                <img onclick="app_document.edit.setUnderline();" src="apps/app_document/images/edit/font/underline.svg" style="height: 2.5vh;margin-right: 1vw;" />
                 <img src="apps/app_document/images/edit/font/stroke.svg" style="height: 2.5vh;margin-right: 1vw;" />
                 <img src="apps/app_document/images/edit/font/subscript.svg" style="height: 2.5vh;margin-right: 1vw;" />
                 <img src="apps/app_document/images/edit/font/supscript.svg" style="height: 2.5vh;" />
             </div>
             
             <!-- Style : Couleur, Saturation -->
-            <div class="part" style="width: 10vw;border-right: 1px solid rgb(180, 180, 180);">
-                <img src="apps/app_document/images/edit/style/fill.svg" style="height: 2.5vh;margin-right: 1vw;" />
+            <div class="part" style="width: 7vw;border-right: 1px solid rgb(180, 180, 180);">
                 <img src="apps/app_document/images/edit/style/highlight.svg" style="height: 2.5vh;margin-right: 1vw;" />
                 <img src="apps/app_document/images/edit/style/color.svg" style="height: 2.5vh;" />
             </div>
             
             <!-- Paragraphe : Alignement -->
             <div class="part" style="width: 14vw;border-right: 1px solid rgb(180, 180, 180);">
-                <img src="apps/app_document/images/edit/paragraph/list.svg" style="height: 2.5vh;margin-right: 1vw;" />
-                <img src="apps/app_document/images/edit/paragraph/left.svg" style="height: 2.5vh;margin-right: 1vw;" />
-                <img src="apps/app_document/images/edit/paragraph/center.svg" style="height: 2.5vh;margin-right: 1vw;" />
-                <img src="apps/app_document/images/edit/paragraph/right.svg" style="height: 2.5vh;margin-right: 1vw;" />
-                <img src="apps/app_document/images/edit/paragraph/justify.svg" style="height: 2.5vh;" />
+                <img onclick="app_document.edit.setList();" src="apps/app_document/images/edit/paragraph/list.svg" style="height: 2.5vh;margin-right: 1vw;" />
+                <img onclick="app_document.edit.setLeft();" src="apps/app_document/images/edit/paragraph/left.svg" style="height: 2.5vh;margin-right: 1vw;" />
+                <img onclick="app_document.edit.setCenter();" src="apps/app_document/images/edit/paragraph/center.svg" style="height: 2.5vh;margin-right: 1vw;" />
+                <img onclick="app_document.edit.setRight();" src="apps/app_document/images/edit/paragraph/right.svg" style="height: 2.5vh;margin-right: 1vw;" />
+                <img onclick="app_document.edit.setJustify();" src="apps/app_document/images/edit/paragraph/justify.svg" style="height: 2.5vh;" />
             </div>
             
             <!-- Préformaté -->
-            <div class="part" style="width: 25vw;border-right: 1px solid rgb(180, 180, 180);">
-                <input type="text" value="Corps de texte" class="preformatedText" style="margin-bottom: 1vh;" readonly />&nbsp;
-                <input type="text" value="Titre 1" class="preformatedText" readonly />&nbsp;
-                <input type="text" value="Titre 2" class="preformatedText" readonly />&nbsp;
-                <input type="text" value="Titre 3" class="preformatedText" readonly /><br />
-                <input type="text" value="Titre 4" class="preformatedText" readonly />&nbsp;
-                <input type="text" value="Titre 5" class="preformatedText" readonly />&nbsp;
-                <input type="text" value="Titre 6" class="preformatedText" readonly />&nbsp;
-                <input type="text" value="Titre 7" class="preformatedText" readonly />
+            <div class="part" style="width: 28vw;border-right: 1px solid rgb(180, 180, 180);">
+                <input type="button" value="Abc" class="preformatedText" id="preformated_text" readonly />&nbsp;&nbsp;
+                <input type="button" value="Abc" class="preformatedText" id="preformated_title_1" readonly />&nbsp;&nbsp;
+                <input type="button" value="Abc" class="preformatedText" id="preformated_title_2" readonly />&nbsp;&nbsp;
+                <input type="button" value="Abc" class="preformatedText" id="preformated_title_3" readonly />&nbsp;&nbsp;
+                <input type="button" value="Abc" class="preformatedText" id="preformated_title_4" readonly />
             </div>
             
             <div class="part" style="width: 6vw;">
@@ -175,27 +172,33 @@
         <div vlass="contentTab" id="cT_insert"></div>
         <div vlass="contentTab" id="cT_layout"></div>
         <div vlass="contentTab" id="cT_export"></div>
+        <div vlass="contentTab" id="cT_settings"></div>
     </div>
     <div id="titlesTabs">
         <div class="titlesTab" id="tT_edit">
             <div class="part" style="width: 5vw;">Actions</div>
             <div class="part" style="width: 12vw;">Presse-papiers</div>
             <div class="part" style="width: 18vw;">Police</div>
-            <div class="part" style="width: 10vw;">Style</div>
+            <div class="part" style="width: 7vw;">Style</div>
             <div class="part" style="width: 14vw;">Paragraphe</div>
-            <div class="part" style="width: 25vw;">Section</div>
+            <div class="part" style="width: 28vw;">Préformaté</div>
             <div class="part" style="width: 6vw;">Modification</div>
         </div>
         <div class="titlesTab" id="tT_insert"></div>
         <div class="titlesTab" id="tT_layout"></div>
         <div class="titlesTab" id="tT_export"></div>
+        <div class="titlesTab" id="tT_settings"></div>
     </div>
 </div>
 
 <div id="content">
-	<div id="page" contenteditable="true"></div>	
+	<iframe id="page" contenteditable="true" designMode="on" insertBrOnReturn="true"></iframe>	
 </div>
 
 <div id="loaderArea"><img src="images/loader.png" /></div>
 
 <div id="quickAccess"><span>+</span></div>
+
+<div id="popup" class="pos_edit_color">
+    <img src="apps/app_document/images/arrow.svg" class="arrow" />
+</div>

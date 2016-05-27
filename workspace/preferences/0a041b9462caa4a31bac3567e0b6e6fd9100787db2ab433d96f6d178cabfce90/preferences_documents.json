@@ -1,0 +1,59 @@
+{
+    "preferences_documents":
+    {
+        "text":
+        {
+            "color": "#000000",
+            "highlight": "transparent",
+            "size": "12px",
+            "font": "Tahoma",
+            "bold": false,
+            "italic": false,
+            "underline": false
+        },
+        
+        "title_1":
+        {
+            "color": "#ff7600",
+            "highlight": "transparent",
+            "size": "28px",
+            "font": "Tahoma",
+            "bold": false,
+            "italic": false,
+            "underline": false
+        },
+        
+        "title_2":
+        {
+            "color": "#00a7ff",
+            "highlight": "transparent",
+            "size": "24px",
+            "font": "Tahoma",
+            "bold": false,
+            "italic": false,
+            "underline": false
+        },
+        
+        "title_3":
+        {
+            "color": "#17c400",
+            "highlight": "transparent",
+            "size": "20px",
+            "font": "Tahoma",
+            "bold": false,
+            "italic": false,
+            "underline": false
+        },
+        
+        "title_4":
+        {
+            "color": "#c40000",
+            "highlight": "transparent",
+            "size": "16px",
+            "font": "Tahoma",
+            "bold": false,
+            "italic": false,
+            "underline": false
+        }
+    }
+}
