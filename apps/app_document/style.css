@@ -295,6 +295,8 @@
 
 #app_document #popup
 {
+    display: none;
+    
     position: absolute;
     top: 17.2vh;
     height: 20vh;

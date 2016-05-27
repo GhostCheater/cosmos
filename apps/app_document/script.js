@@ -87,7 +87,6 @@ var app_document =
         
         parse: function(data)
         {
-            console.log(data["preferences_documents"]);
             for(type in data["preferences_documents"])
             {
                 if({}.hasOwnProperty.call(data["preferences_documents"], type))
@@ -96,11 +95,12 @@ var app_document =
                     var italic = (data["preferences_documents"][type]["italic"]) ? "font-style:italic;" : "";
                     var underline = (data["preferences_documents"][type]["underline"]) ? "text-decoration:underline;" : "";
                         
-                    var style = "background-color:"+data["preferences_documents"][type]["highlight"]+
-                                ";color:"+data["preferences_documents"][type]["color"]+
+                    var style = "color:"+data["preferences_documents"][type]["color"]+
                                 ";font-family:"+data["preferences_documents"][type]["font"]+
-                                ";font-size:"+data["preferences_documents"][type]["size"]+
-                                ";" + bold + italic + underline + "display: inline;vertical-align:middle;";
+                                ";font-size:"+parseFloat(data["preferences_documents"][type]["size"]) * 3+"pt"+
+                                ";" + bold + italic + underline;
+                    
+                    style += "display: inline;vertical-align:middle;";
                     
                     document.querySelector("#app_document #navBar #preformated_"+type).style = [style];
                 }
@@ -132,6 +132,10 @@ var app_document =
                 var isBold = page.contentWindow.document.queryCommandState("bold");
                 var isItalic = page.contentWindow.document.queryCommandState("italic");
                 var isUnderline = page.contentWindow.document.queryCommandState("underline");
+                var isStroke = page.contentWindow.document.queryCommandState("strikeThrough");
+                var isSub = page.contentWindow.document.queryCommandState("subscript");
+                var isSup = page.contentWindow.document.queryCommandState("superscript");
+                
                 var isLeft = page.contentWindow.document.queryCommandState("justifyLeft");
                 var isCenter = page.contentWindow.document.queryCommandState("justifyCenter");
                 var isRight = page.contentWindow.document.queryCommandState("justifyRight");
@@ -140,6 +144,9 @@ var app_document =
                 if(isBold) {buttons[6].className = "selected";} else {buttons[6].className = "";}
                 if(isItalic) {buttons[7].className = "selected";} else {buttons[7].className = "";}
                 if(isUnderline) {buttons[8].className = "selected";} else {buttons[8].className = "";}
+                if(isStroke) {buttons[9].className = "selected";} else {buttons[9].className = "";}
+                if(isSub) {buttons[10].className = "selected";} else {buttons[10].className = "";}
+                if(isSup) {buttons[11].className = "selected";} else {buttons[11].className = "";}
 
                 if(isLeft) {buttons[15].className = "selected";} else {buttons[15].className = "";}
                 if(isCenter) {buttons[16].className = "selected";} else {buttons[16].className = "";}
@@ -152,6 +159,49 @@ var app_document =
     edit:
     {
         page: function(){ return document.querySelector("#app_document #page"); },
+        
+        /*
+        * Actions
+        */
+        undo: function()
+        {
+            this.page().contentWindow.document.execCommand("undo", false, null);
+            this.page().focus(); 
+        },
+        
+        redo: function()
+        {
+            this.page().contentWindow.document.execCommand("redo", false, null);
+            this.page().focus(); 
+        },
+        
+        
+        /*
+        * Presse-papier
+        */
+        paste: function()
+        {
+            this.page().contentWindow.document.execCommand("paste", false, null);
+            this.page().focus(); 
+        },
+        
+        copy: function()
+        {
+            this.page().contentWindow.document.execCommand("copy", false, null);
+            this.page().focus(); 
+        },
+        
+        cut: function()
+        {
+            this.page().contentWindow.document.execCommand("cut", false, null);
+            this.page().focus(); 
+        },
+        
+        selectAll: function()
+        {
+            this.page().contentWindow.document.execCommand("selectAll", false, null);
+            this.page().focus(); 
+        },
         
         /* 
         * Police
@@ -171,6 +221,24 @@ var app_document =
         setUnderline: function()
         {
             this.page().contentWindow.document.execCommand("underline", false, null);
+            this.page().focus();
+        },
+        
+        setStroke: function()
+        {
+            this.page().contentWindow.document.execCommand("strikeThrough", false, null);
+            this.page().focus();
+        },
+        
+        setSub: function()
+        {
+            this.page().contentWindow.document.execCommand("subscript", false, null);
+            this.page().focus();
+        },
+        
+        setSup: function()
+        {
+            this.page().contentWindow.document.execCommand("superscript", false, null);
             this.page().focus();
         },
         
@@ -206,6 +274,54 @@ var app_document =
             this.page().contentWindow.document.execCommand("justifyFull", false, null);
             this.page().focus();
         },
+        
+        /*
+        * Préformaté
+        */
+        preformated: function(section)
+        {
+            if(document.querySelector("#app_document #navBar #"+section))
+            {
+                this.page().contentWindow.document.execCommand("removeFormat",false, null);
+                
+                this.page().contentWindow.document.execCommand("styleWithCSS", false, true);
+                
+                var style = document.querySelector("#app_document #navBar #"+section).style;
+                
+                var color = style.color;
+                var size = style.fontSize;
+                var font = style.fontFamily;
+                var bold = style.fontWeight;
+                var italic = style.fontStyle;
+                var underline = style.textDecoration
+                
+                if(bold !== "" && bold !== null && bold !== undefined){ this.page().contentWindow.document.execCommand("bold", false, null); }
+                if(italic !== "" && italic !== null && italic !== undefined){ this.page().contentWindow.document.execCommand("italic", false, null); }
+                if(underline !== "" && underline !== null && underline !== undefined){ this.page().contentWindow.document.execCommand("underline", false, null); }
+                
+                this.page().contentWindow.document.execCommand("foreColor", false, color);
+                this.page().contentWindow.document.execCommand("fontSize", false, parseFloat(size) / 3);
+                this.page().contentWindow.document.execCommand("fontName", false, font);
+                
+                this.page().focus();
+            }
+        }
+    },
+    
+    popup:
+    {
+        trigger: function(tab)
+        {
+            var popup = document.querySelector("#app_document #popup");
+            
+            popup.style.display = (popup.style.display === "none" || popup.style.display === "" || popup.className != tab) ? "block" : "none";
+            popup.className = (popup.className === tab) ? "" : tab;
+        },
+        
+        load: function(tab)
+        {
+            
+        }
     }
 } 
 || {};

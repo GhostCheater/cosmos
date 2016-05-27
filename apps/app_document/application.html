@@ -18,16 +18,16 @@
         <div class="contentTab" id="cT_edit">
             <!-- Actions : Annuler, Refaire -->
             <div class="part" style="width: 5vw;border-right: 1px solid rgb(180, 180, 180);">
-                <img src="apps/app_document/images/edit/actions/undo.svg" style="height: 2.5vh;" /><br />
-                <img src="apps/app_document/images/edit/actions/redo.svg" style="height: 2.5vh;" />
+                <img onclick="app_document.edit.undo();" src="apps/app_document/images/edit/actions/undo.svg" style="height: 2.5vh;" /><br />
+                <img onclick="app_document.edit.redo();" src="apps/app_document/images/edit/actions/redo.svg" style="height: 2.5vh;" />
             </div>
             
             <!-- Presse-papiers : Copier, Couper, Coller -->
             <div class="part" style="width: 12vw;border-right: 1px solid rgb(180, 180, 180);">
-                <img src="apps/app_document/images/edit/clipboard/paste.svg" style="height: 2.5vh;margin-right: 1vw;" />
-                <img src="apps/app_document/images/edit/clipboard/copy.svg" style="height: 2.5vh;margin-right: 1vw;" />
-                <img src="apps/app_document/images/edit/clipboard/cut.svg" style="height: 2.5vh;margin-right: 1vw;" />
-                <img src="apps/app_document/images/edit/clipboard/select.svg" style="height: 2.5vh;" />
+                <img onclick="app_document.edit.paste();" src="apps/app_document/images/edit/clipboard/paste.svg" style="height: 2.5vh;margin-right: 1vw;" />
+                <img onclick="app_document.edit.copy();" src="apps/app_document/images/edit/clipboard/copy.svg" style="height: 2.5vh;margin-right: 1vw;" />
+                <img onclick="app_document.edit.cut();" src="apps/app_document/images/edit/clipboard/cut.svg" style="height: 2.5vh;margin-right: 1vw;" />
+                <img onclick="app_document.edit.selectAll();" src="apps/app_document/images/edit/clipboard/select.svg" style="height: 2.5vh;" />
             </div>
             
             <!-- Police : Police, Taille -->
@@ -110,40 +110,27 @@
                     <option style="font-family: Yu Gothic UI Semilight">Yu Gothic UI Semilight</option>
                 </select>&nbsp;
                 <select class="input" style="width: 5vw;height: 2.5vh;margin-bottom: 1vh;">
-                    <option style="font-size: 8px;">8</option>
-                    <option style="font-size: 9px;">9</option>
-                    <option style="font-size: 10px;">10</option>
-                    <option style="font-size: 11px;">11</option>
-                    <option style="font-size: 12px;" selected>12</option>
-                    <option style="font-size: 14px;">14</option>
-                    <option style="font-size: 16px;">16</option>
-                    <option style="font-size: 18px;">18</option>
-                    <option style="font-size: 20px;">20</option>
-                    <option style="font-size: 24px;">24</option>
-                    <option style="font-size: 28px;">28</option>
-                    <option style="font-size: 32px;">32</option>
-                    <option style="font-size: 38px;">38</option>
-                    <option style="font-size: 44px;">44</option>
-                    <option style="font-size: 50px;">50</option>
-                    <option style="font-size: 58px;">58</option>
-                    <option style="font-size: 66px;">66</option>
-                    <option style="font-size: 74px;">74</option>
-                    <option style="font-size: 82px;">82</option>
-                    <option style="font-size: 92px;">92</option>
+                    <option style="font-size: 3pt;">3 pt</option>
+                    <option style="font-size: 6pt;">6 pt</option>
+                    <option style="font-size: 9pt;">9 pt</option>
+                    <option style="font-size: 12pt;">12 pt</option>
+                    <option style="font-size: 15pt;">15 pt</option>
+                    <option style="font-size: 18pt;">18 pt</option>
+                    <option style="font-size: 21pt;">21 pt</option>
                 </select><br />
                 
                 <img onclick="app_document.edit.setBold();" src="apps/app_document/images/edit/font/bold.svg" style="height: 2.5vh;margin-right: 1vw;" />
                 <img onclick="app_document.edit.setItalic();" src="apps/app_document/images/edit/font/italic.svg" style="height: 2.5vh;margin-right: 1vw;" />
                 <img onclick="app_document.edit.setUnderline();" src="apps/app_document/images/edit/font/underline.svg" style="height: 2.5vh;margin-right: 1vw;" />
-                <img src="apps/app_document/images/edit/font/stroke.svg" style="height: 2.5vh;margin-right: 1vw;" />
-                <img src="apps/app_document/images/edit/font/subscript.svg" style="height: 2.5vh;margin-right: 1vw;" />
-                <img src="apps/app_document/images/edit/font/supscript.svg" style="height: 2.5vh;" />
+                <img onclick="app_document.edit.setStroke();" src="apps/app_document/images/edit/font/stroke.svg" style="height: 2.5vh;margin-right: 1vw;" />
+                <img onclick="app_document.edit.setSub();" src="apps/app_document/images/edit/font/subscript.svg" style="height: 2.5vh;margin-right: 1vw;" />
+                <img onclick="app_document.edit.setSup();" src="apps/app_document/images/edit/font/supscript.svg" style="height: 2.5vh;" />
             </div>
             
             <!-- Style : Couleur, Saturation -->
             <div class="part" style="width: 7vw;border-right: 1px solid rgb(180, 180, 180);">
-                <img src="apps/app_document/images/edit/style/highlight.svg" style="height: 2.5vh;margin-right: 1vw;" />
-                <img src="apps/app_document/images/edit/style/color.svg" style="height: 2.5vh;" />
+                <img onclick="app_document.popup.trigger('pos_edit_highlight');" src="apps/app_document/images/edit/style/highlight.svg" style="height: 2.5vh;margin-right: 1vw;" />
+                <img onclick="app_document.popup.trigger('pos_edit_color');" src="apps/app_document/images/edit/style/color.svg" style="height: 2.5vh;" />
             </div>
             
             <!-- Paragraphe : Alignement -->
@@ -157,11 +144,11 @@
             
             <!-- Préformaté -->
             <div class="part" style="width: 28vw;border-right: 1px solid rgb(180, 180, 180);">
-                <input type="button" value="Abc" class="preformatedText" id="preformated_text" readonly />&nbsp;&nbsp;
-                <input type="button" value="Abc" class="preformatedText" id="preformated_title_1" readonly />&nbsp;&nbsp;
-                <input type="button" value="Abc" class="preformatedText" id="preformated_title_2" readonly />&nbsp;&nbsp;
-                <input type="button" value="Abc" class="preformatedText" id="preformated_title_3" readonly />&nbsp;&nbsp;
-                <input type="button" value="Abc" class="preformatedText" id="preformated_title_4" readonly />
+                <input onclick="app_document.edit.preformated('preformated_text');" type="button" value="Abc" class="preformatedText" id="preformated_text" readonly />&nbsp;&nbsp;
+                <input onclick="app_document.edit.preformated('preformated_title_1');" type="button" value="Abc" class="preformatedText" id="preformated_title_1" readonly />&nbsp;&nbsp;
+                <input onclick="app_document.edit.preformated('preformated_title_2');" type="button" value="Abc" class="preformatedText" id="preformated_title_2" readonly />&nbsp;&nbsp;
+                <input onclick="app_document.edit.preformated('preformated_title_3');" type="button" value="Abc" class="preformatedText" id="preformated_title_3" readonly />&nbsp;&nbsp;
+                <input onclick="app_document.edit.preformated('preformated_title_4');" type="button" value="Abc" class="preformatedText" id="preformated_title_4" readonly />
             </div>
             
             <div class="part" style="width: 6vw;">
@@ -199,6 +186,6 @@
 
 <div id="quickAccess"><span>+</span></div>
 
-<div id="popup" class="pos_edit_color">
+<div id="popup" class="">
     <img src="apps/app_document/images/arrow.svg" class="arrow" />
 </div>

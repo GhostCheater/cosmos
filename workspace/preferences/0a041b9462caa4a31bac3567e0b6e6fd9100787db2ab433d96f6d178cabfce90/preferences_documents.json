@@ -1,55 +1,40 @@
 {
-    "preferences_documents":
-    {
-        "text":
-        {
-            "color": "#000000",
-            "highlight": "transparent",
-            "size": "12px",
+    "preferences_documents": {
+        "text": {
+            "color": "rgb(0, 0, 0)",
+            "size": 3,
             "font": "Tahoma",
             "bold": false,
             "italic": false,
             "underline": false
         },
-        
-        "title_1":
-        {
-            "color": "#ff7600",
-            "highlight": "transparent",
-            "size": "28px",
+        "title_1": {
+            "color": "rgb(255, 118, 0)",
+            "size": 7,
             "font": "Tahoma",
             "bold": false,
             "italic": false,
             "underline": false
         },
-        
-        "title_2":
-        {
-            "color": "#00a7ff",
-            "highlight": "transparent",
-            "size": "24px",
+        "title_2": {
+            "color": "rgb(0, 167, 255)",
+            "size": 6,
             "font": "Tahoma",
             "bold": false,
             "italic": false,
             "underline": false
         },
-        
-        "title_3":
-        {
-            "color": "#17c400",
-            "highlight": "transparent",
-            "size": "20px",
+        "title_3": {
+            "color": "rgb(23, 196, 0)",
+            "size": 5,
             "font": "Tahoma",
             "bold": false,
             "italic": false,
             "underline": false
         },
-        
-        "title_4":
-        {
-            "color": "#c40000",
-            "highlight": "transparent",
-            "size": "16px",
+        "title_4": {
+            "color": "rgb(196, 0, 0)",
+            "size": 4,
             "font": "Tahoma",
             "bold": false,
             "italic": false,
