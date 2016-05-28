@@ -1,7 +1,10 @@
+"use_strict";
+
 var app_document = 
 {
     init: function()
     {
+        // Chargement de la toolbar
         this.preferences.load();
         this.tab.load("edit");
         this.update.states();
@@ -11,7 +14,106 @@ var app_document =
         page.contentEditable = true;
         page.contentDocument.designMode = "on";
         
-        page.focus();
+        // On place le focus sur l'éditeur
+        page.contentWindow.document.execCommand("contentReadOnly", false, true);
+        page.contentWindow.focus();
+        
+        // On espionne l'objet
+        page.contentWindow.document.addEventListener("keydown", function(event)
+        {
+            app_document.keyboard.trigger(event);
+        }, false);
+    },
+    
+    convert:
+    {
+        size_to_px: function(size)
+        {
+            size = parseInt(size);
+            
+            switch(size)
+            {
+                case 1:
+                    return 10;
+                    break;
+                    
+                case 2:
+                    return 13;
+                    break;
+                    
+                case 3:
+                    return 16;
+                    break;
+                    
+                case 4:
+                    return 18;
+                    break;
+                    
+                case 5:
+                    return 24;
+                    break;
+                    
+                case 6:
+                    return 32;
+                    break;
+                    
+                case 7:
+                    return 48;
+                    break;
+                    
+                default:
+                    break;
+            }
+        },
+        
+        px_to_size: function(px)
+        {
+            px = parseInt(px);
+            
+            switch(px)
+            {
+                case 10:
+                    return 1;
+                    break;
+                    
+                case 13:
+                    return 2;
+                    break;
+                    
+                case 16:
+                    return 3;
+                    break;
+                    
+                case 18:
+                    return 4;
+                    break;
+                    
+                case 24:
+                    return 5;
+                    break;
+                    
+                case 32:
+                    return 6;
+                    break;
+                    
+                case 48:
+                    return 7;
+                    break;
+                    
+                default:
+                    break;
+            }
+        }
+    },
+    
+    loader:
+    {
+        trigger: function()
+        {
+            var loaderArea = document.querySelector("#app_document #loaderArea");
+            
+            loaderArea.className = (loaderArea.className === "") ? "loaderHide" : "";
+        }
     },
     
     tab:
@@ -91,13 +193,13 @@ var app_document =
             {
                 if({}.hasOwnProperty.call(data["preferences_documents"], type))
                 {
-                    var bold = (data["preferences_documents"][type]["bold"]) ? "font-weight:bold;" : "";
-                    var italic = (data["preferences_documents"][type]["italic"]) ? "font-style:italic;" : "";
-                    var underline = (data["preferences_documents"][type]["underline"]) ? "text-decoration:underline;" : "";
+                    var bold = (data["preferences_documents"][type]["bold"]) ? "font-weight: bold;" : "font-weight: normal;";
+                    var italic = (data["preferences_documents"][type]["italic"]) ? "font-style: italic;" : "font-style: normal;";
+                    var underline = (data["preferences_documents"][type]["underline"]) ? "text-decoration: underline;" : "text-decoration: none;";
                         
                     var style = "color:"+data["preferences_documents"][type]["color"]+
                                 ";font-family:"+data["preferences_documents"][type]["font"]+
-                                ";font-size:"+parseFloat(data["preferences_documents"][type]["size"]) * 3+"pt"+
+                                ";font-size:"+app_document.convert.size_to_px(data["preferences_documents"][type]["size"])+"px"+
                                 ";" + bold + italic + underline;
                     
                     style += "display: inline;vertical-align:middle;";
@@ -105,6 +207,32 @@ var app_document =
                     document.querySelector("#app_document #navBar #preformated_"+type).style = [style];
                 }
             }
+            
+            // On applique le style "Corps de texte" par défaut
+            var page = document.querySelector("#app_document #page");
+            
+            var style_preformated_text = document.querySelector("#app_document #navBar #preformated_text").style;
+            
+            var color = style_preformated_text.color;
+            var size = style_preformated_text.fontSize;
+            var font = style_preformated_text.fontFamily;
+            var bold = style_preformated_text.fontWeight;
+            var italic = style_preformated_text.fontStyle;
+            var underline = style_preformated_text.textDecoration;
+            
+            page.contentWindow.document.body.style.color = color;
+            page.contentWindow.document.body.style.fontSize = size * 3;
+            page.contentWindow.document.body.style.fontFamily = font;
+            page.contentWindow.document.body.style.fontWeight = bold;
+            page.contentWindow.document.body.style.fontStyle = italic;
+            page.contentWindow.document.body.style.textDecoration = underline;
+            
+            // On "relâche" l'éditeur
+            page.contentWindow.document.execCommand("contentReadOnly", false, false);
+            page.focus();
+            
+            // On masque le loader
+            app_document.loader.trigger();
         }
     },
     
@@ -153,6 +281,12 @@ var app_document =
                 if(isRight) {buttons[17].className = "selected";} else {buttons[17].className = "";}
                 if(isJustify) {buttons[18].className = "selected";} else {buttons[18].className = "";}
             }, 100);
+        },
+        
+        tree: function()
+        {
+            var titles = document.querySelector("#app_document #page").contentWindow.document.querySelectorAll("p");
+            var preforms = document.querySelectorAll("#app_document #navBar .preformatedText");
         }
     },
     
@@ -282,6 +416,23 @@ var app_document =
         {
             if(document.querySelector("#app_document #navBar #"+section))
             {
+                // Affichage du loader
+                app_document.loader.trigger();
+                
+                var range = this.page().contentWindow.document.createRange();
+                
+                if(this.page().contentWindow.document.getSelection().anchorOffset === this.page().contentWindow.document.getSelection().focusOffset && this.page().contentWindow.document.getSelection().anchorNode === this.page().contentWindow.document.getSelection().focusNode)
+                {
+                    // Aucun texte n'est sélectionné, on applique le style à la ligne
+                    var sel = this.page().contentWindow.document.getSelection();
+                    
+                    range.setStart(sel.anchorNode, 0);
+                    range.setEnd(sel.anchorNode, sel.anchorNode.textContent.length);
+                    
+                    sel.removeAllRanges();
+                    sel.addRange(range);
+                }
+                
                 this.page().contentWindow.document.execCommand("removeFormat",false, null);
                 
                 this.page().contentWindow.document.execCommand("styleWithCSS", false, true);
@@ -290,20 +441,43 @@ var app_document =
                 
                 var color = style.color;
                 var size = style.fontSize;
+                
                 var font = style.fontFamily;
                 var bold = style.fontWeight;
                 var italic = style.fontStyle;
-                var underline = style.textDecoration
+                var underline = style.textDecoration;
                 
-                if(bold !== "" && bold !== null && bold !== undefined){ this.page().contentWindow.document.execCommand("bold", false, null); }
-                if(italic !== "" && italic !== null && italic !== undefined){ this.page().contentWindow.document.execCommand("italic", false, null); }
-                if(underline !== "" && underline !== null && underline !== undefined){ this.page().contentWindow.document.execCommand("underline", false, null); }
+                var size = app_document.convert.px_to_size(size);
+                
+                this.page().contentWindow.document.execCommand("fontSize", false, size);
+                
+                if(section !== "preformated_text")
+                {
+                    this.page().contentWindow.document.execCommand("formatBlock", false, "<p>");
+                }
                 
                 this.page().contentWindow.document.execCommand("foreColor", false, color);
-                this.page().contentWindow.document.execCommand("fontSize", false, parseFloat(size) / 3);
                 this.page().contentWindow.document.execCommand("fontName", false, font);
                 
+                if(bold !== "normal"){ this.page().contentWindow.document.execCommand("bold", false, null); }
+                if(italic !== "normal"){ this.page().contentWindow.document.execCommand("italic", false, null); }
+                if(underline !== "none"){ this.page().contentWindow.document.execCommand("underline", false, null); }
+                
+                this.page().contentWindow.document.getSelection().collapseToEnd();
+                
                 this.page().focus();
+                
+                // Si le style est un titre, on applique un retour à la ligne et on remet en place le style de "Corps de texte"
+                if(section !== "preformated_text")
+                {
+                    this.page().contentWindow.document.execCommand("insertHTML", false, "<br><br>");
+                    this.page().contentWindow.document.execCommand("insertHTML", false, "\001");
+
+                    app_document.edit.preformated("preformated_text");
+                }
+                
+                // Masquage du loader
+                app_document.loader.trigger();
             }
         }
     },
@@ -321,6 +495,14 @@ var app_document =
         load: function(tab)
         {
             
+        }
+    },
+    
+    keyboard:
+    {
+        trigger: function(event)
+        {
+            app_document.update.tree();
         }
     }
 } 

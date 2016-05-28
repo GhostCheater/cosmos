@@ -110,13 +110,13 @@
                     <option style="font-family: Yu Gothic UI Semilight">Yu Gothic UI Semilight</option>
                 </select>&nbsp;
                 <select class="input" style="width: 5vw;height: 2.5vh;margin-bottom: 1vh;">
-                    <option style="font-size: 3pt;">3 pt</option>
                     <option style="font-size: 6pt;">6 pt</option>
                     <option style="font-size: 9pt;">9 pt</option>
                     <option style="font-size: 12pt;">12 pt</option>
                     <option style="font-size: 15pt;">15 pt</option>
                     <option style="font-size: 18pt;">18 pt</option>
                     <option style="font-size: 21pt;">21 pt</option>
+                    <option style="font-size: 24pt;">24 pt</option>
                 </select><br />
                 
                 <img onclick="app_document.edit.setBold();" src="apps/app_document/images/edit/font/bold.svg" style="height: 2.5vh;margin-right: 1vw;" />
@@ -144,11 +144,11 @@
             
             <!-- Préformaté -->
             <div class="part" style="width: 28vw;border-right: 1px solid rgb(180, 180, 180);">
-                <input onclick="app_document.edit.preformated('preformated_text');" type="button" value="Abc" class="preformatedText" id="preformated_text" readonly />&nbsp;&nbsp;
-                <input onclick="app_document.edit.preformated('preformated_title_1');" type="button" value="Abc" class="preformatedText" id="preformated_title_1" readonly />&nbsp;&nbsp;
-                <input onclick="app_document.edit.preformated('preformated_title_2');" type="button" value="Abc" class="preformatedText" id="preformated_title_2" readonly />&nbsp;&nbsp;
-                <input onclick="app_document.edit.preformated('preformated_title_3');" type="button" value="Abc" class="preformatedText" id="preformated_title_3" readonly />&nbsp;&nbsp;
-                <input onclick="app_document.edit.preformated('preformated_title_4');" type="button" value="Abc" class="preformatedText" id="preformated_title_4" readonly />
+                <input onclick="app_document.edit.preformated('preformated_text');" type="button" value="Aa" class="preformatedText" id="preformated_text" readonly />&nbsp;&nbsp;
+                <input onclick="app_document.edit.preformated('preformated_title_1');" type="button" value="Aa" class="preformatedText" id="preformated_title_1" readonly />&nbsp;&nbsp;
+                <input onclick="app_document.edit.preformated('preformated_title_2');" type="button" value="Aa" class="preformatedText" id="preformated_title_2" readonly />&nbsp;&nbsp;
+                <input onclick="app_document.edit.preformated('preformated_title_3');" type="button" value="Aa" class="preformatedText" id="preformated_title_3" readonly />&nbsp;&nbsp;
+                <input onclick="app_document.edit.preformated('preformated_title_4');" type="button" value="Aa" class="preformatedText" id="preformated_title_4" readonly />
             </div>
             
             <div class="part" style="width: 6vw;">
@@ -188,4 +188,9 @@
 
 <div id="popup" class="">
     <img src="apps/app_document/images/arrow.svg" class="arrow" />
+</div>
+
+<div id="tree">
+    <div class="head"><span>Architecture du document</span></div>
+    <div class="body"></div>
 </div>
