@@ -6,7 +6,7 @@ var app_document =
     {
         // Chargement de la toolbar
         this.preferences.load();
-        this.tab.load("edit");
+        this.tab.load("insert");
         this.update.states();
         
         // Création de l'éditeur
@@ -20,6 +20,10 @@ var app_document =
         
         // On espionne l'objet
         page.contentWindow.document.addEventListener("keyup", function(event)
+        {
+            app_document.keyboard.trigger(event);
+        }, false);
+        page.contentWindow.document.addEventListener("click", function(event)
         {
             app_document.keyboard.trigger(event);
         }, false);
@@ -387,7 +391,31 @@ var app_document =
             var e = document.querySelector("#app_document #navBar #fonts");
             var font = e.options[e.selectedIndex].value;
             
-            console.log(font);
+            var range = this.page().contentWindow.document.createRange();
+                
+            if(this.page().contentWindow.document.getSelection().anchorOffset === this.page().contentWindow.document.getSelection().focusOffset && this.page().contentWindow.document.getSelection().anchorNode === this.page().contentWindow.document.getSelection().focusNode)
+            {
+                // Aucun texte n'est sélectionné, on applique le style à la ligne
+                var sel = this.page().contentWindow.document.getSelection();
+
+                range.setStart(sel.anchorNode, 0);
+                range.setEnd(sel.anchorNode, sel.anchorNode.textContent.length);
+
+                sel.removeAllRanges();
+                sel.addRange(range);
+            }
+            
+            this.page().contentWindow.document.execCommand("fontName", false, font);
+            
+            // On replace à la fin de la sélection
+            this.page().contentWindow.document.getSelection().collapseToEnd();
+            this.page().focus();
+        },
+        
+        setSize: function()
+        {
+            var e = document.querySelector("#app_document #navBar #sizes");
+            var size = app_document.convert.px_to_size(e.options[e.selectedIndex].value);
             
             var range = this.page().contentWindow.document.createRange();
                 
@@ -403,19 +431,11 @@ var app_document =
                 sel.addRange(range);
             }
             
-//            this.page().contentWindow.document.execCommand("removeFormat",false, null);
-//            this.page().contentWindow.document.execCommand("styleWithCSS", false, true);
-            
-            this.page().contentWindow.document.execCommand("fontName", false, font);
+            this.page().contentWindow.document.execCommand("fontSize", false, size);
             
             // On replace à la fin de la sélection
             this.page().contentWindow.document.getSelection().collapseToEnd();
             this.page().focus();
-        },
-        
-        setSize: function()
-        {
-            
         },
         
         setBold: function()
@@ -644,6 +664,16 @@ var app_document =
         }
     },
     
+    insert:
+    {
+        page: function(){ return document.querySelector("#app_document #page"); },
+        
+        tab: function()
+        {
+            this.page().contentWindow.document.execCommand("insertHTML", false, "<br><table style='width: 100%;border-collapse: collapse;'><tr><td style='border: 1px solid black;'></td><td style='border: 1px solid black;'></td></tr><tr><td style='border: 1px solid black;'></td><td style='border: 1px solid black;'></td></tr></table><br>");   
+        }
+    },
+    
     popup:
     {
         trigger: function(tab)
@@ -688,13 +718,18 @@ var app_document =
     
     keyboard:
     {
+        page: function(){ return document.querySelector("#app_document #page"); },
+        
         trigger: function(event)
         {
-            // Mise à jour de l'architecture du document
+            /*
+            * Mise à jour de l'architecture du document
+            */
             app_document.update.tree();
             
-            // Mise à jour des status
-            
+            /*
+            * Mise à jour des statuts
+            */
             // Recherche de la police
             var select = page.contentWindow.document.getSelection();
             var element = (select.anchorNode == page.contentWindow.document.body) ? page.contentWindow.document.body : select.anchorNode.parentNode;
@@ -707,9 +742,69 @@ var app_document =
 
             // Recherche de la taille
             var size = getComputedStyle(element).fontSize;
-
             document.querySelector("#app_document #navBar #sizes").value = size;
-    }
+            
+            /*
+            * Mise à jour du QuickAccess
+            */
+            var range = this.page().contentWindow.document.getSelection();
+            
+            var toAnalyze = (range.anchorNode.toString() == "[object Text]") ? range.anchorNode.parentNode.toString() : range.anchorNode.toString();
+            
+            console.log(toAnalyze);
+            
+            var element = document.querySelector("#app_document #quickAccess_popup .body span");
+            
+            switch(toAnalyze)
+            {
+                case "[object Text]": // Texte
+                case "[object HTMLBodyElement]":
+                    this.quickAccess("text");
+                    break;
+                    
+                case "[object HTMLLIElement]": // Liste à puces
+                case "[object HTMLUListElement]":
+                    this.quickAccess("list");
+                    break;
+                    
+                case "[object HTMLTableCellElement]": // Tableau
+                    this.quickAccess("table");
+                    break;
+                    
+                default:
+                    break;
+            }
+        },
+        
+        quickAccess: function(wht)
+        {
+            var toAppend = "";
+            
+            switch(wht)
+            {
+                case "text":
+                    break;
+                    
+                case "list":
+                    break;
+                    
+                case "table":
+                    
+                    toAppend = "" +
+                        "<p>" +
+                            "<img src='apps/app_document/images/quickAccess/table/add_row.svg' style='margin-right: 1vw;' />" +
+                            "<img src='apps/app_document/images/quickAccess/table/remove_row.svg' style='margin-right: 1vw;' />" +
+                            "<img src='apps/app_document/images/quickAccess/table/add_column.svg' style='margin-right: 1vw;' />" +
+                            "<img src='apps/app_document/images/quickAccess/table/remove_column.svg' />" +
+                        "</p>";
+                    break;
+                    
+                default:
+                    break;
+            }
+            
+            document.querySelector("#app_document #quickAccess_popup #quickAccess_actions_specials").innerHTML = toAppend;
+        }
     }
 } 
 || {};

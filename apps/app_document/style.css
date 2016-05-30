@@ -280,6 +280,108 @@
     text-align: center;
 }
 
+#app_document #quickAccess_popup
+{
+    position: absolute;
+    top: 38%;
+    right: 3%;
+    width: 14%;
+    height: 50%;
+    
+    background-color: rgb(240, 240, 240);
+    
+    border-radius: 3px;
+}
+
+#app_document #quickAccess_popup .arrow
+{
+    position: absolute;
+    bottom: -1.8vh;
+    right: 0;
+    height: 3vh;
+}
+
+#app_document #quickAccess_popup .head
+{
+    display: table;
+    
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 15%;
+    width: 100%;
+    
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    
+    background-color: rgb(177, 177, 177);
+}
+
+#app_document #quickAccess_popup .head span
+{
+    display: table-cell;
+    vertical-align: middle;
+    
+    text-align: center;
+}
+
+#app_document #quickAccess_popup .body
+{
+    display: table;
+    
+    position: absolute;
+    top: 15%;
+    left: 0;
+    max-height: 85%;
+    width: 100%;
+}
+
+#app_document #quickAccess_popup .body span
+{
+    display: table-row;
+    
+    height: 5vh;
+}
+
+#app_document #quickAccess_popup .body .title p
+{
+    font-size: 16px;
+    
+    text-align: left;
+    
+    padding-left: 1vw;
+}
+
+#app_document #quickAccess_popup .body .actions p
+{
+    text-align: center;
+}
+
+#app_document #quickAccess_popup .body span p
+{
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#app_document #quickAccess_popup .body span p img
+{
+    transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    
+    border-radius: 3px;
+    
+    height: 2.5vh;
+    
+    cursor: pointer;
+}
+#app_document #quickAccess_popup .body span p img:hover
+{
+    background-color: rgba(0, 196, 255, 0.2);
+}
+
 #app_document #content #page
 {
 	position: absolute;
@@ -402,10 +504,10 @@
 #app_document #tree
 {
     position: absolute;
-    top: 30%;
+    top: 25%;
     left: 3%;
     width: 14%;
-    height: 50%;
+    height: 30%;
     
     border-radius: 3px;
     
@@ -474,3 +576,76 @@
 #app_document #tree .body .titles span p.title_2 {padding-left: 2vw;}
 #app_document #tree .body .titles span p.title_3 {padding-left: 3vw;}
 #app_document #tree .body .titles span p.title_4 {padding-left: 4.3vw;}
+
+#app_document #references
+{
+    position: absolute;
+    top: 65%;
+    left: 3%;
+    width: 14%;
+    height: 30%;
+    
+    border-radius: 3px;
+    
+    background-color: rgb(240, 240, 240);
+}
+
+#app_document #references .head
+{
+    display: table;
+    
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 15%;
+    width: 100%;
+    
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    
+    background-color: rgb(177, 177, 177);
+}
+
+#app_document #references .head span
+{
+    display: table-cell;
+    vertical-align: middle;
+    
+    text-align: center;
+}
+
+#app_document #references .body
+{
+    position: absolute;
+    top: 15%;
+    left: 0;
+    height: 85%;
+    width: 100%;
+    
+    overflow: auto;
+}
+
+#app_document #references .body .references
+{
+    display: table;
+    
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+#app_document #references .body .references span
+{
+    display: table-row;
+    
+    height: 5vh;
+}
+
+#app_document #references .body .references span p
+{
+    display: table-cell;
+    vertical-align: middle;
+    
+    padding-left: 1vw;
+}

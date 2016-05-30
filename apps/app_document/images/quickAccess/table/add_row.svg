@@ -1,0 +1,13 @@
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 80 80" style="enable-background:new 0 0 80 80;" xml:space="preserve">
+    <rect x="10" y="60" style="fill:#36404D;" width="60" height="4"></rect>
+    <rect x="10" y="20" style="fill:#36404D;" width="60" height="4"></rect>
+    
+    
+    <rect x="10" y="20" style="fill:#36404D;" height="41" width="4"></rect>
+    <rect x="66" y="20" style="fill:#36404D;" height="41" width="4"></rect>
+    
+    <circle cx="65" cy="62" r="15" fill="#00a200"></circle>
+    
+    <rect x="58" y="60" style="fill:#ffffff;" width="15" height="4"></rect>
+    <rect x="63.5" y="55" style="fill:#ffffff;" height="15" width="4"></rect>
+</svg>

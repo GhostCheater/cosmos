@@ -18,21 +18,21 @@
         <div class="contentTab" id="cT_edit">
             <!-- Actions : Annuler, Refaire -->
             <div class="part" style="width: 5vw;border-right: 1px solid rgb(180, 180, 180);">
-                <img onclick="app_document.edit.undo();" src="apps/app_document/images/edit/actions/undo.svg" style="height: 2.5vh;" /><br />
-                <img onclick="app_document.edit.redo();" src="apps/app_document/images/edit/actions/redo.svg" style="height: 2.5vh;" />
+                <img onclick="app_document.edit.undo();" src="apps/app_document/images/edit/actions/undo.svg" style="height: 2.8vh;" /><br />
+                <img onclick="app_document.edit.redo();" src="apps/app_document/images/edit/actions/redo.svg" style="height: 2.8vh;" />
             </div>
             
             <!-- Presse-papiers : Copier, Couper, Coller -->
             <div class="part" style="width: 12vw;border-right: 1px solid rgb(180, 180, 180);">
-                <img onclick="app_document.edit.paste();" src="apps/app_document/images/edit/clipboard/paste.svg" style="height: 2.5vh;margin-right: 1vw;" />
-                <img onclick="app_document.edit.copy();" src="apps/app_document/images/edit/clipboard/copy.svg" style="height: 2.5vh;margin-right: 1vw;" />
-                <img onclick="app_document.edit.cut();" src="apps/app_document/images/edit/clipboard/cut.svg" style="height: 2.5vh;margin-right: 1vw;" />
-                <img onclick="app_document.edit.selectAll();" src="apps/app_document/images/edit/clipboard/select.svg" style="height: 2.5vh;" />
+                <img onclick="app_document.edit.paste();" src="apps/app_document/images/edit/clipboard/paste.svg" style="height: 2.8vh;margin-right: 1vw;" />
+                <img onclick="app_document.edit.copy();" src="apps/app_document/images/edit/clipboard/copy.svg" style="height: 2.8vh;margin-right: 1vw;" />
+                <img onclick="app_document.edit.cut();" src="apps/app_document/images/edit/clipboard/cut.svg" style="height: 2.8vh;margin-right: 1vw;" />
+                <img onclick="app_document.edit.selectAll();" src="apps/app_document/images/edit/clipboard/select.svg" style="height: 2.8vh;" />
             </div>
             
             <!-- Police : Police, Taille -->
             <div class="part" style="width: 18vw;border-right: 1px solid rgb(180, 180, 180);" onchange="app_document.edit.setFont();">
-                <select class="input" style="width: 10vw;height: 2.5vh;" id="fonts">
+                <select class="input" style="width: 10vw;height: 2.8vh;" id="fonts">
                     <option style="font-family: Arial">Arial</option>
                     <option style="font-family: Arial Black">Arial Black</option>
                     <option style="font-family: Arimo">Arimo</option>
@@ -109,7 +109,7 @@
                     <option style="font-family: Yu Gothic UI Semibold">Yu Gothic UI Semibold</option>
                     <option style="font-family: Yu Gothic UI Semilight">Yu Gothic UI Semilight</option>
                 </select>&nbsp;
-                <select class="input" style="width: 5vw;height: 2.5vh;margin-bottom: 1vh;" id="sizes">
+                <select class="input" style="width: 5vw;height: 2.8vh;margin-bottom: 1vh;" id="sizes" onchange="app_document.edit.setSize();">
                     <option style="font-size: 10px;">10px</option>
                     <option style="font-size: 13px;">13px</option>
                     <option style="font-size: 16px;">16px</option>
@@ -119,27 +119,27 @@
                     <option style="font-size: 48px;">48px</option>
                 </select><br />
                 
-                <img onclick="app_document.edit.setBold();" src="apps/app_document/images/edit/font/bold.svg" style="height: 2.5vh;margin-right: 1vw;" />
-                <img onclick="app_document.edit.setItalic();" src="apps/app_document/images/edit/font/italic.svg" style="height: 2.5vh;margin-right: 1vw;" />
-                <img onclick="app_document.edit.setUnderline();" src="apps/app_document/images/edit/font/underline.svg" style="height: 2.5vh;margin-right: 1vw;" />
-                <img onclick="app_document.edit.setStroke();" src="apps/app_document/images/edit/font/stroke.svg" style="height: 2.5vh;margin-right: 1vw;" />
-                <img onclick="app_document.edit.setSub();" src="apps/app_document/images/edit/font/subscript.svg" style="height: 2.5vh;margin-right: 1vw;" />
-                <img onclick="app_document.edit.setSup();" src="apps/app_document/images/edit/font/supscript.svg" style="height: 2.5vh;" />
+                <img onclick="app_document.edit.setBold();" src="apps/app_document/images/edit/font/bold.svg" style="height: 2.8vh;margin-right: 1vw;" />
+                <img onclick="app_document.edit.setItalic();" src="apps/app_document/images/edit/font/italic.svg" style="height: 2.8vh;margin-right: 1vw;" />
+                <img onclick="app_document.edit.setUnderline();" src="apps/app_document/images/edit/font/underline.svg" style="height: 2.8vh;margin-right: 1vw;" />
+                <img onclick="app_document.edit.setStroke();" src="apps/app_document/images/edit/font/stroke.svg" style="height: 2.8vh;margin-right: 1vw;" />
+                <img onclick="app_document.edit.setSub();" src="apps/app_document/images/edit/font/subscript.svg" style="height: 2.8vh;margin-right: 1vw;" />
+                <img onclick="app_document.edit.setSup();" src="apps/app_document/images/edit/font/supscript.svg" style="height: 2.8vh;" />
             </div>
             
             <!-- Style : Couleur, Saturation -->
             <div class="part" style="width: 7vw;border-right: 1px solid rgb(180, 180, 180);">
-                <img onclick="app_document.popup.trigger('pos_edit_highlight');" src="apps/app_document/images/edit/style/highlight.svg" style="height: 2.5vh;margin-right: 1vw;" />
-                <img onclick="app_document.popup.trigger('pos_edit_color');" src="apps/app_document/images/edit/style/color.svg" style="height: 2.5vh;" />
+                <img onclick="app_document.popup.trigger('pos_edit_highlight');" src="apps/app_document/images/edit/style/highlight.svg" style="height: 2.8vh;margin-right: 1vw;" />
+                <img onclick="app_document.popup.trigger('pos_edit_color');" src="apps/app_document/images/edit/style/color.svg" style="height: 2.8vh;" />
             </div>
             
             <!-- Paragraphe : Alignement -->
             <div class="part" style="width: 14vw;border-right: 1px solid rgb(180, 180, 180);">
-                <img onclick="app_document.edit.setList();" src="apps/app_document/images/edit/paragraph/list.svg" style="height: 2.5vh;margin-right: 1vw;" />
-                <img onclick="app_document.edit.setLeft();" src="apps/app_document/images/edit/paragraph/left.svg" style="height: 2.5vh;margin-right: 1vw;" />
-                <img onclick="app_document.edit.setCenter();" src="apps/app_document/images/edit/paragraph/center.svg" style="height: 2.5vh;margin-right: 1vw;" />
-                <img onclick="app_document.edit.setRight();" src="apps/app_document/images/edit/paragraph/right.svg" style="height: 2.5vh;margin-right: 1vw;" />
-                <img onclick="app_document.edit.setJustify();" src="apps/app_document/images/edit/paragraph/justify.svg" style="height: 2.5vh;" />
+                <img onclick="app_document.edit.setList();" src="apps/app_document/images/edit/paragraph/list.svg" style="height: 2.8vh;margin-right: 1vw;" />
+                <img onclick="app_document.edit.setLeft();" src="apps/app_document/images/edit/paragraph/left.svg" style="height: 2.8vh;margin-right: 1vw;" />
+                <img onclick="app_document.edit.setCenter();" src="apps/app_document/images/edit/paragraph/center.svg" style="height: 2.8vh;margin-right: 1vw;" />
+                <img onclick="app_document.edit.setRight();" src="apps/app_document/images/edit/paragraph/right.svg" style="height: 2.8vh;margin-right: 1vw;" />
+                <img onclick="app_document.edit.setJustify();" src="apps/app_document/images/edit/paragraph/justify.svg" style="height: 2.8vh;" />
             </div>
             
             <!-- Préformaté -->
@@ -152,14 +152,54 @@
             </div>
             
             <div class="part" style="width: 6vw;">
-                <img src="apps/app_document/images/edit/modification/find.svg" style="height: 2.5vh;" /><br />
-                <img src="apps/app_document/images/edit/modification/find_replace.svg" style="height: 2.5vh;" />
+                <img src="apps/app_document/images/edit/modification/find.svg" style="height: 2.8vh;" /><br />
+                <img src="apps/app_document/images/edit/modification/find_replace.svg" style="height: 2.8vh;" />
             </div>
         </div>
-        <div vlass="contentTab" id="cT_insert"></div>
-        <div vlass="contentTab" id="cT_layout"></div>
-        <div vlass="contentTab" id="cT_export"></div>
-        <div vlass="contentTab" id="cT_settings"></div>
+        <div class="contentTab" id="cT_insert">
+            <!-- Tableau -->
+            <div class="part" style="width: 5vw;border-right: 1px solid rgb(180, 180, 180);">
+                <img onclick="app_document.insert.tab();" src="apps/app_document/images/insert/tab/insert.svg" style="height: 2.8vh;" />
+            </div>
+            
+            <!-- Images -->
+            <div class="part" style="width: 10vw;border-right: 1px solid rgb(180, 180, 180);">
+                <img onclick="app_document.insert.image.local();" src="apps/app_document/images/insert/images/insert_local.svg" style="height: 2.8vh;margin-right: 1vw;" />
+                <img onclick="app_document.insert.image.web();" src="apps/app_document/images/insert/images/insert_web.svg" style="height: 2.8vh;" />
+            </div>
+            
+            <!-- Lien -->
+            <div class="part" style="width: 5vw;border-right: 1px solid rgb(180, 180, 180);">
+                <img onclick="app_document.insert.link();" src="apps/app_document/images/insert/link/insert.svg" style="height: 2.8vh;" />
+            </div>
+            
+            <!-- Formule -->
+            <div class="part" style="width: 5vw;border-right: 1px solid rgb(180, 180, 180);">
+                <img onclick="app_document.insert.formula();" src="apps/app_document/images/insert/formula/insert.svg" style="height: 2.8vh;" />
+            </div>
+            
+            <!-- Paragraphe : Saut de page, bas de page, haut de page, champs spéciaux -->
+            <div class="part" style="width: 15vw;border-right: 1px solid rgb(180, 180, 180);">
+                <img onclick="app_document.insert.header();" src="apps/app_document/images/insert/layout/header.svg" style="height: 2.8vh;margin-right: 1vw;" />
+                <img onclick="app_document.insert.footer();" src="apps/app_document/images/insert/layout/footer.svg" style="height: 2.8vh;margin-right: 1vw;" />
+                <img onclick="app_document.insert.jump();" src="apps/app_document/images/insert/layout/jump.svg" style="height: 2.8vh;margin-right: 1vw;" />
+                <img onclick="app_document.insert.summary();" src="apps/app_document/images/insert/layout/summary.svg" style="height: 2.8vh;" />
+            </div>
+            
+            <!-- Note de base de page -->
+            <div class="part" style="width: 5vw; border-right: 1px solid rgb(180, 180, 180);">
+                <img onclick="app_document.insert.note();" src="apps/app_document/images/insert/note/insert.svg" style="height: 2.8vh;" />
+            </div>
+            
+            <!-- Caractères spéciaux -->
+            <div class="part" style="width: 10vw;">
+                <img onclick="app_document.insert.special.char();" src="apps/app_document/images/insert/special/insert_char.svg" style="height: 2.8vh;margin-right: 1vw;" />
+                <img onclick="app_document.insert.special.form();" src="apps/app_document/images/insert/special/insert_form.svg" style="height: 2.8vh;" />
+            </div>
+        </div>
+        <div class="contentTab" id="cT_layout"></div>
+        <div class="contentTab" id="cT_export"></div>
+        <div class="contentTab" id="cT_settings"></div>
     </div>
     <div id="titlesTabs">
         <div class="titlesTab" id="tT_edit">
@@ -171,7 +211,15 @@
             <div class="part" style="width: 28vw;">Texte et titres</div>
             <div class="part" style="width: 6vw;">Modification</div>
         </div>
-        <div class="titlesTab" id="tT_insert"></div>
+        <div class="titlesTab" id="tT_insert">
+            <div class="part" style="width: 5vw;">Tableau</div>
+            <div class="part" style="width: calc(10vw + 1px);">Image</div>
+            <div class="part" style="width: calc(5vw + 1px);">Lien</div>
+            <div class="part" style="width: 5vw;">Formule</div>
+            <div class="part" style="width: 15vw;">Mise en forme</div>
+            <div class="part" style="width: 5vw;">Référence</div>
+            <div class="part" style="width: 10vw;">Spécial</div>
+        </div>
         <div class="titlesTab" id="tT_layout"></div>
         <div class="titlesTab" id="tT_export"></div>
         <div class="titlesTab" id="tT_settings"></div>
@@ -185,6 +233,37 @@
 <div id="loaderArea"><img src="images/loader.png" /></div>
 
 <div id="quickAccess"><span>+</span></div>
+
+<div id="quickAccess_popup">
+    <img src="apps/app_document/images/quickAccess/arrow.svg" class="arrow" />
+    
+    <div class="head"><span>Accès rapide</span></div>
+    <div class="body">
+        <span class="title"><p>&Eacute;dition</p></span>
+        <span class="actions">
+            <p>
+                <img src="apps/app_document/images/edit/font/bold.svg" style="margin-right: 1vw;" />
+                <img src="apps/app_document/images/edit/font/italic.svg" style="margin-right: 1vw;" />
+                <img src="apps/app_document/images/edit/font/underline.svg" style="margin-right: 1vw;" />
+                <img src="apps/app_document/images/edit/font/stroke.svg" style="" />
+            </p>
+        </span>
+        
+        <span class="title"><p>Insertion</p></span>
+        <span class="actions">
+            <p>
+                <img src="apps/app_document/images/insert/tab/insert.svg" style="margin-right: 1vw;" />
+                <img src="apps/app_document/images/insert/images/insert_local.svg" style="margin-right: 1vw;" />
+                <img src="apps/app_document/images/insert/link/insert.svg" style="margin-right: 1vw;" />
+                <img src="apps/app_document/images/insert/formula/insert.svg" style="margin-right: 1vw;" />
+                <img src="apps/app_document/images/insert/special/insert_char.svg" style="" />
+            </p>
+        </span>
+        
+        <span class="title"><p>Spécial</p></span>
+        <span class="actions" id="quickAccess_actions_specials"></span>
+    </div>
+</div>
 
 <div id="popup">
     <img src="apps/app_document/images/arrow.svg" class="arrow" />
@@ -230,4 +309,13 @@
 <div id="tree">
     <div class="head"><span>Architecture</span></div>
     <div class="body"><div class="titles"></div></div>
+</div>
+
+<div id="references">
+    <div class="head"><span>Références</span></div>
+    <div class="body"><div class="references">
+        <span><p>1. Blablabla</p></span>
+        <span><p>2. Blablabla</p></span>
+        <span><p>3. Blablabla</p></span>
+    </div></div>
 </div>
