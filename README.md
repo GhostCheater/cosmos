@@ -11,7 +11,7 @@ CosmOS est un WebOS vous permettant d'accéder à vos fichiers et de les manipul
 ## Avancement
 - Interface globale : 95 %
 - Application "Explorateur de fichiers" : 90%
-- Application "Editeur de documents" : 10%
+- Application "Editeur de documents" : 20%
 - Application "Visionneuse d'images" : 0%
 - Application "Visionneuse de PDF" : 0%
 - Application "Visionneuse de vidéos" : 0%
