@@ -19,7 +19,7 @@ var app_document =
         page.contentWindow.focus();
         
         // On espionne l'objet
-        page.contentWindow.document.addEventListener("keydown", function(event)
+        page.contentWindow.document.addEventListener("keyup", function(event)
         {
             app_document.keyboard.trigger(event);
         }, false);
@@ -221,7 +221,7 @@ var app_document =
             var underline = style_preformated_text.textDecoration;
             
             page.contentWindow.document.body.style.color = color;
-            page.contentWindow.document.body.style.fontSize = size * 3;
+            page.contentWindow.document.body.style.fontSize = app_document.convert.size_to_px(size) + "px";
             page.contentWindow.document.body.style.fontFamily = font;
             page.contentWindow.document.body.style.fontWeight = bold;
             page.contentWindow.document.body.style.fontStyle = italic;
@@ -256,7 +256,8 @@ var app_document =
                 * 18 : Alignement justifié
                 */
                 var buttons = document.querySelectorAll("#app_document #navBar img");
-
+                
+                // Recherche des styles
                 var isBold = page.contentWindow.document.queryCommandState("bold");
                 var isItalic = page.contentWindow.document.queryCommandState("italic");
                 var isUnderline = page.contentWindow.document.queryCommandState("underline");
@@ -285,8 +286,49 @@ var app_document =
         
         tree: function()
         {
-            var titles = document.querySelector("#app_document #page").contentWindow.document.querySelectorAll("p");
+            var titles = document.querySelector("#app_document #page").contentWindow.document.querySelectorAll("p span font");
             var preforms = document.querySelectorAll("#app_document #navBar .preformatedText");
+            var list = [];
+            
+            // Récupération de la liste des titres suivant les différents styles
+            for(var i = 0; i < titles.length; i++)
+            {
+                var cStyle = getComputedStyle(titles[i]);
+                
+                for(var a = 0; a < preforms.length; a++)
+                {                    
+                    var cStyleTab = [
+                        cStyle.fontSize,
+                        cStyle.fontFamily,
+                        cStyle.color,
+                        (cStyle.fontWeight === "400" || cStyle.fontWeight === "normal") ? "normal" : "bold",
+                        cStyle.fontStyle
+                    ];
+                    
+                    var preformsTab = [
+                        preforms[a].style.fontSize,
+                        preforms[a].style.fontFamily,
+                        preforms[a].style.color,
+                        (preforms[a].style.fontWeight === "400" || preforms[a].style.fontWeight === "normal") ? "normal" : "bold",
+                        preforms[a].style.fontStyle
+                    ];
+                    
+                    if(preformsTab[0] === cStyleTab[0] && preformsTab[1] === cStyleTab[1] && preformsTab[2] === cStyleTab[2] && preformsTab[3] === cStyleTab[3] && preformsTab[4] === cStyleTab[4])
+                    {
+                        list.push([preforms[a].id, titles[i].textContent]);
+                    }
+                }
+            }
+            
+            // Affichage de la liste des titres dans l'architecture
+            var toAppend = "";
+            
+            for(var i = 0, length = list.length; i < length; i++)
+            {
+                toAppend += "<span><p class='" + list[i][0].replace("preformated_", "") + "'>" + list[i][1] + "</p></span>";
+            }
+            
+            document.querySelector("#app_document #tree .titles").innerHTML = toAppend;
         }
     },
     
@@ -340,6 +382,42 @@ var app_document =
         /* 
         * Police
         */
+        setFont: function()
+        {
+            var e = document.querySelector("#app_document #navBar #fonts");
+            var font = e.options[e.selectedIndex].value;
+            
+            console.log(font);
+            
+            var range = this.page().contentWindow.document.createRange();
+                
+            if(this.page().contentWindow.document.getSelection().anchorOffset === this.page().contentWindow.document.getSelection().focusOffset && this.page().contentWindow.document.getSelection().anchorNode === this.page().contentWindow.document.getSelection().focusNode)
+            {
+                // Aucun texte n'est sélectionné, on applique le style à la ligne
+                var sel = this.page().contentWindow.document.getSelection();
+
+                range.setStart(sel.anchorNode, 0);
+                range.setEnd(sel.anchorNode, sel.anchorNode.textContent.length);
+
+                sel.removeAllRanges();
+                sel.addRange(range);
+            }
+            
+//            this.page().contentWindow.document.execCommand("removeFormat",false, null);
+//            this.page().contentWindow.document.execCommand("styleWithCSS", false, true);
+            
+            this.page().contentWindow.document.execCommand("fontName", false, font);
+            
+            // On replace à la fin de la sélection
+            this.page().contentWindow.document.getSelection().collapseToEnd();
+            this.page().focus();
+        },
+        
+        setSize: function()
+        {
+            
+        },
+        
         setBold: function()
         {
             this.page().contentWindow.document.execCommand("bold", false, null);
@@ -377,6 +455,67 @@ var app_document =
         },
         
         /*
+        * Style
+        */
+        setColor: function(color)
+        {
+            var range = this.page().contentWindow.document.createRange();
+                
+            if(this.page().contentWindow.document.getSelection().anchorOffset === this.page().contentWindow.document.getSelection().focusOffset && this.page().contentWindow.document.getSelection().anchorNode === this.page().contentWindow.document.getSelection().focusNode)
+            {
+                // Aucun texte n'est sélectionné, on applique le style à la ligne
+                var sel = this.page().contentWindow.document.getSelection();
+
+                range.setStart(sel.anchorNode, 0);
+                range.setEnd(sel.anchorNode, sel.anchorNode.textContent.length);
+
+                sel.removeAllRanges();
+                sel.addRange(range);
+            }
+            
+            this.page().contentWindow.document.execCommand("removeFormat",false, null);
+            this.page().contentWindow.document.execCommand("styleWithCSS", false, true);
+            
+            this.page().contentWindow.document.execCommand("foreColor", false, color);
+            
+            // On replace à la fin de la sélection
+            this.page().contentWindow.document.getSelection().collapseToEnd();
+            this.page().focus();
+            
+            // On ferme la popup
+            app_document.popup.trigger("pos_edit_color");
+        },
+        
+        setHighlight: function(color)
+        {
+            var range = this.page().contentWindow.document.createRange();
+                
+            if(this.page().contentWindow.document.getSelection().anchorOffset === this.page().contentWindow.document.getSelection().focusOffset && this.page().contentWindow.document.getSelection().anchorNode === this.page().contentWindow.document.getSelection().focusNode)
+            {
+                // Aucun texte n'est sélectionné, on applique le style à la ligne
+                var sel = this.page().contentWindow.document.getSelection();
+
+                range.setStart(sel.anchorNode, 0);
+                range.setEnd(sel.anchorNode, sel.anchorNode.textContent.length);
+
+                sel.removeAllRanges();
+                sel.addRange(range);
+            }
+            
+            this.page().contentWindow.document.execCommand("removeFormat",false, null);
+            this.page().contentWindow.document.execCommand("styleWithCSS", false, true);
+            
+            this.page().contentWindow.document.execCommand("hiliteColor", false, color);
+            
+            // On replace à la fin de la sélection
+            this.page().contentWindow.document.getSelection().collapseToEnd();
+            this.page().focus();
+            
+            // On ferme la popup
+            app_document.popup.trigger("pos_edit_highlight");
+        },
+        
+        /*
         * Paragraphe
         */
         setList: function()
@@ -410,15 +549,12 @@ var app_document =
         },
         
         /*
-        * Préformaté
+        * Texte et titres
         */
         preformated: function(section)
         {
             if(document.querySelector("#app_document #navBar #"+section))
-            {
-                // Affichage du loader
-                app_document.loader.trigger();
-                
+            {                
                 var range = this.page().contentWindow.document.createRange();
                 
                 if(this.page().contentWindow.document.getSelection().anchorOffset === this.page().contentWindow.document.getSelection().focusOffset && this.page().contentWindow.document.getSelection().anchorNode === this.page().contentWindow.document.getSelection().focusNode)
@@ -470,14 +606,40 @@ var app_document =
                 // Si le style est un titre, on applique un retour à la ligne et on remet en place le style de "Corps de texte"
                 if(section !== "preformated_text")
                 {
-                    this.page().contentWindow.document.execCommand("insertHTML", false, "<br><br>");
+                    this.page().contentWindow.document.execCommand("insertHTML", false, "<br>\001");
+                    app_document.edit.preformated("preformated_text");
+                    this.page().contentWindow.document.execCommand("insertHTML", false, "<br>\001");
+                    app_document.edit.preformated("preformated_text");
                     this.page().contentWindow.document.execCommand("insertHTML", false, "\001");
 
                     app_document.edit.preformated("preformated_text");
                 }
+            }
+        },
+        
+        /*
+        * Modification
+        */
+        search:
+        {
+            trigger: function()
+            {
                 
-                // Masquage du loader
-                app_document.loader.trigger();
+            },
+            
+            all: function()
+            {
+                
+            },
+            
+            next: function()
+            {
+                
+            },
+            
+            previous: function()
+            {
+                
             }
         }
     },
@@ -490,11 +652,37 @@ var app_document =
             
             popup.style.display = (popup.style.display === "none" || popup.style.display === "" || popup.className != tab) ? "block" : "none";
             popup.className = (popup.className === tab) ? "" : tab;
+            
+            this.load(tab);
         },
         
         load: function(tab)
         {
-            
+            switch(tab)
+            {
+                case "pos_edit_color":
+                    var elements = document.querySelectorAll("#app_document #popup .content .parentBlock");
+                    
+                    for(var i = 0, length = elements.length; i < length; i++)
+                    {
+                        var color = elements[i].querySelector(".block").style.backgroundColor;
+                        elements[i].setAttribute("onclick", "app_document.edit.setColor('"+color+"');");
+                    }
+                    break;
+                    
+                case "pos_edit_highlight":
+                    var elements = document.querySelectorAll("#app_document #popup .content .parentBlock");
+                    
+                    for(var i = 0, length = elements.length; i < length; i++)
+                    {
+                        var color = elements[i].querySelector(".block").style.backgroundColor;
+                        elements[i].setAttribute("onclick", "app_document.edit.setHighlight('"+color+"');");
+                    }
+                    break;
+                    
+                default:
+                    break;
+            }
         }
     },
     
@@ -502,8 +690,26 @@ var app_document =
     {
         trigger: function(event)
         {
+            // Mise à jour de l'architecture du document
             app_document.update.tree();
-        }
+            
+            // Mise à jour des status
+            
+            // Recherche de la police
+            var select = page.contentWindow.document.getSelection();
+            var element = (select.anchorNode == page.contentWindow.document.body) ? page.contentWindow.document.body : select.anchorNode.parentNode;
+            var font = getComputedStyle(element).fontFamily;
+
+            if(font !== "serif")
+            {
+                document.querySelector("#app_document #navBar #fonts").value = font;
+            }
+
+            // Recherche de la taille
+            var size = getComputedStyle(element).fontSize;
+
+            document.querySelector("#app_document #navBar #sizes").value = size;
+    }
     }
 } 
 || {};

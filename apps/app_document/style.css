@@ -312,7 +312,7 @@
     
     position: absolute;
     top: 17.2vh;
-    height: 20vh;
+    height: 25vh;
     width: 10vw;
     
     background-color: grey;
@@ -320,6 +320,8 @@
     border-radius: 3px;
     
     opacity: .9;
+    
+    box-shadow: 0 0 2px grey;
 }
 
 #app_document .pos_edit_highlight{ left: 32vw; }
@@ -332,6 +334,69 @@
     position: absolute;
     top: -5.2vh;
     left: 2.5vw;
+}
+
+#app_document #popup .content
+{
+    display: table;
+    
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    
+    border-radius: 3px;
+}
+
+#app_document #popup .content .line
+{
+    display: table-row;
+    
+    height: 5vh;
+}
+
+#app_document #popup .content .line div
+{
+    transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    
+    width: 2vw;
+    
+    border-radius: 3px;
+}
+#app_document #popup .content .line div:hover
+{
+    background-color: rgba(0, 59, 255, 0.41);
+}
+
+#app_document #popup .content .line div .block
+{
+    transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    
+    display: inline-block;
+    
+    text-align: center;
+    
+    height: 1.8em;
+    width: 1.8em;
+    
+    border-radius: 3px;
+    
+    background-color: black;
+    
+    cursor: pointer;
 }
 
 #app_document #tree
@@ -370,3 +435,42 @@
     
     text-align: center;
 }
+
+#app_document #tree .body
+{
+    position: absolute;
+    top: 15%;
+    left: 0;
+    height: 85%;
+    width: 100%;
+    
+    overflow: auto;
+}
+
+#app_document #tree .body .titles
+{
+    display: table;
+    
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+#app_document #tree .body .titles span
+{
+    display: table-row;
+    
+    height: 5vh;
+}
+
+#app_document #tree .body .titles span p
+{
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#app_document #tree .body .titles span p.title_1 {padding-left: 1vw;}
+#app_document #tree .body .titles span p.title_2 {padding-left: 2vw;}
+#app_document #tree .body .titles span p.title_3 {padding-left: 3vw;}
+#app_document #tree .body .titles span p.title_4 {padding-left: 4.3vw;}
