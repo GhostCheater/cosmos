@@ -666,11 +666,139 @@ var app_document =
     
     insert:
     {
-        page: function(){ return document.querySelector("#app_document #page"); },
-        
         tab: function()
         {
-            this.page().contentWindow.document.execCommand("insertHTML", false, "<br><table style='width: 100%;border-collapse: collapse;'><tr><td style='border: 1px solid black;'></td><td style='border: 1px solid black;'></td></tr><tr><td style='border: 1px solid black;'></td><td style='border: 1px solid black;'></td></tr></table><br>");   
+            app_document.edit.page().contentWindow.document.execCommand("insertHTML", false, "<br><table style='width: 100%;border-collapse: collapse;'><tr><td style='border: 1px solid black;'></td><td style='border: 1px solid black;'></td></tr><tr><td style='border: 1px solid black;'></td><td style='border: 1px solid black;'></td></tr></table><br>");   
+        },
+        
+        image:
+        {
+            local: function()
+            {
+                popup.open(
+                    "popUp_doc_insert_image",
+                    "Insertion d'une image",
+                    "<input type='file' id='input_doc_insert_image' /><br /><br /><span id='return_doc_insert_image'></span>",
+                    "<input type='button' class='button' value='Insérer' onclick='app_document.insert.image.nlocal.upload_n_insert();' />"
+                );
+            },
+            
+            web: function()
+            {
+                popup.open(
+                    "popUp_doc_insert_image",
+                    "Insertion d'une image en ligne",
+                    "<input type='text' id='input_doc_insert_image' placeholder='URL de l&apos;image...' /><br /><br /><span id='return_doc_insert_image'></span>",
+                    "<input type='button' class='button' value='Insérer' onclick='app_document.insert.image.nweb.test_n_insert();' />"
+                );
+            },
+            
+            nlocal:
+            {
+                upload_n_insert: function()
+                {
+                    document.querySelector("#return_doc_insert_image").innerHTML = "Upload en cours...";
+                    
+                    var element = document.querySelector("#input_doc_insert_image");
+                    
+                    var file = element.files[0];
+                    
+                    console.log(file);
+                    
+                    var formData = new FormData();
+                    
+                    formData.append("file", file);
+                    
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "inc/ajax/edit/uploadImage.php", true);
+                    
+                    xhr.onreadystatechange = function()
+                    {
+                        if(xhr.readyState == 4 && xhr.status == 200)
+                        {
+                            var state = xhr.responseText.split("~||]]", 1)[0];
+                            var data = xhr.responseText.split("~||]]", 2)[1];
+					
+                            switch(state)
+                            {
+                                case "ok":
+                                    document.querySelector("#return_doc_insert_image").innerHTML = "Upload terminé";
+                                    
+                                    // On insère l'image
+                                    app_document.edit.page().contentWindow.document.execCommand("insertHTML", false, "<br><img src='inc/ajax/edit/showImage.php?link="+data+"' style='max-width: 100%;margin-bottom: 5px;' /><br><br>");
+                                    break;
+                                    
+                                default:
+                                    document.querySelector("#return_doc_insert_image").innerHTML = "Une erreur est survenue lors de l'upload de l'image";
+                                    break;
+                            }
+                        }
+                    }
+                    
+                    xhr.send(formData);
+                }
+            },
+            
+            nweb:
+            {
+                test_n_insert: function()
+                {
+                    var url = document.querySelector("#input_doc_insert_image").value;
+                    
+                    var img = document.createElement("img");
+                    
+                    img.onload = function()
+                    {
+                        document.querySelector("#return_doc_insert_image").innerHTML = "Insertion de l'&apos;image en cours...";
+                        
+                        app_document.edit.page().contentWindow.document.execCommand("insertHTML", false, "<br><img src='"+url+"' style='max-width: 100%;margin-bottom: 5px;' /><br><br>");
+                    };
+                    
+                    img.onerror = function()
+                    {
+                        document.querySelector("#return_doc_insert_image").innerHTML = "L&apos;image n'est pas accessible";
+                    };
+                    
+                    img.src = url;
+                }
+            }
+        },
+        
+        link:
+        {
+            open: function()
+            {
+                popup.open(
+                    "popup_doc_insert_link",
+                    "Insertion d'un lien",
+                    "<input type='text' placeholder='Lien...' id='input_doc_insert_link' /><br /><br /><span id='return_doc_insert_link'></span>",
+                    "<input type='button' class='button' value='Insérer' onclick='app_document.insert.link.put();' />"
+                );
+            },
+            
+            put: function()
+            {
+                console.log("test");
+                
+                var returnArea = document.querySelector("#return_doc_insert_link");
+                var url = document.querySelector("#input_doc_insert_link").value;
+                
+                var img = document.createElement("img");
+                
+                img.onload = function()
+                {
+                    returnArea.innerHTML = "Insertion du lien en cours...";
+                    
+                    app_document.edit.page().contentWindow.document.execCommand("createLink", false, url);
+                };
+                
+                img.onerror = function()
+                {
+                    returnArea.innerHTML = "Le lien n'est pas accessible";
+                };
+                
+                img.src = url;
+            }
         }
     },
     
@@ -750,6 +878,7 @@ var app_document =
             var range = this.page().contentWindow.document.getSelection();
             
             var toAnalyze = (range.anchorNode.toString() == "[object Text]") ? range.anchorNode.parentNode.toString() : range.anchorNode.toString();
+            toAnalyze = (toAnalyze.indexOf("http://") != -1 || toAnalyze.indexOf("https://") != -1 || toAnalyze.indexOf("ftp://") != -1) ? "[object Link]" : toAnalyze;
             
             console.log(toAnalyze);
             
@@ -771,6 +900,10 @@ var app_document =
                     this.quickAccess("table");
                     break;
                     
+                case "[object Link]": // Lien
+                    this.quickAccess("link");
+                    break;
+                    
                 default:
                     break;
             }
@@ -789,14 +922,17 @@ var app_document =
                     break;
                     
                 case "table":
-                    
                     toAppend = "" +
                         "<p>" +
-                            "<img src='apps/app_document/images/quickAccess/table/add_row.svg' style='margin-right: 1vw;' />" +
-                            "<img src='apps/app_document/images/quickAccess/table/remove_row.svg' style='margin-right: 1vw;' />" +
-                            "<img src='apps/app_document/images/quickAccess/table/add_column.svg' style='margin-right: 1vw;' />" +
-                            "<img src='apps/app_document/images/quickAccess/table/remove_column.svg' />" +
+                            "<img src='apps/app_document/images/quickAccess/table/add_row.svg' style='margin-right: 1vw;' onclick='app_document.quickAccess.table.insertRow();' />" +
+                            "<img src='apps/app_document/images/quickAccess/table/remove_row.svg' style='margin-right: 1vw;' onclick='app_document.quickAccess.table.deleteRow();' />" +
+                            "<img src='apps/app_document/images/quickAccess/table/add_column.svg' style='margin-right: 1vw;' onclick='app_document.quickAccess.table.insertColumn();' />" +
+                            "<img src='apps/app_document/images/quickAccess/table/remove_column.svg' onclick='app_document.quickAccess.table.deleteColumn();' />" +
                         "</p>";
+                    break;
+                    
+                case "link":
+                    toAppend = "<p><img src='apps/app_document/images/quickAccess/link/remove.svg' onclick='app_document.quickAccess.link.remove();' /></p>";
                     break;
                     
                 default:
@@ -804,6 +940,136 @@ var app_document =
             }
             
             document.querySelector("#app_document #quickAccess_popup #quickAccess_actions_specials").innerHTML = toAppend;
+        }
+    },
+    
+    quickAccess:
+    {
+        table:
+        {
+            insertColumn: function()
+            {
+                var range = document.querySelector("#app_document #page").contentWindow.document.getSelection();
+                
+                var element = (range.anchorNode.toString() == "[object Text]") ? range.anchorNode.parentNode.toString() : range.anchorNode.toString();
+                
+                if(element == "[object HTMLTableCellElement]")
+                {
+                    var parent = (range.anchorNode.toString() == "[object Text]") ? ((range.anchorNode.parentNode).parentNode).parentNode : (range.anchorNode.parentNode).parentNode;
+                                        
+                    for(var i = 0; i < parent.querySelectorAll("tr").length; i++)
+                    {                        
+                        var cell = document.createElement("td");
+                        cell.style.border = "1px solid black";
+                        
+                        parent.querySelectorAll("tr")[i].appendChild(cell);
+                    }
+                }
+                
+                document.querySelector("#app_document #page").focus();
+            },
+            
+            deleteColumn: function()
+            {
+                var range = document.querySelector("#app_document #page").contentWindow.document.getSelection();
+                
+                var element = (range.anchorNode.toString() == "[object Text]") ? range.anchorNode.parentNode.toString() : range.anchorNode.toString();
+                
+                if(element == "[object HTMLTableCellElement]")
+                {
+                    var parent = (range.anchorNode.toString() == "[object Text]") ? ((range.anchorNode.parentNode).parentNode).parentNode : (range.anchorNode.parentNode).parentNode;
+                    
+                    for(var i = 0; i < parent.querySelectorAll("tr").length; i++)
+                    {
+                        parent.querySelectorAll("tr")[i].removeChild(parent.querySelectorAll("tr")[i].lastChild);
+                    }
+                    
+                    // Teste s'il reste des cellules. Si ce n'est pas le cas, on supprime le tableau
+                    if(parent.querySelectorAll("td").length == 0)
+                    {
+                        document.querySelector("#app_document #page").contentWindow.document.body.removeChild(parent.parentNode);
+                    }
+                }
+                
+                document.querySelector("#app_document #page").focus();
+            },
+            
+            insertRow: function()
+            {
+                var range = document.querySelector("#app_document #page").contentWindow.document.getSelection();
+                
+                var element = (range.anchorNode.toString() == "[object Text]") ? range.anchorNode.parentNode.toString() : range.anchorNode.toString();
+                
+                var parent = (range.anchorNode.toString() == "[object Text]") ? ((range.anchorNode.parentNode).parentNode).parentNode : (range.anchorNode.parentNode).parentNode;
+                
+                if(element == "[object HTMLTableCellElement]")
+                {
+                    // Compter le nombre de cellule par ligne
+                    var nbCol = parent.querySelectorAll("tr td").length / parent.querySelectorAll("tr").length;
+                    
+                    // Créer l'élément à insérer
+                    var row = document.createElement("tr");
+                    var toAppend = "";
+                    
+                    for(var i = 0; i < nbCol; i++)
+                    {
+                        toAppend += "<td style='border: 1px solid black;'>\001</td>";
+                    }
+                    
+                    row.innerHTML = toAppend;
+                    
+                    // Insertion de l'élément dans le tableau
+                    parent.appendChild(row);
+                }
+                
+                document.querySelector("#app_document #page").focus();
+            },
+            
+            deleteRow: function()
+            {
+                var range = document.querySelector("#app_document #page").contentWindow.document.getSelection();
+                
+                var element = (range.anchorNode.toString() == "[object Text]") ? range.anchorNode.parentNode.toString() : range.anchorNode.toString();
+                
+                var elmnt = (range.anchorNode.toString() == "[object Text]") ? (range.anchorNode.parentNode).parentNode : (range.anchorNode).parentNode;
+                
+                var parent = (range.anchorNode.toString() == "[object Text]") ? ((range.anchorNode.parentNode).parentNode).parentNode : (range.anchorNode.parentNode).parentNode;
+                
+                if(element == "[object HTMLTableCellElement]")
+                {
+                    // Suppression de la ligne
+                    parent.removeChild(elmnt);
+                    
+                    // S'il n'y a plus de ligne, on supprime le tableau
+                    if(parent.querySelectorAll("tr").length == 0)
+                    {
+                        document.querySelector("#app_document #page").contentWindow.document.body.removeChild(parent.parentNode);
+                    }
+                }
+                
+                document.querySelector("#app_document #page").focus();
+            }
+        },
+        
+        link:
+        {
+            remove: function()
+            {
+                var range = app_document.edit.page().contentWindow.document.createRange();
+                var sel = app_document.edit.page().contentWindow.document.getSelection();
+                
+                range.setStart(sel.anchorNode, 0);
+                range.setEnd(sel.anchorNode, sel.anchorNode.textContent.length);
+
+                sel.removeAllRanges();
+                sel.addRange(range);
+                
+                app_document.edit.page().contentWindow.document.execCommand("unlink", false, null);
+                
+                app_document.edit.page().contentWindow.document.getSelection().collapseToEnd();
+                
+                app_document.edit.page().focus();
+            }
         }
     }
 } 
