@@ -6,6 +6,7 @@
     Native          : Oui
 -->
 
+<!-- Barre de navigation -->
 <div id="navBar">
     <div id="tabs">
         <div class="tab" id="tab_edit" onclick="app_document.tab.load('edit');">&Eacute;dition</div>
@@ -144,7 +145,7 @@
             
             <!-- Préformaté -->
             <div class="part" style="width: 28vw;border-right: 1px solid rgb(180, 180, 180);">
-                <input onclick="app_document.edit.preformated('preformated_text');" type="button" value="Aa" class="preformatedText" id="preformated_text" readonly />&nbsp;&nbsp;
+                <input onclick="app_document.edit.preformated('preformated_text', document.activeElement);" tabindex="-1" type="button" value="Aa" class="preformatedText" id="preformated_text" readonly />&nbsp;&nbsp;
                 <input onclick="app_document.edit.preformated('preformated_title_1');" type="button" value="Aa" class="preformatedText" id="preformated_title_1" readonly />&nbsp;&nbsp;
                 <input onclick="app_document.edit.preformated('preformated_title_2');" type="button" value="Aa" class="preformatedText" id="preformated_title_2" readonly />&nbsp;&nbsp;
                 <input onclick="app_document.edit.preformated('preformated_title_3');" type="button" value="Aa" class="preformatedText" id="preformated_title_3" readonly />&nbsp;&nbsp;
@@ -175,7 +176,7 @@
             
             <!-- Formule -->
             <div class="part" style="width: 5vw;border-right: 1px solid rgb(180, 180, 180);">
-                <img onclick="app_document.insert.formula();" src="apps/app_document/images/insert/formula/insert.svg" style="height: 2.5vh;" />
+                <img onclick="app_document.insert.formula.open();" src="apps/app_document/images/insert/formula/insert.svg" style="height: 2.5vh;" />
             </div>
             
             <!-- Paragraphe : Saut de page, bas de page, haut de page, champs spéciaux -->
@@ -193,7 +194,7 @@
             
             <!-- Caractères spéciaux -->
             <div class="part" style="width: 10vw;">
-                <img onclick="app_document.insert.special.char();" src="apps/app_document/images/insert/special/insert_char.svg" style="height: 2.5vh;margin-right: 1vw;" />
+                <img onclick="app_document.insert.special.char.open();" src="apps/app_document/images/insert/special/insert_char.svg" style="height: 2.5vh;margin-right: 1vw;" />
                 <img onclick="app_document.insert.special.form();" src="apps/app_document/images/insert/special/insert_form.svg" style="height: 2.5vh;" />
             </div>
         </div>
@@ -226,26 +227,37 @@
     </div>
 </div>
 
+<!-- Contenu : les pages -->
 <div id="content">
-	<iframe id="page" contenteditable="true" designMode="on" insertBrOnReturn="true"></iframe>	
+	<iframe class="page" contenteditable="true" designmode="on" insertBrOnReturn="true" id="editorPage_1" data-num="1"></iframe>
 </div>
 
+<!-- Zone du loader -->
 <div id="loaderArea"><img src="images/loader.png" /></div>
 
+<!-- Zone du QuickAccess -->
 <div id="quickAccess"><span>+</span></div>
 
+<!-- Fenêtre du QuickAccess -->
 <div id="quickAccess_popup">
     <img src="apps/app_document/images/quickAccess/arrow.svg" class="arrow" />
     
     <div class="head"><span>Accès rapide</span></div>
     <div class="body">
+        <span class="title"><p>Sauvegarde</p></span>
+        <span class="actions">
+            <p>
+                <img id="quickAccess_button_save" src="apps/app_document/images/edit/save.svg" onclick="app_document.edit.save();" />
+            </p>
+        </span>
+        
         <span class="title"><p>&Eacute;dition</p></span>
         <span class="actions">
             <p>
-                <img src="apps/app_document/images/edit/font/bold.svg" style="margin-right: 1vw;" />
-                <img src="apps/app_document/images/edit/font/italic.svg" style="margin-right: 1vw;" />
-                <img src="apps/app_document/images/edit/font/underline.svg" style="margin-right: 1vw;" />
-                <img src="apps/app_document/images/edit/font/stroke.svg" style="" />
+                <img src="apps/app_document/images/edit/font/bold.svg" style="margin-right: 1vw;" onclick="app_document.edit.setBold();" />
+                <img src="apps/app_document/images/edit/font/italic.svg" style="margin-right: 1vw;" onclick="app_document.edit.setItalic();" />
+                <img src="apps/app_document/images/edit/font/underline.svg" style="margin-right: 1vw;" onclick="app_document.edit.setUnderline();" />
+                <img src="apps/app_document/images/edit/font/stroke.svg" onclick="app_document.edit.setStroke();" />
             </p>
         </span>
         
@@ -265,6 +277,7 @@
     </div>
 </div>
 
+<!-- Mini-popup pour la selection des couleurs -->
 <div id="popup">
     <img src="apps/app_document/images/arrow.svg" class="arrow" />
     <div class="content">
@@ -306,11 +319,11 @@
     </div>
 </div>
 
+<!-- Architecture et références -->
 <div id="tree">
     <div class="head"><span>Architecture</span></div>
     <div class="body"><div class="titles"></div></div>
 </div>
-
 <div id="references">
     <div class="head"><span>Références</span></div>
     <div class="body"><div class="references">

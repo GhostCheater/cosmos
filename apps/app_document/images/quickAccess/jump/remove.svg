@@ -1,0 +1,21 @@
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 80 80" style="enable-background:new 0 0 80 80;" xml:space="preserve">
+    <g>
+        <polygon style="fill:#8BB7F0;" points="27.207,39 40,25.707 52.793,39"></polygon>
+    </g>
+    <g>
+        <polygon style="fill:#8BB7F0;" points="27.207,41 52.793,41 40,53.293"></polygon>
+    </g>
+    
+    <rect x="4" y="55" style="fill:#36404D;" width="72" height="1"></rect>
+    <rect x="4" y="23" style="fill:#36404D;" width="72" height="1"></rect>
+    
+    <rect x="4" y="8.5" style="fill:#36404D;" height="15" width="1"></rect>
+    <rect x="75" y="8.5" style="fill:#36404D;" height="15" width="1"></rect>
+    
+    <rect x="4" y="55.5" style="fill:#36404D;" height="15" width="1"></rect>
+    <rect x="75" y="55.5" style="fill:#36404D;" height="15" width="1"></rect>
+    
+    <circle cx="70" cy="70" r="10" fill="#ff4545"></circle>
+    
+    <rect x="64" y="67.5" height="5" width="12.5" fill="#ffffff"></rect>
+</svg>

@@ -154,6 +154,78 @@ var app_explorer =
 		/* Ouverture d'un fichier */
 		open: function(call)
 		{
+            var element = call.parentNode;
+            
+            var hash = element.getAttribute("data-hash");
+            var extension = element.getAttribute("data-type");
+            var name = element.getAttribute("data-name");
+            
+            switch(extension)
+            {
+                case "archive":
+                    WINDOW.trigger("app_archive", "grey");
+                    
+                    setTimeout(function(){
+                        app_archive.extern.open(hash, name);
+                    }, 2000);
+                    break;
+                    
+                case "audio":
+                    WINDOW.trigger("app_audio", "orange");
+                    
+                    setTimeout(function(){
+                        app_audio.extern.open(hash, name);
+                    }, 2000);
+                    break;
+                    
+                case "code":
+                    WINDOW.trigger("app_code", "blue");
+                    
+                    setTimeout(function(){
+                        app_code.extern.open(hash, name);
+                    }, 2000);
+                    break;
+                    
+                case "doc":
+                    WINDOW.trigger("app_document", "blue");
+                    
+                    setTimeout(function(){
+                        app_document.extern.open(hash, name);
+                    }, 2000);
+                    break;
+                    
+                case "image":
+                    WINDOW.trigger("app_image", "orange");
+                    
+                    setTimeout(function(){
+                        app_image.extern.open(hash, name);
+                    }, 2000);
+                    break;
+                    
+                case "pdf":
+                    WINDOW.trigger("app_pdf", "red");
+                    
+                    setTimeout(function(){
+                        app_pdf.extern.open(hash, name);
+                    }, 2000);
+                    break;
+                    
+                case "video":
+                    WINDOW.trigger("app_video", "orange");
+                    
+                    setTimeout(function(){
+                        app_video.extern.open(hash, name);
+                    }, 2000);
+                    break;
+                    
+                default:
+                    WINDOW.trigger("app_text", "black");
+                    
+                    setTimeout(function(){
+                        app_text.extern.open(hash, name);
+                    }, 2000);
+                    break;
+            }
 		},
 		
 		/* Changement de répertoire */
@@ -297,103 +369,79 @@ var app_explorer =
                 
                 document.querySelector("#popup_upload .content").innerHTML = toAppend;
                 
-                this.encrypt(files, 0); // On chiffre le premier fichier
-            },
-            
-            encrypt: function(files, file_key)
-            {
-				if(files.length > file_key)
-				{
-					// Changement du statut du fichier
-					document.querySelector("#popup_upload .content #upload_file_"+file_key+" img").src = "images/status/encrypt.svg";
-					
-					var worker = new Worker("js/lib/aeJs.worker.js");
-					
-					worker.postMessage({
-						action: "encrypt",
-						file: files[file_key],
-						password: atob(localStorage.getItem("pass")),
-						bits: 128
-					});
-					
-					worker.onmessage = function(e)
-					{
-						switch(e.data.action)
-						{
-							case "encryptFile":
-								if(e.data.progress === "end") // Chiffrement terminé
-								{
-									document.querySelector("#popup_upload .content #upload_file_"+file_key+" progress").value = 100;
-									
-									// Lorsque le chiffrement est terminé, on peut uploader le contenu du fichier
-									
-									app_explorer.actions.upload.upload(files, file_key, e.data.ciphertext);
-									
-									file_key++;
-									
-									setTimeout(function(){app_explorer.actions.upload.encrypt(files, file_key)}, 500);
-								}
-								else // Chiffrement en cours
-								{
-									document.querySelector("#popup_upload .content #upload_file_"+file_key+" progress").value = e.data.progress;
-								}
-								break;
-								
-							default:
-								break;
-						}
-					}
-				}
+                this.upload(files, 0);
             },
 			
-			upload: function(files, file_key, ciphertext)
-			{				
-				if(files.length > file_key)
-				{
-					document.querySelector("#popup_upload .content #upload_file_"+file_key+" img").src = "images/status/upload.svg";
-					document.querySelector("#popup_upload .content #upload_file_"+file_key+" progress").value = 0;
-					
-					// Création du blob
-					var blob = new Blob([ciphertext], {type: 'application/octet-binary'});
-					var formData = new FormData();
-					
-					formData.append(files[file_key].name, blob);
-					
-					var xhr = new XMLHttpRequest();
-					
-					xhr.open("POST", "inc/ajax/explore/upload.php", true);
-					xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-					
-					xhr.upload.addEventListener("progress", function(e){
-						app_explorer.actions.upload.progress(file_key, e);
-					}, false);
-					
-					xhr.addEventListener("readyStateChange", function(e){
-						app_explorer.actions.upload.readyStateChange(file_key, e);
-					}, false);
-					
-					xhr.send(formData);
-				}
+			upload: function(files, key)
+			{
+                if(key < files.length)
+                {
+                    var formData = new FormData();
+                    formData.append("file", files[key]);
+
+                    // Création de la requête
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "inc/ajax/explore/upload.php", true);
+                    
+                    xhr.addEventListener("readystatechange", function(e)
+                    {
+                        app_explorer.actions.upload._readystatechange(this, files, key, e);
+                    }, false);
+
+                    xhr.upload.addEventListener("progress", function(e){
+                        app_explorer.actions.upload._progress(xhr, files, key, e);
+                    }, false);
+
+                    xhr.send(formData);   
+                }
 			},
 			
-			progress: function(file_key, e)
-			{				
+			_progress: function(xhr, files, key, e)
+			{
 				if(e.lengthComputable)
 				{
 					var percent = (e.loaded / e.total) * 100;
 					
-					document.querySelector("#popup_upload .content #upload_file_"+file_key+" progress").value = percent;
-				}
+					document.querySelector("#popup_upload .content #upload_file_"+key+" progress").value = percent;
+				    document.querySelector("#popup_upload .content #upload_file_"+key+" img").src = "images/status/upload.svg";
+                }
 			},
-			
-			readyStateChange: function(file_key,e)
-			{
-				if(e.readyState === 4)
-				{
-					document.querySelector("#popup_upload .content #upload_file_"+file_key+" progress").value = 100;
-					document.querySelector("#popup_upload .content #upload_file_"+file_key+" img").src = "images/status/ok.svg";
-				}
-			}
+            
+            _readystatechange: function(xhr, files, key, e)
+            {
+                if(xhr.readyState == 4)
+                {
+                    document.querySelector("#popup_upload .content #upload_file_"+key+" progress").value = 100;
+                    
+                    console.log(xhr.responseText);
+                    
+                    switch(xhr.responseText)
+                    {
+                        case "ok~||]]":
+                            document.querySelector("#popup_upload .content #upload_file_"+key+" img").src = "images/status/ok.svg";
+                            break;
+                            
+                        default:
+                            document.querySelector("#popup_upload .content #upload_file_"+key+" img").src = "images/status/error.svg";
+                            break;
+                    }
+                    
+                    key++;
+                
+                    if(key < files.length)
+                    {
+                        app_explorer.actions.upload.upload(files, key);
+                    }
+                    
+                    if(key == files.length - 1)
+                    {                        
+                        setTimeout(function(){
+                            app_explorer.actions.list();
+                            popup.close("popup_upload");
+                        }, 1000)
+                    }
+                }
+            }
 		},
 		
 		/* Suppression d'un élément */

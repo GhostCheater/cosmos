@@ -2,31 +2,78 @@
 
 var app_document = 
 {
+    page: function()
+    {
+        // Doit retourner la page "focus" ou la première page si aucun focus n'est détecté
+        if(document.activeElement.toString() == "[object HTMLIFrameElement]")
+        {
+            localStorage.setItem("focus", document.activeElement.id);
+            return document.activeElement;
+        }
+        else
+        {
+            return document.querySelector("#app_document #"+localStorage.getItem("focus"));
+        }
+    },
+    
     init: function()
     {
+        // Création de l'éditeur
+        var pages = document.querySelectorAll("#app_document .page");
+        
+        for(var i = 0; i < pages.length; i++)
+        {
+            pages[i].contentEditable = true;
+            pages[i].contentDocument.designMode = "on";
+            pages[i].focus();
+            pages[i].contentWindow.document.execCommand("insertHTML", false, "<br>");
+        }
+        
         // Chargement de la toolbar
         this.preferences.load();
         this.tab.load("insert");
         this.update.states();
         
-        // Création de l'éditeur
-        var page = document.querySelector("#app_document #page");
+        
+        // On place le focus sur l'éditeur
+        pages[0].addEventListener("readyStateChange", function()
+        {
+            if(pages[0].readyState == "complete")
+            {
+                pages[0].contentWindow.focus();
+            }
+        }, false);
+        
+        // On espionne l'objet
+        for(var i = 0; i < pages.length; i++)
+        {
+            pages[i].contentWindow.document.addEventListener("keyup", function(event)
+            {
+                app_document.keyboard.trigger(event);
+            }, false);
+            pages[i].contentWindow.document.addEventListener("click", function(event)
+            {
+                app_document.keyboard.trigger(event);
+            }, false);   
+        }
+    },
+    
+    initPage: function(num)
+    {
+        var page = document.querySelector("#app_document #content #editorPage_"+num);
+        
+        console.log(page);
+        
         page.contentEditable = true;
         page.contentDocument.designMode = "on";
         
-        // On place le focus sur l'éditeur
-        page.contentWindow.document.execCommand("contentReadOnly", false, true);
-        page.contentWindow.focus();
+        page.contentWindow.document.body.style.color = document.querySelector("#app_document #content #editorPage_1").contentWindow.document.body.style.color;
+        page.contentWindow.document.body.style.fontFamily = document.querySelector("#app_document #content #editorPage_1").contentWindow.document.body.style.fontFamily;
+        page.contentWindow.document.body.style.fontWeight = document.querySelector("#app_document #content #editorPage_1").contentWindow.document.body.style.fontWeight;
+        page.contentWindow.document.body.style.fontStyle = document.querySelector("#app_document #content #editorPage_1").contentWindow.document.body.style.fontStyle;
+        page.contentWindow.document.body.style.textDecoration = document.querySelector("#app_document #content #editorPage_1").contentWindow.document.body.style.textDecoration;
         
-        // On espionne l'objet
-        page.contentWindow.document.addEventListener("keyup", function(event)
-        {
-            app_document.keyboard.trigger(event);
-        }, false);
-        page.contentWindow.document.addEventListener("click", function(event)
-        {
-            app_document.keyboard.trigger(event);
-        }, false);
+        page.contentWindow.document.body.appendChild(document.createElement("br"));
     },
     
     convert:
@@ -178,7 +225,7 @@ var app_document =
                             }
                             catch(err)
                             {
-                                console.error("Error parsing json.");
+                                console.error("Error parsing json : " + err);
                             }
                             break;
                             
@@ -213,30 +260,32 @@ var app_document =
             }
             
             // On applique le style "Corps de texte" par défaut
-            var page = document.querySelector("#app_document #page");
+            var pages = document.querySelectorAll("#app_document .page");
             
-            var style_preformated_text = document.querySelector("#app_document #navBar #preformated_text").style;
+            for(var i = 0; i < pages.length; i++)
+            {
+                var page = pages[i];
+                var style_preformated_text = document.querySelector("#app_document #navBar #preformated_text").style;
             
-            var color = style_preformated_text.color;
-            var size = style_preformated_text.fontSize;
-            var font = style_preformated_text.fontFamily;
-            var bold = style_preformated_text.fontWeight;
-            var italic = style_preformated_text.fontStyle;
-            var underline = style_preformated_text.textDecoration;
-            
-            page.contentWindow.document.body.style.color = color;
-            page.contentWindow.document.body.style.fontSize = app_document.convert.size_to_px(size) + "px";
-            page.contentWindow.document.body.style.fontFamily = font;
-            page.contentWindow.document.body.style.fontWeight = bold;
-            page.contentWindow.document.body.style.fontStyle = italic;
-            page.contentWindow.document.body.style.textDecoration = underline;
-            
-            // On "relâche" l'éditeur
-            page.contentWindow.document.execCommand("contentReadOnly", false, false);
-            page.focus();
-            
-            // On masque le loader
-            app_document.loader.trigger();
+                var color = style_preformated_text.color;
+                var size = style_preformated_text.fontSize;
+                var font = style_preformated_text.fontFamily;
+                var bold = style_preformated_text.fontWeight;
+                var italic = style_preformated_text.fontStyle;
+                var underline = style_preformated_text.textDecoration;
+
+                page.contentWindow.document.body.style.color = color;
+                page.contentWindow.document.body.style.fontSize = app_document.convert.size_to_px(size) + "px";
+                page.contentWindow.document.body.style.fontFamily = font;
+                page.contentWindow.document.body.style.fontWeight = bold;
+                page.contentWindow.document.body.style.fontStyle = italic;
+                page.contentWindow.document.body.style.textDecoration = underline;
+
+                page.focus();
+
+                // On masque le loader
+                app_document.loader.trigger();
+            }
         }
     },
     
@@ -245,9 +294,9 @@ var app_document =
         states: function()
         {
             setInterval(function(){
-                var page = document.querySelector("#app_document #page");
-
                 /*
+                * Barre d'édition
+                * ---------------
                 * 6 : Gras
                 * 7 : Italique
                 * 8 : Souligné
@@ -259,38 +308,58 @@ var app_document =
                 * 17 : Alignement droite
                 * 18 : Alignement justifié
                 */
-                var buttons = document.querySelectorAll("#app_document #navBar img");
                 
-                // Recherche des styles
-                var isBold = page.contentWindow.document.queryCommandState("bold");
-                var isItalic = page.contentWindow.document.queryCommandState("italic");
-                var isUnderline = page.contentWindow.document.queryCommandState("underline");
-                var isStroke = page.contentWindow.document.queryCommandState("strikeThrough");
-                var isSub = page.contentWindow.document.queryCommandState("subscript");
-                var isSup = page.contentWindow.document.queryCommandState("superscript");
+                if(document.querySelector("#app_document") != undefined)
+                {
+                    var buttons = document.querySelectorAll("#app_document #navBar img");
+                    
+                    // Recherche des styles
+                    var isBold = app_document.page().contentWindow.document.queryCommandState("bold");
+                    var isItalic = app_document.page().contentWindow.document.queryCommandState("italic");
+                    var isUnderline = app_document.page().contentWindow.document.queryCommandState("underline");
+                    var isStroke = app_document.page().contentWindow.document.queryCommandState("strikeThrough");
+                    var isSub = app_document.page().contentWindow.document.queryCommandState("subscript");
+                    var isSup = app_document.page().contentWindow.document.queryCommandState("superscript");
+
+                    var isLeft = app_document.page().contentWindow.document.queryCommandState("justifyLeft");
+                    var isCenter = app_document.page().contentWindow.document.queryCommandState("justifyCenter");
+                    var isRight = app_document.page().contentWindow.document.queryCommandState("justifyRight");
+                    var isJustify = app_document.page().contentWindow.document.queryCommandState("justifyFull");
+
+                    if(isBold) {buttons[6].className = "selected";} else {buttons[6].className = "";}
+                    if(isItalic) {buttons[7].className = "selected";} else {buttons[7].className = "";}
+                    if(isUnderline) {buttons[8].className = "selected";} else {buttons[8].className = "";}
+                    if(isStroke) {buttons[9].className = "selected";} else {buttons[9].className = "";}
+                    if(isSub) {buttons[10].className = "selected";} else {buttons[10].className = "";}
+                    if(isSup) {buttons[11].className = "selected";} else {buttons[11].className = "";}
+
+                    if(isLeft) {buttons[15].className = "selected";} else {buttons[15].className = "";}
+                    if(isCenter) {buttons[16].className = "selected";} else {buttons[16].className = "";}
+                    if(isRight) {buttons[17].className = "selected";} else {buttons[17].className = "";}
+                    if(isJustify) {buttons[18].className = "selected";} else {buttons[18].className = "";}   
                 
-                var isLeft = page.contentWindow.document.queryCommandState("justifyLeft");
-                var isCenter = page.contentWindow.document.queryCommandState("justifyCenter");
-                var isRight = page.contentWindow.document.queryCommandState("justifyRight");
-                var isJustify = page.contentWindow.document.queryCommandState("justifyFull");
+                    /*
+                    * QuickAccess
+                    * -----------
+                    * 0 : Gras
+                    * 1 : Italique
+                    * 2 : Souligné
+                    * 3 : Barré
+                    */
 
-                if(isBold) {buttons[6].className = "selected";} else {buttons[6].className = "";}
-                if(isItalic) {buttons[7].className = "selected";} else {buttons[7].className = "";}
-                if(isUnderline) {buttons[8].className = "selected";} else {buttons[8].className = "";}
-                if(isStroke) {buttons[9].className = "selected";} else {buttons[9].className = "";}
-                if(isSub) {buttons[10].className = "selected";} else {buttons[10].className = "";}
-                if(isSup) {buttons[11].className = "selected";} else {buttons[11].className = "";}
+                    var buttons_2 = document.querySelectorAll("#app_document #quickAccess_popup .body .actions img");
 
-                if(isLeft) {buttons[15].className = "selected";} else {buttons[15].className = "";}
-                if(isCenter) {buttons[16].className = "selected";} else {buttons[16].className = "";}
-                if(isRight) {buttons[17].className = "selected";} else {buttons[17].className = "";}
-                if(isJustify) {buttons[18].className = "selected";} else {buttons[18].className = "";}
-            }, 100);
+                    if(isBold) {buttons_2[1].className = "selected";} else {buttons_2[1].className = "";}
+                    if(isItalic) {buttons_2[2].className = "selected";} else {buttons_2[2].className = "";}
+                    if(isUnderline) {buttons_2[3].className = "selected";} else {buttons_2[3].className = "";}
+                    if(isStroke) {buttons_2[4].className = "selected";} else {buttons_2[4].className = "";}
+                }
+            }, 500);
         },
         
         tree: function()
         {
-            var titles = document.querySelector("#app_document #page").contentWindow.document.querySelectorAll("p span font");
+            var titles = app_document.page().contentWindow.document.querySelectorAll("p span font");
             var preforms = document.querySelectorAll("#app_document #navBar .preformatedText");
             var list = [];
             
@@ -338,21 +407,68 @@ var app_document =
     
     edit:
     {
-        page: function(){ return document.querySelector("#app_document #page"); },
+        /*
+        * Sauvegarde d'un fichier
+        * Créer un nouveau fichier s'il n'y a pas de hash passé en paramètre ou s'il est vide
+        */
+        save: function()
+        {
+            var content = app_document.page().contentWindow.document.body.innerHTML;
+            
+            var img_save = document.querySelector("#app_document #quickAccess_button_save");
+            
+            var hash = (localStorage.getItem("app_document_hash") == undefined) ? "new_file" : localStorage.getItem("app_document_hash");
+            
+            img_save.src = "images/loader.png";
+            
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "inc/ajax/general/put_content_file.php", true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            
+            xhr.onreadystatechange = function()
+            {
+                if(xhr.status == 200 && xhr.readyState == 4)
+                {
+                    var state = xhr.responseText.split("~||]]", 1)[0];
+					var data = xhr.responseText.split("~||]]", 2)[1];
+                    
+                    switch(state)
+                    {
+                        case "ok":
+                            localStorage.setItem("app_document_hash", data);
+                            
+                            img_save.src = "images/status/ok.svg";
+                            break;
+                            
+                        default:
+                            img_save.src = "images/status/error.svg";
+                            break;
+                    }
+                    
+                    setTimeout(function()
+                    {
+                        img_save.src = "apps/app_document/images/edit/save.svg";
+                    }, 1000);
+                }
+            }
+            
+            xhr.send("hash="+hash+"&content="+content);
+        },
+        
         
         /*
         * Actions
         */
         undo: function()
         {
-            this.page().contentWindow.document.execCommand("undo", false, null);
-            this.page().focus(); 
+            app_document.page().contentWindow.document.execCommand("undo", false, null);
+            app_document.page().focus(); 
         },
         
         redo: function()
         {
-            this.page().contentWindow.document.execCommand("redo", false, null);
-            this.page().focus(); 
+            app_document.page().contentWindow.document.execCommand("redo", false, null);
+            app_document.page().focus(); 
         },
         
         
@@ -361,26 +477,26 @@ var app_document =
         */
         paste: function()
         {
-            this.page().contentWindow.document.execCommand("paste", false, null);
-            this.page().focus(); 
+            app_document.page().contentWindow.document.execCommand("paste", false, null);
+            app_document.page().focus(); 
         },
         
         copy: function()
         {
-            this.page().contentWindow.document.execCommand("copy", false, null);
-            this.page().focus(); 
+            app_document.page().contentWindow.document.execCommand("copy", false, null);
+            app_document.page().focus(); 
         },
         
         cut: function()
         {
-            this.page().contentWindow.document.execCommand("cut", false, null);
-            this.page().focus(); 
+            app_document.page().contentWindow.document.execCommand("cut", false, null);
+            app_document.page().focus(); 
         },
         
         selectAll: function()
         {
-            this.page().contentWindow.document.execCommand("selectAll", false, null);
-            this.page().focus(); 
+            app_document.page().contentWindow.document.execCommand("selectAll", false, null);
+            app_document.page().focus(); 
         },
         
         /* 
@@ -391,12 +507,12 @@ var app_document =
             var e = document.querySelector("#app_document #navBar #fonts");
             var font = e.options[e.selectedIndex].value;
             
-            var range = this.page().contentWindow.document.createRange();
+            var range = app_document.page().contentWindow.document.createRange();
                 
-            if(this.page().contentWindow.document.getSelection().anchorOffset === this.page().contentWindow.document.getSelection().focusOffset && this.page().contentWindow.document.getSelection().anchorNode === this.page().contentWindow.document.getSelection().focusNode)
+            if(app_document.page().contentWindow.document.getSelection().anchorOffset === app_document.page().contentWindow.document.getSelection().focusOffset && app_document.page().contentWindow.document.getSelection().anchorNode === app_document.page().contentWindow.document.getSelection().focusNode)
             {
                 // Aucun texte n'est sélectionné, on applique le style à la ligne
-                var sel = this.page().contentWindow.document.getSelection();
+                var sel = app_document.page().contentWindow.document.getSelection();
 
                 range.setStart(sel.anchorNode, 0);
                 range.setEnd(sel.anchorNode, sel.anchorNode.textContent.length);
@@ -405,11 +521,11 @@ var app_document =
                 sel.addRange(range);
             }
             
-            this.page().contentWindow.document.execCommand("fontName", false, font);
+            app_document.page().contentWindow.document.execCommand("fontName", false, font);
             
             // On replace à la fin de la sélection
-            this.page().contentWindow.document.getSelection().collapseToEnd();
-            this.page().focus();
+            app_document.page().contentWindow.document.getSelection().collapseToEnd();
+            app_document.page().focus();
         },
         
         setSize: function()
@@ -417,12 +533,12 @@ var app_document =
             var e = document.querySelector("#app_document #navBar #sizes");
             var size = app_document.convert.px_to_size(e.options[e.selectedIndex].value);
             
-            var range = this.page().contentWindow.document.createRange();
+            var range = app_document.page().contentWindow.document.createRange();
                 
-            if(this.page().contentWindow.document.getSelection().anchorOffset === this.page().contentWindow.document.getSelection().focusOffset && this.page().contentWindow.document.getSelection().anchorNode === this.page().contentWindow.document.getSelection().focusNode)
+            if(app_document.page().contentWindow.document.getSelection().anchorOffset === app_document.page().contentWindow.document.getSelection().focusOffset && app_document.page().contentWindow.document.getSelection().anchorNode === app_document.page().contentWindow.document.getSelection().focusNode)
             {
                 // Aucun texte n'est sélectionné, on applique le style à la ligne
-                var sel = this.page().contentWindow.document.getSelection();
+                var sel = app_document.page().contentWindow.document.getSelection();
 
                 range.setStart(sel.anchorNode, 0);
                 range.setEnd(sel.anchorNode, sel.anchorNode.textContent.length);
@@ -431,47 +547,47 @@ var app_document =
                 sel.addRange(range);
             }
             
-            this.page().contentWindow.document.execCommand("fontSize", false, size);
+            app_document.page().contentWindow.document.execCommand("fontSize", false, size);
             
             // On replace à la fin de la sélection
-            this.page().contentWindow.document.getSelection().collapseToEnd();
-            this.page().focus();
+            app_document.page().contentWindow.document.getSelection().collapseToEnd();
+            app_document.page().focus();
         },
         
         setBold: function()
         {
-            this.page().contentWindow.document.execCommand("bold", false, null);
-            this.page().focus();
+            app_document.page().contentWindow.document.execCommand("bold", false, null);
+            app_document.page().focus();
         },
         
         setItalic: function()
         {
-            this.page().contentWindow.document.execCommand("italic", false, null);
-            this.page().focus();
+            app_document.page().contentWindow.document.execCommand("italic", false, null);
+            app_document.page().focus();
         },
         
         setUnderline: function()
         {
-            this.page().contentWindow.document.execCommand("underline", false, null);
-            this.page().focus();
+            app_document.page().contentWindow.document.execCommand("underline", false, null);
+            app_document.page().focus();
         },
         
         setStroke: function()
         {
-            this.page().contentWindow.document.execCommand("strikeThrough", false, null);
-            this.page().focus();
+            app_document.page().contentWindow.document.execCommand("strikeThrough", false, null);
+            app_document.page().focus();
         },
         
         setSub: function()
         {
-            this.page().contentWindow.document.execCommand("subscript", false, null);
-            this.page().focus();
+            app_document.page().contentWindow.document.execCommand("subscript", false, null);
+            app_document.page().focus();
         },
         
         setSup: function()
         {
-            this.page().contentWindow.document.execCommand("superscript", false, null);
-            this.page().focus();
+            app_document.page().contentWindow.document.execCommand("superscript", false, null);
+            app_document.page().focus();
         },
         
         /*
@@ -479,12 +595,12 @@ var app_document =
         */
         setColor: function(color)
         {
-            var range = this.page().contentWindow.document.createRange();
+            var range = app_document.page().contentWindow.document.createRange();
                 
-            if(this.page().contentWindow.document.getSelection().anchorOffset === this.page().contentWindow.document.getSelection().focusOffset && this.page().contentWindow.document.getSelection().anchorNode === this.page().contentWindow.document.getSelection().focusNode)
+            if(app_document.page().contentWindow.document.getSelection().anchorOffset === app_document.page().contentWindow.document.getSelection().focusOffset && app_document.page().contentWindow.document.getSelection().anchorNode === app_document.page().contentWindow.document.getSelection().focusNode)
             {
                 // Aucun texte n'est sélectionné, on applique le style à la ligne
-                var sel = this.page().contentWindow.document.getSelection();
+                var sel = app_document.page().contentWindow.document.getSelection();
 
                 range.setStart(sel.anchorNode, 0);
                 range.setEnd(sel.anchorNode, sel.anchorNode.textContent.length);
@@ -493,14 +609,14 @@ var app_document =
                 sel.addRange(range);
             }
             
-            this.page().contentWindow.document.execCommand("removeFormat",false, null);
-            this.page().contentWindow.document.execCommand("styleWithCSS", false, true);
+            app_document.page().contentWindow.document.execCommand("removeFormat",false, null);
+            app_document.page().contentWindow.document.execCommand("styleWithCSS", false, true);
             
-            this.page().contentWindow.document.execCommand("foreColor", false, color);
+            app_document.page().contentWindow.document.execCommand("foreColor", false, color);
             
             // On replace à la fin de la sélection
-            this.page().contentWindow.document.getSelection().collapseToEnd();
-            this.page().focus();
+            app_document.page().contentWindow.document.getSelection().collapseToEnd();
+            app_document.page().focus();
             
             // On ferme la popup
             app_document.popup.trigger("pos_edit_color");
@@ -508,12 +624,12 @@ var app_document =
         
         setHighlight: function(color)
         {
-            var range = this.page().contentWindow.document.createRange();
+            var range = app_document.page().contentWindow.document.createRange();
                 
-            if(this.page().contentWindow.document.getSelection().anchorOffset === this.page().contentWindow.document.getSelection().focusOffset && this.page().contentWindow.document.getSelection().anchorNode === this.page().contentWindow.document.getSelection().focusNode)
+            if(app_document.page().contentWindow.document.getSelection().anchorOffset === app_document.page().contentWindow.document.getSelection().focusOffset && app_document.page().contentWindow.document.getSelection().anchorNode === app_document.page().contentWindow.document.getSelection().focusNode)
             {
                 // Aucun texte n'est sélectionné, on applique le style à la ligne
-                var sel = this.page().contentWindow.document.getSelection();
+                var sel = app_document.page().contentWindow.document.getSelection();
 
                 range.setStart(sel.anchorNode, 0);
                 range.setEnd(sel.anchorNode, sel.anchorNode.textContent.length);
@@ -522,14 +638,14 @@ var app_document =
                 sel.addRange(range);
             }
             
-            this.page().contentWindow.document.execCommand("removeFormat",false, null);
-            this.page().contentWindow.document.execCommand("styleWithCSS", false, true);
+            app_document.page().contentWindow.document.execCommand("removeFormat",false, null);
+            app_document.page().contentWindow.document.execCommand("styleWithCSS", false, true);
             
-            this.page().contentWindow.document.execCommand("hiliteColor", false, color);
+            app_document.page().contentWindow.document.execCommand("hiliteColor", false, color);
             
             // On replace à la fin de la sélection
-            this.page().contentWindow.document.getSelection().collapseToEnd();
-            this.page().focus();
+            app_document.page().contentWindow.document.getSelection().collapseToEnd();
+            app_document.page().focus();
             
             // On ferme la popup
             app_document.popup.trigger("pos_edit_highlight");
@@ -540,47 +656,49 @@ var app_document =
         */
         setList: function()
         {
-            this.page().contentWindow.document.execCommand("insertUnorderedList", false, null);
-            this.page().focus();
+            app_document.page().contentWindow.document.execCommand("insertUnorderedList", false, null);
+            app_document.page().focus();
         },
         
         setLeft: function()
         {
-            this.page().contentWindow.document.execCommand("justifyLeft", false, null);
-            this.page().focus();
+            app_document.page().contentWindow.document.execCommand("justifyLeft", false, null);
+            app_document.page().focus();
         },
         
         setCenter: function()
         {
-            this.page().contentWindow.document.execCommand("justifyCenter", false, null);
-            this.page().focus();
+            app_document.page().contentWindow.document.execCommand("justifyCenter", false, null);
+            app_document.page().focus();
         },
         
         setRight: function()
         {
-            this.page().contentWindow.document.execCommand("justifyRight", false, null);
-            this.page().focus();
+            app_document.page().contentWindow.document.execCommand("justifyRight", false, null);
+            app_document.page().focus();
         },
         
         setJustify: function()
         {
-            this.page().contentWindow.document.execCommand("justifyFull", false, null);
-            this.page().focus();
+            app_document.page().contentWindow.document.execCommand("justifyFull", false, null);
+            app_document.page().focus();
         },
         
         /*
         * Texte et titres
         */
-        preformated: function(section)
+        preformated: function(section, focused)
         {
+            var page = app_document.page();
+            
             if(document.querySelector("#app_document #navBar #"+section))
             {                
-                var range = this.page().contentWindow.document.createRange();
+                var range = page.contentWindow.document.createRange();
                 
-                if(this.page().contentWindow.document.getSelection().anchorOffset === this.page().contentWindow.document.getSelection().focusOffset && this.page().contentWindow.document.getSelection().anchorNode === this.page().contentWindow.document.getSelection().focusNode)
+                if(page.contentWindow.document.getSelection().anchorOffset === page.contentWindow.document.getSelection().focusOffset && page.contentWindow.document.getSelection().anchorNode === page.contentWindow.document.getSelection().focusNode)
                 {
                     // Aucun texte n'est sélectionné, on applique le style à la ligne
-                    var sel = this.page().contentWindow.document.getSelection();
+                    var sel = page.contentWindow.document.getSelection();
                     
                     range.setStart(sel.anchorNode, 0);
                     range.setEnd(sel.anchorNode, sel.anchorNode.textContent.length);
@@ -589,9 +707,9 @@ var app_document =
                     sel.addRange(range);
                 }
                 
-                this.page().contentWindow.document.execCommand("removeFormat",false, null);
+                page.contentWindow.document.execCommand("removeFormat",false, null);
                 
-                this.page().contentWindow.document.execCommand("styleWithCSS", false, true);
+                page.contentWindow.document.execCommand("styleWithCSS", false, true);
                 
                 var style = document.querySelector("#app_document #navBar #"+section).style;
                 
@@ -605,32 +723,32 @@ var app_document =
                 
                 var size = app_document.convert.px_to_size(size);
                 
-                this.page().contentWindow.document.execCommand("fontSize", false, size);
+                page.contentWindow.document.execCommand("fontSize", false, size);
                 
                 if(section !== "preformated_text")
                 {
-                    this.page().contentWindow.document.execCommand("formatBlock", false, "<p>");
+                    page.contentWindow.document.execCommand("formatBlock", false, "<p>");
                 }
                 
-                this.page().contentWindow.document.execCommand("foreColor", false, color);
-                this.page().contentWindow.document.execCommand("fontName", false, font);
+                page.contentWindow.document.execCommand("foreColor", false, color);
+                page.contentWindow.document.execCommand("fontName", false, font);
                 
-                if(bold !== "normal"){ this.page().contentWindow.document.execCommand("bold", false, null); }
-                if(italic !== "normal"){ this.page().contentWindow.document.execCommand("italic", false, null); }
-                if(underline !== "none"){ this.page().contentWindow.document.execCommand("underline", false, null); }
+                if(bold !== "normal"){ page.contentWindow.document.execCommand("bold", false, null); }
+                if(italic !== "normal"){ page.contentWindow.document.execCommand("italic", false, null); }
+                if(underline !== "none"){ page.contentWindow.document.execCommand("underline", false, null); }
                 
-                this.page().contentWindow.document.getSelection().collapseToEnd();
+                page.contentWindow.document.getSelection().collapseToEnd();
                 
-                this.page().focus();
+                page.focus();
                 
                 // Si le style est un titre, on applique un retour à la ligne et on remet en place le style de "Corps de texte"
                 if(section !== "preformated_text")
                 {
-                    this.page().contentWindow.document.execCommand("insertHTML", false, "<br>\001");
+                    page.contentWindow.document.execCommand("insertHTML", false, "<br>\001");
                     app_document.edit.preformated("preformated_text");
-                    this.page().contentWindow.document.execCommand("insertHTML", false, "<br>\001");
+                    page.contentWindow.document.execCommand("insertHTML", false, "<br>\001");
                     app_document.edit.preformated("preformated_text");
-                    this.page().contentWindow.document.execCommand("insertHTML", false, "\001");
+                    page.contentWindow.document.execCommand("insertHTML", false, "\001");
 
                     app_document.edit.preformated("preformated_text");
                 }
@@ -668,7 +786,7 @@ var app_document =
     {
         tab: function()
         {
-            app_document.edit.page().contentWindow.document.execCommand("insertHTML", false, "<br><table style='width: 100%;border-collapse: collapse;'><tr><td style='border: 1px solid black;'></td><td style='border: 1px solid black;'></td></tr><tr><td style='border: 1px solid black;'></td><td style='border: 1px solid black;'></td></tr></table><br>");   
+            app_document.page().contentWindow.document.execCommand("insertHTML", false, "<br><table style='width: 100%;border-collapse: collapse;'><tr><td style='border: 1px solid black;'></td><td style='border: 1px solid black;'></td></tr><tr><td style='border: 1px solid black;'></td><td style='border: 1px solid black;'></td></tr></table><br>");   
         },
         
         image:
@@ -703,8 +821,6 @@ var app_document =
                     
                     var file = element.files[0];
                     
-                    console.log(file);
-                    
                     var formData = new FormData();
                     
                     formData.append("file", file);
@@ -725,7 +841,7 @@ var app_document =
                                     document.querySelector("#return_doc_insert_image").innerHTML = "Upload terminé";
                                     
                                     // On insère l'image
-                                    app_document.edit.page().contentWindow.document.execCommand("insertHTML", false, "<br><img src='inc/ajax/edit/showImage.php?link="+data+"' style='max-width: 100%;margin-bottom: 5px;' /><br><br>");
+                                    app_document.page().contentWindow.document.execCommand("insertHTML", false, "<br><img src='inc/ajax/edit/showImage.php?link="+data+"' style='max-width: 100%;margin-bottom: 5px;' /><br><br>");
                                     break;
                                     
                                 default:
@@ -751,7 +867,7 @@ var app_document =
                     {
                         document.querySelector("#return_doc_insert_image").innerHTML = "Insertion de l'&apos;image en cours...";
                         
-                        app_document.edit.page().contentWindow.document.execCommand("insertHTML", false, "<br><img src='"+url+"' style='max-width: 100%;margin-bottom: 5px;' /><br><br>");
+                        app_document.page().contentWindow.document.execCommand("insertHTML", false, "<br><img src='"+url+"' style='max-width: 100%;margin-bottom: 5px;' /><br><br>");
                     };
                     
                     img.onerror = function()
@@ -778,8 +894,6 @@ var app_document =
             
             put: function()
             {
-                console.log("test");
-                
                 var returnArea = document.querySelector("#return_doc_insert_link");
                 var url = document.querySelector("#input_doc_insert_link").value;
                 
@@ -789,7 +903,7 @@ var app_document =
                 {
                     returnArea.innerHTML = "Insertion du lien en cours...";
                     
-                    app_document.edit.page().contentWindow.document.execCommand("createLink", false, url);
+                    app_document.page().contentWindow.document.execCommand("createLink", false, url);
                 };
                 
                 img.onerror = function()
@@ -798,6 +912,96 @@ var app_document =
                 };
                 
                 img.src = url;
+            }
+        },
+        
+        formula: // TODO : finish
+        {
+            open: function()
+            {
+                popup.open(
+                    "popup_doc_insert_formula",
+                    "Insertion d'une formule",
+                    "<input type='text' id='input_doc_insert_formula' placeholder='Votre formule' onkeydown='app_document.insert.formula.preview();' /><br /><br /><span id='return_doc_insert_formula'></span>",
+                    "<input type='button' value='Insérer' class='button' onclick='app_document.insert.formula.put();' />"
+                );
+            },
+            
+            preview: function()
+            {
+                var content = document.querySelector("#input_doc_insert_formula").value;
+                
+                // Permet de visualiser les formules avant de les inclure
+                var functions = ["int", "sum", "iint", "iiint", "lint", "liin", "liint", "frac"];
+                var chars = [
+                    "\Alpha", "\Beta", "\Gamma", "\Delta", "\Epsilon", "\Zeta"
+                ];
+                
+                var reg_functions = /\\(\w+)\{/g;
+                
+                var reg_arguments = /{(\d+)\}/g;
+                
+                var arr_functions = content.exec(reg_functions);
+                var arr_args = arguments.exec(reg_arguments);
+            },
+            
+            put: function()
+            {
+                
+            }
+        },
+        
+        jump: function()
+        {
+            app_document.page().contentWindow.document.execCommand("insertHTML", false, "<br><hr style='height: 5px;background-color: rgba(0, 0, 0, 0.46);border:none;'></hr><br>");  
+        },
+        
+        special:
+        {
+            char:
+            {
+                open: function()
+                {
+                    popup.open(
+                        "popup_doc_insert_special",
+                        "Insertion de caractères spéciaux",
+                        "<div style='position: absolute;top: 0;left: 0;height: 100%;width: 100%;overflow: auto;'><table id='table_insert_chars'></table></div>",
+                        ""
+                    );
+                    
+                    var toAppend = "";
+                    
+                    var symbols = ["&fnof;", "&Alpha;", "&Beta;", "&Gamma;", "&Delta;", "&Epsilon;", "&Zeta;", "&Eta;", "&Theta;", "&Iota;", "&Kappa;", "&Lambda;", "&Mu;", "&Nu;", "&Xi;", "&Omicron;", "&Pi;", "&Rho;", "&Sigma;", "&Tau;", "&Upsilon;", "&Phi;", "&Chi;", "&Psi;", "&Omega;", "&alpha;", "&beta;", "&gamma;", "&delta;", "&epsilon;", "&zeta;", "&eta;", "&theta;", "&iota;", "&kappa;", "&lambda;", "&mu;", "&nu;", "&xi;", "&omicron;", "&pi;", "&rho;", "&sigmaf;", "&sigma;", "&tau;", "&upsilon;", "&phi;", "&chi;", "&psi;", "&omega;", "&thetasym;", "&upsih;", "&piv;", "&bull;", "&hellip;", "&prime;",  "&Prime;",  "&oline;",  "&frasl;",  "&weierp;", "&image;",  "&real;",   "&trade;",  "&alefsym;",    "&larr;",   "&rarr;",   "&darr;",   "&harr;",   "&crarr;",  "&lArr;",   "&uArr;",   "&rArr;",   "&dArr;",   "&hArr;",   "&forall;", "&part;",   "&exist;",  "&empty;",  "&nabla;",  "&isin;",   "&notin;",  "&ni;", "&prod;",   "&sum;",    "&minus;",  "&lowast;", "&radic;",  "&prop;",   "&infin;",  "&ang;",    "&and;",    "&or;", "&cap;",    "&cup;",    "&int;",    "&there4;", "&sim;",    "&cong;",   "&asymp;",  "&ne;", "&equiv;",  "&le;", "&ge;", "&sub;",    "&sup;",    "&nsub;",   "&sube;",   "&supe;",   "&oplus;",  "&otimes;", "&perp;",   "&sdot;", "&lceil;", "&rceil;", "&lfloor;", "&rfloor;", "&lang;", "&rang;", "&loz;", "&spades;", "&clubs;", "&hearts;", "&diams;"];
+                    var list = [];
+                    
+                    for(var symbol = 0; symbol < symbols.length; symbol = symbol+10)
+                    {
+                        list.push(symbols.slice(symbol, symbol + 10));
+                    }
+                    
+                    for(var line = 0; line < list.length; line++)
+                    {
+                        toAppend += "<tr style='height: 4vh;text-align: center;'>";
+                        
+                        for(var col = 0; col < 10; col++)
+                        {
+                            if(list[line][col] != undefined)
+                            {
+                                toAppend += "<td onclick='app_document.insert.special.char.put(\""+list[line][col]+"\")'>"+list[line][col]+"</td>";
+                            }
+                        }
+                        
+                        toAppend += "</tr>";
+                    }
+                    
+                    document.querySelector("#popup_doc_insert_special table").innerHTML = toAppend;
+                },
+                
+                put: function(which)
+                {
+                    app_document.page().contentWindow.document.execCommand("insertText", false, which);
+                    app_document.page().focus();
+                }
             }
         }
     },
@@ -846,8 +1050,6 @@ var app_document =
     
     keyboard:
     {
-        page: function(){ return document.querySelector("#app_document #page"); },
-        
         trigger: function(event)
         {
             /*
@@ -859,8 +1061,8 @@ var app_document =
             * Mise à jour des statuts
             */
             // Recherche de la police
-            var select = page.contentWindow.document.getSelection();
-            var element = (select.anchorNode == page.contentWindow.document.body) ? page.contentWindow.document.body : select.anchorNode.parentNode;
+            var select = app_document.page().contentWindow.document.getSelection();
+            var element = (select.anchorNode == app_document.page().contentWindow.document.body) ? app_document.page().contentWindow.document.body : select.anchorNode.parentNode;
             var font = getComputedStyle(element).fontFamily;
 
             if(font !== "serif")
@@ -875,12 +1077,10 @@ var app_document =
             /*
             * Mise à jour du QuickAccess
             */
-            var range = this.page().contentWindow.document.getSelection();
+            var range = app_document.page().contentWindow.document.getSelection();
             
             var toAnalyze = (range.anchorNode.toString() == "[object Text]") ? range.anchorNode.parentNode.toString() : range.anchorNode.toString();
             toAnalyze = (toAnalyze.indexOf("http://") != -1 || toAnalyze.indexOf("https://") != -1 || toAnalyze.indexOf("ftp://") != -1) ? "[object Link]" : toAnalyze;
-            
-            console.log(toAnalyze);
             
             var element = document.querySelector("#app_document #quickAccess_popup .body span");
             
@@ -896,6 +1096,10 @@ var app_document =
                     this.quickAccess("list");
                     break;
                     
+                case "[object HTMLHRElement]": // Saut de page
+                    this.quickAccess("jump");
+                    break;
+                    
                 case "[object HTMLTableCellElement]": // Tableau
                     this.quickAccess("table");
                     break;
@@ -906,6 +1110,23 @@ var app_document =
                     
                 default:
                     break;
+            }
+            
+            /*
+            * Detection de la fin de la page
+            */
+            var parent = app_document.page();
+            var lastChild = app_document.page().contentWindow.document.body.lastChild;
+            
+            if(parseInt(lastChild.offsetTop) / parseInt(getComputedStyle(parent).height) * 100 >= 80) // S'il ne reste plus que 20% sur la page, on en créé une autre
+            {
+                var num = app_document.page().getAttribute("data-num");
+                var nextPage = parseInt(num) + 1;
+                
+                if(document.querySelector("#app_document #editorPage_"+nextPage) == null) // La page n'existe pas
+                {                    
+                    app_document.initPage(nextPage);
+                }
             }
         },
         
@@ -931,6 +1152,10 @@ var app_document =
                         "</p>";
                     break;
                     
+                case "jump":
+                    toAppend = "<p><img src='apps/app_document/images/quickAccess/jump/remove.svg' onclick='app_document.quickAccess.jump.remove();' /></p>";
+                    break;
+                    
                 case "link":
                     toAppend = "<p><img src='apps/app_document/images/quickAccess/link/remove.svg' onclick='app_document.quickAccess.link.remove();' /></p>";
                     break;
@@ -949,7 +1174,7 @@ var app_document =
         {
             insertColumn: function()
             {
-                var range = document.querySelector("#app_document #page").contentWindow.document.getSelection();
+                var range = app_document.page().contentWindow.document.getSelection();
                 
                 var element = (range.anchorNode.toString() == "[object Text]") ? range.anchorNode.parentNode.toString() : range.anchorNode.toString();
                 
@@ -966,12 +1191,12 @@ var app_document =
                     }
                 }
                 
-                document.querySelector("#app_document #page").focus();
+                app_document.page().focus();
             },
             
             deleteColumn: function()
             {
-                var range = document.querySelector("#app_document #page").contentWindow.document.getSelection();
+                var range = app_document.page().contentWindow.document.getSelection();
                 
                 var element = (range.anchorNode.toString() == "[object Text]") ? range.anchorNode.parentNode.toString() : range.anchorNode.toString();
                 
@@ -987,16 +1212,16 @@ var app_document =
                     // Teste s'il reste des cellules. Si ce n'est pas le cas, on supprime le tableau
                     if(parent.querySelectorAll("td").length == 0)
                     {
-                        document.querySelector("#app_document #page").contentWindow.document.body.removeChild(parent.parentNode);
+                        app_document.page().contentWindow.document.body.removeChild(parent.parentNode);
                     }
                 }
                 
-                document.querySelector("#app_document #page").focus();
+                app_document.page().focus();
             },
             
             insertRow: function()
             {
-                var range = document.querySelector("#app_document #page").contentWindow.document.getSelection();
+                var range = app_document.page().contentWindow.document.getSelection();
                 
                 var element = (range.anchorNode.toString() == "[object Text]") ? range.anchorNode.parentNode.toString() : range.anchorNode.toString();
                 
@@ -1022,12 +1247,12 @@ var app_document =
                     parent.appendChild(row);
                 }
                 
-                document.querySelector("#app_document #page").focus();
+                app_document.page().focus();
             },
             
             deleteRow: function()
             {
-                var range = document.querySelector("#app_document #page").contentWindow.document.getSelection();
+                var range = app_document.page().contentWindow.document.getSelection();
                 
                 var element = (range.anchorNode.toString() == "[object Text]") ? range.anchorNode.parentNode.toString() : range.anchorNode.toString();
                 
@@ -1043,11 +1268,11 @@ var app_document =
                     // S'il n'y a plus de ligne, on supprime le tableau
                     if(parent.querySelectorAll("tr").length == 0)
                     {
-                        document.querySelector("#app_document #page").contentWindow.document.body.removeChild(parent.parentNode);
+                        app_document.page().contentWindow.document.body.removeChild(parent.parentNode);
                     }
                 }
                 
-                document.querySelector("#app_document #page").focus();
+                app_document.page().focus();
             }
         },
         
@@ -1055,8 +1280,8 @@ var app_document =
         {
             remove: function()
             {
-                var range = app_document.edit.page().contentWindow.document.createRange();
-                var sel = app_document.edit.page().contentWindow.document.getSelection();
+                var range = app_document.page().contentWindow.document.createRange();
+                var sel = app_document.page().contentWindow.document.getSelection();
                 
                 range.setStart(sel.anchorNode, 0);
                 range.setEnd(sel.anchorNode, sel.anchorNode.textContent.length);
@@ -1064,12 +1289,65 @@ var app_document =
                 sel.removeAllRanges();
                 sel.addRange(range);
                 
-                app_document.edit.page().contentWindow.document.execCommand("unlink", false, null);
+                app_document.page().contentWindow.document.execCommand("unlink", false, null);
                 
-                app_document.edit.page().contentWindow.document.getSelection().collapseToEnd();
+                app_document.page().contentWindow.document.getSelection().collapseToEnd();
                 
-                app_document.edit.page().focus();
+                app_document.page().focus();
             }
+        },
+        
+        jump:
+        {
+            remove: function()
+            {
+                var sel = app_document.page().contentWindow.document.getSelection();
+                
+                var element = sel.anchorNode;
+                
+                app_document.page().contentWindow.document.body.removeChild(element);
+                
+                app_document.page().focus();
+            }
+        }
+    },
+    
+    extern:
+    {
+        open: function(hash, name)
+        {
+            app_document.loader.trigger();
+            // Récupération du contenu du fichier
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "inc/ajax/edit/get_content_file.php?hash="+hash, true);
+            
+            xhr.onreadystatechange = function()
+            {
+                if(xhr.status == 200 && xhr.readyState == 4)
+                {
+                    app_document.loader.trigger();
+                    
+                    var state = xhr.responseText.split("~||]]", 1)[0];
+					var data = xhr.responseText.split("~||]]", 2)[1];
+                    
+                    switch(state)
+                    {
+                        case "ok":
+                            app_document.page().contentWindow.document.execCommand("insertHTML", false, data);
+                            
+                            document.querySelector("#app_document .title_name").innerHTML = "Editeur de documents - <b>" + name + "</b>";
+                            
+                            // Sauvegarde du hash
+                            localStorage.setItem("app_document_hash", hash);
+                            break;
+                            
+                        default:
+                            break;
+                    }
+                }
+            }
+            
+            xhr.send(null);
         }
     }
 } 

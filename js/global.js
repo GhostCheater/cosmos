@@ -79,7 +79,7 @@ var COSMOS =
 		localStorage.setItem("pass", btoa("motdepasse"));
         
         document.body.addEventListener("keypress", function(e){
-            console.log("coucou");
+//            console.log("coucou");
         }, false);
 	},
     

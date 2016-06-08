@@ -5,7 +5,7 @@
     <rect x="20" y="10" style="fill:#36404D;" width="41" height="4"></rect>
     <rect x="20" y="66" style="fill:#36404D;" width="41" height="4"></rect>
     
-    <circle cx="62" cy="65" r="15" fill="#ff4545"></circle>
+    <circle cx="62" cy="65" r="15" fill="#ff5757"></circle>
     
     <rect x="55" y="63" style="fill:#ffffff;" width="15" height="4"></rect>
 </svg>
