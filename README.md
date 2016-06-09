@@ -8,7 +8,7 @@
 ## A propos
 CosmOS est un WebOS vous permettant d'accéder à vos fichiers et de les manipuler à votre guise sans à avoir certaines applications spécifiques.
 
-### Pourquoi un WebOS ?
+#### Pourquoi un WebOS ?
 C'est ue question qui revient assez souvent et pas mal de personne pense que cela ne sert à rien, qu'il faudrait que ce soit une surcouche pour Linux, etc... Mais le principe du WebOS (et sa force) demeure dans le fait qu'il n'y a pas besoin d'installation d'un nouvel OS et qu'il vient s'ajouter en complément dans votre navigateur.
 
 En effet, si un WebOS était une surcouche d'un OS existant, il faudrait l'installer, le mettre à jour, etc... C'est bien plus fastidieux et moins efficace au final. Le fait que chaque OS ait au moins un navigateur permet l'existence de ce genre de projets car en plus de proposer un stockage en ligne (disponible donc n'importe où), un WebOS vous permet d'accéder à vos fichiers, de les modifier, de les visualiser comme si vous étiez sur votre propre ordinateur sans à avoir à installer des applications spécifiques. Sa grande force est alors sa polyvalence et son accessibilité.
