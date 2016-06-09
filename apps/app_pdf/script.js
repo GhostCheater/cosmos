@@ -28,7 +28,8 @@ var app_pdf =
             app_pdf.loader("show");
             
             var xhr = new XMLHttpRequest();
-            xhr.open("GET", "inc/ajax/pdf/test_file.php?hash="+hash, true);
+            xhr.open("POST", "inc/controller.php", true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             
             xhr.onreadystatechange = function()
             {
@@ -45,7 +46,7 @@ var app_pdf =
                         case "ok":
                             document.querySelector("#app_pdf .title_name").innerHTML = "Visionneuse de PDF - <b>" + name + "</b>";
                             
-                            document.querySelector("#app_pdf #pdf_viewer").setAttribute("src", "inc/ajax/pdf/get_content_file.php?hash="+hash);
+                            document.querySelector("#app_pdf #pdf_viewer").setAttribute("src", "inc/controller.php?c=PDF&a=get_content_file&p="+hash);
                             break;
                             
                         default:
@@ -54,7 +55,7 @@ var app_pdf =
                 }
             }
             
-            xhr.send(null);
+            xhr.send("c=PDF&a=test_file&p="+hash);
         }
     }
 };

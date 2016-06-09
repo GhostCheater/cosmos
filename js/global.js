@@ -683,7 +683,8 @@ var COSMOS =
 				changeDisposition: function(disposition)
 				{
 					var xhr = new XMLHttpRequest();
-					xhr.open("GET", "inc/ajax/general/put_preferences.php?change=disposition&content="+disposition, true);
+					xhr.open("POST", "inc/controller.php", true);
+                    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
 					xhr.onreadystatechange = function()
 					{
@@ -705,7 +706,7 @@ var COSMOS =
 						}
 					}
 
-					xhr.send(null);
+					xhr.send("c=General&a=put_preferences&p=disposition,"+disposition);
 				},
 				
 				submit:
@@ -713,7 +714,8 @@ var COSMOS =
 					load_currentBackgroundHeader: function()
 					{
 						var xhr = new XMLHttpRequest();
-						xhr.open("GET", "inc/ajax/general/load_preferences.php", true);
+						xhr.open("POST", "inc/controller.php", true);
+                        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 						
 						xhr.onreadystatechange = function()
 						{
@@ -759,7 +761,7 @@ var COSMOS =
 							}
 						}
 						
-						xhr.send(null);
+						xhr.send("c=General&a=load_preferences");
 					},
 					
 					load_currentBackgroundDesktop: function()
@@ -778,7 +780,8 @@ var COSMOS =
 						];
 						
 						var xhr = new XMLHttpRequest();
-						xhr.open("GET", "inc/ajax/general/load_preferences.php", true);
+						xhr.open("POST", "inc/controller.php", true);
+                        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 						
 						xhr.onreadystatechange = function()
 						{
@@ -827,13 +830,14 @@ var COSMOS =
 							}
 						}
 						
-						xhr.send(null);
+						xhr.send("c=General&a=load_preferences");
 					},
 					
 					load_currentFontSize: function()
 					{
 						var xhr = new XMLHttpRequest();
-						xhr.open("GET", "inc/ajax/general/load_preferences.php", true);
+						xhr.open("POST", "inc/controller.php", true);
+                        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 						
 						xhr.onreadystatechange = function()
 						{
@@ -884,7 +888,7 @@ var COSMOS =
 							}
 						}
 						
-						xhr.send(null);
+						xhr.send("c=General&a=load_preferences");
 					},
 					
 					preview_headerBackground: function(element)
@@ -912,7 +916,8 @@ var COSMOS =
 						document.querySelector("header").style.backgroundColor = color;
 						
 						var xhr = new XMLHttpRequest();
-						xhr.open("GET", "inc/ajax/general/put_preferences.php?change=headerBackground&content="+color, true);
+						xhr.open("POST", "inc/controller.php", true);
+                        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 						
 						xhr.onreadystatechange = function()
 						{
@@ -922,7 +927,7 @@ var COSMOS =
 							}
 						}
 						
-						xhr.send(null);
+						xhr.send("c=General&a=put_preferences&p=headerBackground,"+color);
 					},
 					
 					preview_desktopBackground: function(element, background)
@@ -933,7 +938,8 @@ var COSMOS =
 						document.body.style = "background-image: url('images/bg/"+background+"');";
 						
 						var xhr = new XMLHttpRequest();
-						xhr.open("GET", "inc/ajax/general/put_preferences.php?change=desktopBackground&content="+background, true);
+						xhr.open("POST", "inc/controller.php", true);
+                        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 						
 						xhr.onreadystatechange = function()
 						{
@@ -943,7 +949,7 @@ var COSMOS =
 							}
 						}
 						
-						xhr.send(null);
+						xhr.send("c=General&a=put_preferences&p=desktopBackground,"+background);
 					},
 					
 					preview_fontSize: function(element)
@@ -953,7 +959,8 @@ var COSMOS =
 						document.querySelector("body").style.fontSize = currentSize;
 						
 						var xhr = new XMLHttpRequest();
-						xhr.open("GET", "inc/ajax/general/put_preferences.php?change=fontSize&content="+currentSize, true);
+						xhr.open("POST", "inc/controller.php", true);
+                        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 						
 						xhr.onreadystatechange = function()
 						{
@@ -963,7 +970,7 @@ var COSMOS =
 							}
 						}
 						
-						xhr.send(null);
+						xhr.send("c=General&a=put_preferences&p=fontSize,"+currentSize);
 					}
 				}
 			},

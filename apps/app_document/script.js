@@ -205,7 +205,8 @@ var app_document =
         load: function()
         {
             var xhr = new XMLHttpRequest();
-            xhr.open("GET", "inc/ajax/edit/load_preferences.php", true);
+            xhr.open("POST", "inc/controller.php", true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             
             xhr.onreadystatechange = function()
             {
@@ -235,7 +236,7 @@ var app_document =
                 }
             }
             
-            xhr.send(null);
+            xhr.send("c=Edit&a=load_preferences");
         },
         
         parse: function(data)
@@ -422,7 +423,7 @@ var app_document =
             img_save.src = "images/loader.png";
             
             var xhr = new XMLHttpRequest();
-            xhr.open("POST", "inc/ajax/general/put_content_file.php", true);
+            xhr.open("POST", "inc/controller.php", true);
             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             
             xhr.onreadystatechange = function()
@@ -452,7 +453,7 @@ var app_document =
                 }
             }
             
-            xhr.send("hash="+hash+"&content="+content);
+            xhr.send("c=General&a=put_content_file&p="+hash+","+content);
         },
         
         
@@ -823,15 +824,18 @@ var app_document =
                     
                     var formData = new FormData();
                     
-                    formData.append("file", file);
+                    formData.append("c", "Edit");
+                    formData.append("a", "upload_image");
+                    formData.append("p", file);
                     
                     var xhr = new XMLHttpRequest();
-                    xhr.open("POST", "inc/ajax/edit/uploadImage.php", true);
+                    xhr.open("POST", "inc/controller.php", true);
                     
                     xhr.onreadystatechange = function()
                     {
                         if(xhr.readyState == 4 && xhr.status == 200)
                         {
+                            console.log(xhr.responseText);
                             var state = xhr.responseText.split("~||]]", 1)[0];
                             var data = xhr.responseText.split("~||]]", 2)[1];
 					
@@ -841,7 +845,7 @@ var app_document =
                                     document.querySelector("#return_doc_insert_image").innerHTML = "Upload terminé";
                                     
                                     // On insère l'image
-                                    app_document.page().contentWindow.document.execCommand("insertHTML", false, "<br><img src='inc/ajax/edit/showImage.php?link="+data+"' style='max-width: 100%;margin-bottom: 5px;' /><br><br>");
+                                    app_document.page().contentWindow.document.execCommand("insertHTML", false, "<br><img src='inc/controller.php?c=Edit&a=show_image&p="+data+"' style='max-width: 100%;margin-bottom: 5px;' /><br><br>");
                                     break;
                                     
                                 default:
@@ -1317,9 +1321,11 @@ var app_document =
         open: function(hash, name)
         {
             app_document.loader.trigger();
+            
             // Récupération du contenu du fichier
             var xhr = new XMLHttpRequest();
-            xhr.open("GET", "inc/ajax/edit/get_content_file.php?hash="+hash, true);
+            xhr.open("POST", "inc/controller.php", true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             
             xhr.onreadystatechange = function()
             {
@@ -1347,7 +1353,7 @@ var app_document =
                 }
             }
             
-            xhr.send(null);
+            xhr.send("c=Edit&a=get_content_file&p="+hash);
         }
     }
 } 

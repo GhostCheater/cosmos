@@ -45,7 +45,7 @@
             {
                 COSMOS.init();
                 
-                WINDOW.trigger("app_document", "blue");
+                WINDOW.trigger("app_explorer", "orange");
             }
         </script>
     </body>
