@@ -1,7 +1,5 @@
 <?php
     require("global/init.php");
-    require_once("global/constants.php");
-    require_once("global/extensions.php");
 
     // Si jamais la requête est avec la méthode GET
     if(isset($_GET['c'])) $_POST['c'] = $_GET['c'];
@@ -25,21 +23,21 @@
                 break;
 
             case "Explorer":
-                require_once("controllers/cExplore.php");
+                require_once("controllers/cExplorer.php");
                 
-                if(in_array($protoAction, array("get_content_file", "test_file"))) eval("cExplorer::" . $protoAction . "();");
+                if(in_array($protoAction, array(""))) eval("cExplorer::" . $protoAction . "('{$args}');");
                 break;
 
             case "General":
                 require_once("controllers/cGeneral.php");
                 
-                if(in_array($protoAction, array("load_preferences", "upload_image", "get_content_file"))) eval("cGeneral::" . $protoAction . "();");
+                if(in_array($protoAction, array("load_preferences", "put_content_file", "put_preferences"))) eval("cGeneral::" . $protoAction . "('{$args}');");
                 break;
 
             case "Panel":
                 require_once("controllers/cPanel.php");
                 
-                if(in_array($protoAction, array("load_preferences", "upload_image", "get_content_file"))) eval("cPanel::" . $protoAction . "();");
+                if(in_array($protoAction, array("tab_apps", "tab_profil", "tab_search", "tab_settings", "edit_sessionName", "edit_mail", "edit_password", "edit_deleteAccount", "logout", "lock", "unlock"))) eval("cPanel::" . $protoAction . "('{$args}');");
                 break;
 
             case "PDF":

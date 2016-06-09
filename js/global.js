@@ -139,7 +139,8 @@ var COSMOS =
 							COSMOS.elements.header.button.apps().className = "selected";
 							
 							var xhr = new XMLHttpRequest();
-							xhr.open("GET", "inc/ajax/rightPanel/apps.php", true);
+							xhr.open("POST", "inc/controller.php", true);
+                            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 					
 							xhr.onreadystatechange = function()
 							{
@@ -185,7 +186,7 @@ var COSMOS =
 								}
 							}
 
-							xhr.send(null);
+							xhr.send("c=Panel&a=tab_apps");
 						}
 						break;
 						
@@ -216,7 +217,8 @@ var COSMOS =
 							COSMOS.elements.header.button.user().className = "selected";
 							
 							var xhr2 = new XMLHttpRequest();
-							xhr2.open("GET", "inc/ajax/rightPanel/profil.php", true);
+							xhr2.open("POST", "inc/controller.php", true);
+                            xhr2.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 					
 							xhr2.onreadystatechange = function()
 							{
@@ -241,7 +243,7 @@ var COSMOS =
 								}
 							}
 							
-							xhr2.send(null);
+							xhr2.send("c=Panel&a=tab_profil");
 						}
 						break;
 						
@@ -254,7 +256,8 @@ var COSMOS =
 							COSMOS.elements.header.button.settings().className = "selected";
 							
 							var xhr3 = new XMLHttpRequest();
-							xhr3.open("GET", "inc/ajax/rightPanel/settings.php", true);
+							xhr3.open("POST", "inc/controller.php", true);
+                            xhr3.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 					
 							xhr3.onreadystatechange = function()
 							{
@@ -279,7 +282,7 @@ var COSMOS =
 								}
 							}
 							
-							xhr3.send(null);
+							xhr3.send("c=Panel&a=tab_settings");
 						}
 						break;
 						
@@ -323,7 +326,8 @@ var COSMOS =
 					document.querySelector("div#contentResults div#loader p").innerHTML = "Recherche en cours... &nbsp; <img src='images/loader.png' />";
 
 					var xhr = new XMLHttpRequest();
-					xhr.open("GET", "inc/ajax/rightPanel/search.php?patternToSearch="+patternToSearch, true);
+					xhr.open("POST", "inc/controller.php", true);
+                    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
 					xhr.onreadystatechange = function()
 					{
@@ -399,7 +403,7 @@ var COSMOS =
 						}
 					}
 
-					xhr.send(null);
+					xhr.send("c=Panel&a=tab_search&p="+patternToSearch);
 				}
 			},
 			
@@ -424,30 +428,6 @@ var COSMOS =
 						"<input type='button' value='Modifier' class='button' onclick='COSMOS.rightPanel.trigger.profil.submit.editMail();' />"
 					);
 				},
-								
-				viewPublicKey: function()
-				{
-					popup.open(
-						"popup_viewPublicKey",
-						"Visionnage de votre clé publique",
-						"<b>Clé publique</b><br /><br /><textarea id='content_viewPublicKey' style='width: 30vw;height:20vh;resize: none;border-radius: 3px;border: 1px solid #bebebe;padding: 1vh;' readonly='true'>Chargement...</textarea>",
-						""
-					);
-					
-					COSMOS.rightPanel.trigger.profil.submit.viewPublicKey();
-				},
-				
-				viewPrivateKey: function()
-				{
-					popup.open(
-						"popup_viewPrivateKey",
-						"Visionnage de votre clé privée",
-						"<b>Clé privée</b><br /><br /><textarea id='content_viewPrivateKey' style='width: 30vw;height:20vh;resize: none;border-radius: 3px;border: 1px solid #bebebe;padding: 1vh;' readonly='true'>Chargement...</textarea>",
-						""
-					);
-					
-					COSMOS.rightPanel.trigger.profil.submit.viewPrivateKey();
-				},
 				
 				deleteAccount: function()
 				{
@@ -471,7 +451,8 @@ var COSMOS =
 						if(newName !== "")
 						{
 							var xhr = new XMLHttpRequest();
-							xhr.open("GET", "inc/ajax/rightPanel/profil/edit_sessionName.php?name="+encodeURI(newName), true);
+							xhr.open("POST", "inc/controller.php", true);
+                            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 							
 							xhr.onreadystatechange = function()
 							{
@@ -497,7 +478,7 @@ var COSMOS =
 								}
 							}
 							
-							xhr.send(null);
+							xhr.send("c=Panel&a=edit_sessionName&p="+encodeURI(newName));
 						}
 						else
 						{
@@ -513,7 +494,8 @@ var COSMOS =
 						returnArea.innerHTML = "<img src='images/loader.png' style='height: 1.5vh;' />";
 
 						var xhr = new XMLHttpRequest();
-						xhr.open("GET", "inc/ajax/rightPanel/profil/edit_mail.php?mail="+encodeURI(newMail), true);
+						xhr.open("POST", "inc/controller.php", true);
+                        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
 						xhr.onreadystatechange = function()
 						{
@@ -539,7 +521,7 @@ var COSMOS =
 							}
 						}
 
-						xhr.send(null);
+						xhr.send("c=Panel&a=edit_mail&p="+encodeURI(newMail));
 					},
 					
 					saveNewPassword: function()
@@ -558,7 +540,8 @@ var COSMOS =
 							var hash_repeatPassword = sha512(repeatPassword);
 							
 							var xhr = new XMLHttpRequest();
-							xhr.open("GET", "inc/ajax/rightPanel/profil/edit_password.php?old="+hash_oldPassword+"&new="+hash_newPassword+"&repeat="+hash_repeatPassword, true);
+							xhr.open("POST", "inc/controller.php", true);
+                            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 							
 							xhr.onreadystatechange = function()
 							{
@@ -588,46 +571,15 @@ var COSMOS =
 								}
 							}
 							
-							xhr.send(null);
+							xhr.send("c=Panel&a=edit_password&p="+hash_oldPassword+"|"+hash_newPassword+"|"+hash_repeatPassword);
 						}
-					},
-					
-					viewPublicKey: function()
-					{
-						var xhr = new XMLHttpRequest();
-						xhr.open("GET", "inc/ajax/rightPanel/profil/view_publicKey.php", true);
-						
-						xhr.onreadystatechange = function()
-						{
-							if(xhr.status === 200 && xhr.readyState === 4)
-							{
-								document.querySelector("#content_viewPublicKey").innerHTML = xhr.responseText;
-							}
-						}
-						
-						xhr.send(null);
-					},
-					
-					viewPrivateKey: function()
-					{
-						var xhr = new XMLHttpRequest();
-						xhr.open("GET", "inc/ajax/rightPanel/profil/view_privateKey.php", true);
-						
-						xhr.onreadystatechange = function()
-						{
-							if(xhr.status === 200 && xhr.readyState === 4)
-							{
-								document.querySelector("#content_viewPrivateKey").innerHTML = xhr.responseText;
-							}
-						}
-						
-						xhr.send(null);
 					},
 
 					deleteAccount: function()
 					{
 						var xhr = new XMLHttpRequest();
-						xhr.open("GET", "inc/ajax/rightPanel/profil/edit_deleteAccount.php", true);
+						xhr.open("POST", "inc/controller.php", true);
+                        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 						
 						xhr.onreadystatechange = function()
 						{
@@ -637,7 +589,7 @@ var COSMOS =
 							}
 						}
 						
-						xhr.send(null);
+						xhr.send("c=Panel&a=edit_deleteAccount");
 					}
 				}
 			},
@@ -1012,7 +964,8 @@ var COSMOS =
 					logout: function()
 					{
 						var xhr = new XMLHttpRequest();
-						xhr.open("GET", "inc/ajax/rightPanel/logout/logout.php", true);
+						xhr.open("POST", "inc/controller.php", true);
+                        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 						
 						xhr.onreadystatechange = function()
 						{
@@ -1022,7 +975,7 @@ var COSMOS =
 							}
 						}
 						
-						xhr.send(null);
+						xhr.send("c=Panel&a=logout");
 					},
 					
 					reload: function()
@@ -1033,8 +986,9 @@ var COSMOS =
 					lock: function()
 					{
 						var xhr = new XMLHttpRequest();
-						xhr.open("GET", "inc/ajax/rightPanel/logout/lockMode.php?action=lock", true);
-						xhr.send(null);
+						xhr.open("POST", "inc/controller.php", true);
+                        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+						xhr.send("c=Panel&a=lock");
 						
 						popup.close("popup_logoutLock");
 						
@@ -1065,7 +1019,8 @@ var COSMOS =
 						button.value = "Vérification...";
 						
 						var xhr = new XMLHttpRequest();
-						xhr.open("GET", "inc/ajax/rightPanel/logout/lockMode.php?action=unlock&password="+password, true)
+						xhr.open("POST", "inc/controller.php", true);
+                        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 						
 						xhr.onreadystatechange = function()
 						{
@@ -1090,7 +1045,7 @@ var COSMOS =
 							}
 						}
 						
-						xhr.send(null);
+						xhr.send("c=Panel&a=unlock&p="+password);
 					}
 				}
 			}

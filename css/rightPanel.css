@@ -285,6 +285,8 @@
     font-weight: normal;
     
     font-size: 16px;
+    
+    height: 8vh;
 }
 
 #rightPanel #content #profilContent #resultProfil tr td input[type="password"]
