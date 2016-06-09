@@ -6,15 +6,6 @@ engines:
        enabled: false
   golint:
     enabled: true
-  phpmd:
-    enabled: true
-    checks:
-      Naming/LongVariable:
-        enabled: false
-      Controversial/CamelCaseVariableName:
-        enabled: false
-      Controversial/Superglobals:
-        enabled: false
   eslint:
     enabled: true
     checks:
