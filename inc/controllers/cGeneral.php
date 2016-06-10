@@ -25,6 +25,8 @@
         
         static function put_content_file($content)
         {
+            require("secure.php");
+            
             $path = cGeneral::relative_path();
                 
             $hash = explode("|", $content)[0];

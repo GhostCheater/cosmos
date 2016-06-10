@@ -55,7 +55,7 @@
         
         static function tab_profil()
         {
-            require("global/bdd.php");
+            require("secure.php");
             
             $path = cPanel::relative_path();
 
@@ -162,7 +162,7 @@
         {
             $path = cPanel::relative_path();
             
-            require("global/bdd.php");
+            require("secure.php");
             
             /* Résultats globaux */
             $results = array(
@@ -267,8 +267,7 @@
         
         static function tab_settings()
         {
-            require("global/bdd.php");
-            require("global/constants.php");
+            require("secure.php");
             
             $path = cPanel::relative_path();
 
@@ -386,7 +385,7 @@
         
         static function edit_sessionName($newName)
         {
-            require("global/bdd.php");
+            require("secure.php");
             
             if(isset($newName) && !empty($newName))
             {
@@ -425,7 +424,7 @@
         
         static function edit_mail($newMail)
         {
-            require("global/bdd.php");
+            require("secure.php");
             
             if(isset($newMail) && !empty($newMail))
             {
@@ -462,7 +461,7 @@
         
         static function edit_password($content)
         {
-            require("global/bdd.php");
+            require("secure.php");
             
             $old = htmlspecialchars(explode("|", $content)[0]);
             $new = htmlspecialchars(explode("|", $content)[1]);
@@ -521,7 +520,7 @@
         
         static function edit_deleteAccount()
         {
-            require("global/bdd.php");
+            require("secure.php");
             
             /* Suppression dans la table "session" */
             $req = $bdd->prepare("DELETE FROM session WHERE token = ? AND user = ?");
@@ -545,7 +544,7 @@
         
         static function logout()
         {
-            require("global/bdd.php");
+            require("secure.php");
             
             // Suppression de la session dans la bdd
             $req = $bdd->prepare("DELETE FROM session WHERE token = ? AND user = ?");
@@ -568,7 +567,7 @@
         
         static function unlock($password)
         {
-            require("global/bdd.php");
+            require("secure.php");
             
             $req = $bdd->prepare("SELECT * FROM users WHERE mdp_login = ? AND hash = ?");
             $req->execute(array(

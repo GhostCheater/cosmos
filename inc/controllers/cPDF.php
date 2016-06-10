@@ -8,7 +8,7 @@
         
         static function get_content_file($hash)
         {            
-            require("global/bdd.php");
+            require("secure.php");
             
             $path = cPDF::relative_path();
             
@@ -47,7 +47,7 @@
         
         static function test_file($hash)
         {
-            require("global/bdd.php");
+            require("secure.php");
             
             $req = $bdd->prepare("SELECT * FROM elements WHERE user = ? AND hash = ? AND type = ?");
             $req->execute(array(

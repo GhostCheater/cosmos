@@ -1,5 +1,5 @@
 <?php
-    require("global/init.php");
+    require("secure.php");
 
     // Si jamais la requête est avec la méthode GET
     if(isset($_GET['c'])) $_POST['c'] = $_GET['c'];
@@ -25,7 +25,7 @@
             case "Explorer":
                 require_once("controllers/cExplorer.php");
                 
-                if(in_array($protoAction, array(""))) eval("cExplorer::" . $protoAction . "('{$args}');");
+                if(in_array($protoAction, array("change_directory_navBar", "change_directory_workspace", "list_elements", "show_navBar", "upload", "delete_elements", "copy_elements", "cut_elements", "paste", "create_file", "create_folder", "rename_element", "view_infos"))) eval("cExplorer::" . $protoAction . "('{$args}');");
                 break;
 
             case "General":

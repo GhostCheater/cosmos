@@ -70,7 +70,7 @@
         
         static function get_content_file($hash)
         {
-            require("global/bdd.php");
+            require("secure.php");
             
             $path = cEdit::relative_path();
             

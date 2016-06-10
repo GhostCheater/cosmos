@@ -34,7 +34,8 @@ var app_explorer =
 			app_explorer.load.trigger("show");
 			
 			var xhr = new XMLHttpRequest();
-			xhr.open("GET", "inc/ajax/explore/list.php", true);
+			xhr.open("POST", "inc/controller.php", true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			
 			xhr.onreadystatechange = function()
 			{
@@ -116,7 +117,7 @@ var app_explorer =
 				}
 			}
 			
-			xhr.send(null);
+			xhr.send("c=Explorer&a=list_elements");
 		},
 		
 		/* Affichage de l'arborescence du répertoire courant */
@@ -125,7 +126,8 @@ var app_explorer =
 			app_explorer.load.trigger("show");
 			
 			var xhr = new XMLHttpRequest();
-			xhr.open("GET", "inc/ajax/explore/nav.php", true);
+			xhr.open("POST", "inc/controller.php", true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			
 			xhr.onreadystatechange = function()
 			{
@@ -148,7 +150,7 @@ var app_explorer =
 				}
 			}
 			
-			xhr.send(null);
+			xhr.send("c=Explorer&a=show_navBar");
 		},
 		
 		/* Ouverture d'un fichier */
@@ -237,13 +239,17 @@ var app_explorer =
 			
 			if(state === "workspace")
 			{
-				xhr.open("GET", "inc/ajax/explore/changeDirectoryWorkspace.php?directoryID="+encodeURIComponent(idDirectory), true);
+				xhr.open("POST", "inc/controller.php", true);
+                xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhr.send("c=Explorer&a=change_directory_workspace&p="+encodeURIComponent(idDirectory));
 			}
 			else
 			{
-				xhr.open("GET", "inc/ajax/explore/changeDirectoryNavBar.php?directoryID="+encodeURIComponent(idDirectory), true);
+				xhr.open("POST", "inc/controller.php", true);
+                xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhr.send("c=Explorer&a=change_directory_navBar&p="+encodeURIComponent(idDirectory));
 			}
-			
+            
 			xhr.onreadystatechange = function()
 			{
 				if(xhr.status === 200 && xhr.readyState === 4)
@@ -262,8 +268,6 @@ var app_explorer =
 					}
 				}
 			}
-			
-			xhr.send(null);
 		},
 		
 		/* Création d'un fichier */
@@ -377,11 +381,13 @@ var app_explorer =
                 if(key < files.length)
                 {
                     var formData = new FormData();
-                    formData.append("file", files[key]);
+                    formData.append("p", files[key]);
+                    formData.append("c", "Explorer");
+                    formData.append("a", "upload");
 
                     // Création de la requête
                     var xhr = new XMLHttpRequest();
-                    xhr.open("POST", "inc/ajax/explore/upload.php", true);
+                    xhr.open("POST", "inc/controller.php", true);
                     
                     xhr.addEventListener("readystatechange", function(e)
                     {
@@ -392,7 +398,7 @@ var app_explorer =
                         app_explorer.actions.upload._progress(xhr, files, key, e);
                     }, false);
 
-                    xhr.send(formData);   
+                    xhr.send(formData);
                 }
 			},
 			
@@ -512,7 +518,8 @@ var app_explorer =
 			var defaultActions = document.querySelector("div#app_explorer div#defaultActions p");
 
 			var xhr = new XMLHttpRequest();
-			xhr.open("GET", "inc/ajax/explore/copy.php?hash=" + encodeURIComponent(hash), true);
+			xhr.open("POST", "inc/controller.php", true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
 			xhr.onreadystatechange = function ()
 			{
@@ -541,7 +548,7 @@ var app_explorer =
 				}    
 			}
 
-			xhr.send(null);
+			xhr.send("c=Explorer&a=copy_elements&p="+encodeURIComponent(hash));
 		},
 		
 		/* Couper un élément */
@@ -555,7 +562,8 @@ var app_explorer =
 			var defaultActions = document.querySelector("div#app_explorer div#defaultActions p");
 
 			var xhr = new XMLHttpRequest();
-			xhr.open("GET", "inc/ajax/explore/cut.php?hash=" + encodeURIComponent(hash), true);
+            xhr.open("POST", "inc/controller.php", true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
 			xhr.onreadystatechange = function ()
 			{
@@ -584,7 +592,7 @@ var app_explorer =
 				}    
 			}
 
-			xhr.send(null);
+			xhr.send("c=Explorer&a=cut_elements&p="+encodeURIComponent(hash));
 		},
 		
 		/* Coller un élément */
@@ -595,7 +603,8 @@ var app_explorer =
 			app_explorer.load.trigger("show");
 			
 			var xhr = new XMLHttpRequest();
-			xhr.open("GET", "inc/ajax/explore/paste.php", true);
+			xhr.open("POST", "inc/controller.php", true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
 			xhr.onreadystatechange = function ()
 			{
@@ -619,7 +628,7 @@ var app_explorer =
 				}
 			}
 			
-			xhr.send(null);
+			xhr.send("c=Explorer&a=paste");
 		},
 
 		/* Afficher les informations sur un élément */
@@ -663,7 +672,8 @@ var app_explorer =
 			}
 			
 			var xhr = new XMLHttpRequest();
-			xhr.open("GET", "inc/ajax/explore/copy.php?hash="+(hashs.toString()), true);
+			xhr.open("POST", "inc/controller.php", true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			
 			xhr.onreadystatechange = function()
 			{
@@ -690,7 +700,7 @@ var app_explorer =
 				}
 			}
 			
-			xhr.send(null);
+			xhr.send("c=Explorer&a=copy_elements&p="+(hashs.toString()));
 		},
         
         cut: function()
@@ -709,7 +719,8 @@ var app_explorer =
 			}
 			
 			var xhr = new XMLHttpRequest();
-			xhr.open("GET", "inc/ajax/explore/cut.php?hash="+(hashs.toString()), true);
+			xhr.open("POST", "inc/controller.php", true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			
 			xhr.onreadystatechange = function()
 			{
@@ -736,7 +747,7 @@ var app_explorer =
 				}
 			}
 			
-			xhr.send(null);
+			xhr.send("c=Explorer&a=cut_elements&p="+(hashs.toString()));
         }
 	},
 	
@@ -758,7 +769,8 @@ var app_explorer =
 			}
 			
 			var xhr = new XMLHttpRequest();
-			xhr.open("GET", "inc/ajax/explore/createFile.php?name="+encodeURIComponent(nameFile)+"&extension="+encodeURIComponent(extension), true);
+			xhr.open("POST", "inc/controller.php", true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			
 			xhr.onreadystatechange = function()
 			{
@@ -784,7 +796,7 @@ var app_explorer =
 				}
 			}
 			
-			xhr.send(null);
+			xhr.send("c=Explorer&a=create_file&p="+encodeURIComponent(nameFile) + "|" + encodeURIComponent(extension));
 		},
 		
 		/* Création d'un dossier */
@@ -796,7 +808,8 @@ var app_explorer =
 			returnArea.innerHTML = "<img src='images/loader.png' style='height: 1.5vh;' />";
 			
 			var xhr = new XMLHttpRequest();
-			xhr.open("GET", "inc/ajax/explore/createFolder.php?name="+encodeURIComponent(nameFolder), true);
+			xhr.open("POST", "inc/controller.php", true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			
 			xhr.onreadystatechange = function()
 			{
@@ -822,7 +835,7 @@ var app_explorer =
 				}
 			}
 			
-			xhr.send(null);
+			xhr.send("c=Explorer&a=create_folder&p="+encodeURIComponent(nameFolder));
 		},
 		
 		/* Suppression d'un élément */
@@ -832,7 +845,8 @@ var app_explorer =
 			returnArea.innerHTML = "<img src='images/loader.png' style='height: 1.5vh;' />";
 			
 			var xhr = new XMLHttpRequest();
-			xhr.open("GET", "inc/ajax/explore/delete.php?hash="+encodeURIComponent(hash), true);
+			xhr.open("POST", "inc/controller.php", true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			
 			xhr.onreadystatechange = function()
 			{
@@ -859,7 +873,7 @@ var app_explorer =
 				}
 			}
 			
-			xhr.send(null);
+			xhr.send("c=Explorer&a=delete_elements&p="+encodeURIComponent(hash));
 		},
 		
 		/* Suppression de plusieurs éléments */
@@ -879,9 +893,10 @@ var app_explorer =
 				}
 			}
 			
-			var xhr = new XMLHttpRequest();
-			xhr.open("GET", "inc/ajax/explore/delete.php?hash="+(hashs.toString()), true);
-			
+            var xhr = new XMLHttpRequest();
+			xhr.open("POST", "inc/controller.php", true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            
 			xhr.onreadystatechange = function()
 			{
 				if(xhr.status === 200 && xhr.readyState == 4)
@@ -907,7 +922,7 @@ var app_explorer =
 				}
 			}
 			
-			xhr.send(null);
+			xhr.send("c=Explorer&a=delete_elements&p="+encodeURIComponent(hashs));
 		},
 		
 		/* Renommer un élément */
@@ -923,13 +938,17 @@ var app_explorer =
 			
 			if(type === "folder")
 			{
-				 xhr.open("GET", "inc/ajax/explore/rename.php?hash="+encodeURIComponent(hash)+"&name="+encodeURIComponent(name), true);
+				xhr.open("POST", "inc/controller.php", true);
+                xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhr.send("c=Explorer&a=rename&p="+encodeURIComponent(hash)+"|"+encodeURIComponent(name));
 			}
 			else
 			{
 				var extension = element.querySelectorAll("input")[1].value;
 				
-				xhr.open("GET", "inc/ajax/explore/rename.php?hash="+encodeURIComponent(hash)+"&name="+(name)+"&extension="+encodeURIComponent(extension), true);
+				xhr.open("POST", "inc/controller.php", true);
+                xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhr.send("c=Explorer&a=rename_element&p="+encodeURIComponent(hash)+"|"+encodeURIComponent(name)+"|"+encodeURIComponent(extension));
 			}
 			
 			xhr.onreadystatechange = function()
@@ -970,8 +989,6 @@ var app_explorer =
 					}
 				}
 			}
-			
-			xhr.send(null);
 		},
 		
 		/* Afficher les informations sur un élément */
@@ -980,7 +997,8 @@ var app_explorer =
 			var element = document.querySelector("div#app_explorer div#infos_popup");
 			
 			var xhr = new XMLHttpRequest();
-			xhr.open("GET", "inc/ajax/explore/infos.php?hash="+encodeURIComponent(hash), true);
+			xhr.open("POST", "inc/controller.php", true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			
 			xhr.onreadystatechange = function()
 			{
@@ -1034,7 +1052,7 @@ var app_explorer =
 				}
 			}
 			
-			xhr.send(null);
+			xhr.send("c=Explorer&a=view_infos&p="+encodeURIComponent(hash));
 		}
 	},
 	
