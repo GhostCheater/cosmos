@@ -17,7 +17,7 @@ En effet, si un WebOS était une surcouche d'un OS existant, il faudrait l'insta
 - Interface globale : 95 %
 - Application "Explorateur de fichiers" : 100%
 - Application "Editeur de documents" : 30%
-- Application "Visionneuse d'images" : 0%
+- Application "Visionneuse d'images" : 10%
 - Application "Visionneuse de PDF" : 100%
 - Application "Visionneuse de vidéos" : 0%
 - Application "Lecteur audio" : 0%
