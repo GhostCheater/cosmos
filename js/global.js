@@ -81,6 +81,8 @@ var COSMOS =
         document.body.addEventListener("keypress", function(e){
 //            console.log("coucou");
         }, false);
+        
+        // Chargement des préférences et application à l'interface
 	},
     
     /*
@@ -658,7 +660,7 @@ var COSMOS =
 						}
 					}
 
-					xhr.send("c=General&a=put_preferences&p=disposition,"+disposition);
+					xhr.send("c=General&a=put_preferences&p=disposition|"+disposition);
 				},
 				
 				submit:
@@ -879,7 +881,7 @@ var COSMOS =
 							}
 						}
 						
-						xhr.send("c=General&a=put_preferences&p=headerBackground,"+color);
+						xhr.send("c=General&a=put_preferences&p=headerBackground|"+color);
 					},
 					
 					preview_desktopBackground: function(element, background)
@@ -901,7 +903,7 @@ var COSMOS =
 							}
 						}
 						
-						xhr.send("c=General&a=put_preferences&p=desktopBackground,"+background);
+						xhr.send("c=General&a=put_preferences&p=desktopBackground|"+background);
 					},
 					
 					preview_fontSize: function(element)
@@ -922,7 +924,7 @@ var COSMOS =
 							}
 						}
 						
-						xhr.send("c=General&a=put_preferences&p=fontSize,"+currentSize);
+						xhr.send("c=General&a=put_preferences&p=fontSize|"+currentSize);
 					}
 				}
 			},

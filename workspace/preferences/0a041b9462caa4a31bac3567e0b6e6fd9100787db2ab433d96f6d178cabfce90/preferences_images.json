@@ -1,0 +1,13 @@
+{
+    "preferences_images": {
+        "auto_archive": false
+    },
+    
+    "images": [
+        {
+            "name": "coucou",
+            "location": "/",
+            "hash": "2554654az"
+        }
+    ]
+}

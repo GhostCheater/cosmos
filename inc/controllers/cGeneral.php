@@ -121,7 +121,7 @@
 
                     $json_string = json_encode($json);
 
-                    file_put_contents("../../../workspace/preferences/{$_SESSION['session']['user']}/preferences.json", $json_string);
+                    file_put_contents("{$path}workspace/preferences/{$_SESSION['session']['user']}/preferences.json", $json_string);
                     break;
 
                 case "desktopBackground":
@@ -129,7 +129,7 @@
 
                     $json_string = json_encode($json);
 
-                    file_put_contents("../../../workspace/preferences/{$_SESSION['session']['user']}/preferences.json", $json_string);
+                    file_put_contents("{$path}workspace/preferences/{$_SESSION['session']['user']}/preferences.json", $json_string);
                     break;
 
                 case "fontSize":
@@ -137,7 +137,7 @@
 
                     $json_string = json_encode($json);
 
-                    file_put_contents("../../../workspace/preferences/{$_SESSION['session']['user']}/preferences.json", $json_string);
+                    file_put_contents("{$path}workspace/preferences/{$_SESSION['session']['user']}/preferences.json", $json_string);
                     break;
 
                 case "disposition":
@@ -145,7 +145,7 @@
 
                     $json_string = json_encode($json);
 
-                    file_put_contents("../../../workspace/preferences/{$_SESSION['session']['user']}/preferences.json", $json_string);
+                    file_put_contents("{$path}workspace/preferences/{$_SESSION['session']['user']}/preferences.json", $json_string);
                     break;
 
                 default:

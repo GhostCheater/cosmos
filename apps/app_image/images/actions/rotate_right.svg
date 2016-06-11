@@ -1,0 +1,23 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">
+    <path style="fill:none;stroke:#4E7AB5;stroke-miterlimit:10;" d="M33.692,7.559C30.308,3.837,25.427,1.5,20,1.5C9.783,1.5,1.5,9.783,1.5,20"></path>
+    <g>
+        <g>
+            <path style="fill:none;stroke:#4E7AB5;stroke-miterlimit:10;" d="M1.5,20c0,1.018,0.082,2.016,0.24,2.99"></path>
+            <path style="fill:none;stroke:#4E7AB5;stroke-miterlimit:10;stroke-dasharray:5.3197,1.7732;" d="M2.109,24.724C3.875,31.43,9.31,36.646,16.137,38.096"></path>
+            <path style="fill:none;stroke:#4E7AB5;stroke-miterlimit:10;" d="M17.01,38.26c0.973,0.158,1.972,0.24,2.99,0.24"></path>
+        </g>
+    </g>
+    <g>
+        <g>
+            <path style="fill:none;stroke:#4E7AB5;stroke-miterlimit:10;" d="M20,38.5c0.505,0,1.005-0.02,1.499-0.06"></path>
+            <path style="fill:none;stroke:#4E7AB5;stroke-miterlimit:10;stroke-dasharray:2.8947,1.9298;" d="M23.413,38.186c7.796-1.454,13.871-7.796,14.925-15.725"></path>
+            <path style="fill:none;stroke:#4E7AB5;stroke-miterlimit:10;" d="M38.44,21.499c0.04-0.495,0.06-0.995,0.06-1.499"></path>
+        </g>
+    </g>
+    <g>
+        <polygon style="fill:#8BB7F0;" points="27.714,8.902 34.552,2.064 35.769,10.812 	"></polygon>
+        <g>
+            <path style="fill:#4E7AB5;" d="M34.195,3.128l0.978,7.029l-6.472-1.535L34.195,3.128 M34.909,1l-8.182,8.182l9.638,2.285L34.909,1L34.909,1z"></path>
+        </g>
+    </g>
+</svg>

@@ -45,6 +45,12 @@
                 
                 if(in_array($protoAction, array("get_content_file", "test_file"))) eval("cPDF::" . $protoAction . "('{$args}');");
                 break;
+                
+            case "Image":
+                require_once("controllers/cImage.php");
+                
+                if(in_array($protoAction, array("get_preferences"))) eval("cImage::" . $protoAction . "('{$args}');");
+                break;
 
             default:
                 break;
