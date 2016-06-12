@@ -1,7 +1,17 @@
 <div id="view">
-    <img src="apps/app_image/images/list.svg" class="image list" />
+    <img id="button_list" src="apps/app_image/images/list.svg" class="image" onclick="app_image.triggerList();" />
     
-    <p>Initialisation...<br /><br />Veuillez patienter...</p>
+    <p>Aucune image à afficher pour le moment.</p>
+</div>
+
+<div id="list" style="display: none;">
+    <img src="apps/app_image/images/arrow.svg" class="arrow" />
+    
+    <div id="content">
+        <span>
+            <p>Chargement en cours...</p>
+        </span>
+    </div>
 </div>
 
 <div id="control">

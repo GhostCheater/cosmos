@@ -45,8 +45,6 @@
             window.onload = function()
             {
                 COSMOS.init();
-                
-                WINDOW.trigger("app_image", "blue");
             }
         </script>
     </body>

@@ -56,21 +56,12 @@
     width: 100%;
 }
 
-#app_image #view p
-{
-    display: table-cell;
-    vertical-align: middle;
-    
-    text-align: center;
-}
-
-#app_image #view p img
-{
-    max-height: 80%;
-}
-
 #app_image #view .image
 {
+    position: absolute;
+    top: 1%;
+    left: 1%;
+    
     transition: all .3s ease;
     -webkit-transition: all .3s ease;
     -moz-transition: all .3s ease;
@@ -83,16 +74,94 @@
     
     cursor: pointer;
 }
+#app_image #view .image.selected
+{
+    background-color: rgba(0, 196, 255, 0.15);
+}
 #app_image #view .image:hover
 {
     background-color: rgba(255, 165, 0, 0.15);
 }
 
-#app_image #view .image.list
+#app_image #view p
+{
+    display: table-cell;
+    vertical-align: middle;
+    
+    text-align: center;
+}
+
+#app_image #view p img
+{
+    max-height: 65vh;
+}
+
+#app_image #list
 {
     position: absolute;
-    top: 1%;
-    left: 1%;
+    top: calc(1% + 5vh);
+    left: 1vw;
+    height: 60%;
+    width: 40%;
+    
+    background-color: #e8e8e8;
+    
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    
+    border-radius: 3px;
+}
+
+#app_image #list .arrow
+{
+    position: absolute;
+    top: -2vh;
+    left: -0.2vh;
+    width: 2vw;
+}
+
+#app_image #list #content
+{
+    display: table;
+    
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+#app_image #list #content span
+{
+    display: table-row;
+}
+
+#app_image #list #content span p
+{
+    transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    
+    display: table-cell;
+    vertical-align: middle;
+    
+    text-align: center;
+    
+    cursor: pointer;
+    
+    height: 12vh;
+}
+#app_image #list #content span p:hover
+{
+    background-color: rgba(255, 0, 0, 0.15);
+}
+
+#app_image #list #content span p img:not(.arrow)
+{
+    height: 5vh;
+    max-width: 10vw;
+    
+    padding: 3px;
 }
 
 #app_image #control

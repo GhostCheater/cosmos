@@ -28,6 +28,27 @@ var app_explorer =
 	/* Actions sur les éléments de l'application */
 	actions:
 	{
+        /* Permet de réduire la taille du nom du fichier ou du dossier */
+        reduce: function(str, type)
+        {
+            if(str.length > 25)
+            {
+                if(type == "folder")
+                {
+                    str = str.substr(0, 20) + "...";   
+                }
+                else
+                {
+                    var name = str.substr(0, 20);
+                    var extension = str.substr(str.lastIndexOf("."), str.length);
+                    
+                    str = name + "..." + extension;
+                }
+            }
+            
+            return str;
+        },
+        
 		/* Permet le listage du répertoire courant */
 		list: function()
 		{
@@ -89,7 +110,7 @@ var app_explorer =
 											
 												toAppend += "<div class='element' data-name='" + name + "' data-hash='" + content[line_key][element_key][0][1] + "' data-type='" + content[line_key][element_key][0][2] + "' data-extension='" + content[line_key][element_key][0][3] + "' data-baseName='" + content[line_key][element_key][0][0] + "'>";
 												toAppend += "<img src='apps/app_explorer/images/types/" + content[line_key][element_key][0][2] + ".svg' onclick='app_explorer.select.trigger(this);' ondblclick='"+onclickAction+"' /><br />";
-												toAppend += "<div onclick='app_explorer.select.trigger(this);' ondblclick'"+onclickAction+"'>"+name+"</div>";
+												toAppend += "<div onclick='app_explorer.select.trigger(this);' ondblclick'"+onclickAction+"'>"+app_explorer.actions.reduce(name, content[line_key][element_key][0][2])+"</div>";
 												toAppend += "<br />";
 												toAppend += "<p>"+actions+"</p>";
 												toAppend += "</div>";
@@ -197,7 +218,7 @@ var app_explorer =
                     break;
                     
                 case "image":
-                    WINDOW.trigger("app_image", "orange");
+                    WINDOW.trigger("app_image", "blue");
                     
                     setTimeout(function(){
                         app_image.extern.open(hash, name);

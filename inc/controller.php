@@ -49,7 +49,7 @@
             case "Image":
                 require_once("controllers/cImage.php");
                 
-                if(in_array($protoAction, array("get_preferences"))) eval("cImage::" . $protoAction . "('{$args}');");
+                if(in_array($protoAction, array("list_elements", "verif_image", "view_image"))) eval("cImage::" . $protoAction . "('{$args}');");
                 break;
 
             default:
