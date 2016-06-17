@@ -45,6 +45,10 @@ div.window.orange div.title {background-color: rgb(255, 238, 192);}
 div.window.black div.load { background-color: rgb(209, 209, 209); }
 div.window.black div.title {background-color: rgb(209, 209, 209);}
 
+/* Purple */
+div.window.purple div.load { background-color: rgb(211, 203, 255); }
+div.window.purple div.title {background-color: rgb(211, 203, 255);}
+
 div.window div.load
 {
     display: table;

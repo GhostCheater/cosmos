@@ -1,0 +1,53 @@
+#app_video video
+{
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    width: 90%;
+    height: 75%;
+    
+    border: 1px solid rgba(211, 128, 255, 0.5);
+    border-radius: 3px;
+    
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+#app_video #controls
+{
+    display: table;
+    
+    position: absolute;
+    top: 85%;
+    left: 0;
+    height: 15%;
+    width: 100%;
+    
+    background-color: #dddddd;
+}
+
+#app_video #controls p
+{
+    display: table-cell;
+    vertical-align: middle;
+    
+    text-align: center;
+    
+    width: 20%;
+    
+    cursor: pointer;
+}
+#app_video #controls p:hover img
+{
+    height: 5vh;
+}
+
+#app_video #controls p img
+{
+    transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    
+    height: 4vh;
+}

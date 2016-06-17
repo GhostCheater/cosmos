@@ -45,6 +45,8 @@
             window.onload = function()
             {
                 COSMOS.init();
+                
+                WINDOW.trigger("app_video", "purple");
             }
         </script>
     </body>
