@@ -186,7 +186,7 @@ var app_explorer =
             switch(extension)
             {
                 case "archive":
-                    WINDOW.trigger("app_archive", "grey");
+                    if(document.querySelector("#app_archive") == undefined) WINDOW.trigger("app_archive", "grey");
                     
                     setTimeout(function(){
                         app_archive.extern.open(hash, name);
@@ -194,7 +194,7 @@ var app_explorer =
                     break;
                     
                 case "audio":
-                    WINDOW.trigger("app_audio", "orange");
+                    if(document.querySelector("#app_audio") == undefined) WINDOW.trigger("app_audio", "orange");
                     
                     setTimeout(function(){
                         app_audio.extern.open(hash, name);
@@ -202,7 +202,7 @@ var app_explorer =
                     break;
                     
                 case "code":
-                    WINDOW.trigger("app_code", "blue");
+                    if(document.querySelector("#app_code") == undefined) WINDOW.trigger("app_code", "green");
                     
                     setTimeout(function(){
                         app_code.extern.open(hash, name);
@@ -210,7 +210,7 @@ var app_explorer =
                     break;
                     
                 case "doc":
-                    WINDOW.trigger("app_document", "blue");
+                    if(document.querySelector("#app_document") == undefined)WINDOW.trigger("app_document", "blue");
                     
                     setTimeout(function(){
                         app_document.extern.open(hash, name);
@@ -218,7 +218,7 @@ var app_explorer =
                     break;
                     
                 case "image":
-                    WINDOW.trigger("app_image", "blue");
+                    if(document.querySelector("#app_image") == undefined) WINDOW.trigger("app_image", "blue");
                     
                     setTimeout(function(){
                         app_image.extern.open(hash, name);
@@ -226,7 +226,7 @@ var app_explorer =
                     break;
                     
                 case "pdf":
-                    WINDOW.trigger("app_pdf", "red");
+                    if(document.querySelector("#app_pdf") == undefined) WINDOW.trigger("app_pdf", "red");
                     
                     setTimeout(function(){
                         app_pdf.extern.open(hash, name);
@@ -234,7 +234,7 @@ var app_explorer =
                     break;
                     
                 case "video":
-                    WINDOW.trigger("app_video", "orange");
+                    if(document.querySelector("#app_video") == undefined) WINDOW.trigger("app_video", "purple");
                     
                     setTimeout(function(){
                         app_video.extern.open(hash, name);
@@ -242,7 +242,7 @@ var app_explorer =
                     break;
                     
                 default:
-                    WINDOW.trigger("app_text", "black");
+                    if(document.querySelector("#app_text") == undefined) WINDOW.trigger("app_text", "black");
                     
                     setTimeout(function(){
                         app_text.extern.open(hash, name);

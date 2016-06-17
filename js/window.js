@@ -3,7 +3,8 @@ var app_list = [
     "app_document", // Editeur de documents
     "app_explorer", // Explorateur de fichiers
     "app_pdf",      // Visionneuse de PDF
-    "app_image"     // Visionneuse d'images
+    "app_image",    // Visionneuse d'images
+    "app_video"     // Visionneuse de vidéos
 ];
 
 var WINDOW = 
@@ -20,13 +21,21 @@ var WINDOW =
             element.className = "window " + app_color;
             element.setAttribute("data-status", "active");
             element.setAttribute("onclick", "WINDOW.setActiveWindow('"+app_id+"')");
+            element.setAttribute("style", "display:block;");
+            
+            /*
+            * Disposition de la fenêtre
+            */
+            var dispo = WINDOW.disposition();
+            
+            element.className = "window " + app_color + dispo;
             
             /*
             * Définition du header de la fenêtre
             */
             var element_title = document.createElement("div");
             element_title.className = "title";
-            element_title.innerHTML = "<p class='title_icon'><img src='apps/"+app_id+"/app.svg' /></p><p class='title_name'>"+app_id+"</p><p class='title_actions'><img src='images/window/reduce.svg' />&nbsp;<img src='images/window/close.svg' onclick='WINDOW.close(\""+app_id+"\");' /></p>";
+            element_title.innerHTML = "<p class='title_icon'><img src='apps/"+app_id+"/app.svg' /></p><p class='title_name'>"+app_id+"</p><p class='title_actions' onclick='WINDOW.interact(\""+app_id+"\")'><img src='images/window/reduce.svg' />&nbsp;<img src='images/window/close.svg' onclick='WINDOW.close(\""+app_id+"\");' /></p>";
             element_title.style.backgroundColor = "white";
             element.appendChild(element_title);
 			
@@ -148,11 +157,11 @@ var WINDOW =
                     // Affichage du contenu chargé
                     document.querySelector("div#"+app_id).removeChild(document.querySelector("div#"+app_id+" div.load"));
                     element_title.removeAttribute("style");
-                    element.className = "window " + app_color;
+                    element.className = "window " + app_color + dispo;
                     
                     clearInterval(timeout);
                 }
-            }, 1500); // 1.5s
+            }, 1000); // 1s
             
             var verif_timeout = setInterval(function(){ // Deuxième vérification
                 if(loadHTML && loadCSS && loadJS && loadMANIFEST)
@@ -164,11 +173,11 @@ var WINDOW =
                     }
                     
                     element_title.removeAttribute("style");
-                    element.className = "window " + app_color;
+                    element.className = "window " + app_color + dispo;
                     
                     clearInterval(verif_timeout);   
                 }
-            }, 3000); // 3s
+            }, 2000); // 2s
             
             /*
             * Affichage de la fenêtre
@@ -184,6 +193,52 @@ var WINDOW =
             {
                 COSMOS.header.trigger.panel("apps");
             }
+            
+            /*
+            * Ajout de l'application dans la barre des tâches
+            */
+            var task = document.createElement("p");
+            task.className = "open";
+            task.id = "task_" + app_id;
+            task.innerHTML = "<img src='apps/"+app_id+"/app.svg' />";
+            task.setAttribute("onclick", "WINDOW.interact('" + app_id + "')");
+            document.querySelector("header #apps").appendChild(task);
+        }
+    },
+    
+    interact: function(app_id)
+    {        
+        if(document.querySelector("div#"+app_id))
+        {
+            if(document.querySelector("div#"+app_id).style.display == "block")
+            {
+                document.querySelector("div#"+app_id).style.display = "none";
+                document.querySelector("header #apps #task_" + app_id).className = "reduce";
+            }
+            else
+            {
+                document.querySelector("div#"+app_id).style.display = "block";
+                document.querySelector("header #apps #task_" + app_id).className = "open";
+            }
+        }
+    },
+    
+    disposition: function(element)
+    {
+        var disposition = localStorage.getItem("disposition");
+        
+        switch(disposition)
+        {
+            case "disposition_1":
+                return " dispo_1";
+                break;
+                
+            case "disposition_4":
+                var nb_windows = document.querySelectorAll("#desktop .window").length;
+                var position = nb_windows % 4;
+                
+                return " dispo_4 elmt_" + position;
+                break;
         }
     },
     
@@ -214,6 +269,9 @@ var WINDOW =
             
             // Suppression de la fenêtre
 			document.querySelector("section#desktop").removeChild(document.querySelector("div#"+app_id));
+            
+            // Suppression de l'icône dans la barre des tâches
+            document.querySelector("header #apps").removeChild(document.querySelector("header #apps #task_"+app_id));
 		}
 	}
 } 

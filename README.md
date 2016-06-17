@@ -9,9 +9,9 @@
 CosmOS est un WebOS vous permettant d'accéder à vos fichiers et de les manipuler à votre guise sans à avoir certaines applications spécifiques.
 
 #### Pourquoi un WebOS ?
-C'est ue question qui revient assez souvent et pas mal de personne pense que cela ne sert à rien, qu'il faudrait que ce soit une surcouche pour Linux, etc... Mais le principe du WebOS (et sa force) demeure dans le fait qu'il n'y a pas besoin d'installation d'un nouvel OS et qu'il vient s'ajouter en complément dans votre navigateur.
+C'est une question qui revient assez souvent. Un WebOS permet de concilier deux aspects : le web et le local. En plus d'avoir accès à vos fichiers en local, vous avez aussi accès à vos fichiers en ligne. Seulement, lorsque vous n'avez pas votre ordinateur sur vous et que vous devez accéder à vos fichiers et les éditer sur donc un autre ordinateur que le votre, celui-ci ne contient pas forcément toutes les applications dont vous avez besoin pour vos fichiers. Le WebOS, en proposant des applications utilisables de n'importe où, vous permet de contourner ce problème.
 
-En effet, si un WebOS était une surcouche d'un OS existant, il faudrait l'installer, le mettre à jour, etc... C'est bien plus fastidieux et moins efficace au final. Le fait que chaque OS ait au moins un navigateur permet l'existence de ce genre de projets car en plus de proposer un stockage en ligne (disponible donc n'importe où), un WebOS vous permet d'accéder à vos fichiers, de les modifier, de les visualiser comme si vous étiez sur votre propre ordinateur sans à avoir à installer des applications spécifiques. Sa grande force est alors sa polyvalence et son accessibilité.
+Mais sa plus grande force demeure dans le fait que chaque OS a un navigateur de base et donc permet d'accéder à un WebOS sans à avoir à installer d'autres applications. Et qui dit pas d'installation dit pas de mise à jour, etc... tout ceci ne vous concerne pas et vous pouvez naviguer sur le WebOS sans vous poser ce genre de questions.
 
 ## Avancement
 - Interface globale : 95 %

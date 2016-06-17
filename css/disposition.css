@@ -1,0 +1,45 @@
+/*
+* Disposition des fenêtres au centre et en plein-écran
+*/
+.dispo_1
+{
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    width: 90%;
+    height: 90%;
+}
+
+/*
+* Disposition des fenêtres en 4 parties
+*/
+.dispo_4
+{
+    position: absolute;
+    width: 48%;
+    height: 48%;
+}
+
+.dispo_4.elmt_0
+{
+    top: 1%;
+    left: 1%;
+}
+
+.dispo_4.elmt_1
+{
+    top: 1%;
+    right: 1%;
+}
+
+.dispo_4.elmt_2
+{
+    bottom: 1%;
+    left: 1%;
+}
+
+.dispo_4.elmt_3
+{
+    bottom: 1%;
+    right: 1%;
+}

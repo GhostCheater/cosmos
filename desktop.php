@@ -11,6 +11,7 @@
         <link rel="stylesheet" type="text/css" href="css/popup_content.css" />
         <link rel="stylesheet" type="text/css" href="css/window.css" />
         <link rel="stylesheet" type="text/css" href="css/lockMode.css" />
+        <link rel="stylesheet" type="text/css" href="css/disposition.css" />
         <script type="text/javascript" src="js/global.js" async></script>
         <script type="text/javascript" src="js/window.js" async></script>
         <script type="text/javascript" src="js/errorMessages.js" async></script>
@@ -20,9 +21,7 @@
     
     <body>
         <header>
-            <div id="apps">
-<!--                <p title="Explorateur de fichiers" class="open"><img src="apps/app_explorer/app.svg" /></p>-->
-            </div>
+            <div id="apps"></div>
             
             <div id="rightArea">
                 <p title="Applications" onclick="COSMOS.header.trigger.panel('apps');"><img src="images/header/apps.svg" /><br />Applications</p>

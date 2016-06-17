@@ -1,10 +1,10 @@
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 80 80" style="enable-background:new 0 0 80 80;" xml:space="preserve">
     <g>
-        <rect x="4.5" y="4.5" style="fill:#8BB7F0;" width="71" height="71"></rect>
-        <path style="fill:#4E7AB5;" d="M75,5v70H5V5H75 M76,4H4v72h72V4L76,4z"></path>
+        <rect x="4.5" y="4.5" style="fill:transparent;" width="71" height="71"></rect>
+        <path style="fill:#000000;" d="M75,5v70H5V5H75 M76,4H4v72h72V4L76,4z"></path>
     </g>
     <g>
-        <path style="fill:#FFFFFF;" d="M58,32v16H22V32H58 M60,30H20v20h40V30L60,30z"></path>
+        <path style="fill:#000000;" d="M58,32v16H22V32H58 M60,30H20v20h40V30L60,30z"></path>
     </g>
-    <rect x="20" y="30" style="fill:#FFFFFF;" width="40" height="8"></rect>
+    <rect x="20" y="30" style="fill:#000000;" width="40" height="8"></rect>
 </svg>

@@ -75,15 +75,53 @@ var COSMOS =
 	* Fonction d'initialisation de l'interface
 	*/
 	init: function()
-	{
-		localStorage.setItem("pass", btoa("motdepasse"));
-        
-        document.body.addEventListener("keypress", function(e){
-//            console.log("coucou");
-        }, false);
-        
+	{        
         // Chargement des préférences et application à l'interface
+        this.load_preferences();
 	},
+    
+    load_preferences: function()
+    {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "inc/controller.php", true);
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        
+        xhr.onreadystatechange = function()
+        {
+            if(xhr.status == 200 && xhr.readyState == 4)
+            {
+                var state = xhr.responseText.split("~||]]", 1)[0];
+                var data = xhr.responseText.split("~||]]", 2)[1];
+
+                switch(state)
+                {
+                    case "ok":
+                        try
+                        {
+                            var preferences = JSON.parse(data);
+                            
+                            console.log(preferences);
+                            
+                            document.body.style.background = "url('images/bg/"+preferences["preferences"]["desktopBackground"]+"')";
+                            document.body.style.fontSize = preferences["preferences"]["fontSize"];
+                            document.querySelector("header").style.backgroundColor = preferences["preferences"]["headerBackground"];
+                            
+                            localStorage.setItem("disposition", preferences["preferences"]["windowDisposition"]);
+                        }
+                        catch(err)
+                        {
+                            console.error("Error parsing JSON : " + err);
+                        }
+                        break;
+                        
+                    default:
+                        break;
+                }
+            }
+        }
+        
+        xhr.send("c=General&a=load_preferences");
+    },
     
     /*
     * Récupération des raccourcis clavier

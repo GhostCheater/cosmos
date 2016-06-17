@@ -4,7 +4,7 @@
         <path style="fill:#66798F;" d="M47,56v12H33V56H47 M48,55H32v14h16V55L48,55z"></path>
     </g>
     <g>
-        <rect x="2.5" y="7.5" style="fill:#C2E8FF;" width="75" height="53"></rect>
+        <rect x="2.5" y="7.5" style="fill:#c2ffd0;" width="75" height="53"></rect>
         <g>
             <path style="fill:#66798F;" d="M77,8v52H3V8H77 M78,7H2v54h76V7L78,7z"></path>
         </g>

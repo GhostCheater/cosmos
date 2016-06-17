@@ -51,6 +51,12 @@
                 
                 if(in_array($protoAction, array("list_elements", "verif_image", "view_image"))) eval("cImage::" . $protoAction . "('{$args}');");
                 break;
+                
+            case "Video":
+                require_once("controllers/cVideo.php");
+                
+                if(in_array($protoAction, array("verif_video", "view_video"))) eval("cVideo::" . $protoAction . "('{$args}');");
+                break;
 
             default:
                 break;
