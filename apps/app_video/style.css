@@ -1,28 +1,6 @@
-#app_video video
-{
-    position: absolute;
-    top: 5%;
-    left: 5%;
-    width: 90%;
-    height: 75%;
-    
-    border: 1px solid rgba(211, 128, 255, 0.5);
-    border-radius: 3px;
-    
-    background-color: rgba(0, 0, 0, 0.9);
-}
-
-#app_video #buffer
-{
-    position: absolute;
-    top: 85%;
-    left: 0;
-    height: 3%;
-    width: 90%;
-    
-    background-color: rgba(157, 0, 255, 0.2);
-}
-
+/*
+* Commun
+*/
 #app_video #buffer #progress
 {
     position: absolute;
@@ -41,19 +19,6 @@
     height: 20%;
     
     background-color: rgb(255, 134, 134);
-}
-
-#app_video #time
-{
-    display: table;
-    
-    position: absolute;
-    top: 85%;
-    left: 90%;
-    width: 10%;
-    height: 3%;
-    
-    background-color: #bcbcbc;
 }
 
 #app_video #time p
@@ -78,7 +43,7 @@
 }
 
 #app_video #controls p
-{
+{    
     display: table-cell;
     vertical-align: middle;
     
@@ -88,12 +53,54 @@
     
     cursor: pointer;
 }
-#app_video #controls p:hover img
+
+/*
+* Disposition (1)
+*/
+#app_video.dispo_1 video
+{
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    width: 90%;
+    height: 75%;
+    
+    border: 1px solid rgba(211, 128, 255, 0.5);
+    border-radius: 3px;
+    
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+#app_video.dispo_1 #buffer
+{
+    position: absolute;
+    top: 85%;
+    left: 0;
+    height: 3%;
+    width: 90%;
+    
+    background-color: rgba(157, 0, 255, 0.2);
+}
+
+#app_video.dispo_1 #time
+{
+    display: table;
+    
+    position: absolute;
+    top: 85%;
+    left: 90%;
+    width: 10%;
+    height: 3%;
+    
+    background-color: #bcbcbc;
+}
+
+#app_video.dispo_1 #controls p:hover img
 {
     height: 5vh;
 }
 
-#app_video #controls p img
+#app_video.dispo_1 #controls p img
 {
     transition: all .3s ease;
     -webkit-transition: all .3s ease;
@@ -102,4 +109,199 @@
     -ms-transition: all .3s ease;
     
     height: 4vh;
+}
+
+
+/*
+* Disposition (2_v)
+*/
+#app_video.dispo_2_v video
+{
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    width: 90%;
+    height: 70%;
+    
+    border: 1px solid rgba(211, 128, 255, 0.5);
+    border-radius: 3px;
+    
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+#app_video.dispo_2_v #buffer
+{
+    position: absolute;
+    top: 80%;
+    left: 0;
+    height: 3%;
+    width: 90%;
+    
+    background-color: rgba(157, 0, 255, 0.2);
+}
+
+#app_video.dispo_2_v #time
+{
+    display: table;
+    
+    position: absolute;
+    top: 80%;
+    left: 90%;
+    width: 10%;
+    height: 3%;
+    
+    background-color: #bcbcbc;
+    
+    font-size: 1.4vh;
+}
+
+#app_video.dispo_2_v #controls
+{
+    font-size: 1.3vh;
+}
+
+#app_video.dispo_2_v #controls p:hover img
+{    
+    height: 4vh;
+}
+
+#app_video.dispo_2_v #controls p img
+{
+    transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    
+    height: 3vh;
+}
+
+
+/*
+* Disposition (2_h)
+*/
+#app_video.dispo_2_h video
+{
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    width: 90%;
+    height: 70%;
+    
+    border: 1px solid rgba(211, 128, 255, 0.5);
+    border-radius: 3px;
+    
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+#app_video.dispo_2_h #buffer
+{
+    position: absolute;
+    top: 80%;
+    left: 0;
+    height: 8%;
+    width: 90%;
+    
+    background-color: rgba(157, 0, 255, 0.2);
+}
+
+#app_video.dispo_2_h #time
+{
+    display: table;
+    
+    position: absolute;
+    top: 80%;
+    left: 90%;
+    width: 10%;
+    height: 8%;
+    
+    background-color: #bcbcbc;
+    
+    font-size: 1.4vh;
+}
+
+#app_video.dispo_2_h #controls
+{
+    font-size: 0vh;
+}
+
+#app_video.dispo_2_h #controls p:hover img
+{    
+    height: 2.6vh;
+}
+
+#app_video.dispo_2_h #controls p img
+{
+    transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    
+    height: 2vh;
+}
+
+
+/*
+* Disposition (4)
+*/
+#app_video.dispo_4 video
+{
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    width: 90%;
+    height: 70%;
+    
+    border: 1px solid rgba(211, 128, 255, 0.5);
+    border-radius: 3px;
+    
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+#app_video.dispo_4 #buffer
+{
+    position: absolute;
+    top: 80%;
+    left: 0;
+    height: 8%;
+    width: 90%;
+    
+    background-color: rgba(157, 0, 255, 0.2);
+}
+
+#app_video.dispo_4 #time
+{
+    display: table;
+    
+    position: absolute;
+    top: 80%;
+    left: 90%;
+    width: 10%;
+    height: 8%;
+    
+    background-color: #bcbcbc;
+    
+    font-size: 1.4vh;
+}
+
+#app_video.dispo_4 #controls
+{
+    font-size: 0vh;
+}
+
+#app_video.dispo_4 #controls p:hover img
+{    
+    height: 2.6vh;
+}
+
+#app_video.dispo_4 #controls p img
+{
+    transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    
+    height: 2vh;
 }

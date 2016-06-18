@@ -272,10 +272,10 @@
             $path = cPanel::relative_path();
 
             $dispositions = array(
-                "disposition_1",
-                "disposition_2",
-                "disposition_2_up",
-                "disposition_4"
+                "dispo_1",
+                "dispo_2_v",
+                "dispo_2_h",
+                "dispo_4"
             );
 
             try

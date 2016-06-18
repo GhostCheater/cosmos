@@ -1,3 +1,6 @@
+/*
+* Commun
+*/
 .fade
 {
     z-index: 99;
@@ -11,53 +14,6 @@
     background-color: rgba(0, 0, 0, 0.9);
 }
 
-#app_image .button
-{    
-    height: 4vh;
-    width: 10vw;
-    
-    cursor: pointer;
-    
-    border: none;
-    border-radius: 3px;
-    
-    background-color: transparent;
-}
-
-#app_image .button.blue
-{
-    transition: all .3s ease;
-    -webkit-transition: all .3s ease;
-    -moz-transition: all .3s ease;
-    -o-transition: all .3s ease;
-    -ms-transition: all .3s ease;
-    
-    border: 3px solid #3da5ff;
-    color: #3da5ff;
-}
-#app_image .button.blue:hover
-{
-    background-color: #3da5ff;
-    color: white;
-}
-
-#app_image .button.red
-{
-    transition: all .3s ease;
-    -webkit-transition: all .3s ease;
-    -moz-transition: all .3s ease;
-    -o-transition: all .3s ease;
-    -ms-transition: all .3s ease;
-    
-    border: 3px solid #ff4f4f;
-    color: #ff4f4f;
-}
-#app_image .button.red:hover
-{
-    background-color: #ff4f4f;
-    color: white;
-}
-
 #app_image #view
 {
     display: table;
@@ -69,24 +25,6 @@
     width: 100%;
 }
 
-#app_image #view .image
-{
-    position: absolute;
-    top: 1%;
-    left: 1%;
-    
-    transition: all .3s ease;
-    -webkit-transition: all .3s ease;
-    -moz-transition: all .3s ease;
-    -o-transition: all .3s ease;
-    -ms-transition: all .3s ease;
-    
-    height: 4vh;
-    
-    border-radius: 3px;
-    
-    cursor: pointer;
-}
 #app_image #view .image.selected
 {
     background-color: rgba(0, 196, 255, 0.15);
@@ -104,9 +42,44 @@
     text-align: center;
 }
 
-#app_image #view p img
+#app_image #control
 {
-    max-height: 65vh;
+    display: table;
+    
+    position: absolute;
+    top: 90%;
+    left: 0;
+    height: 10%;
+    width: 100%;
+    
+    background-color: #e8e8e8;
+}
+
+#app_image #control p
+{
+    display: table-cell;
+    vertical-align: middle;
+    
+    text-align: center;
+    
+    width: 33.33%;
+    
+    cursor: pointer;
+}
+
+#app_image #list #content
+{
+    display: table;
+    
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+#app_image #list #content span
+{
+    display: table-row;
 }
 
 #app_image #list
@@ -132,19 +105,9 @@
     width: 2vw;
 }
 
-#app_image #list #content
+#app_image #list #content span p:hover
 {
-    display: table;
-    
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-}
-
-#app_image #list #content span
-{
-    display: table-row;
+    background-color: rgba(255, 0, 0, 0.15);
 }
 
 #app_image #list #content span p
@@ -161,48 +124,37 @@
     text-align: center;
     
     cursor: pointer;
-    
-    height: 12vh;
-}
-#app_image #list #content span p:hover
-{
-    background-color: rgba(255, 0, 0, 0.15);
 }
 
-#app_image #list #content span p img:not(.arrow)
-{
-    height: 5vh;
-    max-width: 10vw;
-    
-    padding: 3px;
-}
 
-#app_image #control
+/*
+* Disposition(1)
+*/
+#app_image.dispo_1 #view .image
 {
-    display: table;
-    
     position: absolute;
-    top: 90%;
-    left: 0;
-    height: 10%;
-    width: 100%;
+    top: 1%;
+    left: 1%;
     
-    background-color: #e8e8e8;
-}
-
-#app_image #control p
-{
-    display: table-cell;
-    vertical-align: middle;
+    transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -ms-transition: all .3s ease;
     
-    text-align: center;
+    height: 4vh;
     
-    width: 20%;
+    border-radius: 3px;
     
     cursor: pointer;
 }
 
-#app_image #control p img
+#app_image.dispo_1 #view p img
+{
+    max-height: 65vh;
+}
+
+#app_image.dispo_1 #control p img
 {
     transition: all .3s ease;
     -webkit-transition: all .3s ease;
@@ -213,7 +165,209 @@
     height: 4vh;
 }
 
-#app_image #control p:hover img
+#app_image.dispo_1 #control p:hover img
 {
     height: 5vh;
+}
+
+
+
+#app_image.dispo_1 #list #content span p
+{    
+    height: 12vh;
+}
+
+#app_image.dispo_1 #list #content span p img:not(.arrow)
+{
+    height: 5vh;
+    max-width: 10vw;
+    
+    padding: 3px;
+}
+
+
+/*
+* Disposition (2_v)
+*/
+#app_image.dispo_2_v #view .image
+{
+    position: absolute;
+    top: 1%;
+    left: 1%;
+    
+    transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    
+    height: 3vh;
+    
+    border-radius: 3px;
+    
+    cursor: pointer;
+}
+
+#app_image.dispo_2_v #view p img
+{
+    max-height: 40vh;
+}
+
+#app_image.dispo_2_v #control p img
+{
+    transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    
+    height: 3vh;
+}
+
+#app_image.dispo_2_v #control p:hover img
+{
+    height: 4vh;
+}
+
+#app_image.dispo_2_v #list #content span p
+{
+    height: 6vh;
+    
+    font-size: 1.2vh;
+}
+
+#app_image.dispo_2_v #list #content span p img:not(.arrow)
+{
+    height: 4vh;
+    max-width: 6vw;
+    
+    padding: 3px;
+}   
+
+
+/*
+* Disposition (2_h)
+*/
+#app_image.dispo_2_h #view .image
+{
+    position: absolute;
+    top: 1%;
+    left: 1%;
+    
+    transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    
+    height: 3vh;
+    
+    border-radius: 3px;
+    
+    cursor: pointer;
+}
+
+#app_image.dispo_2_h #view p img
+{
+    max-height: 30vh;
+}
+
+#app_image.dispo_2_h #control p
+{
+    font-size: 0vh;
+}
+
+#app_image.dispo_2_h #control p img
+{
+    transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    
+    height: 2vh;
+}
+
+#app_image.dispo_2_h #control p:hover img
+{
+    height: 2.8vh;
+}
+
+#app_image.dispo_2_h #list #content span p
+{
+    height: 6vh;
+    
+    font-size: 1.2vh;
+}
+
+#app_image.dispo_2_h #list #content span p img:not(.arrow)
+{
+    height: 4vh;
+    max-width: 6vw;
+    
+    padding: 3px;
+}
+
+
+/*
+* Disposition (4)
+*/
+#app_image.dispo_4 #view .image
+{
+    position: absolute;
+    top: 1%;
+    left: 1%;
+    
+    transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    
+    height: 3vh;
+    
+    border-radius: 3px;
+    
+    cursor: pointer;
+}
+
+#app_image.dispo_4 #view p img
+{
+    max-height: 30vh;
+}
+
+#app_image.dispo_4 #control p
+{
+    font-size: 0vh;
+}
+
+#app_image.dispo_4 #control p img
+{
+    transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    
+    height: 2vh;
+}
+
+#app_image.dispo_4 #control p:hover img
+{
+    height: 2.8vh;
+}
+
+#app_image.dispo_4 #list #content span p
+{
+    height: 6vh;
+    
+    font-size: 1.2vh;
+}
+
+#app_image.dispo_4 #list #content span p img:not(.arrow)
+{
+    height: 4vh;
+    max-width: 6vw;
+    
+    padding: 3px;
 }

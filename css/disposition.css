@@ -1,5 +1,5 @@
 /*
-* Disposition des fenêtres au centre et en plein-écran
+* Disposition des fenêtres au centre et en plein-écran (1)
 */
 .dispo_1
 {
@@ -10,8 +10,67 @@
     height: 90%;
 }
 
+.dispo_1 .title { height: 5vh; }
+.dispo_1 .title .title_icon img { height: 4vh; }
+.dispo_1 .content {top: 5vh; height: calc(100% - 5vh);}
+.dispo_1 .load {top: 5vh; height: calc(100% - 5vh - 1px);}
+
 /*
-* Disposition des fenêtres en 4 parties
+* Disposition des fenêtres l'une à côté de l'autre (2)
+*/
+.dispo_2_v
+{
+    position: absolute;
+    width: 48%;
+    height: 98%;
+}
+
+.dispo_2_v .title { height: 5vh; }
+.dispo_2_v .title .title_icon img { height: 4vh; }
+.dispo_2_v .content {top: 5vh; height: calc(100% - 5vh);}
+.dispo_2_v .load {top: 5vh; height: calc(100% - 5vh - 1px);}
+
+.dispo_2_v.elmt_0
+{
+    top: 1%;
+    left: 1%;
+}
+
+.dispo_2_v.elmt_1
+{
+    top: 1%;
+    right: 1%;
+}
+
+/*
+* Disposition des fenêtres l'une au-dessus de l'autre
+*/
+.dispo_2_h
+{
+    position: absolute;
+    width: 98%;
+    height: 48%;
+}
+
+.dispo_2_h .title { height: 3vh; }
+.dispo_2_h .title .title_icon img { height: 2vh; }
+.dispo_2_h .content {top: 3vh; height: calc(100% - 3vh);}
+.dispo_2_h .load {top: 3vh; height: calc(100% - 3vh - 1px);}
+
+.dispo_2_h.elmt_0
+{
+    top: 1%;
+    left: 1%;
+}
+
+.dispo_2_h.elmt_1
+{
+    bottom: 1%;
+    left: 1%;
+}
+
+/*
+* Disposition des fenêtres en 4 parties (4)
 */
 .dispo_4
 {
@@ -19,6 +78,11 @@
     width: 48%;
     height: 48%;
 }
+
+.dispo_4 .title { height: 3vh; }
+.dispo_4 .title .title_icon img { height: 2vh; }
+.dispo_4 .content {top: 3vh; height: calc(100% - 3vh);}
+.dispo_4 .load {top: 3vh; height: calc(100% - 3vh - 1px);}
 
 .dispo_4.elmt_0
 {

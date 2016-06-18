@@ -229,11 +229,25 @@ var WINDOW =
         
         switch(disposition)
         {
-            case "disposition_1":
+            case "dispo_1":
                 return " dispo_1";
                 break;
                 
-            case "disposition_4":
+            case "dispo_2_v":
+                var nb_windows = document.querySelectorAll("#desktop .window").length;
+                var position = nb_windows % 2;
+                
+                return " dispo_2_v elmt_" + position;
+                break;
+                
+            case "dispo_2_h":
+                var nb_windows = document.querySelectorAll("#desktop .window").length;
+                var position = nb_windows % 2;
+                
+                return " dispo_2_h elmt_" + position;
+                break;
+                
+            case "dispo_4":
                 var nb_windows = document.querySelectorAll("#desktop .window").length;
                 var position = nb_windows % 4;
                 

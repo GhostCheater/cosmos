@@ -50,9 +50,7 @@ div.window div.load
     z-index: 95;
     
     position: absolute;
-    top: 5vh;
     left: 0;
-    height: calc(100% - 5vh - 1px);
     width: 100%;
     
     border-radius: 2px;
@@ -80,7 +78,6 @@ div.window div.title
     position: absolute;
     top: 0;
     left: 0;
-    height: 5vh;
     width: 100%;
     
     border-bottom: 1px solid #bfbfbf;
@@ -95,7 +92,6 @@ div.window div.title p
 }
 
 div.window div.title .title_icon { width: 10%; }
-div.window div.title .title_icon img { height: 4vh; }
 div.window div.title .title_name { width: 80%; }
 div.window div.title .title_actions { width: 10%; }
 
@@ -107,18 +103,16 @@ div.window div.title p.title_actions img
     -o-transition: all .3s ease;
     -ms-transition: all .3s ease;
     
-    height: 2.5vh; 
+    height: 2vh; 
     cursor: pointer;
 }
 
-div.window div.title p.title_actions img:hover { box-shadow: 0 0 2px black; }
+div.window div.title p.title_actions img:hover { background-color: #ffda95; }
 
 div.window .content
 {
 	position: absolute;
-	top: 5vh;
 	left: 0;
-	height: calc(100% - 5vh);
 	width: 100%;
     
     overflow: hidden;

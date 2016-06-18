@@ -6,6 +6,10 @@
 	Native          : Oui
 */
 
+/*
+* Commun
+*/
+
 /* Barre de navigation */
 #app_document #navBar
 {
@@ -157,12 +161,6 @@
     background-color: rgba(255, 0, 0, 0.15);
 }
 
-#app_document #navBar #contentTabs .input
-{
-    border: none;
-    border-radius: 3px;
-}
-
 #app_document #navBar #contentTabs .preformatedText
 {
     transition: all .3s ease;
@@ -173,9 +171,6 @@
     
     border: 1px solid rgb(180, 180, 180);
     border-radius: 3px;
-    
-    height: 7vh;
-    width: 4.5vw;
     
     overflow: hidden;
     
@@ -221,8 +216,6 @@
     -ms-transition: all .3s ease;
     
 	position: absolute;
-	bottom: 1vw;
-	left: 1vw;
 	height: 2vw;
 	width: 2vw;
     
@@ -263,8 +256,6 @@
     background-color: #bcbcbc;
     
     cursor: pointer;
-    
-    font-size: 2vw;
 }
 #app_document #quickAccess:hover
 {
@@ -413,27 +404,6 @@
     
 /*    overflow: hidden;*/
 }
-
-#app_document #popup
-{
-    display: none;
-    
-    position: absolute;
-    top: 17.2vh;
-    height: 25vh;
-    width: 10vw;
-    
-    background-color: grey;
-    
-    border-radius: 3px;
-    
-    opacity: .9;
-    
-    box-shadow: 0 0 2px grey;
-}
-
-#app_document .pos_edit_highlight{ left: 32vw; }
-#app_document .pos_edit_color{ left: 35vw; }
 
 #app_document #popup img.arrow
 {
@@ -654,4 +624,132 @@
     vertical-align: middle;
     
     padding-left: 1vw;
+}
+
+
+/*
+* Disposition (1)
+*/
+
+#app_document.dispo_1 #navBar img
+{
+    height: 2.5vh;
+}
+
+#app_document.dispo_1 #navBar #contentTabs .input
+{
+    border: none;
+    border-radius: 3px;
+    
+    height: 2.5vh;
+}
+
+#app_document.dispo_1 #navBar #contentTabs .preformatedText
+{
+    height: 7vh;
+    width: 4.5vw;
+}
+
+#app_document.dispo_1 #quickAccess
+{
+    font-size: 2vw;
+}
+
+#app_document.dispo_1 #popup
+{
+    display: none;
+    
+    position: absolute;
+    top: 17.2vh;
+    height: 25vh;
+    width: 10vw;
+    
+    background-color: grey;
+    
+    border-radius: 3px;
+    
+    opacity: .9;
+    
+    box-shadow: 0 0 2px grey;
+}
+
+#app_document.dispo_1 .pos_edit_highlight{ left: 32vw; }
+#app_document.dispo_1 .pos_edit_color{ left: 35vw; }
+
+#app_document.dispo_1 #loaderArea
+{
+	bottom: 1vw;
+	left: 1vw;
+}
+
+
+/*
+* Disposition (4)
+*/
+#app_document.dispo_4 #navBar img
+{
+    height: 1.7vh;
+}
+
+#app_document.dispo_4 #navBar #contentTabs .input
+{
+    border: none;
+    border-radius: 3px;
+    
+    height: 1.7vh;
+}
+
+#app_document.dispo_4 #navBar #contentTabs .preformatedText
+{
+    height: 4vh;
+    width: 2vw;
+    
+    transform: scale(0.8, 0.8);
+}
+
+#app_document.dispo_4 #navBar #contentTabs select
+{
+    max-width: 4vw;
+}
+
+#app_document.dispo_4 #navBar #titlesTabs
+{
+    display: none;
+}
+
+#app_document.dispo_4 #quickAccess
+{
+    display: none;
+}
+
+#app_document.dispo_4 #quickAccess_popup
+{
+    display: none;
+}
+
+#app_document.dispo_4 #popup
+{
+    display: none;
+    
+    position: absolute;
+    top: 10vh;
+    height: 25vh;
+    width: 10vw;
+    
+    background-color: grey;
+    
+    border-radius: 3px;
+    
+    opacity: .9;
+    
+    box-shadow: 0 0 2px grey;
+}
+
+#app_document.dispo_4 .pos_edit_highlight{ left: 16vw; }
+#app_document.dispo_4 .pos_edit_color{ left: 17.5vw; }
+
+#app_document.dispo_4 #loaderArea
+{
+	bottom: 1vw;
+	right: 1vw;
 }

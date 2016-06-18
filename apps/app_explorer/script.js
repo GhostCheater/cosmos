@@ -31,15 +31,15 @@ var app_explorer =
         /* Permet de réduire la taille du nom du fichier ou du dossier */
         reduce: function(str, type)
         {
-            if(str.length > 25)
+            if(str.length > 20)
             {
                 if(type == "folder")
                 {
-                    str = str.substr(0, 20) + "...";   
+                    str = str.substr(0, 17) + "...";   
                 }
                 else
                 {
-                    var name = str.substr(0, 20);
+                    var name = str.substr(0, 14);
                     var extension = str.substr(str.lastIndexOf("."), str.length);
                     
                     str = name + "..." + extension;

@@ -683,6 +683,8 @@ var COSMOS =
 						if(xhr.status === 200 && xhr.readyState === 4)
 						{
 							var elements = document.querySelectorAll("div#settingsContent table#resultSettings tr td img.disposition");
+                            
+                            localStorage.setItem("disposition", disposition);
 							
 							for(var i = 0; i < elements.length; i++)
 							{
