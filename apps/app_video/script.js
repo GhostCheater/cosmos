@@ -25,7 +25,7 @@ var app_video =
         play_pause: function()
         {
             var player = document.querySelector("#app_video video");
-            var play_pause_button = document.querySelectorAll("#app_video #controls p img")[2];
+            var play_pause_button = document.querySelectorAll("#app_video #controls p img")[3];
             
             if(player.paused)
             {
@@ -68,6 +68,37 @@ var app_video =
             var player = document.querySelector("#app_video video");
             
             player.currentTime = 0;
+        },
+        
+        expand: function()
+        {
+            var element = document.querySelector("#app_video video");
+            
+            if (element.mozRequestFullScreen) 
+            {
+                element.mozRequestFullScreen();
+            } 
+            else 
+            {
+                element.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+            }
+        },
+        
+        sound: function()
+        {
+            var player = document.querySelector("#app_video video");
+            var sound_button = document.querySelectorAll("#app_video #controls p img")[6];
+            
+            if(player.muted)
+            {
+                player.muted = false;
+                sound_button.src = "apps/app_video/images/sound_active.svg";
+            }
+            else
+            {
+                player.muted = true;
+                sound_button.src = "apps/app_video/images/sound_mute.svg";
+            }
         }
     },
     

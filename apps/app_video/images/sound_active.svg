@@ -1,0 +1,13 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 80 80" style="enable-background:new 0 0 80 80;" xml:space="preserve">
+    <g>
+        <path style="fill:#cabae0;" d="M8,55.5c-3.033,0-5.5-2.468-5.5-5.5V30c0-3.032,2.467-5.5,5.5-5.5h11.5v31H8z"></path>
+        <path style="fill:#7b5e9c;" d="M19,25v30H8c-2.757,0-5-2.243-5-5V30c0-2.757,2.243-5,5-5H19 M20,24H8c-3.314,0-6,2.686-6,6v20c0,3.314,2.686,6,6,6h12V24L20,24z"></path>
+    </g>
+    <g>
+        <polygon style="fill:#cabae0;" points="18.5,56.053 18.5,24.308 43.5,3.08 43.5,76.931 	"></polygon>
+        <path style="fill:#7b5e9c;" d="M43,4.161v71.701L19,55.818V24.539L43,4.161 M44,2L18,24.076v32.21L44,78V2L44,2z"></path>
+    </g>
+    <path style="fill:none;stroke:#5c9ff5;stroke-width:2;stroke-miterlimit:10;" d="M54.019,71.441C67.344,67.198,77,54.731,77,40c0-14.731-9.656-27.198-22.981-31.441"></path>
+    <path style="fill:none;stroke:#5c9ff5;stroke-width:2;stroke-miterlimit:10;" d="M51.182,62.538C60.402,59.189,67,50.377,67,40c0-10.377-6.598-19.189-15.818-22.538"></path>
+    <path style="fill:none;stroke:#5c9ff5;stroke-width:2;stroke-miterlimit:10;" d="M47.947,52.386C53.196,50.714,57,45.803,57,40s-3.804-10.714-9.053-12.386"></path>
+</svg>
