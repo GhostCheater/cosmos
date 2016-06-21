@@ -2,6 +2,39 @@
 
 var app_document = 
 {
+    init: function()
+    {
+        // Création de l'éditeur
+        var page = document.querySelector("#app_document .page");
+        
+        page.contentEditable = true;
+        page.contentDocument.designMode = "on";
+        page.focus();
+        page.contentWindow.document.execCommand("insertHTML", false, "<br>");
+        
+        // Chargement de la toolbar
+        this.preferences.load();
+        this.tab.load("insert");
+        this.update.states();
+        
+        
+        // On place le focus sur l'éditeur
+        page.addEventListener("load", function()
+        {
+            page.contentWindow.focus();
+        }, false);
+        
+        // On espionne l'objet
+        page.contentWindow.document.addEventListener("keyup", function(event)
+        {
+            app_document.keyboard.trigger(event);
+        }, false);
+        page.contentWindow.document.addEventListener("click", function(event)
+        {
+            app_document.keyboard.trigger(event);
+        }, false);   
+    },
+    
     page: function()
     {
         // Doit retourner la page "focus" ou la première page si aucun focus n'est détecté
@@ -16,64 +49,67 @@ var app_document =
         }
     },
     
-    init: function()
+    editor:
     {
-        // Création de l'éditeur
-        var pages = document.querySelectorAll("#app_document .page");
-        
-        for(var i = 0; i < pages.length; i++)
+        initPage: function(page)
         {
-            pages[i].contentEditable = true;
-            pages[i].contentDocument.designMode = "on";
-            pages[i].focus();
-            pages[i].contentWindow.document.execCommand("insertHTML", false, "<br>");
-        }
-        
-        // Chargement de la toolbar
-        this.preferences.load();
-        this.tab.load("insert");
-        this.update.states();
-        
-        
-        // On place le focus sur l'éditeur
-        pages[0].addEventListener("readyStateChange", function()
-        {
-            if(pages[0].readyState == "complete")
+            if(page != undefined)
             {
-                pages[0].contentWindow.focus();
+                page.onload = function()
+                {
+                    page.contentEditable = true;
+                    page.contentDocument.designMode = "on";
+                }
             }
-        }, false);
+        },
         
-        // On espionne l'objet
-        for(var i = 0; i < pages.length; i++)
+        addPage: function()
         {
-            pages[i].contentWindow.document.addEventListener("keyup", function(event)
+            
+        },
+        
+        removePage: function()
+        {
+            
+        },
+        
+        event_method:
+        {
+            reachEndPage: function()
             {
-                app_document.keyboard.trigger(event);
-            }, false);
-            pages[i].contentWindow.document.addEventListener("click", function(event)
+                
+            },
+            
+            reachStartPage: function()
             {
-                app_document.keyboard.trigger(event);
-            }, false);   
+                
+            },
+            
+            focusPage: function(page)
+            {
+                
+            }
         }
     },
     
-    initPage: function(num)
+    addPage: function(page_num)
     {
-        var page = document.querySelector("#app_document #content #editorPage_"+num);
+        // On clone les propriétés de la première page (sans le contenu)
+        var newPage = document.querySelector("#app_document .page").cloneNode(false);
         
-        console.log(page);
+        newPage.id = "editorPage_" + page_num;
+        newPage.setAttribute("data-num", page_num);
         
-        page.contentEditable = true;
-        page.contentDocument.designMode = "on";
+        document.querySelector("#app_document #content").appendChild(newPage);
         
-        page.contentWindow.document.body.style.color = document.querySelector("#app_document #content #editorPage_1").contentWindow.document.body.style.color;
-        page.contentWindow.document.body.style.fontFamily = document.querySelector("#app_document #content #editorPage_1").contentWindow.document.body.style.fontFamily;
-        page.contentWindow.document.body.style.fontWeight = document.querySelector("#app_document #content #editorPage_1").contentWindow.document.body.style.fontWeight;
-        page.contentWindow.document.body.style.fontStyle = document.querySelector("#app_document #content #editorPage_1").contentWindow.document.body.style.fontStyle;
-        page.contentWindow.document.body.style.textDecoration = document.querySelector("#app_document #content #editorPage_1").contentWindow.document.body.style.textDecoration;
-        
-        page.contentWindow.document.body.appendChild(document.createElement("br"));
+        newPage.addEventListener("load", function()
+        {
+            console.log("coucou");
+
+            newPage.contentEditable = true;
+            newPage.contentDocument.designMode = "on";
+            newPage.contentWindow.document.body.innerHTML = "";
+        }, false);
     },
     
     convert:
@@ -1128,8 +1164,8 @@ var app_document =
                 var nextPage = parseInt(num) + 1;
                 
                 if(document.querySelector("#app_document #editorPage_"+nextPage) == null) // La page n'existe pas
-                {                    
-                    app_document.initPage(nextPage);
+                {                                        
+                    app_document.addPage(nextPage);
                 }
             }
         },

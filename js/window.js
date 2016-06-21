@@ -223,6 +223,31 @@ var WINDOW =
         }
     },
     
+    changeDisposition: function()
+    {
+        var disposition = localStorage.getItem("disposition");
+        var windows = document.querySelectorAll("#desktop .window");
+        
+        switch(disposition)
+        {
+            case "dispo_1":
+                for(var i = 0; i < windows.length; i++)
+                {
+                    
+                }
+                break;
+                
+            case "dispo_2_v":
+                break;
+                
+            case "dispo_2_h":
+                break;
+                
+            case "dispo_4":
+                break;
+        }
+    },
+    
     disposition: function(element)
     {
         var disposition = localStorage.getItem("disposition");

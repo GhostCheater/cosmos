@@ -1,0 +1,20 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" enable-background="new 0 0 48 48" xml:space="preserve">
+    <path fill="#673AB7" d="M45,26.002c0,3.084-4,4-4,4s-31,8.001-34,8.001s-4-1.791-4-4V14.002c0-2.209,1.791-4,4-4h34c2.209,0,4,1.791,4,4V26.002z"></path>
+    <g>
+        <rect x="16" y="7" fill="#FFC107" width="7" height="32"></rect>
+        <rect x="25" y="7" fill="#FFC107" width="7" height="30"></rect>
+        <rect x="34" y="7.001" fill="#FFC107" width="7" height="27.999"></rect>
+        <rect x="7" y="7.001" fill="#FFC107" width="7" height="33.999"></rect>
+    </g>
+    <g>
+        <circle fill="#EF6C00" cx="10.5" cy="12.501" r="1.5"></circle>
+        <circle fill="#EF6C00" cx="19.5" cy="12.501" r="1.5"></circle>
+        <circle fill="#EF6C00" cx="28.5" cy="12.501" r="1.5"></circle>
+        <circle fill="#EF6C00" cx="37.5" cy="12.501" r="1.5"></circle>
+        <circle fill="#EF6C00" cx="37.5" cy="27.502" r="1.5"></circle>
+        <circle fill="#EF6C00" cx="10.5" cy="33.502" r="1.5"></circle>
+        <circle fill="#EF6C00" cx="19.5" cy="31.502" r="1.5"></circle>
+    </g>
+    <line fill="none" stroke="#795548" stroke-width="3" stroke-linecap="round" x1="19.034" y1="20.465" x2="44.001" y2="41"></line>
+    <circle fill="#5D4037" cx="19.5" cy="20.501" r="3.5"></circle>
+</svg>

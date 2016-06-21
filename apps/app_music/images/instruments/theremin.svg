@@ -1,0 +1,16 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" enable-background="new 0 0 48 48" xml:space="preserve">
+    <g>
+        <line fill="none" stroke="#B0BEC5" stroke-width="2" stroke-linecap="square" stroke-linejoin="round" stroke-miterlimit="10" x1="43" y1="6" x2="43" y2="30"></line>
+        <path fill="none" stroke="#B0BEC5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M16,30.939h-3.32C11.42,30.939,9.74,34,7.36,34C4.98,34,4,32.479,4,30.939S5.96,28,8.34,28c0.98,0,5.46,0,5.46,0"></path>
+    </g>
+    <path fill="#90A4AE" d="M45,32.001c0,0.552-0.447,1-1,1h-3c-0.553,0-1-0.448-1-1v-3c0-0.552,0.447-1,1-1h3c0.553,0,1,0.448,1,1V32.001z"></path>
+    <path fill="#C16629" d="M41,23.001c0-0.552-0.447-1-1-1H16c-0.552,0-1,0.448-1,1l-3,12.998c0,0.552,0.448,1.002,1,1.002h30c0.553,0,1-0.45,1-1.002L41,23.001z"></path>
+    <path fill="#FF9800" d="M44,35.999C44,35.447,43.553,35,43,35H13c-0.552,0-1,0.447-1,0.999V41c0,0.553,0.448,1,1,1h30c0.553,0,1-0.447,1-1V35.999z"></path>
+    <rect x="17" y="35" fill="#5D4037" width="22" height="7"></rect>
+    <g>
+        <circle fill="#CFD8DC" cx="25.5" cy="38.501" r="1.5"></circle>
+        <circle fill="#CFD8DC" cx="30.5" cy="38.501" r="1.5"></circle>
+        <circle fill="#CFD8DC" cx="35.5" cy="38.501" r="1.5"></circle>
+        <circle fill="#CFD8DC" cx="20.5" cy="38.501" r="1.5"></circle>
+    </g>
+</svg>

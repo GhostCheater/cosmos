@@ -1,0 +1,400 @@
+#app_music #song_name
+{
+    display: table;
+    
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 5%;
+    width: 100%;
+    
+    background-color: #d9d9d9;
+}
+
+#app_music #song_name p
+{
+    display: table-cell;
+    vertical-align: middle;
+    
+    text-align: center;
+    
+    color: #5e6c9c;
+    
+    font-size: 1.8vh;
+}
+
+#app_music #player
+{
+    position: absolute;
+    top: 5%;
+    left: 0;
+    height: 10%;
+    width: 100%;
+    
+    background-color: #d9d9d9;
+}
+
+#app_music #player #basic_control
+{
+    display: table;
+    
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 15%;
+}
+
+#app_music #player #basic_control p
+{
+    display: table-cell;
+    vertical-align: middle;
+    
+    text-align: center;
+    
+    width: 33.33%;
+    
+    cursor: pointer;
+}
+
+#app_music #player #basic_control p:hover img
+{
+    height: 4.5vh;
+}
+
+#app_music #player #basic_control p img
+{
+    transition: all .3s ease;
+	-webkit-transition: all .3s ease;
+	-moz-transition: all .3s ease;
+	-o-transition: all .3s ease;
+	-ms-transition: all .3s ease;
+    
+    height: 3.5vh;
+}
+
+#app_music #player #progress
+{
+    display: table;
+    
+    position: absolute;
+    top: 0;
+    left: 15%;
+    height: 100%;
+    width: 60%;
+}
+
+#app_music #player #progress #content_progress
+{
+    display: table-cell;
+    vertical-align: middle;
+    
+    text-align: left;
+}
+
+#app_music #player #progress #content_progress span.full
+{
+    display: inline-block;
+    
+    height: 2vh;
+    
+    width: 100%;
+    
+    background-color: #adadad;
+    
+    border-radius: 3px;
+}
+
+#app_music #player #progress #content_progress span.full span.current
+{
+    display: inline-block;
+    
+    height: 2vh;
+    
+    width: 20%;
+    
+    background-color: #5e6c9c;
+    
+    border-radius: 3px;
+}
+
+#app_music #player #time
+{
+    display: table;
+    
+    position: absolute;
+    top: 0;
+    left: 75%;
+    width: 10%;
+    height: 100%;
+}
+
+#app_music #player #time p
+{
+    display: table-cell;
+    vertical-align: middle;
+    
+    text-align: center;
+}
+
+#app_music #player #repeat_control
+{
+    display: table;
+    
+    position: absolute;
+    top: 0;
+    left: 85%;
+    width: 15%;
+    height: 100%;
+}
+
+#app_music #player #repeat_control p
+{
+    display: table-cell;
+    vertical-align: middle;
+    
+    text-align: center;
+    
+    width: 33.33%;
+    
+    cursor: pointer;
+}
+
+#app_music #player #repeat_control p:hover img
+{
+    height: 4.5vh;
+}
+
+#app_music #player #repeat_control p img
+{
+    transition: all .3s ease;
+	-webkit-transition: all .3s ease;
+	-moz-transition: all .3s ease;
+	-o-transition: all .3s ease;
+	-ms-transition: all .3s ease;
+    
+    height: 3.5vh;
+}
+
+#app_music #content
+{
+    position: absolute;
+    top: 15%;
+    left: 0;
+    height: 85%;
+    width: 100%;
+}
+
+#app_music #content #playing
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 18%;
+    
+    background-color: #989898;
+}
+
+#app_music #content #playing #icon
+{
+    display: table;
+    
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 30%;
+}
+
+#app_music #content #playing #icon p
+{
+    display: table-cell;
+    vertical-align: middle;
+    
+    text-align: center;
+    
+    color: #bac9e0;
+    
+    font-size: 2vh;
+}
+
+#app_music #content #playing #icon p img:not(.settings)
+{
+    height: 8vh;
+    
+    border-radius: 8vh;
+    
+    border: 5px solid #5e6c9c;
+    
+    background-color: #bac9e0;
+    
+    padding: 1vh;
+}
+
+#app_music #content #playing #mark
+{
+    display: table;
+    
+    position: absolute;
+    top: 30%;
+    left: 0;
+    width: 100%;
+    height: 5%;
+}
+
+#app_music #content #playing #mark p
+{
+    display: table-cell;
+    vertical-align: middle;
+    
+    text-align: center;
+}
+
+#app_music #content #playing #mark p img
+{
+    height: 3vh;
+}
+
+#app_music #content #playing #instruments
+{
+    display: table;
+    
+    position: absolute;
+    top: 35%;
+    left: 0;
+    height: 65%;
+    width: 100%;
+}
+
+#app_music #content #playing #instruments p
+{
+    display: table-cell;
+    vertical-align: middle;
+    
+    text-align: center;
+}
+
+#app_music #content #playing #instruments p img
+{
+    transition: all .3s ease;
+	-webkit-transition: all .3s ease;
+	-moz-transition: all .3s ease;
+	-o-transition: all .3s ease;
+	-ms-transition: all .3s ease;
+    
+    height: 3.5vh;
+    
+    border-radius: 3.5vh;
+    
+    padding: .3vh;
+    
+    border: 3px solid #656565;
+    
+    background-color: #ebebeb;
+    
+    cursor: pointer;
+}
+
+#app_music #content #playing #instruments p .unselected
+{
+    opacity: .15;
+}
+
+#app_music #content #playing #instruments p img:hover
+{
+    opacity: 1;
+    
+    border: 3px solid #5e6c9c;
+    
+    background-color: rgba(94, 108, 156, 0.5);
+}
+
+#app_music #content #list
+{
+    position: absolute;
+    top: 0;
+    left: 18%;
+    height: 85%;
+    width: 82%;
+}
+
+#app_music #content #list #title
+{
+    display: table;
+    
+    position: absolute;
+    top: 0;
+    left: 10%;
+    width: 80%;
+    height: 10%;
+    
+    border-bottom: 1px solid #cbcbcb;
+}
+
+#app_music #content #list #title p
+{
+    display: table-cell;
+    vertical-align: middle;
+    
+    text-align: left;
+}
+
+#app_music #content #list #title .title
+{
+    font-size: 2.5vh;
+    
+    width: 75%;
+}
+
+#app_music #content #list #title .search
+{
+    text-align: right;
+    
+    width: 25%;
+}
+
+#app_music #content #list #title .search input
+{
+    width: 12vw;
+    height: 3vh;
+    
+    border: none;
+    border-radius: 3px;
+}
+
+#app_music #content #list #content
+{
+    position: absolute;
+    top: 12%;
+    left: 0;
+    height: 86%;
+    width: 100%;
+    
+    overflow: auto;
+}
+
+#app_music #content #list #content #tracks
+{
+    display: table;
+    
+    position: absolute;
+    top: 0;
+    left: 10%;
+    width: 80%;
+}
+
+#app_music #content #list #content #tracks .track
+{
+    display: table-row;
+    
+    height: 6vh;
+}
+
+#app_music #content #list #content #tracks .track span
+{
+    display: table-cell;
+    vertical-align: middle;
+    
+    text-align: center;
+}

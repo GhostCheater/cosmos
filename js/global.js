@@ -697,6 +697,8 @@ var COSMOS =
 									elements[i].className = "disposition";
 								}
 							}
+                            
+                            WINDOW.changeDisposition();
 						}
 					}
 
