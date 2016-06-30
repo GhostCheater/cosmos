@@ -1,10 +1,13 @@
+"use_strict";
+
 var app_list = [
     "app_code",     // Editeur de codes
     "app_document", // Editeur de documents
     "app_explorer", // Explorateur de fichiers
     "app_pdf",      // Visionneuse de PDF
     "app_image",    // Visionneuse d'images
-    "app_video"     // Visionneuse de vidéos
+    "app_video",    // Visionneuse de vidéos
+    "app_music"     // Lecteur audio
 ];
 
 var WINDOW = 

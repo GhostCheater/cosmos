@@ -11,7 +11,7 @@
 }
 
 .dispo_1 .title { height: 5vh; }
-.dispo_1 .title .title_icon img { height: 4vh; }
+.dispo_1 .title .title_icon img { height: 3.5vh; }
 .dispo_1 .content {top: 5vh; height: calc(100% - 5vh);}
 .dispo_1 .load {top: 5vh; height: calc(100% - 5vh - 1px);}
 
@@ -26,7 +26,7 @@
 }
 
 .dispo_2_v .title { height: 5vh; }
-.dispo_2_v .title .title_icon img { height: 4vh; }
+.dispo_2_v .title .title_icon img { height: 3.5vh; }
 .dispo_2_v .content {top: 5vh; height: calc(100% - 5vh);}
 .dispo_2_v .load {top: 5vh; height: calc(100% - 5vh - 1px);}
 

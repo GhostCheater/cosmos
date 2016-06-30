@@ -254,6 +254,8 @@
 #app_music #content #playing #mark p img
 {
     height: 3vh;
+    
+    cursor: pointer;
 }
 
 #app_music #content #playing #instruments
@@ -344,7 +346,17 @@
 {
     font-size: 2.5vh;
     
-    width: 75%;
+    width: 25%;
+}
+
+#app_music #content #list #title .loader
+{
+    width: 50%;
+}
+
+#app_music #content #list #title .loader img
+{
+    height: 1.5vh;
 }
 
 #app_music #content #list #title .search
@@ -352,15 +364,8 @@
     text-align: right;
     
     width: 25%;
-}
-
-#app_music #content #list #title .search input
-{
-    width: 12vw;
-    height: 3vh;
     
-    border: none;
-    border-radius: 3px;
+    cursor: pointer;
 }
 
 #app_music #content #list #content
@@ -372,6 +377,31 @@
     width: 100%;
     
     overflow: auto;
+}
+
+#app_music #content #list #content #search_area
+{
+    z-index: 2;
+    
+    position: absolute;
+    top: 0;
+    left: 1vw;
+    height: 70%;
+    width: calc(100% - 2vw);
+    
+    border: 1px solid #bfbfbf;
+    border-radius: 3px;
+    
+    background-color: #e0e0e0;
+}
+
+#app_music #content #list #content #search_area .arrow
+{
+    position: fixed;
+    top: 32%;
+    right: 12.5%;
+    
+    height: 6vh;
 }
 
 #app_music #content #list #content #tracks
@@ -387,8 +417,6 @@
 #app_music #content #list #content #tracks .track
 {
     display: table-row;
-    
-    height: 6vh;
 }
 
 #app_music #content #list #content #tracks .track span
@@ -397,4 +425,19 @@
     vertical-align: middle;
     
     text-align: center;
+    
+    width: 16.66%;
+    
+    height: 6vh;
+}
+
+#app_music #content #list #content #tracks .track span img
+{
+    height: 3.5vh;
+    width: 3.5vh;
+    
+    border-radius: 3.5vh;
+    border: 3px solid #868686;
+    
+    padding: .3vh;
 }

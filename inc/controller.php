@@ -57,6 +57,13 @@
                 
                 if(in_array($protoAction, array("verif_video", "view_video"))) eval("cVideo::" . $protoAction . "('{$args}');");
                 break;
+                
+            case "Audio":
+                require_once("controllers/cAudio.php");
+                require_once("classes/audio.class.php");
+                
+                if(in_array($protoAction, array("list_tracks"))) eval("cAudio::" . $protoAction . "('{$args}');");
+                break;
 
             default:
                 break;

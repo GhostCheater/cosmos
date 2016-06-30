@@ -11,37 +11,32 @@ div.window
 {
     background-color: white;
     
-    border: 1px solid rgb(177, 177, 177);
-    border: 1px solid rgba(0, 0, 0, 0.3);
-    
     border-radius: 3px;
-    
-    box-shadow: 0 0 1px #818181;
 }
 
 /* Blue */
-div.window.blue div.load { background-color: rgb(192, 218, 255); }
-div.window.blue div.title {background-color: rgb(192, 218, 255);}
+div.window.blue div.load { background-color:  #3f51b5; }
+div.window.blue div.title {background-color:  #3f51b5;}
 
 /* Red */
-div.window.red div.load { background-color: rgb(255, 192, 192); }
-div.window.red div.title {background-color: rgb(255, 192, 192);}
+div.window.red div.load { background-color:  #f44336; }
+div.window.red div.title {background-color: #f44336;}
 
 /* Green */
-div.window.green div.load { background-color: rgb(192, 255, 197); }
-div.window.green div.title {background-color: rgb(192, 255, 197);}
+div.window.green div.load { background-color:  #009688; }
+div.window.green div.title {background-color:  #009688;}
 
 /* Orange */
-div.window.orange div.load { background-color: rgb(255, 238, 192); }
-div.window.orange div.title {background-color: rgb(255, 238, 192);}
+div.window.orange div.load { background-color: #ff9800; }
+div.window.orange div.title {background-color: #ff9800;}
 
 /* Black */
-div.window.black div.load { background-color: rgb(209, 209, 209); }
-div.window.black div.title {background-color: rgb(209, 209, 209);}
+div.window.black div.load { background-color:  #607d8b; }
+div.window.black div.title {background-color:  #607d8b;}
 
 /* Purple */
-div.window.purple div.load { background-color: rgb(211, 203, 255); }
-div.window.purple div.title {background-color: rgb(211, 203, 255);}
+div.window.purple div.load { background-color:  #673ab7; }
+div.window.purple div.title {background-color:  #673ab7;}
 
 div.window div.load
 {
@@ -81,6 +76,10 @@ div.window div.title
     width: 100%;
     
     border-bottom: 1px solid #bfbfbf;
+    
+    color: #dedede;
+    
+    font-size: 1.8vh;
 }
 
 div.window div.title p
@@ -103,11 +102,11 @@ div.window div.title p.title_actions img
     -o-transition: all .3s ease;
     -ms-transition: all .3s ease;
     
-    height: 2vh; 
+    height: 3vh; 
     cursor: pointer;
 }
 
-div.window div.title p.title_actions img:hover { background-color: #ffda95; }
+div.window div.title p.title_actions img:hover { background-color: #717171;border-radius: 3vh; }
 
 div.window .content
 {

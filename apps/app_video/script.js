@@ -1,3 +1,5 @@
+"use_strict";
+
 var app_video =
 {
     init: function()
@@ -139,7 +141,7 @@ var app_video =
             
             xhr.onreadystatechange = function()
             {
-                if(xhr.status == 200 && xhr.readyState == 4)
+                if(xhr.status === 200 && xhr.readyState == 4)
                 {                    
                     var state = xhr.responseText.split("~||]]", 1)[0];
                     

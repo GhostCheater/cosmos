@@ -1,0 +1,44 @@
+{
+    "preferences_documents": {
+        "text": {
+            "color": "rgb(0, 0, 0)",
+            "size": 3,
+            "font": "Arial",
+            "bold": false,
+            "italic": false,
+            "underline": false
+        },
+        "title_1": {
+            "color": "rgb(255, 118, 0)",
+            "size": 7,
+            "font": "Tahoma",
+            "bold": false,
+            "italic": false,
+            "underline": false
+        },
+        "title_2": {
+            "color": "rgb(0, 167, 255)",
+            "size": 6,
+            "font": "Tahoma",
+            "bold": false,
+            "italic": false,
+            "underline": false
+        },
+        "title_3": {
+            "color": "rgb(23, 196, 0)",
+            "size": 5,
+            "font": "Tahoma",
+            "bold": false,
+            "italic": false,
+            "underline": false
+        },
+        "title_4": {
+            "color": "rgb(196, 0, 0)",
+            "size": 4,
+            "font": "Tahoma",
+            "bold": false,
+            "italic": false,
+            "underline": false
+        }
+    }
+}

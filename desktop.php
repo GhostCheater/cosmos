@@ -4,7 +4,7 @@
         <meta charset="utf-8" />
         <meta lang="fr" />
         <title>CosmOS</title>
-        <link rel="icon" href="images/logo.png" type="image/png">
+        <link rel="icon" href="images/logo.png" type="image/png" />
         <link rel="stylesheet" type="text/css" href="css/desktop.css" />
         <link rel="stylesheet" type="text/css" href="css/rightPanel.css" />
         <link rel="stylesheet" type="text/css" href="css/popup.css" />
@@ -45,7 +45,7 @@
             {
                 COSMOS.init();
                 
-                WINDOW.trigger("app_music", "blue");
+                WINDOW.trigger("app_music", "red");
             }
         </script>
     </body>

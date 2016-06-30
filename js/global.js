@@ -1,3 +1,5 @@
+"use_strict";
+
 var COSMOS = 
 {
 	/*
@@ -88,7 +90,7 @@ var COSMOS =
         
         xhr.onreadystatechange = function()
         {
-            if(xhr.status == 200 && xhr.readyState == 4)
+            if(xhr.status === 200 && xhr.readyState == 4)
             {
                 var state = xhr.responseText.split("~||]]", 1)[0];
                 var data = xhr.responseText.split("~||]]", 2)[1];
