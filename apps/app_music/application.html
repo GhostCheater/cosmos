@@ -1,21 +1,23 @@
-<div id="song_name"><p>Artist name - Song name (.mp3)</p></div>
+<audio autoplay></audio>
+
+<div id="song_name"><p>Aucune musique en cours de lecture</p></div>
 
 <div id="player">
     <div id="basic_control">
-        <p><img src="apps/app_music/images/actions/previous.svg" /></p>
-        <p><img src="apps/app_music/images/actions/play.svg" /></p>
-        <p><img src="apps/app_music/images/actions/next.svg" /></p>
+        <p><img src="apps/app_music/images/actions/previous.svg" onclick="app_music.controlActions.previous();" /></p>
+        <p><img src="apps/app_music/images/actions/play.svg" onclick="app_music.controlActions.triggerPlay();" /></p>
+        <p><img src="apps/app_music/images/actions/next.svg" onclick="app_music.controlActions.next();" /></p>
     </div>
     <div id="progress">
         <div id="content_progress">
             <span class="full"><span class="current"></span></span>
         </div>
     </div>
-    <div id="time"><p>3s / 120s</p></div>
+    <div id="time"><p>0s / 0s</p></div>
     <div id="repeat_control">
-        <p><img src="apps/app_music/images/actions/sound_active.svg" /></p>
-        <p><img src="apps/app_music/images/actions/shuffle.svg" /></p>
-        <p><img src="apps/app_music/images/actions/repeat.svg" /></p>
+        <p onclick="app_music.controlActions.triggerSound();"><img src="apps/app_music/images/actions/sound_active.svg" /></p>
+        <p onclick="app_music.controlActions.shuffle();"><img src="apps/app_music/images/actions/shuffle.svg" /></p>
+        <p onclick="app_music.controlActions.repeat();"><img src="apps/app_music/images/actions/repeat.svg" /></p>
     </div>
 </div>
 
@@ -23,16 +25,16 @@
     <div id="playing">
         <div id="icon">
             <p>
-                <img src="apps/app_music/images/music_types/metal.svg" /><br />Judas Priest - Leather Rebel&nbsp;<img src="apps/app_music/images/settings.svg" style="height: 1.5vh" class="settings" /><br />(Painkiller)
+                <img src="apps/app_music/images/track.svg" /><br /><span class='track'>Aucune piste en cours</span><span class='creator'></span><br /><span class='album'>de lecture</span>
             </p>
         </div>
         
         <div id="mark">
             <p>
-                <img src="apps/app_music/images/star_full.svg" onclick="app_music.trackActions.triggerMark(1);" />&nbsp;
-                <img src="apps/app_music/images/star_full.svg" onclick="app_music.trackActions.triggerMark(2);" />&nbsp;
-                <img src="apps/app_music/images/star_full.svg" onclick="app_music.trackActions.triggerMark(3);" />&nbsp;
-                <img src="apps/app_music/images/star_full.svg" onclick="app_music.trackActions.triggerMark(4);" />&nbsp;
+                <img src="apps/app_music/images/star_empty.svg" onclick="app_music.trackActions.triggerMark(1);" />&nbsp;
+                <img src="apps/app_music/images/star_empty.svg" onclick="app_music.trackActions.triggerMark(2);" />&nbsp;
+                <img src="apps/app_music/images/star_empty.svg" onclick="app_music.trackActions.triggerMark(3);" />&nbsp;
+                <img src="apps/app_music/images/star_empty.svg" onclick="app_music.trackActions.triggerMark(4);" />&nbsp;
                 <img src="apps/app_music/images/star_empty.svg" onclick="app_music.trackActions.triggerMark(5);" />
             </p>
         </div>
@@ -71,9 +73,9 @@
                 
                 <img onclick="app_music.trackActions.triggerInstrument(this);" src="apps/app_music/images/instruments/theremin.svg" class="unselected" />&nbsp;
                 <img onclick="app_music.trackActions.triggerInstrument(this);" src="apps/app_music/images/instruments/snare_drum.svg" class="unselected" />&nbsp;
-                <img onclick="app_music.trackActions.triggerInstrument(this);" src="apps/app_music/images/instruments/drums.svg" class="" />&nbsp;
+                <img onclick="app_music.trackActions.triggerInstrument(this);" src="apps/app_music/images/instruments/drums.svg" class="unselected" />&nbsp;
                 <img onclick="app_music.trackActions.triggerInstrument(this);" src="apps/app_music/images/instruments/accordion.svg" class="unselected" />&nbsp;
-                <img onclick="app_music.trackActions.triggerInstrument(this);" src="apps/app_music/images/instruments/electric_guitar.svg" class="" />
+                <img onclick="app_music.trackActions.triggerInstrument(this);" src="apps/app_music/images/instruments/electric_guitar.svg" class="unselected" />
             </p>
         </div>
     </div>
@@ -86,16 +88,7 @@
         
         <div id="content">
             <div id="search_area" style="display: none;"><img src="apps/app_music/images/arrow.svg" class="arrow" /></div>
-            <div id="tracks">
-                <div class="track">
-                    <span><img src="apps/app_music/images/music_types/metal.svg" /></span>
-                    <span>Nom de la piste</span>
-                    <span>Album</span>
-                    <span>Artiste</span>
-                    <span>Année</span>
-                    <span>Durée</span>
-                </div>
-            </div>
+            <div id="tracks"></div>
         </div>
     </div>
 </div>

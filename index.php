@@ -30,19 +30,9 @@
                 <img src="apps/app_explorer/images/types/video.svg" class="object orbit_8" />
             </div>
             
+            <!-- Slogan -->
             <div id="slogan">
                 <p>Tous vos fichiers à portée de main, où que vous soyez</p>
-            </div>
-            
-            <div id="applications">
-                <p><img src="apps/app_code/app.svg" /></p>
-                <p><img src="apps/app_document/app.svg" /></p>
-                <p><img src="apps/app_explorer/app.svg" /></p>
-                <p><img src="apps/app_image/app.svg" /></p>
-                <p><img src="apps/app_music/app.svg" /></p>
-                <p><img src="apps/app_pdf/app.svg" /></p>
-                <p><img src="apps/app_text/app.svg" /></p>
-                <p><img src="apps/app_video/app.svg" /></p>
             </div>
         </section>
     </body>

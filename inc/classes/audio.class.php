@@ -1,5 +1,5 @@
 <?php
-    class audio
+    class track
     {
         static function escape_ascii_chars($str)
         {
@@ -19,18 +19,16 @@
             $handle = fopen($path, "r");
 
             // Lecture des 1024 premiers bits
-            $data = explode("\000",fread($handle, 1024));
-            
-            var_dump($data);
+            $data = explode("\000", fread($handle, 1024));
 
             // Récupération des informations sur la piste
             return array(
-                "commentaries" => audio::escape_ascii_chars(str_replace("COMM", "", $data[11])),
-                "num" => audio::escape_ascii_chars(str_replace("TALB", "", $data[52])),
-                "album" => audio::escape_ascii_chars(str_replace("TYER", "", $data[58])),
-                "date" => audio::escape_ascii_chars(str_replace("TCON", "", $data[64])),
-                "track" => audio::escape_ascii_chars(str_replace("TPE2", "", $data[76])),
-                "creator" => audio::escape_ascii_chars(str_replace("TPE1", "", $data[82])),
+                "commentaries" => track::escape_ascii_chars(str_replace("COMM", "", $data[11])),
+                "num" => track::escape_ascii_chars(str_replace("TALB", "", $data[46])),
+                "album" => track::escape_ascii_chars(str_replace("TYER", "", $data[52])),
+                "date" => track::escape_ascii_chars(str_replace("TPE1", "", $data[58])),
+                "track" => track::escape_ascii_chars(str_replace("POPM", "", $data[10])),
+                "creator" => track::escape_ascii_chars(str_replace("TPE1", "", $data[64])),
             );
         }
         
@@ -51,11 +49,11 @@
 
             return array(
                 "commentaries" => "",
-                "num" => audio::escape_ascii_chars(str_replace("TrackNumber", "", $arr[5])),
-                "album" => audio::escape_ascii_chars(str_replace("AlbumTitle,", "", $arr[2])), 
-                "date" => audio::escape_ascii_chars(str_replace("Year\n", "", $arr[6])),
-                "track" => audio::escape_ascii_chars(substr(substr($arr[0], 34, strlen($arr[0])), 0, strrpos(substr($arr[0], 34, strlen($arr[0])), audio::escape_ascii_chars(str_replace("AlbumArtist", "", $arr[8]))))),
-                "creator" => audio::escape_ascii_chars(str_replace("AlbumArtist", "", $arr[8]))
+                "num" => track::escape_ascii_chars(str_replace("TrackNumber", "", $arr[5])),
+                "album" => track::escape_ascii_chars(str_replace("AlbumTitle,", "", $arr[2])), 
+                "date" => track::escape_ascii_chars(str_replace("Year\n", "", $arr[6])),
+                "track" => track::escape_ascii_chars(substr(substr($arr[0], 34, strlen($arr[0])), 0, strrpos(substr($arr[0], 34, strlen($arr[0])), track::escape_ascii_chars(str_replace("AlbumArtist", "", $arr[8]))))),
+                "creator" => track::escape_ascii_chars(str_replace("AlbumArtist", "", $arr[8]))
             );
         }
     }

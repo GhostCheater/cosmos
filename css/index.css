@@ -6,8 +6,8 @@
 
 @keyframes orbit 
 {
-    from { transform: rotate(0deg) translateX(19.5vh) rotate(0deg); opacity: 1; }
-    to   { transform: rotate(360deg) translateX(19.5vh) rotate(-360deg);opacity: 1; }
+    from { transform: rotate(0deg) translateX(25vh) rotate(0deg); opacity: 1; }
+    to   { transform: rotate(360deg) translateX(25vh) rotate(-360deg);opacity: 1; }
 }
 
 html
@@ -18,8 +18,7 @@ html
 
 body
 {
-    background: url("../images/bg/bg_red.png");
-    background-size: cover;
+    background: url("../images/bg/bg_purple.png");
     
     overflow: hidden;
 }
@@ -46,7 +45,7 @@ header p
     
     color: white;
     
-    font-size: 3vh;
+    font-size: 5vh;
     
     width: 50%;
 }
@@ -126,28 +125,28 @@ section
 section #organization
 {
     position: absolute;
-    top: 0;
+    top: 30%;
     left: 0;
-    height: 60%;
+    height: 70%;
     width: 100%;
 }
 
 section #organization .logo
 {
     position: absolute;
-    top: calc(50% - 10vh);
-    left: calc(50% - 10vh);
-    height: 20vh;
-    width: 20vh;
+    top: calc(50% - 15vh);
+    left: calc(50% - 15vh);
+    height: 30vh;
+    width: 30vh;
 }
 
 section #organization .object
 {
     position: absolute;
-    top: calc(50% - 2.5vh);
-    left: calc(50% - 2.5vh);
-    height: 5vh;
-    width: 5vh;
+    top: calc(50% - 4vh);
+    left: calc(50% - 4vh);
+    height: 8vh;
+    width: 8vh;
     
     animation: orbit 8s linear infinite;
     
@@ -200,9 +199,9 @@ section #slogan
     display: table;
     
     position: absolute;
-    top: 60%;
+    top: 0;
     left: 0;
-    height: 15%;
+    height: 30%;
     width: 100%;
 }
 
@@ -216,50 +215,4 @@ section #slogan p
     color: white;
     
     font-size: 3vh;
-}
-
-section #applications
-{
-    display: table;
-    
-    position: absolute;
-    top: 75%;
-    left: 0;
-    height: 25%;
-    width: 100%;
-    
-    background-color: rgba(0, 0, 0, 0.15);
-}
-
-section #applications p
-{
-    display: table-cell;
-    vertical-align: middle;
-    
-    text-align: center;
-}
-
-section #applications p img
-{
-    transition: all .3s ease;
-    -webkit-transition: all .3s ease;
-    -moz-transition: all .3s ease;
-    -o-transition: all .3s ease;
-    -ms-transition: all .3s ease;
-    
-    height: 6vh;
-    width: 6vh;
-    
-    padding: 1vh;
-    
-    border: 2px solid #ffffff;
-    border-radius: 6vh;
-    
-    cursor: pointer;
-}
-section #applications p img:hover
-{
-    border: 2px solid #baeeff;
-    
-    background-color: rgba(186, 238, 255, 0.3); 
 }

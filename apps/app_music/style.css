@@ -94,9 +94,10 @@
 
 #app_music #player #progress #content_progress span.full
 {
-    display: inline-block;
+    position: absolute;
+    top: calc(50% - 0.5vh);
     
-    height: 2vh;
+    height: 1vh;
     
     width: 100%;
     
@@ -107,13 +108,14 @@
 
 #app_music #player #progress #content_progress span.full span.current
 {
-    display: inline-block;
+    position: absolute;
+    top: calc(50% - 0.5vh);
     
-    height: 2vh;
+    height: 1vh;
     
-    width: 20%;
+    width: 0%;
     
-    background-color: #5e6c9c;
+    background-color: #f44336;
     
     border-radius: 3px;
 }
@@ -174,6 +176,13 @@
 	-ms-transition: all .3s ease;
     
     height: 3.5vh;
+
+    border-radius: 4.5vh;
+}
+
+#app_music #player #repeat_control p .selected
+{
+    background-color: rgba(94, 108, 156, 0.3);
 }
 
 #app_music #content
@@ -219,15 +228,9 @@
     font-size: 2vh;
 }
 
-#app_music #content #playing #icon p img:not(.settings)
+#app_music #content #playing #icon p img
 {
     height: 8vh;
-    
-    border-radius: 8vh;
-    
-    border: 5px solid #5e6c9c;
-    
-    background-color: #bac9e0;
     
     padding: 1vh;
 }
@@ -285,9 +288,9 @@
 	-o-transition: all .3s ease;
 	-ms-transition: all .3s ease;
     
-    height: 3.5vh;
+    height: 3vh;
     
-    border-radius: 3.5vh;
+    border-radius: 3vh;
     
     padding: .3vh;
     
@@ -416,7 +419,21 @@
 
 #app_music #content #list #content #tracks .track
 {
+    transition: all .3s ease;
+	-webkit-transition: all .3s ease;
+	-moz-transition: all .3s ease;
+	-o-transition: all .3s ease;
+	-ms-transition: all .3s ease;
+
     display: table-row;
+
+    cursor: pointer;
+
+    font-size: 1.7vh;
+}
+#app_music #content #list #content #tracks .track:hover
+{
+    background-color: #bac9ee;
 }
 
 #app_music #content #list #content #tracks .track span
@@ -424,20 +441,15 @@
     display: table-cell;
     vertical-align: middle;
     
-    text-align: center;
+    text-align: left;
     
-    width: 16.66%;
+    width: 14.28%;
     
     height: 6vh;
 }
 
-#app_music #content #list #content #tracks .track span img
+#app_music #content #list #content #tracks .track span img:not(.status_track)
 {
-    height: 3.5vh;
-    width: 3.5vh;
-    
-    border-radius: 3.5vh;
-    border: 3px solid #868686;
-    
-    padding: .3vh;
+    height: 4vh;
+    width: 4vh;
 }
