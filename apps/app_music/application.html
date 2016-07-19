@@ -87,7 +87,61 @@
         </div>
         
         <div id="content">
-            <div id="search_area" style="display: none;"><img src="apps/app_music/images/arrow.svg" class="arrow" /></div>
+            <div id="search_area" style="display: none;">
+                <img src="apps/app_music/images/arrow.svg" class="arrow" />
+                
+                <div id="content">
+                    <span class="titles">
+                        <p>Instruments<br /><indic>(Ne rien sélectionner pour ne pas prendre en compte)</indic></p>
+                        <p>Nom de la piste<br /><indic>(Laissez vide pour ne pas prendre en compte)</indic></p>
+                        <p>Album<br /><indic>(Laissez vide pour ne pas prendre en compte)</indic></p>
+                        <p>Artiste<br /><indic>(Laissez vide pour ne pas prendre en compte)</indic></p>
+                    </span>
+                    <span class="cols">
+                        <p>
+                            <img class="unselected" onclick="app_music.libraryActions.search.triggerInstrument(this);" src="apps/app_music/images/instruments/accordion.svg" />&nbsp;
+                            <img class="unselected" onclick="app_music.libraryActions.search.triggerInstrument(this);" src="apps/app_music/images/instruments/alto_saxophone.svg" />&nbsp;
+                            <img class="unselected" onclick="app_music.libraryActions.search.triggerInstrument(this);" src="apps/app_music/images/instruments/bass_drum.svg" />&nbsp;
+                            <img class="unselected" onclick="app_music.libraryActions.search.triggerInstrument(this);" src="apps/app_music/images/instruments/bell_lyre.svg" />&nbsp;
+                            <img class="unselected" onclick="app_music.libraryActions.search.triggerInstrument(this);" src="apps/app_music/images/instruments/bugle.svg" />&nbsp;
+                            <img class="unselected" onclick="app_music.libraryActions.search.triggerInstrument(this);" src="apps/app_music/images/instruments/cello.svg" /><br />
+                            
+                            <img class="unselected" onclick="app_music.libraryActions.search.triggerInstrument(this);" src="apps/app_music/images/instruments/clarinet.svg" />&nbsp;
+                            <img class="unselected" onclick="app_music.libraryActions.search.triggerInstrument(this);" src="apps/app_music/images/instruments/classic_guitar.svg" />&nbsp;
+                            <img class="unselected" onclick="app_music.libraryActions.search.triggerInstrument(this);" src="apps/app_music/images/instruments/cornet.svg" />&nbsp;
+                            <img class="unselected" onclick="app_music.libraryActions.search.triggerInstrument(this);" src="apps/app_music/images/instruments/cymbals.svg" />&nbsp;
+                            <img class="unselected" onclick="app_music.libraryActions.search.triggerInstrument(this);" src="apps/app_music/images/instruments/drums.svg" />&nbsp;
+                            <img class="unselected" onclick="app_music.libraryActions.search.triggerInstrument(this);" src="apps/app_music/images/instruments/electric_guitar.svg" /><br />
+                            
+                            <img class="unselected" onclick="app_music.libraryActions.search.triggerInstrument(this);" src="apps/app_music/images/instruments/flute.svg" />&nbsp;
+                            <img class="unselected" onclick="app_music.libraryActions.search.triggerInstrument(this);" src="apps/app_music/images/instruments/french_horn.svg" />&nbsp;
+                            <img class="unselected" onclick="app_music.libraryActions.search.triggerInstrument(this);" src="apps/app_music/images/instruments/harmonica.svg" />&nbsp;
+                            <img class="unselected" onclick="app_music.libraryActions.search.triggerInstrument(this);" src="apps/app_music/images/instruments/harp.svg" />&nbsp;
+                            <img class="unselected" onclick="app_music.libraryActions.search.triggerInstrument(this);" src="apps/app_music/images/instruments/herald_trumpet.svg" />&nbsp;
+                            <img class="unselected" onclick="app_music.libraryActions.search.triggerInstrument(this);" src="apps/app_music/images/instruments/lyre.svg" /><br />
+                            
+                            <img class="unselected" onclick="app_music.libraryActions.search.triggerInstrument(this);" src="apps/app_music/images/instruments/piano.svg" />&nbsp;
+                            <img class="unselected" onclick="app_music.libraryActions.search.triggerInstrument(this);" src="apps/app_music/images/instruments/piccolo.svg" />&nbsp;
+                            <img class="unselected" onclick="app_music.libraryActions.search.triggerInstrument(this);" src="apps/app_music/images/instruments/pipe_organ.svg" />&nbsp;
+                            <img class="unselected" onclick="app_music.libraryActions.search.triggerInstrument(this);" src="apps/app_music/images/instruments/saxophone.svg" />&nbsp;
+                            <img class="unselected" onclick="app_music.libraryActions.search.triggerInstrument(this);" src="apps/app_music/images/instruments/snare_drum.svg" />&nbsp;
+                            <img class="unselected" onclick="app_music.libraryActions.search.triggerInstrument(this);" src="apps/app_music/images/instruments/theremin.svg" /><br />
+                            
+                            <img class="unselected" onclick="app_music.libraryActions.search.triggerInstrument(this);" src="apps/app_music/images/instruments/timpani.svg" />&nbsp;
+                            <img class="unselected" onclick="app_music.libraryActions.search.triggerInstrument(this);" src="apps/app_music/images/instruments/trombone.svg" />&nbsp;
+                            <img class="unselected" onclick="app_music.libraryActions.search.triggerInstrument(this);" src="apps/app_music/images/instruments/trumpet.svg" />&nbsp;
+                            <img class="unselected" onclick="app_music.libraryActions.search.triggerInstrument(this);" src="apps/app_music/images/instruments/tuba.svg" />&nbsp;
+                            <img class="unselected" onclick="app_music.libraryActions.search.triggerInstrument(this);" src="apps/app_music/images/instruments/violin.svg" />&nbsp;
+                            <img class="unselected" onclick="app_music.libraryActions.search.triggerInstrument(this);" src="apps/app_music/images/instruments/xylophone.svg" />
+                        </p>
+                        <p><input type="text" placeholder="Mots-clés..." id="input_search_track" /></p>
+                        <p><input type="text" placeholder="Mots-clés..." id="input_search_album" /></p>
+                        <p><input type="text" placeholder="Mots-clés..." id="input_search_artist" /></p>
+                        <p></p>
+                    </span>
+                </div>
+                <div id="footer"><p><input type="button" value="Rechercher" /></p></div>
+            </div>
             <div id="tracks"></div>
         </div>
     </div>

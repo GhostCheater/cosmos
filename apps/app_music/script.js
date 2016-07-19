@@ -347,7 +347,7 @@ var app_music =
                         {
                             toAppend += "" +
                                 "<div class='track' id='track_"+parsedData[key]["hash"]+"' onclick='app_music.libraryActions.loadTrack(this);' data-mark='"+parsedData[key]["mark"]+"' data-instruments='"+parsedData[key]["instruments"]+"' data-hash='"+parsedData[key]["hash"]+"' data-track='"+parsedData[key]["track"]+"' data-album='"+parsedData[key]["album"]+"' data-creator='"+parsedData[key]["creator"]+"' data-date='"+parsedData[key]["date"]+"'>"+
-                                    "<span><img src='apps/app_music/images/actions/stoping.svg' class='status_track' style='height:3vh;' /></span>"+
+                                    "<span><img src='apps/app_music/images/actions/stoping.svg' class='status_track' /></span>"+
                                     "<span><img src='apps/app_music/images/track.svg' /></span>"+
                                     "<span>"+parsedData[key]["track"]+"</span>"+
                                     "<span>"+parsedData[key]["album"]+"</span>"+
