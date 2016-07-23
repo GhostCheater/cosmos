@@ -48,7 +48,11 @@
                 {
                     $new_preferences["app_music"][$data[$i]["hash"]] = array(
                         "mark" => 3,
-                        "instruments" => ""
+                        "instruments" => "",
+                        "track_name" => ($list[$i]["track"] == "") ? $data[$i]["name"] : $list[$i]["track"],
+                        "creator" => ($list[$i]["creator"] == "") ? "unknown" : $list[$i]["creator"],
+                        "album" => ($list[$i]["album"] == "") ? "unknown" : $list[$i]["album"],
+                        "date" => ($list[$i]["date"] == "") ? "unknown" : $list[$i]["date"]
                     );
 
                     $list[$i]["mark"] = 3;
@@ -201,6 +205,104 @@
             $data["app_music"][$hash]["mark"] = $mark;
 
             file_put_contents("{$relative_path}workspace/storage/{$_SESSION['session']['user']}/app_music.json", json_encode($data));
+        }
+
+        static function search($content)
+        {
+            require("secure.php");
+
+            $relative_path = cAudio::relative_path();
+
+            // Récupération des paramètres de recherche
+            $instrument_kw = explode(",", explode("|", $content)[0]);
+            $track_kw = explode("|", $content)[1];
+            $album_kw = explode("|", $content)[2];
+            $artist_kw = explode("|", $content)[3];
+
+            $list = array();
+
+            $file_content = json_decode(file_get_contents("{$relative_path}workspace/storage/{$_SESSION['session']['user']}/app_music.json"), true);
+
+            // Récupération de la liste des pistes
+            $req = $bdd->prepare("SELECT * FROM elements WHERE user = ? AND type = ?");
+            $req->execute(array(
+                $_SESSION['session']['user'],
+                "audio"
+            ));
+
+            $data = $req->fetchAll();
+
+            for($i = 0; $i < count($data); $i++)
+            {
+               $list[] = $data[$i]["hash"];
+            }
+            
+
+            /* 
+            * Début de la recherche 
+            */
+
+            // Filtrage via les instruments
+            if(count($instrument_kw) != 0)
+            {
+                for($i = 0; $i < count($list); $i++)
+                {
+                    $state = 1;
+
+                    for($a = 0; $a < count($instrument_kw); $a++)
+                    {
+                        if(!in_array($instrument_kw[$a], explode(",", $file_content["app_music"][$list[$i]]["instruments"])))
+                        {
+                            $state = 0;
+                            break;
+                        }
+                    }
+
+                    // La piste ne contient pas les instruments recherchés
+                    if($state == 0)
+                    {
+                        unset($file_content["app_music"][$list[$i]]);
+                    }
+                }
+            }
+
+            // Filtrage via le nom de la piste
+            if(!empty($track_kw))
+            {
+                foreach($file_content["app_music"] as $hash => $track)
+                {
+                    if(strpos($track["track_name"], $track_kw) === FALSE)
+                    {
+                        unset($file_content["app_music"][$hash]);
+                    }
+                }
+            }
+
+            // Filtrage via le nom de l'album
+            if(!empty($album_kw))
+            {
+                foreach($file_content["app_music"] as $hash => $track)
+                {
+                    if(strpos($track["album"], $album_kw) === FALSE)
+                    {
+                        unset($file_content["app_music"][$hash]);
+                    }
+                }
+            }
+
+            // Filtrage via le nom de l'artiste ou du groupe
+            if(!empty($artist_kw))
+            {
+                foreach($file_content["app_music"] as $hash => $track)
+                {
+                    if(strpos($track["creator"], $artist_kw) === FALSE)
+                    {
+                        unset($file_content["app_music"][$hash]);
+                    }
+                }
+            }
+
+            echo json_encode($file_content["app_music"]);
         }
     }
 ?>

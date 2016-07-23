@@ -62,7 +62,7 @@
                 require_once("controllers/cAudio.php");
                 require_once("classes/audio2.class.php");
                 
-                if(in_array($protoAction, array("list_tracks", "load_track", "trigger_instrument", "trigger_mark"))) eval("cAudio::" . $protoAction . "('{$args}');");
+                if(in_array($protoAction, array("list_tracks", "load_track", "trigger_instrument", "trigger_mark", "search"))) eval("cAudio::" . $protoAction . "('{$args}');");
                 break;
 
             default:

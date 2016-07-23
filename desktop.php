@@ -24,6 +24,7 @@
             <div id="apps"></div>
             
             <div id="rightArea">
+                <p title="Notifications" onclick="COSMOS.header.trigger.panel('notifications');"><img src="images/header/notifications.svg" /><br />Notifications</p>
                 <p title="Applications" onclick="COSMOS.header.trigger.panel('apps');"><img src="images/header/apps.svg" /><br />Applications</p>
                 <p title="Recherche" onclick="COSMOS.header.trigger.panel('search');"><img src="images/header/search.svg" /><br />Recherche</p>
                 <p title="Profil" onclick="COSMOS.header.trigger.panel('profil');"><img src="images/header/profil.svg" /><br />Utilisateur</p>
@@ -45,7 +46,7 @@
             {
                 COSMOS.init();
                 
-                WINDOW.trigger("app_music", "red");
+                WINDOW.trigger("app_document", "blue");
             }
         </script>
     </body>

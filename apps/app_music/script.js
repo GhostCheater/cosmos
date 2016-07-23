@@ -444,21 +444,95 @@ var app_music =
 
             document.querySelectorAll("#app_music #player #basic_control img")[1].src = "apps/app_music/images/actions/pause.svg";
         },
+
+        // Permet de charger une piste depuis les résultats de la recherche
+        loadTrackFromSearch: function(hash)
+        {
+            this.loadTrack(document.querySelector("#app_music #track_" + hash));
+        },
         
         // Affiche la zone de recherche
         displaySearch: function()
         {
             var element = document.querySelector("#app_music #search_area");
+            var element2 = document.querySelector("#app_music #search_results");
             
             var state = (element.style.display == "none") ? "block" : "none";
             
             element.style.display = state;
+            element2.style.display = state;
         },
         
         // Effectue une recherche
         search:
         {
-            
+            triggerInstrument: function(element)
+            {
+                var currentState = element.className;
+
+                var newState = (currentState == "unselected") ? "selected" : "unselected";
+
+                element.className = newState;
+            },
+
+            beginSearch: function(buttonSearch)
+            {
+                app_music.triggerLoader();
+
+                var element = document.querySelector("#app_music #search_area");
+
+                // Récupération des informations
+                var list_instruments = document.querySelectorAll("#app_music #search_area .cols .selected");
+                var track_keywords = document.querySelectorAll("#app_music #search_area .cols input")[0].value;
+                var album_keywords = document.querySelectorAll("#app_music #search_area .cols input")[1].value;
+                var artist_keywords = document.querySelectorAll("#app_music #search_area .cols input")[2].value;
+                var instruments = [];
+
+                for(var i = 0; i < list_instruments.length; i++)
+                {
+                    instruments.push(list_instruments[i].src.substr(list_instruments[i].src.lastIndexOf("/") + 1, list_instruments[i].src.length).replace(".svg", ""));
+                }
+
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "inc/controller.php", true);
+                xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+                xhr.onreadystatechange = function()
+                {
+                    if(xhr.status == 200 && xhr.readyState == 4)
+                    {
+                        app_music.triggerLoader();
+
+                        try
+                        {
+                            var data = JSON.parse(xhr.responseText);
+                            var toAppend = "<div class='track'>";
+
+                            for(hash in data)
+                            {
+                                toAppend += "<p onclick='app_music.libraryActions.loadTrackFromSearch(\""+hash+"\")'>";
+
+                                toAppend += "<span>" + data[hash]["track_name"] + "</span>";
+                                toAppend += "<span>" + data[hash]["album"] + "</span>";
+                                toAppend += "<span>" + data[hash]["creator"] + "</span>";
+                                toAppend += "<span>" + data[hash]["date"] + "</span>";
+
+                                toAppend += "</p>";
+                            }
+
+                            toAppend += "</div>";
+
+                            document.querySelector("#app_music #search_results #content").innerHTML = toAppend;
+                        }
+                        catch(err)
+                        {
+                            console.error("Error parsing JSON : " + err);
+                        }
+                    }
+                }
+
+                xhr.send("c=Audio&a=search&p=" + instruments + "|" + track_keywords + "|" + album_keywords + "|" + artist_keywords);
+            }
         }
     },
     

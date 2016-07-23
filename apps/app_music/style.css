@@ -294,6 +294,11 @@
     cursor: pointer;
 }
 
+#app_music.dispo_1 #content #list
+{
+    height: 100%;
+}
+
 #app_music #content #list #content
 {
     position: absolute;
@@ -312,11 +317,14 @@
     position: absolute;
     top: 0;
     left: 1vw;
-    height: 70%;
+    height: 60%;
     width: calc(100% - 2vw);
     
-    border: 1px solid #bfbfbf;
-    border-radius: 3px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-left: 1px solid grey;
+    border-right: 1px solid grey;
+    border-top: 1px solid grey;
     
     background-color: #e0e0e0;
 }
@@ -473,6 +481,76 @@
     height: 6vh;
 }
 
+#app_music #content #list #content #search_results
+{
+    display: none;
+    
+    position: absolute;
+    top: 60%;
+    left: 1vw;
+    width: calc(100% - 2vw);
+    height: 38%;
+
+    background-color: #bfbfbf;
+
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+
+    border-right: 1px solid grey;
+    border-left: 1px solid grey;
+    border-bottom: 1px solid grey;
+}
+
+#app_music #content #list #content #search_results #content
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+
+    overflow: auto;
+}
+
+#app_music #content #list #content #search_results #content .track
+{
+    display: table;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+#app_music #content #list #content #search_results #content .track p
+{
+    transition: all .3s ease;
+	-webkit-transition: all .3s ease;
+	-moz-transition: all .3s ease;
+	-o-transition: all .3s ease;
+	-ms-transition: all .3s ease;
+
+    display: table-row;
+
+    cursor: pointer;
+}
+#app_music #content #list #content #search_results #content .track p:hover
+{
+    background-color: rgba(94, 108, 156, 0.3);
+}
+
+#app_music #content #list #content #search_results #content .track p span
+{
+    display: table-cell;
+    vertical-align: middle;
+
+    text-align: center;
+
+    height: 5vh;
+
+    width: 16.66%;
+}
+
 #app_music #content #list #content #tracks
 {
     display: table;
@@ -585,7 +663,6 @@
     position: absolute;
     top: 0;
     left: 18%;
-    height: 85%;
     width: 82%;
 }
 
@@ -602,7 +679,7 @@
 
 #app_music.dispo_1 #content #list #content #search_area .arrow
 {
-    top: 32%;
+    top: 33%;
     right: 12.5%;
 }
 
@@ -624,7 +701,7 @@
 
     cursor: pointer;
 
-    font-size: 1.4vh;
+    font-size: 1.5vh;
 }
 
 #app_music.dispo_1 #content #list #content #tracks .track span img:not(.status_track)
