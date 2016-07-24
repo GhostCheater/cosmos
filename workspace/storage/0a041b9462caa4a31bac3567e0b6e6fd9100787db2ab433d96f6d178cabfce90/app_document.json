@@ -40,5 +40,22 @@
             "italic": false,
             "underline": false
         }
+    },
+    
+    "settings": {
+        "suggestions": "toggle_off",
+        "autosave": "toggle_on",
+        "copy": "toggle_off",
+        "autocomplete": "toggle_off",
+        "historic": "toggle_on",
+        "zenmode": "toggle_off",
+        "ortho": "toggle_on"
+    },
+    
+    "historic": {
+        "445ba4814173c7bb11d94be1ec77946d81aea3b67c6a04aef7473a0322f5d84f":{
+            "date": "24/08/2016 à 18:55",
+            "name": "test.doc"
+        }
     }
 }

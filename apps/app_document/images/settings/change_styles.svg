@@ -1,0 +1,30 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 80 80" style="enable-background:new 0 0 80 80;" xml:space="preserve">
+    <g>
+        <path style="fill:#66798F;" d="M73,7v66H7V7H73 M74,6H6v68h68V6L74,6z"></path>
+    </g>
+    <g>
+        <rect x="69.5" y="2.5" style="fill:#8BB7F0;" width="8" height="8"></rect>
+        <g>
+            <path style="fill:#4E7AB5;" d="M77,3v7h-7V3H77 M78,2h-9v9h9V2L78,2z"></path>
+        </g>
+    </g>
+    <g>
+        <rect x="2.5" y="2.5" style="fill:#8BB7F0;" width="8" height="8"></rect>
+        <g>
+            <path style="fill:#4E7AB5;" d="M10,3v7H3V3H10 M11,2H2v9h9V2L11,2z"></path>
+        </g>
+    </g>
+    <g>
+        <rect x="69.5" y="69.5" style="fill:#8BB7F0;" width="8" height="8"></rect>
+        <g>
+            <path style="fill:#4E7AB5;" d="M77,70v7h-7v-7H77 M78,69h-9v9h9V69L78,69z"></path>
+        </g>
+    </g>
+    <g>
+        <rect x="2.5" y="69.5" style="fill:#8BB7F0;" width="8" height="8"></rect>
+        <g>
+            <path style="fill:#4E7AB5;" d="M10,70v7H3v-7H10 M11,69H2v9h9V69L11,69z"></path>
+        </g>
+    </g>
+    <text x="23" y="49" fill="#B0C1D4" stroke-width=".5" stroke="#66798F" font-family="Tahoma" font-size="30px">Aa</text>
+</svg>

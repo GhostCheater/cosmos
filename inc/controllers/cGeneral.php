@@ -12,7 +12,7 @@
             
             try
             {
-                $data_preferences = file_get_contents("{$path}workspace/preferences/{$_SESSION['session']['user']}/preferences.json");
+                $data_preferences = file_get_contents("{$path}workspace/storage/{$_SESSION['session']['user']}/app_global.json");
 
                 echo "ok~||]]";			
                 echo $data_preferences;
@@ -112,7 +112,7 @@
             $change = explode("|", $content)[0];
             $data = explode("|", $content)[1];
             
-            $json = json_decode(file_get_contents("{$path}workspace/preferences/{$_SESSION['session']['user']}/preferences.json"), true);
+            $json = json_decode(file_get_contents("{$path}workspace/storage/{$_SESSION['session']['user']}/app_global.json"), true);
             
             switch($change)
             {
@@ -121,7 +121,7 @@
 
                     $json_string = json_encode($json);
 
-                    file_put_contents("{$path}workspace/preferences/{$_SESSION['session']['user']}/preferences.json", $json_string);
+                    file_put_contents("{$path}workspace/storage/{$_SESSION['session']['user']}/app_global.json", $json_string);
                     break;
 
                 case "desktopBackground":
@@ -129,7 +129,7 @@
 
                     $json_string = json_encode($json);
 
-                    file_put_contents("{$path}workspace/preferences/{$_SESSION['session']['user']}/preferences.json", $json_string);
+                    file_put_contents("{$path}workspace/storage/{$_SESSION['session']['user']}/app_global.json", $json_string);
                     break;
 
                 case "fontSize":
@@ -137,7 +137,7 @@
 
                     $json_string = json_encode($json);
 
-                    file_put_contents("{$path}workspace/preferences/{$_SESSION['session']['user']}/preferences.json", $json_string);
+                    file_put_contents("{$path}workspace/storage/{$_SESSION['session']['user']}/app_global.json", $json_string);
                     break;
 
                 case "disposition":
@@ -145,7 +145,7 @@
 
                     $json_string = json_encode($json);
 
-                    file_put_contents("{$path}workspace/preferences/{$_SESSION['session']['user']}/preferences.json", $json_string);
+                    file_put_contents("{$path}workspace/storage/{$_SESSION['session']['user']}/app_global.json", $json_string);
                     break;
 
                 default:

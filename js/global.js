@@ -15,11 +15,12 @@ var COSMOS =
 			
 			button:
 			{
-				apps: function() {return document.querySelectorAll("header div#rightArea p")[0]},
-				search: function() {return document.querySelectorAll("header div#rightArea p")[1]},
-				user: function() {return document.querySelectorAll("header div#rightArea p")[2]},
-				settings: function() {return document.querySelectorAll("header div#rightArea p")[3]},
-				logout: function() {return document.querySelectorAll("header div#rightArea p")[4]}
+                notifs: function() {return document.querySelectorAll("header div#rightArea p")[0]},
+				apps: function() {return document.querySelectorAll("header div#rightArea p")[1]},
+				search: function() {return document.querySelectorAll("header div#rightArea p")[2]},
+				user: function() {return document.querySelectorAll("header div#rightArea p")[3]},
+				settings: function() {return document.querySelectorAll("header div#rightArea p")[4]},
+				logout: function() {return document.querySelectorAll("header div#rightArea p")[5]}
 			}
 		},
 		
@@ -172,6 +173,16 @@ var COSMOS =
 				
 				switch(tab)
 				{
+                    case "notifications":
+                        if(rightPanel.className.indexOf("notifications") !== -1)
+						{
+                            header_rightPanel.innerHTML = "<img src='images/header/notifications.svg' /><br />Notifications";
+							content_rightPanel.innerHTML = "<p style='text-align: center'><br /><img src='images/loader.png' style='width: 32px;' /></p>";
+                            
+                            COSMOS.elements.header.button.notifs().className = "selected";
+                        }
+                        break;
+                        
 					case "apps":                        
 						if(rightPanel.className.indexOf("apps") !== -1)
 						{

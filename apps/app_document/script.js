@@ -14,8 +14,12 @@ var app_document =
         
         // Chargement de la toolbar
         this.preferences.load();
-        this.tab.load("insert");
+        this.tab.load("settings");
         this.update.states();
+        
+        // Initialisation de la liste des documents
+        localStorage.setItem("app_document#files", "{}");
+        localStorage.removeItem("app_document#current");
         
         
         // On place le focus sur l'éditeur
@@ -49,8 +53,206 @@ var app_document =
         }
     },
     
-    editor:
+    documents:
     {
+        new: function()
+        {
+            
+        },
+        
+        switchTo: function(hash, name)
+        {
+            if(localStorage.getItem("app_document#current") != hash)
+            {
+                app_document.loader.trigger();
+                
+                // Récupération de l'id du fichier courant
+                var current_id = localStorage.getItem("app_document#current");
+                
+                // Récupération du contenu du fichier (au niveau des pages)
+                var pages = document.querySelectorAll("#app_document #content .page");
+                var content = "";
+                
+                for(var i = 0; i < pages.length; i++)
+                {
+                    content += pages[i].contentWindow.document.body.innerHTML;
+                    
+                    if(i != pages.length - 1)
+                    {
+                        content += "{-------||-------}"; // Séparateur de pages
+                    }
+                }
+                
+                // On sauvegarde le contenu du fichier courant
+                app_document.documents.save(current_id, content);
+                
+                // On vide l'éditeur
+                for(var i = 0; i < pages.length; i++)
+                {
+                    pages[i].contentWindow.document.execCommand("selectAll", false);
+                    pages[i].contentWindow.document.execCommand("delete", false);
+                }
+                
+                // On stocke l'id du fichier en local
+                localStorage.setItem("app_document#current", hash);
+                
+                // On affiche le fichier qui va être ouvert
+                for(var i = 0; i < document.querySelectorAll("#app_document #navBar #contentTabs #cT_files #currentFiles .part").length; i++)
+                {
+                    document.querySelectorAll("#app_document #navBar #contentTabs #cT_files #currentFiles .part")[i].className = "part";
+                }
+                
+                document.querySelector("#app_document #navBar #cT_files #currentFiles #file_" + hash).className = "part current";
+                
+                // On ouvre le nouveau fichier
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "inc/controller.php", true);
+                xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                
+                xhr.onreadystatechange = function()
+                {
+                    if(xhr.status == 200 && xhr.readyState == 4)
+                    {
+                        var data = xhr.responseText;
+                        
+                        var dataToParse = data.split("{-------||-------}");
+                        
+                        app_document.page().contentWindow.document.execCommand("insertHTML", false, data);
+                        
+                        app_document.loader.trigger();
+                    }
+                }
+                
+                xhr.send("c=Edit&a=open_file&p=" + hash);
+            }
+        },
+        
+        open: function(hash, name)
+        {
+            // Affichage du loader
+            app_document.loader.trigger();
+            document.querySelector("#app_document #messages").innerHTML = "<p>Ouverture du fichier <b>"+name+"</b> en cours...</p>";
+            
+            // Affichage des fichiers ouverts
+            app_document.tab.load("files");
+            
+            // Enregistrement du nom de fichier
+            document.querySelector("#app_document #content iframe").setAttribute("data-name", name);
+            
+            var file_to_append = document.createElement("div");
+            file_to_append.className = "part current";
+            file_to_append.style.width = "10vw";
+            file_to_append.id = "file_" + hash;
+            file_to_append.innerHTML = "<img onclick='app_document.documents.switchTo(\""+hash+"\", \""+name+"\")' src='apps/app_document/images/files/doc.svg' style='height: 5vh;' /><br />" + name;
+            
+            document.querySelector("#app_document #navBar #contentTabs #cT_files #currentFiles").appendChild(file_to_append);
+            
+            // Test de l'existence du fichier dans la liste des fichiers ouverts
+            var files = localStorage.getItem("app_document#files");
+            files = JSON.parse(files);
+            
+            var alreadyOpened = false;
+            
+            for(key in files)
+            {
+                if(files[key][0] == hash)
+                {
+                    alreadyOpened = true;
+                    break;
+                }
+            }
+            
+            // Si le fichier n'est pas dans le liste des fichiers ouverts, on l'ajoute à la liste
+            if(!alreadyOpened)
+            {                
+                files[hash] = {0: hash, 1:name};
+                
+                // On met à jour la liste des fichiers ouverts en local
+                localStorage.setItem("app_document#files", JSON.stringify(files));
+                
+                // Ouverture du fichier
+                app_document.documents.switchTo(hash, name);
+            }
+            else
+            {
+                document.querySelector("#app_document #navBar #contentTabs #cT_files").removeChild(file_to_append);
+            }
+            
+            app_document.loader.trigger();
+        },
+        
+        preSave: function()
+        {
+            if(localStorage.getItem("app_document#current") != undefined || localStorage.getItem("app_document#current") != null)
+            {
+                var pages = document.querySelectorAll("#app_document #content .page");
+                var content = "";
+                
+                for(var i = 0; i < pages.length; i++)
+                {
+                    content += pages[i].contentWindow.document.body.innerHTML;
+                    
+                    if(i != pages.length - 1)
+                    {
+                        content += "{-------||-------}"; // Séparateur de pages
+                    }
+                }
+                
+                app_document.documents.save(localStorage.getItem("app_document#current"), content);
+            }
+        },
+        
+        save: function(hash, content)
+        {
+            if(hash != "")
+            {
+                document.querySelector("#app_document #messages").innerHTML = "<p>Sauvegarde en cours...</p>";
+            
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "inc/controller.php", true);
+                xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+                xhr.onreadystatechange = function()
+                {
+                    if(xhr.status == 200 && xhr.readyState == 4)
+                    {
+                        var state = xhr.responseText.split("~||]]", 1)[0];
+
+                        switch(state)
+                        {
+                            case "ok":
+                                try
+                                {
+                                    var date = new Date();
+                                    var hour = date.getHours();
+                                    var minutes = date.getMinutes();
+                                    document.querySelector("#app_document #messages").innerHTML = "<p>Sauvegardé à <b>" + hour + ":" + minutes + "</b></p>";
+                                }
+                                catch(err)
+                                {
+                                    document.querySelector("#app_document #messages").innerHTML = "<p>Une erreur est survenue lors de la sauvegarde</p>";
+                                    console.error("Error parsing json : " + err);
+                                }
+                                break;
+
+                            default:
+                                break;
+                        }
+                    }
+                }
+
+                xhr.send("c=Edit&a=save_file&p=" + hash + "[-||||-]" + content);   
+            }
+        },
+        
+        close: function(hash)
+        {
+            
+        }
+    },
+    
+    editor:
+    {        
         initPage: function(page)
         {
             if(page != undefined)
@@ -59,13 +261,25 @@ var app_document =
                 {
                     page.contentEditable = true;
                     page.contentDocument.designMode = "on";
+                    
+                    page.focus();
+                    
+                    document.querySelector("#app_document #content").scrollBy(0, 300);
                 }
             }
         },
         
-        addPage: function()
+        addPage: function(page_num)
         {
-            
+            // On clone les propriétés de la première page (sans le contenu)
+            var newPage = document.querySelector("#app_document .page").cloneNode(false);
+
+            newPage.id = "editorPage_" + page_num;
+            newPage.setAttribute("data-num", page_num);
+
+            document.querySelector("#app_document #content").appendChild(newPage);
+
+            app_document.editor.initPage(newPage);
         },
         
         removePage: function()
@@ -90,26 +304,6 @@ var app_document =
                 
             }
         }
-    },
-    
-    addPage: function(page_num)
-    {
-        // On clone les propriétés de la première page (sans le contenu)
-        var newPage = document.querySelector("#app_document .page").cloneNode(false);
-        
-        newPage.id = "editorPage_" + page_num;
-        newPage.setAttribute("data-num", page_num);
-        
-        document.querySelector("#app_document #content").appendChild(newPage);
-        
-        newPage.addEventListener("load", function()
-        {
-            console.log("coucou");
-
-            newPage.contentEditable = true;
-            newPage.contentDocument.designMode = "on";
-            newPage.contentWindow.document.body.innerHTML = "";
-        }, false);
     },
     
     convert:
@@ -207,7 +401,7 @@ var app_document =
     {
         load: function(tab)
         {
-            var tabs = ["edit", "insert", "layout", "export", "settings"];
+            var tabs = ["files", "edit", "insert", "export", "settings"];
             
             
             if(tabs.indexOf(tab) !== -1)
@@ -277,6 +471,7 @@ var app_document =
         
         parse: function(data)
         {
+            // Styles du document
             for(type in data["preferences_documents"])
             {
                 if({}.hasOwnProperty.call(data["preferences_documents"], type))
@@ -293,6 +488,30 @@ var app_document =
                     style += "display: inline;vertical-align:middle;";
                     
                     document.querySelector("#app_document #navBar #preformated_"+type).style = [style];
+                }
+            }
+            
+            // Historique des fichiers
+            for(key in data["historic"])
+            {
+                if({}.hasOwnProperty.call(data["historic"], key))
+                {
+                    var doc = document.createElement("div");
+                    doc.id = "historic_" + key;
+                    doc.className = "part show";
+                    doc.style.width = "10vw";
+                    doc.innerHTML = "<img onclick='app_document.documents.open(\""+key+"\", \""+data["historic"][key]["name"]+"\")' src='apps/app_document/images/files/doc.svg' style='height: 5vh;' /><br /><b>" + data["historic"][key]["name"] + "</b><br /> " + data["historic"][key]["date"];
+                
+                    document.querySelector("#app_document #navBar #contentTabs #cT_files #historicFiles").appendChild(doc);
+                }
+            }
+            
+            // Paramètres de l'éditeur
+            for(key in data["settings"])
+            {
+                if({}.hasOwnProperty.call(data["settings"], key))
+                {
+                    document.querySelector("#app_document #navBar #contentTabs #cT_settings .part .settings_" + key).src = "apps/app_document/images/settings/" + data["settings"][key] + ".svg";
                 }
             }
             
@@ -330,7 +549,7 @@ var app_document =
     {
         states: function()
         {
-            setInterval(function(){
+            var interval = setInterval(function(){
                 /*
                 * Barre d'édition
                 * ---------------
@@ -348,7 +567,7 @@ var app_document =
                 
                 if(document.querySelector("#app_document") != undefined)
                 {
-                    var buttons = document.querySelectorAll("#app_document #navBar img");
+                    var buttons = document.querySelectorAll("#app_document #navBar img.actions_image");
                     
                     // Recherche des styles
                     var isBold = app_document.page().contentWindow.document.queryCommandState("bold");
@@ -363,17 +582,17 @@ var app_document =
                     var isRight = app_document.page().contentWindow.document.queryCommandState("justifyRight");
                     var isJustify = app_document.page().contentWindow.document.queryCommandState("justifyFull");
 
-                    if(isBold) {buttons[6].className = "selected";} else {buttons[6].className = "";}
-                    if(isItalic) {buttons[7].className = "selected";} else {buttons[7].className = "";}
-                    if(isUnderline) {buttons[8].className = "selected";} else {buttons[8].className = "";}
-                    if(isStroke) {buttons[9].className = "selected";} else {buttons[9].className = "";}
-                    if(isSub) {buttons[10].className = "selected";} else {buttons[10].className = "";}
-                    if(isSup) {buttons[11].className = "selected";} else {buttons[11].className = "";}
+                    if(isBold) {buttons[6].className = "actions_image selected";} else {buttons[6].className = "actions_image";}
+                    if(isItalic) {buttons[7].className = "actions_image selected";} else {buttons[7].className = "actions_image";}
+                    if(isUnderline) {buttons[8].className = "actions_image selected";} else {buttons[8].className = "actions_image";}
+                    if(isStroke) {buttons[9].className = "actions_image selected";} else {buttons[9].className = "actions_image";}
+                    if(isSub) {buttons[10].className = "actions_image selected";} else {buttons[10].className = "actions_image";}
+                    if(isSup) {buttons[11].className = "actions_image selected";} else {buttons[11].className = "actions_image";}
 
-                    if(isLeft) {buttons[15].className = "selected";} else {buttons[15].className = "";}
-                    if(isCenter) {buttons[16].className = "selected";} else {buttons[16].className = "";}
-                    if(isRight) {buttons[17].className = "selected";} else {buttons[17].className = "";}
-                    if(isJustify) {buttons[18].className = "selected";} else {buttons[18].className = "";}   
+                    if(isLeft) {buttons[15].className = "actions_image selected";} else {buttons[15].className = "actions_image";}
+                    if(isCenter) {buttons[16].className = "actions_image selected";} else {buttons[16].className = "actions_image";}
+                    if(isRight) {buttons[17].className = "actions_image selected";} else {buttons[17].className = "actions_image";}
+                    if(isJustify) {buttons[18].className = "actions_image selected";} else {buttons[18].className = "actions_image";}   
                 
                     /*
                     * QuickAccess
@@ -390,6 +609,10 @@ var app_document =
                     if(isItalic) {buttons_2[2].className = "selected";} else {buttons_2[2].className = "";}
                     if(isUnderline) {buttons_2[3].className = "selected";} else {buttons_2[3].className = "";}
                     if(isStroke) {buttons_2[4].className = "selected";} else {buttons_2[4].className = "";}
+                }
+                else
+                {
+                    clearInterval(interval);
                 }
             }, 500);
         },
@@ -443,56 +666,7 @@ var app_document =
     },
     
     edit:
-    {
-        /*
-        * Sauvegarde d'un fichier
-        * Créer un nouveau fichier s'il n'y a pas de hash passé en paramètre ou s'il est vide
-        */
-        save: function()
-        {
-            var content = app_document.page().contentWindow.document.body.innerHTML;
-            
-            var img_save = document.querySelector("#app_document #quickAccess_button_save");
-            
-            var hash = (localStorage.getItem("app_document_hash") == undefined) ? "new_file" : localStorage.getItem("app_document_hash");
-            
-            img_save.src = "images/loader.png";
-            
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", "inc/controller.php", true);
-            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            
-            xhr.onreadystatechange = function()
-            {
-                if(xhr.status === 200 && xhr.readyState == 4)
-                {
-                    var state = xhr.responseText.split("~||]]", 1)[0];
-					var data = xhr.responseText.split("~||]]", 2)[1];
-                    
-                    switch(state)
-                    {
-                        case "ok":
-                            localStorage.setItem("app_document_hash", data);
-                            
-                            img_save.src = "images/status/ok.svg";
-                            break;
-                            
-                        default:
-                            img_save.src = "images/status/error.svg";
-                            break;
-                    }
-                    
-                    setTimeout(function()
-                    {
-                        img_save.src = "apps/app_document/images/edit/save.svg";
-                    }, 1000);
-                }
-            }
-            
-            xhr.send("c=General&a=put_content_file&p="+hash+","+content);
-        },
-        
-        
+    {      
         /*
         * Actions
         */
@@ -799,7 +973,7 @@ var app_document =
         {
             trigger: function()
             {
-                
+                window.find("", true, false, false, false, true, true);
             },
             
             all: function()
@@ -991,9 +1165,8 @@ var app_document =
             }
         },
         
-        jump: function()
+        jump: function() // TODO
         {
-            app_document.page().contentWindow.document.execCommand("insertHTML", false, "<br><hr style='height: 5px;background-color: rgba(0, 0, 0, 0.46);border:none;'></hr><br>");  
         },
         
         special:
@@ -1158,14 +1331,18 @@ var app_document =
             var parent = app_document.page();
             var lastChild = app_document.page().contentWindow.document.body.lastChild;
             
-            if(parseInt(lastChild.offsetTop) / parseInt(getComputedStyle(parent).height) * 100 >= 80) // S'il ne reste plus que 20% sur la page, on en créé une autre
+            var border = parseInt(screen.height * 0.03);
+            
+            if(lastChild.offsetTop + 16 + border >= parseInt(getComputedStyle(parent).height))
             {
                 var num = app_document.page().getAttribute("data-num");
                 var nextPage = parseInt(num) + 1;
                 
+                parent.contentWindow.document.body.removeChild(lastChild);
+                
                 if(document.querySelector("#app_document #editorPage_"+nextPage) == null) // La page n'existe pas
                 {                                        
-                    app_document.addPage(nextPage);
+                    app_document.editor.addPage(nextPage);
                 }
             }
         },
@@ -1356,40 +1533,7 @@ var app_document =
     {
         open: function(hash, name)
         {
-            app_document.loader.trigger();
-            
-            // Récupération du contenu du fichier
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", "inc/controller.php", true);
-            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            
-            xhr.onreadystatechange = function()
-            {
-                if(xhr.status === 200 && xhr.readyState == 4)
-                {
-                    app_document.loader.trigger();
-                    
-                    var state = xhr.responseText.split("~||]]", 1)[0];
-					var data = xhr.responseText.split("~||]]", 2)[1];
-                    
-                    switch(state)
-                    {
-                        case "ok":
-                            app_document.page().contentWindow.document.execCommand("insertHTML", false, data);
-                            
-                            document.querySelector("#app_document .title_name").innerHTML = "Editeur de documents - <b>" + name + "</b>";
-                            
-                            // Sauvegarde du hash
-                            localStorage.setItem("app_document_hash", hash);
-                            break;
-                            
-                        default:
-                            break;
-                    }
-                }
-            }
-            
-            xhr.send("c=Edit&a=get_content_file&p="+hash);
+            app_document.documents.open(hash, name);
         }
     }
 } 

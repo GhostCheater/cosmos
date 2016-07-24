@@ -12,7 +12,7 @@
             
             try
             {
-                $data_preferences = file_get_contents("{$path}workspace/preferences/{$_SESSION['session']['user']}/preferences_documents.json");
+                $data_preferences = file_get_contents("{$path}workspace/storage/{$_SESSION['session']['user']}/app_document.json");
 
                 echo "ok~||]]";			
                 echo $data_preferences;
@@ -68,7 +68,7 @@
             }
         }
         
-        static function get_content_file($hash)
+        static function open_file($hash)
         {
             require("secure.php");
             
@@ -78,7 +78,7 @@
             $req_get = $bdd->prepare("SELECT * FROM elements WHERE user = ? AND hash = ?");
             $req_get->execute(array(
                 $_SESSION['session']['user'],
-                htmlspecialchars($hash)
+                $hash
             ));
 
             $data = $req_get->fetchAll();
@@ -88,8 +88,6 @@
                 if($data[0]["type"] == "doc")
                 {
                     $content = file_get_contents("{$path}workspace/files/{$_SESSION['session']['user']}/{$hash}.data", FILE_USE_INCLUDE_PATH);
-
-                    echo "ok~||]]";
 
                     // TODO : Escape to have a "sure" string
                     echo $content;
@@ -102,6 +100,35 @@
             else
             {
                 die("error~||]]2");
+            }
+        }
+        
+        static function save_file($content)
+        {
+            require("secure.php");
+            
+            $relative_path = cEdit::relative_path();
+            
+            $hash = explode("[-||||-]", $content)[0];
+            $data = explode("[-||||-]", $content)[1];
+            
+            $req = $bdd->prepare("SELECT * FROM elements WHERE hash = ? AND user = ?");
+            $req->execute(array(
+                $hash,
+                $_SESSION['session']['user']
+            ));
+            
+            $result = $req->fetchAll();
+            
+            if(count($result) == 1)
+            {
+                file_put_contents("{$relative_path}workspace/files/{$_SESSION['session']['user']}/{$hash}.data", $data);
+                
+                die("ok~||]]");
+            }
+            else
+            {
+                die("error~||]]");
             }
         }
     }

@@ -1,0 +1,28 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 80 80" style="enable-background:new 0 0 80 80;" xml:space="preserve">
+    <g>
+        <polygon style="fill:#FFFFFF;" points="6.5,75.5 6.5,4.5 43.793,4.5 61.5,22.207 61.5,75.5"></polygon>
+        <g>
+            <path style="fill:#36404D;" d="M43.586,5L61,22.414V75H7V5H43.586 M44,4H6v72h56V22L44,4L44,4z"></path>
+        </g>
+    </g>
+    <g>
+        <polygon style="fill:#FFFFFF;" points="42.5,23.5 42.5,4.5 43.793,4.5 61.5,22.207 61.5,23.5 	"></polygon>
+        <g>
+            <path style="fill:#36404D;" d="M43.586,5L61,22.414V23H43V5H43.586 M44,4h-2v20h20v-2L44,4L44,4z"></path>
+        </g>
+    </g>
+    <polygon style="fill:#D6E3ED;" points="61,42 61,75 58.007,75 58.797,76 62,76 62,42 "></polygon>
+    <g>
+        <g>
+            <polygon style="fill:#9CACBD;" points="49.04,60.5 58.5,60.5 58.5,44.5 69.5,44.5 69.5,60.5 78.96,60.5 64,79.199"></polygon>
+        </g>
+        <g>
+            <path style="fill:#36404D;" d="M69,45v15v1h1h7.919L64,78.399L50.081,61H58h1v-1V45H69 M70,44H58v16H48l16,20l16-20H70V44L70,44z"></path>
+        </g>
+    </g>
+    
+    <rect x="14" y="30" height="3" width="40" style="fill: #36404D"></rect>
+    <rect x="14" y="38" height="3" width="40" style="fill: #36404D"></rect>
+    <rect x="14" y="46" height="3" width="40" style="fill: #36404D"></rect>
+    <rect x="14" y="54" height="3" width="40" style="fill: #36404D"></rect>
+</svg>

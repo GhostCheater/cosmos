@@ -280,7 +280,7 @@
 
             try
             {
-                $data_preferences = file_get_contents("{$path}workspace/preferences/{$_SESSION['session']['user']}/preferences.json");
+                $data_preferences = file_get_contents("{$path}workspace/storage/{$_SESSION['session']['user']}/app_global.json");
 
                 try
                 {

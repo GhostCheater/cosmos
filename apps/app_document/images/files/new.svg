@@ -1,0 +1,16 @@
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 80 80" style="enable-background:new 0 0 80 80;" xml:space="preserve">
+    <g>
+        <polygon style="fill:#FFFFFF;" points="12.5,75.5 12.5,4.5 49.793,4.5 67.5,22.207 67.5,75.5 	"></polygon>
+        <g>
+            <path style="fill:#788B9C;" d="M49.586,5L67,22.414V75H13V5H49.586 M50,4H12v72h56V22L50,4L50,4z"></path>
+        </g>
+    </g>
+    <g>
+        <polygon style="fill:#FFFFFF;" points="49.5,22.5 49.5,4.5 49.793,4.5 67.5,22.207 67.5,22.5 	"></polygon>
+        <g>
+            <path style="fill:#788B9C;" d="M50,5.414L66.586,22H50V5.414 M50,4h-1v19h19v-1L50,4L50,4z"></path>
+        </g>
+    </g>
+    <rect x="24" y="44" style="fill:#8BB7F0;" width="30" height="4"></rect>
+    <rect x="37" y="31" style="fill:#8BB7F0;" width="4" height="30"></rect>
+</svg>
