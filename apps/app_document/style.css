@@ -173,6 +173,20 @@
     background-color: rgba(255, 0, 0, 0.15);
 }
 
+#app_document #navBar #contentTabs #cT_files #currentFiles
+{
+    font-size: 11px;
+}
+
+#app_document #navBar #contentTabs #cT_files #currentFiles .img_close
+{
+    position: relative;
+    margin-bottom: calc(2.5vh);
+    right: 0;
+    width: 1.5vh;
+    height: 1.5vh;
+}
+
 #app_document #navBar #contentTabs .preformatedText
 {
     transition: all .3s ease;
@@ -286,7 +300,7 @@
 #app_document #quickAccess_popup
 {
     position: absolute;
-    top: 25%;
+    top: calc(20% + 3vh);
     right: 3%;
     width: 14%;
     height: 63%;
@@ -391,13 +405,132 @@
     background-color: rgba(0, 196, 255, 0.2);
 }
 
+#app_document #content .header
+{
+    display: table;
+    
+    position: relative;
+    left: 25%;
+    max-height: 7%;
+    height: 7%;
+    width: 50%;
+    
+    background-color: white;
+    
+    border: none;
+    
+    border-top: 3vh solid rgb(200, 200, 200);
+    
+    border-bottom: 2px solid #8BB7F0;
+    
+    padding: 1vw;
+    
+    user-select: text;
+    -webkit-user-select: text;
+    -o-user-select: text;
+    -ms-user-select: text;
+    -moz-user-select: text;
+    
+    overflow: hidden;
+}
+
+#app_document #content .header p
+{
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#app_document #content .header p input
+{
+    border: none;
+    height: 5vh;
+    width: 100%;
+    
+    background-color: transparent;
+    
+    font-size: 14px;
+}
+
+#app_document #content .footer
+{
+    display: table;
+    
+    position: relative;
+    left: 25%;
+    max-height: 7%;
+    height: 7%;
+    width: 50%;
+    
+    background-color: white;
+    
+    border: none;
+    
+    border-bottom: 3vh solid rgb(200, 200, 200);
+    
+    border-top: 2px solid #8BB7F0;
+    
+    padding: 1vw;
+    
+    user-select: text;
+    -webkit-user-select: text;
+    -o-user-select: text;
+    -ms-user-select: text;
+    -moz-user-select: text;
+    
+    overflow: hidden;
+}
+
+#app_document #content .footer p
+{
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#app_document #content .footer p input
+{
+    border: none;
+    height: 5vh;
+    width: 100%;
+    
+    background-color: transparent;
+    
+    font-size: 14px;
+}
+
+#app_document #content hr
+{
+    position: relative;
+    margin-top: calc(10px + 0.25em);
+    margin-bottom: 10px;
+    
+    padding: 0; 
+    border: none; 
+    border-top: medium double #3f51b5; 
+    
+    left: calc(20% - .5vw);
+    width: calc(60% + 3vh + 1.5vw);
+}
+
+#app_document #content .pageNumber
+{
+    display: inline-block; 
+    position: relative;
+    color: #3f51b5; 
+    top: -1.3em; 
+    left: calc(50% - 1.5em);
+    font-size: 1.5em; 
+    padding: 0 0.25em;
+    
+    background-color: rgb(200, 200, 200);
+}
+
 #app_document #content .page
 {
     position: relative;
-    left: 20%;
-    max-height: 200%;
-    height: 200%;
-    width: 60%;
+    left: 25%;
+    max-height: 150%;
+    height: 150%;
+    width: 50%;
     
     background-color: white;
     
@@ -492,7 +625,7 @@
 #app_document #tree
 {
     position: absolute;
-    top: 25%;
+    top: calc(20% + 3vh);
     left: 3%;
     width: 14%;
     height: 30%;
@@ -568,7 +701,7 @@
 #app_document #references
 {
     position: absolute;
-    top: 65%;
+    bottom: 3vh;
     left: 3%;
     width: 14%;
     height: 30%;

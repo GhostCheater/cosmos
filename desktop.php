@@ -44,6 +44,11 @@
         <script type="text/javascript">
             window.onload = function()
             {
+                document.body.onerror = function(msg, url, line)
+                {
+                    MESSAGES.display.error("Message : " + msg + "\n URL : " + url + "\n Line : " + line);
+                };
+                
                 COSMOS.init();
                 
                 WINDOW.trigger("app_document", "blue");

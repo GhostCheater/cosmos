@@ -1,4 +1,4 @@
-var messages = 
+var MESSAGES = 
 {
     display:
     {

@@ -9,6 +9,7 @@
     if(isset($_POST['c']) && !empty($_POST['c']))
     {
         $args = (!isset($_POST['p']) || empty($_POST['p'])) ? "" : $_POST['p'];
+        $args = addslashes($args);
         $protoAction = (!isset($_POST['a']) || empty($_POST['a'])) ? "default" : $_POST['a'];
         
         // Si jamais c'est un upload, les paramètres sont donc les paramètres du fichier uploadé
@@ -19,7 +20,7 @@
             case "Edit":
                 require_once("controllers/cEdit.php");
                 
-                if(in_array($protoAction, array("load_preferences", "upload_image", "open_file", "show_image", "save_file"))) eval("cEdit::" . $protoAction . "('{$args}');");
+                if(in_array($protoAction, array("load_preferences", "upload_image", "open_file", "show_image", "save_file", "update_historic"))) eval("cEdit::" . $protoAction . "('{$args}');");
                 break;
 
             case "Explorer":

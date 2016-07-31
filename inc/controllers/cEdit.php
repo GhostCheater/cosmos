@@ -90,7 +90,7 @@
                     $content = file_get_contents("{$path}workspace/files/{$_SESSION['session']['user']}/{$hash}.data", FILE_USE_INCLUDE_PATH);
 
                     // TODO : Escape to have a "sure" string
-                    echo $content;
+                    echo str_replace("http://latex.codecogs.com/svg.latex?", "http://latex.codecogs.com/svg.latex?\\", stripcslashes(htmlspecialchars_decode($content)));
                 }
                 else
                 {
@@ -125,6 +125,41 @@
                 file_put_contents("{$relative_path}workspace/files/{$_SESSION['session']['user']}/{$hash}.data", $data);
                 
                 die("ok~||]]");
+            }
+            else
+            {
+                die("error~||]]");
+            }
+        }
+        
+        static function update_historic($hash)
+        {
+            require("secure.php");
+            
+            $relative_path = cEdit::relative_path();
+            
+            $req = $bdd->prepare("SELECT * FROM elements WHERE hash = ? AND user = ?");
+            $req->execute(array(
+                $hash,
+                $_SESSION['session']['user']
+            ));
+            
+            $result = $req->fetchAll();
+            
+            if(count($result) == 1)
+            {
+                $file_content = json_decode(file_get_contents("{$relative_path}workspace/storage/{$_SESSION['session']['user']}/app_document.json"), true);
+                
+                $file_content["historic"][$hash] = array(
+                    "date" => date("d/m/Y") . " à " . date("H:i"),
+                    "name" => $result[0]["name"] . "." . $result[0]["extension"]
+                );
+                
+                file_put_contents("{$relative_path}workspace/storage/{$_SESSION['session']['user']}/app_document.json", json_encode($file_content));
+                
+                echo "ok~||]]";
+                
+                echo json_encode($file_content["historic"]);
             }
             else
             {

@@ -7,10 +7,16 @@ var app_document =
         // Création de l'éditeur
         var page = document.querySelector("#app_document .page");
         
+        localStorage.setItem("app_document#size", parseInt(getComputedStyle(page).height));
+        
         page.contentEditable = true;
         page.contentDocument.designMode = "on";
         page.focus();
-        page.contentWindow.document.execCommand("insertHTML", false, "<br>");
+        
+        page.onload = function()
+        {
+            page.contentWindow.document.execCommand("insertHTML", false, "<br>");   
+        }
         
         // Chargement de la toolbar
         this.preferences.load();
@@ -65,6 +71,7 @@ var app_document =
             if(localStorage.getItem("app_document#current") != hash)
             {
                 app_document.loader.trigger();
+                document.querySelector("#app_document #messages").innerHTML = "<p>Ouverture du fichier <b>"+name+"</b> en cours...</p>";
                 
                 // Récupération de l'id du fichier courant
                 var current_id = localStorage.getItem("app_document#current");
@@ -84,7 +91,7 @@ var app_document =
                 }
                 
                 // On sauvegarde le contenu du fichier courant
-                app_document.documents.save(current_id, content);
+                if(localStorage.getItem("app_document#current") != null && localStorage.getItem("app_document#current") != undefined) app_document.documents.save(current_id, content);
                 
                 // On vide l'éditeur
                 for(var i = 0; i < pages.length; i++)
@@ -119,6 +126,8 @@ var app_document =
                         
                         app_document.page().contentWindow.document.execCommand("insertHTML", false, data);
                         
+                        document.querySelector("#app_document #messages").innerHTML = "<p>Fichier ouvert : <b>"+name+"</b></p>";
+                        
                         app_document.loader.trigger();
                     }
                 }
@@ -131,7 +140,6 @@ var app_document =
         {
             // Affichage du loader
             app_document.loader.trigger();
-            document.querySelector("#app_document #messages").innerHTML = "<p>Ouverture du fichier <b>"+name+"</b> en cours...</p>";
             
             // Affichage des fichiers ouverts
             app_document.tab.load("files");
@@ -143,9 +151,7 @@ var app_document =
             file_to_append.className = "part current";
             file_to_append.style.width = "10vw";
             file_to_append.id = "file_" + hash;
-            file_to_append.innerHTML = "<img onclick='app_document.documents.switchTo(\""+hash+"\", \""+name+"\")' src='apps/app_document/images/files/doc.svg' style='height: 5vh;' /><br />" + name;
-            
-            document.querySelector("#app_document #navBar #contentTabs #cT_files #currentFiles").appendChild(file_to_append);
+            file_to_append.innerHTML = "<img onclick='app_document.documents.switchTo(\""+hash+"\", \""+name+"\")' src='apps/app_document/images/files/doc.svg' style='height: 5vh;' /><img  onclick='app_document.documents.close(\""+hash+"\")' src='images/status/error.svg' class='img_close' /><br /><b>" + name + "</b><br />(document)";
             
             // Test de l'existence du fichier dans la liste des fichiers ouverts
             var files = localStorage.getItem("app_document#files");
@@ -155,7 +161,7 @@ var app_document =
             
             for(key in files)
             {
-                if(files[key][0] == hash)
+                if(key == hash)
                 {
                     alreadyOpened = true;
                     break;
@@ -167,15 +173,17 @@ var app_document =
             {                
                 files[hash] = {0: hash, 1:name};
                 
+                document.querySelector("#app_document #navBar #contentTabs #cT_files #currentFiles").appendChild(file_to_append);
+                
                 // On met à jour la liste des fichiers ouverts en local
                 localStorage.setItem("app_document#files", JSON.stringify(files));
                 
                 // Ouverture du fichier
                 app_document.documents.switchTo(hash, name);
             }
-            else
+            else // S'il existe déjà, on switch dessus
             {
-                document.querySelector("#app_document #navBar #contentTabs #cT_files").removeChild(file_to_append);
+                app_document.documents.switchTo(hash, name);
             }
             
             app_document.loader.trigger();
@@ -183,7 +191,7 @@ var app_document =
         
         preSave: function()
         {
-            if(localStorage.getItem("app_document#current") != undefined || localStorage.getItem("app_document#current") != null)
+            if(localStorage.getItem("app_document#current") != undefined && localStorage.getItem("app_document#current") != null)
             {
                 var pages = document.querySelectorAll("#app_document #content .page");
                 var content = "";
@@ -226,7 +234,10 @@ var app_document =
                                     var date = new Date();
                                     var hour = date.getHours();
                                     var minutes = date.getMinutes();
-                                    document.querySelector("#app_document #messages").innerHTML = "<p>Sauvegardé à <b>" + hour + ":" + minutes + "</b></p>";
+                                    document.querySelector("#app_document #messages").innerHTML = "<p>Sauvegardé à <b>" + ("0" + hour).slice(-2) + ":" + ("0" + minutes).slice(-2) + "</b></p>";
+                                    
+                                    // Mise à jour de l'historique
+                                    app_document.documents.updateHistoric(hash);
                                 }
                                 catch(err)
                                 {
@@ -245,41 +256,206 @@ var app_document =
             }
         },
         
+        updateHistoric: function(hash)
+        {
+            app_document.loader.trigger();
+            
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "inc/controller.php", true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            
+            xhr.onreadystatechange = function()
+            {
+                if(xhr.status == 200 && xhr.readyState == 4)
+                {
+                    var state = xhr.responseText.split("~||]]", 1)[0];
+                    var data = xhr.responseText.split("~||]]", 2)[1];
+                    
+                    app_document.loader.trigger();
+                    
+                    switch(state)
+                    {
+                        case "ok":
+                            try
+                            {
+                                var content = JSON.parse(data);
+                                
+                                console.log(content);
+                                
+                                // On supprime l'historique pour le mettre à jour ensuite
+                                while(document.querySelector("#app_document #navBar #contentTabs #cT_files #historicFiles").hasChildNodes())
+                                {
+                                    document.querySelector("#app_document #navBar #contentTabs #cT_files #historicFiles").removeChild(document.querySelector("#app_document #navBar #contentTabs #cT_files #historicFiles").lastChild);
+                                }
+                            
+                                for(key in content)
+                                {
+                                    if({}.hasOwnProperty.call(content, key))
+                                    {
+                                        var doc = document.createElement("div");
+                                        doc.id = "historic_" + key;
+                                        doc.className = "part show";
+                                        doc.style.width = "10vw";
+                                        doc.innerHTML = "<img onclick='app_document.documents.open(\""+key+"\", \""+content[key]["name"]+"\")' src='apps/app_document/images/files/doc.svg' style='height: 5vh;' /><br /><b>" + content[key]["name"] + "</b><br /> " + content[key]["date"];
+
+                                        document.querySelector("#app_document #navBar #contentTabs #cT_files #historicFiles").appendChild(doc);
+                                    }
+                                }
+                            }
+                            catch(err)
+                            {
+                                console.error("Error parsing JSON : " + err);
+                            }
+                            break;
+                            
+                        default:
+                            break;
+                    }
+                }
+            }
+            
+            xhr.send("c=Edit&a=update_historic&p=" + hash);
+        },
+        
         close: function(hash)
         {
+            if(hash == localStorage.getItem("app_document#current"))
+            {
+                // Sauvegarde du fichier
+                app_document.documents.preSave();
+                
+                // On enlève le texte de l'éditeur
+                var pages = document.querySelectorAll("#app_document #content .page");
+                
+                for(var i = 0; i < pages.length; i++)
+                {
+                    pages[i].contentWindow.document.execCommand("selectAll", false);
+                    pages[i].contentWindow.document.execCommand("delete", false);
+                }
+                
+                localStorage.removeItem("app_document#current");
+            }
             
+            // On supprime le fichier de la liste des fichiers ouverts
+            var opened_files = JSON.parse(localStorage.getItem("app_document#files"));
+            
+            if(opened_files[hash] != undefined)
+            {
+                delete opened_files[hash];
+            }
+            
+            localStorage.setItem("app_document#files", JSON.stringify(opened_files));
+            
+            // Fermeture du fichier
+            document.querySelector("#app_document #navBar #contentTabs #cT_files #currentFiles").removeChild(document.querySelector("#app_document #navBar #contentTabs #cT_files #currentFiles #file_" + hash));
         }
     },
     
     editor:
     {        
-        initPage: function(page)
+        initPage: function(page, contentToAdd)
         {
             if(page != undefined)
             {
                 page.onload = function()
-                {
+                {                    
                     page.contentEditable = true;
                     page.contentDocument.designMode = "on";
                     
+                    var firstPageStyle = document.querySelector("#app_document #content .page").contentWindow.document.body.style;
+                    
+                    page.contentWindow.document.body.style.color = firstPageStyle.color;
+                    page.contentWindow.document.body.style.fontFamily = firstPageStyle.fontFamily;
+                    page.contentWindow.document.body.style.fontWeight = firstPageStyle.fontWeight;
+                    page.contentWindow.document.body.style.fontStyle = firstPageStyle.fontStyle;
+                    page.contentWindow.document.body.style.textDecorationColor = firstPageStyle.textDecorationColor;
+                    page.contentWindow.document.body.style.textDecorationLine = firstPageStyle.textDecorationLine;
+                    page.contentWindow.document.body.style.textDecorationStyle = firstPageStyle.textDecorationStyle;
+                    page.contentWindow.document.body.style.overflow = firstPageStyle.overflow;
+                    
+                    page.contentWindow.document.addEventListener("keypress", function(event)
+                    {
+                        app_document.keyboard.trigger(event);
+                    }, false);
+                    page.contentWindow.document.addEventListener("click", function(event)
+                    {
+                        app_document.keyboard.trigger(event);
+                    }, false);   
+                    
                     page.focus();
+                    
+                    page.contentWindow.document.execCommand("insertHTML", false, contentToAdd);
                     
                     document.querySelector("#app_document #content").scrollBy(0, 300);
                 }
             }
         },
         
-        addPage: function(page_num)
+        addPage: function(page_num, contentToAdd)
         {
             // On clone les propriétés de la première page (sans le contenu)
             var newPage = document.querySelector("#app_document .page").cloneNode(false);
 
             newPage.id = "editorPage_" + page_num;
             newPage.setAttribute("data-num", page_num);
+            
+            var newHeader = document.querySelector("#app_document .header").cloneNode(true);
+            
+            newHeader.id = "editorHeader_" + page_num;
+            newHeader.setAttribute("data-num", page_num);
+            
+            var newFooter = document.querySelector("#app_document .footer").cloneNode(true);
+            
+            newFooter.id = "editorFooter_" + page_num;
+            newFooter.setAttribute("data-num", page_num);
+            
+            var separator = document.querySelector("#app_document .separator").cloneNode(false);
+            
+            var newPageNumber = document.querySelector("#app_document .pageNumber").cloneNode(true);
+            newPageNumber.querySelectorAll("o")[0].innerHTML = page_num;
+            newPageNumber.querySelectorAll("o")[1].innerHTML = page_num;
+            
+            for(var i = 0; i < document.querySelectorAll("#app_document #content .pageNumber").length; i++)
+            {
+                document.querySelectorAll("#app_document #content .pageNumber")[i].querySelectorAll("o")[1].innerHTML = page_num;
+            }
 
+            document.querySelector("#app_document #content").appendChild(newHeader);
             document.querySelector("#app_document #content").appendChild(newPage);
+            document.querySelector("#app_document #content").appendChild(newFooter);
+            document.querySelector("#app_document #content").appendChild(separator);
+            document.querySelector("#app_document #content").appendChild(newPageNumber);
 
-            app_document.editor.initPage(newPage);
+            app_document.editor.initPage(newPage, contentToAdd);
+        },
+        
+        addContentToNextPage: function(nextPage, contentToAdd)
+        {
+            if(document.querySelector("#app_document #editorPage_"+nextPage) != null && document.querySelector("#app_document #editorPage_"+nextPage) != undefined)
+            {
+                document.querySelector("#app_document #editorPage_"+nextPage).focus();
+                var firstline = document.querySelector("#app_document #editorPage_"+nextPage).contentWindow.document.body.firstChild.data;
+                
+                console.log(firstline);
+                
+                document.querySelector("#app_document #editorPage_"+nextPage).contentWindow.document.body.removeChild(document.querySelector("#app_document #editorPage_"+nextPage).contentWindow.document.body.firstChild);
+                
+                document.querySelector("#app_document #editorPage_"+nextPage).contentWindow.document.execCommand("insertHTML", false, contentToAdd + "<br />" + firstline);
+            }
+        },
+        
+        cleanPage: function(numPage)
+        {
+            var lastChild = document.querySelector("#app_document #content #editorPage_" + numPage).contentWindow.document.body.lastChild;
+            
+            while(parseInt(lastChild.offsetTop) + parseInt(lastChild.offsetHeight) > localStorage.getItem("app_document#size"))
+            {
+                document.querySelector("#app_document #content #editorPage_" + numPage).contentWindow.document.body.removeChild(lastChild);
+                
+                lastChild = document.querySelector("#app_document #content #editorPage_" + numPage).contentWindow.document.body.lastChild;
+            }
+            
+            document.querySelector("#app_document #content #editorPage_" + numPage).contentWindow.document.body.lastChild.innerHTML = "\001";
         },
         
         removePage: function()
@@ -289,12 +465,31 @@ var app_document =
         
         event_method:
         {
-            reachEndPage: function()
+            reachEndPage: function(event)
             {
+                var parent = app_document.page();
                 
+                var lastChild = app_document.page().contentWindow.document.body.lastChild;
+                
+                if(parseInt(getComputedStyle(app_document.page().contentWindow.document.body).height) + app_document.page().contentWindow.document.body.lastChild.offsetHeight > localStorage.getItem("app_document#size"))
+                {
+                    var num = app_document.page().getAttribute("data-num");
+                    var nextPage = parseInt(num) + 1;
+
+                    if(document.querySelector("#app_document #editorPage_"+nextPage) == null || document.querySelector("#app_document #editorPage_"+nextPage) == undefined) // Si la page n'existe pas
+                    {                                        
+                        app_document.editor.addPage(nextPage, lastChild.innerHTML);
+                    }
+                    else
+                    {                        
+                        app_document.editor.addContentToNextPage(nextPage, lastChild.innerHTML);
+                    }
+                    
+                    app_document.editor.cleanPage(parseInt(num));
+                }
             },
             
-            reachStartPage: function()
+            reachStartPage: function(event)
             {
                 
             },
@@ -401,7 +596,7 @@ var app_document =
     {
         load: function(tab)
         {
-            var tabs = ["files", "edit", "insert", "export", "settings"];
+            var tabs = ["files", "edit", "insert", "export", "draw", "settings"];
             
             
             if(tabs.indexOf(tab) !== -1)
@@ -536,13 +731,14 @@ var app_document =
                 page.contentWindow.document.body.style.fontWeight = bold;
                 page.contentWindow.document.body.style.fontStyle = italic;
                 page.contentWindow.document.body.style.textDecoration = underline;
+                page.contentWindow.document.body.style.overflow = "hidden";
 
                 page.focus();
 
                 // On masque le loader
                 app_document.loader.trigger();
             }
-        }
+        },
     },
     
     update:
@@ -1136,7 +1332,7 @@ var app_document =
                 popup.open(
                     "popup_doc_insert_formula",
                     "Insertion d'une formule",
-                    "<input type='text' id='input_doc_insert_formula' placeholder='Votre formule' onkeydown='app_document.insert.formula.preview();' /><br /><br /><span id='return_doc_insert_formula'></span>",
+                    "<input type='text' id='input_doc_insert_formula' placeholder='Votre formule' onkeypress='app_document.insert.formula.preview();' /><br /><br /><span id='return_doc_insert_formula'></span>",
                     "<input type='button' value='Insérer' class='button' onclick='app_document.insert.formula.put();' />"
                 );
             },
@@ -1145,21 +1341,37 @@ var app_document =
             {
                 var content = document.querySelector("#input_doc_insert_formula").value;
                 
-                // Permet de visualiser les formules avant de les inclure
-                var functions = ["int", "sum", "iint", "iiint", "lint", "liin", "liint", "frac"];
-                var chars = [
-                    "\Alpha", "\Beta", "\Gamma", "\Delta", "\Epsilon", "\Zeta"
-                ];
+                // Permet de visualiser les formules avant de les inclure                
+                var element = document.createElement("img");
+                element.src = "http://latex.codecogs.com/svg.latex?"+content;
                 
-                var reg_functions = /\\(\w+)\{/g;
+                document.querySelector("#return_doc_insert_formula").innerHTML = "Génération en cours...";
                 
-                var reg_arguments = /{(\d+)\}/g;
+                element.onload = function()
+                {
+                    document.querySelector("#return_doc_insert_formula").innerHTML = "<img src='http://latex.codecogs.com/svg.latex?"+content+"' />";
+                }
+            },
+            
+            escape: function(str)
+            {
+                while(str.indexOf("\\") != -1)
+                {
+                    str = str.replace("\\", "&bsol;");
+                }
                 
-                var arr_functions = content.exec(reg_functions);
-                var arr_args = arguments.exec(reg_arguments);
+                return str;
             },
             
             put: function()
+            {
+                var content = document.querySelector("#input_doc_insert_formula").value;
+                
+                var url = "http://latex.codecogs.com/svg.latex?"+this.escape(content);
+                app_document.page().contentWindow.document.execCommand("insertHTML", false, "<img src='"+url+"' style='vertical-align: middle' data-formula='"+this.escape(content)+"' />");
+            },
+            
+            edit: function(formula)
             {
                 
             }
@@ -1270,6 +1482,9 @@ var app_document =
             */
             app_document.update.tree();
             
+            app_document.page().contentWindow.document.execCommand("insertParagraph", false);
+            
+            
             /*
             * Mise à jour des statuts
             */
@@ -1286,6 +1501,7 @@ var app_document =
             // Recherche de la taille
             var size = getComputedStyle(element).fontSize;
             document.querySelector("#app_document #navBar #sizes").value = size;
+            
             
             /*
             * Mise à jour du QuickAccess
@@ -1325,26 +1541,17 @@ var app_document =
                     break;
             }
             
+            
             /*
-            * Detection de la fin de la page
+            * Détection de la fin de la page
             */
-            var parent = app_document.page();
-            var lastChild = app_document.page().contentWindow.document.body.lastChild;
+            app_document.editor.event_method.reachEndPage(event);
             
-            var border = parseInt(screen.height * 0.03);
             
-            if(lastChild.offsetTop + 16 + border >= parseInt(getComputedStyle(parent).height))
-            {
-                var num = app_document.page().getAttribute("data-num");
-                var nextPage = parseInt(num) + 1;
-                
-                parent.contentWindow.document.body.removeChild(lastChild);
-                
-                if(document.querySelector("#app_document #editorPage_"+nextPage) == null) // La page n'existe pas
-                {                                        
-                    app_document.editor.addPage(nextPage);
-                }
-            }
+            /*
+            * Détection du début de la page
+            */
+            app_document.editor.event_method.reachStartPage(event);
         },
         
         quickAccess: function(wht)
@@ -1382,7 +1589,7 @@ var app_document =
             }
             
             document.querySelector("#app_document #quickAccess_popup #quickAccess_actions_specials").innerHTML = toAppend;
-        }
+        },
     },
     
     quickAccess:

@@ -13,6 +13,7 @@
         <div class="tab" id="tab_edit" onclick="app_document.tab.load('edit');">&Eacute;dition</div>
         <div class="tab" id="tab_insert" onclick="app_document.tab.load('insert');">Insertion</div>
         <div class="tab" id="tab_export" onclick="app_document.tab.load('export');">Exportation</div>
+        <div class="tab" id="tab_draw" onclick="app_document.tab.load('draw');">Dessin</div>
         <div class="tab" id="tab_settings" onclick="app_document.tab.load('settings');" style="border-right: 1px solid rgb(193, 193, 193);">Options</div>
     </div>
     <div id="contentTabs">
@@ -219,6 +220,7 @@
                 <img onclick="" src="apps/app_document/images/export/history.svg" />
             </div>
         </div>
+        <div class="contentTab" id="cT_draw"></div>
         <div class="contentTab" id="cT_settings">
             <div class="part" style="width: 7vw;">
                 <img class="settings_suggestions" onclick="" src="apps/app_document/images/settings/toggle_off.svg" />
@@ -233,11 +235,11 @@
             </div>
             
             <div class="part" style="width: 7vw;">
-                <img class="settings_autocomplete" onclick="" src="apps/app_document/images/settings/toggle_off.svg" />
+                <img class="settings_historic" onclick="" src="apps/app_document/images/settings/toggle_off.svg" />
             </div>
             
             <div class="part" style="width: 7vw;">
-                <img class="settings_historic" onclick="" src="apps/app_document/images/settings/toggle_off.svg" />
+                <img class="settings_autocomplete" onclick="" src="apps/app_document/images/settings/toggle_off.svg" />
             </div>
             
             <div class="part" style="width: 7vw;">
@@ -282,14 +284,15 @@
             <div class="part" style="width: 12vw;">Exporter</div>
             <div class="part" style="width: 12vw;">Historique des modifications</div>
         </div>
+        <div class="titlesTab" id="tT_draw"></div>
         <div class="titlesTab" id="tT_settings">
-            <div class="part" style="width: 7vw;">Suggestions <indic style="color: #8BB7F0;font-weight: bold;cursor: pointer;" title="Explication...">[?]</indic></div>
-            <div class="part" style="width: 7vw;">Sauvegarde auto. <indic style="color: #8BB7F0;font-weight: bold;cursor: pointer;" title="Explication...">[?]</indic></div>
-            <div class="part" style="width: 7vw;">Copie en local <indic style="color: #8BB7F0;font-weight: bold;cursor: pointer;" title="Explication...">[?]</indic></div>
-            <div class="part" style="width: 7vw;">Complétion auto. <indic style="color: #8BB7F0;font-weight: bold;cursor: pointer;" title="Explication...">[?]</indic></div>
-            <div class="part" style="width: 7vw;">Historique <indic style="color: #8BB7F0;font-weight: bold;cursor: pointer;" title="Explication...">[?]</indic></div>
-            <div class="part" style="width: 7vw;">Mode Zen <indic style="color: #8BB7F0;font-weight: bold;cursor: pointer;" title="Explication...">[?]</indic></div>
-            <div class="part" style="width: 7vw;">Correction ortho. <indic style="color: #8BB7F0;font-weight: bold;cursor: pointer;" title="Explication...">[?]</indic></div>
+            <div class="part" style="width: 7vw;">Suggestions <indic style="color: #8BB7F0;font-weight: bold;cursor: pointer;" title="Les suggestions permettent de vous indiquer des informations par rapport à vos choix de styles (couleurs, tailles, etc...).">[?]</indic></div>
+            <div class="part" style="width: 7vw;">Sauvegarde auto. <indic style="color: #8BB7F0;font-weight: bold;cursor: pointer;" title="Permet la sauvegarde automatique de votre fichier en cours d'édition toutes les 5 minutes.">[?]</indic></div>
+            <div class="part" style="width: 7vw;">Copie en local <indic style="color: #8BB7F0;font-weight: bold;cursor: pointer;" title="Tout le contenu de votre fichier ainsi que vos modifications sont sauvegardées en local. Cette fonctionnalité est utile si vous avez peur de perdre votre connexion internet.">[?]</indic></div>
+            <div class="part" style="width: 7vw;">Historique <indic style="color: #8BB7F0;font-weight: bold;cursor: pointer;" title="Permet de dresser l'historique de vos derniers fichiers utilisés.">[?]</indic></div>
+            <div class="part" style="width: 7vw;">Complétion auto. <indic style="color: #8BB7F0;font-weight: bold;cursor: pointer;" title="La complétion automatique vous permet de voir des mots en fonction de ce que vous tapez.">[?]</indic></div>
+            <div class="part" style="width: 7vw;">Mode Zen <indic style="color: #8BB7F0;font-weight: bold;cursor: pointer;" title="Le mode zen est un mode anti-distraction, c'est-à-dire seulement l'éditeur avec la barre d'édition.">[?]</indic></div>
+            <div class="part" style="width: 7vw;">Correction ortho. <indic style="color: #8BB7F0;font-weight: bold;cursor: pointer;" title="La correction automatique vous indique les fautes de grammaire dans votre texte">[?]</indic></div>
             <div class="part" style="width: 12vw;">Changement des styles</div>
         </div>
     </div>
@@ -297,7 +300,11 @@
 
 <!-- Contenu : les pages -->
 <div id="content">
-	<iframe class="page" contenteditable="true" designmode="on" insertBrOnReturn="true" id="editorPage_1" data-num="1"></iframe>
+    <div class="header" id="editorHeader_1" data-num="1"><p><input type="text" placeholder="En-tête de votre document..." /></p></div>
+	<iframe class="page" contenteditable="true" designmode="on" id="editorPage_1" data-num="1"></iframe>
+    <div class="footer" id="editorFooter_1" data-num="1"><p><input type="text" placeholder="Pied de page de votre document..." /></p></div>
+    <hr class="separator" />
+    <span class="pageNumber" style="text-align: center;"><o>1</o> / <o>1</o></span>
 </div>
 
 <!-- Zone du loader -->
