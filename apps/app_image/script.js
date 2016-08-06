@@ -64,7 +64,7 @@ var app_image =
                         }
                         catch(err)
                         {
-                            console.error("Error parsing json : " + err);
+                            throw new DesktopExeption(err);
                         }
                         break;
                     

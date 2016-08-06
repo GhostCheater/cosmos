@@ -145,7 +145,7 @@ var WINDOW =
                     }
                     catch(e)
                     {
-                        console.log("Error parsing JSON");   
+                        throw new DesktopExeption(err);
                     }
                 }
             }

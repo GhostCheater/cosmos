@@ -166,42 +166,40 @@
         <div class="contentTab" id="cT_insert">
             <!-- Tableau : OK -->
             <div class="part" style="width: 5vw;border-right: 1px solid rgb(210, 210, 210);">
-                <img onclick="app_document.insert.tab();" src="apps/app_document/images/insert/tab/insert.svg" />
+                <img title="Insérer un tableau" onclick="app_document.insert.tab();" src="apps/app_document/images/insert/tab/insert.svg" />
             </div>
             
             <!-- Images -->
             <div class="part" style="width: 10vw;border-right: 1px solid rgb(210, 210, 210);">
-                <img onclick="app_document.insert.image.local();" src="apps/app_document/images/insert/images/insert_local.svg" style="margin-right: 5%;" />
-                <img onclick="app_document.insert.image.web();" src="apps/app_document/images/insert/images/insert_web.svg" />
+                <img title="Insérer une image locale" onclick="app_document.insert.image.local();" src="apps/app_document/images/insert/images/insert_local.svg" style="margin-right: 5%;" />
+                <img title="Insérer une image depuis une URL" onclick="app_document.insert.image.web();" src="apps/app_document/images/insert/images/insert_web.svg" />
             </div>
             
             <!-- Lien -->
             <div class="part" style="width: 5vw;border-right: 1px solid rgb(210, 210, 210);">
-                <img onclick="app_document.insert.link.open();" src="apps/app_document/images/insert/link/insert.svg" />
+                <img title="Insérer un lien" onclick="app_document.insert.link.open();" src="apps/app_document/images/insert/link/insert.svg" />
             </div>
             
             <!-- Formule -->
             <div class="part" style="width: 5vw;border-right: 1px solid rgb(210, 210, 210);">
-                <img onclick="app_document.insert.formula.open();" src="apps/app_document/images/insert/formula/insert.svg" />
+                <img title="Insérer une formule" onclick="app_document.insert.formula.open();" src="apps/app_document/images/insert/formula/insert.svg" />
             </div>
             
             <!-- Paragraphe : Saut de page, bas de page, haut de page, champs spéciaux -->
             <div class="part" style="width: 15vw;border-right: 1px solid rgb(210, 210, 210);">
-                <img onclick="app_document.insert.header();" src="apps/app_document/images/insert/layout/header.svg" style="margin-right: 5%;" />
-                <img onclick="app_document.insert.footer();" src="apps/app_document/images/insert/layout/footer.svg" style="margin-right: 5%;" />
-                <img onclick="app_document.insert.jump();" src="apps/app_document/images/insert/layout/jump.svg" style="margin-right: 5%;" />
-                <img onclick="app_document.insert.summary();" src="apps/app_document/images/insert/layout/summary.svg" />
+                <img title="Insérer une nouvelle page" onclick="app_document.insert.jump();" src="apps/app_document/images/insert/layout/jump.svg" style="margin-right: 5%;" />
+                <img title="Insérer un sommaire" onclick="app_document.insert.summary();" src="apps/app_document/images/insert/layout/summary.svg" />
             </div>
             
-            <!-- Note de base de page -->
+            <!-- Référence -->
             <div class="part" style="width: 5vw; border-right: 1px solid rgb(210, 210, 210);">
-                <img onclick="app_document.insert.note();" src="apps/app_document/images/insert/note/insert.svg" />
+                <img title="Insérer une référence" onclick="app_document.insert.note();" src="apps/app_document/images/insert/note/insert.svg" />
             </div>
             
             <!-- Caractères spéciaux -->
             <div class="part" style="width: 10vw;">
-                <img onclick="app_document.insert.special.char.open();" src="apps/app_document/images/insert/special/insert_char.svg" style="margin-right: 5%;" />
-                <img onclick="app_document.insert.special.form();" src="apps/app_document/images/insert/special/insert_form.svg" />
+                <img title="Insérer des caractères spéciaux" onclick="app_document.insert.special.char.open();" src="apps/app_document/images/insert/special/insert_char.svg" style="margin-right: 5%;" />
+                <img title="Insérer des objets de formulaire" onclick="app_document.insert.special.form();" src="apps/app_document/images/insert/special/insert_form.svg" />
             </div>
         </div>
         <div class="contentTab" id="cT_export">
@@ -299,13 +297,7 @@
 </div>
 
 <!-- Contenu : les pages -->
-<div id="content">
-    <div class="header" id="editorHeader_1" data-num="1"><p><input type="text" placeholder="En-tête de votre document..." /></p></div>
-	<iframe class="page" contenteditable="true" designmode="on" id="editorPage_1" data-num="1"></iframe>
-    <div class="footer" id="editorFooter_1" data-num="1"><p><input type="text" placeholder="Pied de page de votre document..." /></p></div>
-    <hr class="separator" />
-    <span class="pageNumber" style="text-align: center;"><o>1</o> / <o>1</o></span>
-</div>
+<div id="content"><div class="header" id="editorHeader_1" data-num="1"><p><input type="text" placeholder="En-tête de votre document..." /></p></div><iframe class="page" contenteditable="true" designmode="on" id="editorPage_1" data-num="1" insertBrOnReturn="true"></iframe><div class="footer" id="editorFooter_1" data-num="1"><p><input type="text" placeholder="Pied de page de votre document..." /></p></div><hr class="separator" id="separator_1" /><span class="pageNumber" style="text-align: center;" id="pageNumber_1"><o>1</o> / <o>1</o></span></div>
 
 <!-- Zone du loader -->
 <div id="loaderArea"><img src="images/loader.png" /></div>

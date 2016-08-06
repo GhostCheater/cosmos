@@ -594,7 +594,7 @@
             try
             {
                 echo "ok~||]]";
-                echo json_encode(array_chunk($list, 7));
+                echo json_encode($list);
             }
             catch(Exception $e)
             {
@@ -653,12 +653,12 @@
                 }
             }
 
-            $toAppend = "<p class='directory' onclick='app_explorer.actions.changeDirectory(\"navBar\", \"Home\");'>Home</p>";
+            $toAppend = "<p class='directory' onclick='EXPLORER.actions.call(\"Home\", \"folder\", \"\", \"navBar\");'>Home</p>";
 
             for($i = 0; $i < count($list); $i++)
             {
                 $toAppend .= "<p class='separator'>&gt;</p>";
-                $toAppend .= "<p class='directory' onclick='app_explorer.actions.changeDirectory(\"navBar\", \"".$list[$i][2]."\");'>".$list[$i][0]."</p>";
+                $toAppend .= "<p class='directory' onclick='EXPLORER.actions.call(\"".$list[$i][2]."\", \"folder\", \"\", \"navBar\");'>".$list[$i][0]."</p>";
             }
 
             echo "ok~||]]";
@@ -1097,6 +1097,8 @@
         {
             require("secure.php");
             
+            $relative_path = cExplorer::relative_path();
+            
             $req = $bdd->prepare("SELECT * FROM elements WHERE hash = ? AND user = ?");
             $req->execute(array(
                 $hash,
@@ -1106,6 +1108,17 @@
             if($req->rowCount() == 1)
             {
                 $data = $req->fetchAll();
+                
+                if($data[0]["type"] != "folder")
+                {
+                    $size = filesize("{$relative_path}workspace/files/{$_SESSION['session']['user']}/{$hash}.data") / 8;
+                }
+                else
+                {
+                    $size = "500";
+                }
+                
+                $data[0]["size"] = ceil($size);
 
                 echo "ok~||]]";
 

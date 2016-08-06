@@ -361,7 +361,7 @@ var app_music =
                     } 
                     catch(err)
                     {
-                        console.error("Error : " + err);
+                        throw new DesktopExeption(err);
                     }
 
                     app_music.triggerLoader();
@@ -526,7 +526,7 @@ var app_music =
                         }
                         catch(err)
                         {
-                            console.error("Error parsing JSON : " + err);
+                            throw new DesktopExeption(err);
                         }
                     }
                 }

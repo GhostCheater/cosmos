@@ -6,6 +6,11 @@
             return "../";
         }
         
+        static function tab_notif()
+        {
+            
+        }
+        
         static function tab_apps()
         {
             $path = cPanel::relative_path();

@@ -113,7 +113,7 @@ var COSMOS =
                         }
                         catch(err)
                         {
-                            console.error("Error parsing JSON : " + err);
+                            throw new DesktopExeption(err);
                         }
                         break;
                         
@@ -227,7 +227,7 @@ var COSMOS =
 											}
 											catch(err)
 											{
-												console.error("Error parsing json");
+												throw new DesktopExeption(err);
 											}
 											
 											break;
@@ -445,7 +445,7 @@ var COSMOS =
 									}
 									catch(err)
 									{
-										console.error("Error parsing json");
+										throw new DesktopExeption(err);
 									}
 									break;
 
@@ -759,7 +759,7 @@ var COSMOS =
 										}
 										catch(err)
 										{
-											console.log("error");
+											throw new DesktopExeption(err);
 										}
 										break;
 										
@@ -828,7 +828,7 @@ var COSMOS =
 										}
 										catch(err)
 										{
-											console.log(err);
+											throw new DesktopExeption(err);
 										}
 										break;
 										
@@ -886,7 +886,7 @@ var COSMOS =
 										}
 										catch(err)
 										{
-											console.log("error");
+											throw new DesktopExeption(err);
 										}
 										break;
 										

@@ -1,0 +1,8 @@
+<svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 48 48" enable-background="new 0 0 48 48" xml:space="preserve">
+    <polygon fill="#ffffff" stroke="#3f51b5" stroke-width=".5" points="30,3 8,3 8,45 40,45 40,13 "></polygon>
+    <polygon fill="#3f51b5" stroke="#3f51b5" stroke-width=".5" points="38.5,14 29,14 29,4.5 "></polygon>
+    
+    <polygon fill="#3f51b5" points="21,23 14,33 28,33 "></polygon>
+    <polygon fill="#3f51b5" points="28,26.4 23,33 33,33 "></polygon>
+    <circle fill="#3f51b5" cx="31.5" cy="24.5" r="1.5"></circle>
+</svg>

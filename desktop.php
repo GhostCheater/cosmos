@@ -5,14 +5,20 @@
         <meta lang="fr" />
         <title>CosmOS</title>
         <link rel="icon" href="images/logo.png" type="image/png" />
+        
         <link rel="stylesheet" type="text/css" href="css/desktop.css" />
+        <link rel="stylesheet" type="text/css" href="css/desktop_explorer.css" />
+        <link rel="stylesheet" type="text/css" href="css/notifications.css" />
         <link rel="stylesheet" type="text/css" href="css/rightPanel.css" />
         <link rel="stylesheet" type="text/css" href="css/popup.css" />
         <link rel="stylesheet" type="text/css" href="css/popup_content.css" />
         <link rel="stylesheet" type="text/css" href="css/window.css" />
         <link rel="stylesheet" type="text/css" href="css/lockMode.css" />
         <link rel="stylesheet" type="text/css" href="css/disposition.css" />
+        
         <script type="text/javascript" src="js/global.js" async></script>
+        <script type="text/javascript" src="js/exception.js" async></script>
+        <script type="text/javascript" src="js/explorer/explorer.js" async></script>
         <script type="text/javascript" src="js/window.js" async></script>
         <script type="text/javascript" src="js/errorMessages.js" async></script>
         <script type="text/javascript" src="js/popup.js" async></script>
@@ -39,20 +45,54 @@
         </section>
         
         <section id="desktop">
+            <div id="explorer">
+                <div id="path"></div>
+                <div id="actions">
+                    <p onclick="EXPLORER.actions.createFile();"><img src="images/explorer/actions/newFile.svg" /></p>
+                    <p onclick="EXPLORER.actions.createFolder();"><img src="images/explorer/actions/newFolder.svg" /></p>
+                    <p onclick="EXPLORER.actions.upload.show();"><img src="images/explorer/actions/upload.svg" /></p>
+                </div>
+                
+                <div class="secondOrbit"></div>
+                <div class="thirdOrbit"></div>
+                
+                <span id="circle_center"><p><img class="" src="images/explorer/principal_dir.svg" /></p></span>
+                
+                <span id="firstOrbit" class="orbiting_files"></span>
+                <span id="secondOrbit" class="orbiting_files"></span>
+                <span id="thirdOrbit" class="orbiting_files"></span>
+                
+                <div id="popUp_explorer" class="orbit_8">
+                    <img src="images/explorer/arrows/up.svg" class="arrow up" />
+                    <img src="images/explorer/arrows/left.svg" class="arrow left" />
+                    <img src="images/explorer/arrows/right.svg" class="arrow right" />
+                    <img src="images/explorer/arrows/down.svg" class="arrow down" />
+                    
+                    <div class="header"></div>
+                    <div class="infos"><span class="line"></span><span class="line"></span></div>
+                    <div class="actions"><span class="line"></span><span class="line"></span></div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="notifications_content"></section>
+        <section id="notifications_area" class="warning">
+            <span class="header"><p>Erreur</p></span>
+            <span class="content"><p>Error parsing JSON @script.js:226</p></span>
         </section>
         
         <script type="text/javascript">
             window.onload = function()
-            {
-                document.body.onerror = function(msg, url, line)
-                {
-                    MESSAGES.display.error("Message : " + msg + "\n URL : " + url + "\n Line : " + line);
-                };
-                
+            {                
                 COSMOS.init();
-                
-                WINDOW.trigger("app_document", "blue");
-            }
+                EXPLORER.init();
+            };
+            
+            window.onerror = function()
+            {
+                var err = new Error();
+                MESSAGES.display.error(err.stack);
+            };
         </script>
     </body>
 </html>

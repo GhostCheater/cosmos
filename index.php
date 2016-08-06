@@ -5,35 +5,47 @@
         <title>CosmOS - Accueil</title>
         <meta lang="fr" />
         <link rel="icon" href="images/logo.png" type="image/png" />
-        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <link rel="stylesheet" type="text/css" href="css/home/index.css" />
+        <link rel="stylesheet" type="text/css" href="css/home/general.css" />
     </head>
     
     <body>
         <header>
-            <p>Cosm<b>OS</b></p>
-            <p style="text-align: right;padding-right: 1vw;"><input type="button" value="S'inscrire" class="register" />&nbsp;<input type="button" value="Se connecter" class="connect" /></p>
+            <p style="width: 40%">
+                <a href="index.php">Cosm<b>OS</b></a>
+            </p>
+            <p style="font-size: 16px;text-align:center;width: 60%">
+                <a href="about.php">&Agrave; propos</a>
+                <a href="apps.php">Fonctionnalités</a>
+                <a href="prices.php">Prix</a>
+                <a href="https://github.com/Ne0blast/cosmos">GitHub</a>
+                <a href="donate.php">Faire un don</a>
+                <a href="connect.php">Se connecter</a>
+                <a href="register.php">S'inscrire</a>
+            </p>
         </header>
         
         <section>
-            <div id="organization">
-                <!-- Logo : centre -->
-                <img src="images/logo.svg" class="logo" />
-                
-                <!-- Applications : objets -->
-                <img src="apps/app_explorer/images/types/archive.svg" class="object orbit_1" />
-                <img src="apps/app_explorer/images/types/audio.svg" class="object orbit_2" />
-                <img src="apps/app_explorer/images/types/code.svg" class="object orbit_3" />
-                <img src="apps/app_explorer/images/types/doc.svg" class="object orbit_4" />
-                <img src="apps/app_explorer/images/types/image.svg" class="object orbit_5" />
-                <img src="apps/app_explorer/images/types/pdf.svg" class="object orbit_6" />
-                <img src="apps/app_explorer/images/types/text.svg" class="object orbit_7" />
-                <img src="apps/app_explorer/images/types/video.svg" class="object orbit_8" />
-            </div>
-            
-            <!-- Slogan -->
-            <div id="slogan">
-                <p>Tous vos fichiers à portée de main, où que vous soyez</p>
-            </div>
+            <div id="slogan"><p>Accédez à vos fichiers où que vous soyez</p></div>
+            <div id="screenshots"><p><img src="images/screenshots/1.png" /></p></div>
+            <div id="buttons"><p><a href="apps.php"><input type="button" value="Voir les fonctionnalités" /></a></p><p><a href="register.php"><input type="button" value="Rejoindre l'aventure" /></a></p></div>
         </section>
+        
+        <script type="text/javascript">
+            var $ = document.querySelector("#screenshots p img"),
+                list = ["1.png", "2.png", "3.png"],
+                cooldown = 5000;
+            setInterval(function(){
+                $.className = "hide";
+                
+                var newId = list.indexOf($.src.substr(parseInt($.src.lastIndexOf("/")) + 1, $.src.length)) + 1;
+                
+                if(newId == list.length) newId = 0;
+                
+                setTimeout(function(){$.src = "images/screenshots/" + list[newId];}, 400);
+                
+                setTimeout(function(){$.className = ""}, 1000);
+            }, cooldown);
+        </script>
     </body>
 </html>

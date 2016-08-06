@@ -1,0 +1,180 @@
+header
+{
+    background-color: rgba(0, 0, 0, .3);
+}
+
+section
+{
+    position: absolute;
+    top: 10%;
+    left: 0;
+    width: 100%;
+    height: 90%;
+    background-color: #fbf8ff;
+}
+
+#about_project
+{
+    display: table;
+    
+    position: absolute;
+    top: 5%;
+    left: 15%;
+    width: 70%;
+    height: 25%;
+}
+
+#about_project .title
+{
+    display: table-row;
+}
+
+#about_project .title p
+{
+    display: table-cell;
+    vertical-align: middle;
+    
+    text-align: left;
+    
+    color: black;
+    font-size: 4vh;
+    
+    padding-left: .3vw;
+}
+
+#about_project .title p:first-letter
+{
+    color: #FF4500;
+    
+    text-shadow: 1px 1px 1px black;
+}
+
+#about_project .content
+{
+    display: table-row;
+}
+
+#about_project .content p
+{
+    display: table-cell;
+    vertical-align: middle;
+    
+    text-align: left;
+    
+    color: black;
+    font-size: 1.5vh;
+    
+    padding-left: 1vw;
+}
+
+#about_me
+{
+    display: table;
+    
+    position: absolute;
+    top: 35%;
+    left: 15%;
+    width: 70%;
+    height: 25%;
+}
+
+#about_me .title
+{
+    display: table-row;
+}
+
+#about_me .title p
+{
+    display: table-cell;
+    vertical-align: middle;
+    
+    text-align: left;
+    
+    color: black;
+    font-size: 4vh;
+    
+    padding-left: .3vw;
+}
+
+#about_me .title p:first-letter
+{
+    color: #FF4500;
+    
+    text-shadow: 1px 1px 1px black;
+}
+
+#about_me .content
+{
+    display: table-row;
+}
+
+#about_me .content p
+{
+    display: table-cell;
+    vertical-align: middle;
+    
+    text-align: left;
+    
+    color: black;
+    font-size: 1.5vh;
+    
+    padding-left: 1vw;
+}
+
+#about_future
+{
+    display: table;
+    
+    position: absolute;
+    top: 65%;
+    left: 15%;
+    width: 70%;
+    height: 25%;
+    
+    background-color: rgba(255, 255, 255, .1);
+    
+    border-radius: 5px;
+}
+
+#about_future .title
+{
+    display: table-row;
+}
+
+#about_future .title p
+{
+    display: table-cell;
+    vertical-align: middle;
+    
+    text-align: left;
+    
+    color: black;
+    font-size: 4vh;
+    
+    padding-left: .3vw;
+}
+
+#about_future .title p:first-letter
+{
+    color: #FF4500;
+    
+    text-shadow: 1px 1px 1px black;
+}
+
+#about_future .content
+{
+    display: table-row;
+}
+
+#about_future .content p
+{
+    display: table-cell;
+    vertical-align: middle;
+    
+    text-align: left;
+    
+    color: black;
+    font-size: 1.5vh;
+    
+    padding-left: 1vw;
+}

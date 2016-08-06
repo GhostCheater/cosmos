@@ -41,6 +41,8 @@ body
 
 header
 {
+    z-index: 96;
+    
     position: absolute;
     top: 0;
     left: 0;

@@ -15,12 +15,12 @@ var app_document =
         
         page.onload = function()
         {
-            page.contentWindow.document.execCommand("insertHTML", false, "<br>");   
+            page.contentWindow.document.execCommand("insertHTML", false, "\001");   
         }
         
         // Chargement de la toolbar
         this.preferences.load();
-        this.tab.load("settings");
+        this.tab.load("insert");
         this.update.states();
         
         // Initialisation de la liste des documents
@@ -100,6 +100,11 @@ var app_document =
                     pages[i].contentWindow.document.execCommand("delete", false);
                 }
                 
+                for(var i = 1; i < pages.length; i++)
+                {
+                    app_document.editor.removePage(pages[i]);
+                }
+                
                 // On stocke l'id du fichier en local
                 localStorage.setItem("app_document#current", hash);
                 
@@ -124,7 +129,20 @@ var app_document =
                         
                         var dataToParse = data.split("{-------||-------}");
                         
-                        app_document.page().contentWindow.document.execCommand("insertHTML", false, data);
+                        
+                        
+                        // Pour chaque valeur du split, on créé une page et on ajoute le contenu de la page
+                        for(var i = 0; i < dataToParse.length; i++)
+                        {
+                            if(i == 0) // Première page, nous n'avons pas besoin de la créer. On ajoute donc juste le contenu
+                            {
+                                document.querySelector("#app_document #content #editorPage_1").contentWindow.document.execCommand("insertHTML", false, dataToParse[i]);
+                            }
+                            else
+                            {
+                                app_document.editor.addPage(i + 1, dataToParse[i]);
+                            }
+                        }
                         
                         document.querySelector("#app_document #messages").innerHTML = "<p>Fichier ouvert : <b>"+name+"</b></p>";
                         
@@ -242,7 +260,7 @@ var app_document =
                                 catch(err)
                                 {
                                     document.querySelector("#app_document #messages").innerHTML = "<p>Une erreur est survenue lors de la sauvegarde</p>";
-                                    console.error("Error parsing json : " + err);
+                                    throw new DesktopExeption(err);
                                 }
                                 break;
 
@@ -280,8 +298,6 @@ var app_document =
                             {
                                 var content = JSON.parse(data);
                                 
-                                console.log(content);
-                                
                                 // On supprime l'historique pour le mettre à jour ensuite
                                 while(document.querySelector("#app_document #navBar #contentTabs #cT_files #historicFiles").hasChildNodes())
                                 {
@@ -304,7 +320,7 @@ var app_document =
                             }
                             catch(err)
                             {
-                                console.error("Error parsing JSON : " + err);
+                                throw new DesktopExeption(err);
                             }
                             break;
                             
@@ -373,7 +389,7 @@ var app_document =
                     page.contentWindow.document.body.style.textDecorationStyle = firstPageStyle.textDecorationStyle;
                     page.contentWindow.document.body.style.overflow = firstPageStyle.overflow;
                     
-                    page.contentWindow.document.addEventListener("keypress", function(event)
+                    page.contentWindow.document.addEventListener("keyup", function(event)
                     {
                         app_document.keyboard.trigger(event);
                     }, false);
@@ -410,8 +426,10 @@ var app_document =
             newFooter.setAttribute("data-num", page_num);
             
             var separator = document.querySelector("#app_document .separator").cloneNode(false);
+            separator.id = "separator_" + page_num;
             
             var newPageNumber = document.querySelector("#app_document .pageNumber").cloneNode(true);
+            newPageNumber.id = "pageNumber_" + page_num;
             newPageNumber.querySelectorAll("o")[0].innerHTML = page_num;
             newPageNumber.querySelectorAll("o")[1].innerHTML = page_num;
             
@@ -434,14 +452,27 @@ var app_document =
             if(document.querySelector("#app_document #editorPage_"+nextPage) != null && document.querySelector("#app_document #editorPage_"+nextPage) != undefined)
             {
                 document.querySelector("#app_document #editorPage_"+nextPage).focus();
-                var firstline = document.querySelector("#app_document #editorPage_"+nextPage).contentWindow.document.body.firstChild.data;
                 
-                console.log(firstline);
+                var contentPage = document.querySelector("#app_document #editorPage_"+nextPage).contentWindow.document.body.innerHTML;
                 
                 document.querySelector("#app_document #editorPage_"+nextPage).contentWindow.document.body.removeChild(document.querySelector("#app_document #editorPage_"+nextPage).contentWindow.document.body.firstChild);
+
                 
-                document.querySelector("#app_document #editorPage_"+nextPage).contentWindow.document.execCommand("insertHTML", false, contentToAdd + "<br />" + firstline);
+                if(contentToAdd.toString() != "<br>")
+                {
+                    document.querySelector("#app_document #editorPage_"+nextPage).contentWindow.document.execCommand("selectAll", false);
+                    document.querySelector("#app_document #editorPage_"+nextPage).contentWindow.document.execCommand("delete", false);
+                    document.querySelector("#app_document #editorPage_"+nextPage).contentWindow.document.execCommand("insertHTML", false, "<p>" + contentToAdd + "</p><p>" + contentPage + "</p>");  
+                }
+                else
+                {
+                    document.querySelector("#app_document #editorPage_"+nextPage).contentWindow.document.execCommand("selectAll", false);
+                    document.querySelector("#app_document #editorPage_"+nextPage).contentWindow.document.execCommand("delete", false);
+                    document.querySelector("#app_document #editorPage_"+nextPage).contentWindow.document.execCommand("insertHTML", false, "<p>" + contentPage + "</p>");
+                }
             }
+            
+            app_document.editor.cleanPage(nextPage - 1);
         },
         
         cleanPage: function(numPage)
@@ -453,14 +484,101 @@ var app_document =
                 document.querySelector("#app_document #content #editorPage_" + numPage).contentWindow.document.body.removeChild(lastChild);
                 
                 lastChild = document.querySelector("#app_document #content #editorPage_" + numPage).contentWindow.document.body.lastChild;
+                
+                if(lastChild == null)
+                {
+                    break;
+                }
             }
             
-            document.querySelector("#app_document #content #editorPage_" + numPage).contentWindow.document.body.lastChild.innerHTML = "\001";
+            if(parseInt(lastChild.offsetTop) + parseInt(lastChild.offsetHeight) > localStorage.getItem("app_document#size"))
+            {
+                document.querySelector("#app_document #content #editorPage_" + numPage).contentWindow.document.body.removeChild(lastChild);
+            }
         },
         
-        removePage: function()
+        removePage: function(page)
         {
+            var num = page.getAttribute("data-num");
             
+            // Suppression de l'en-tête de la page
+            document.querySelector("#app_document #content").removeChild(document.querySelector("#app_document #editorHeader_" + num));
+            
+            // Suppression de la page
+            document.querySelector("#app_document #content").removeChild(document.querySelector("#app_document #editorPage_" + num));
+            
+            // Suppression du pied de page
+            document.querySelector("#app_document #content").removeChild(document.querySelector("#app_document #editorFooter_" + num));
+            
+            // Suppression du numéro de la page
+            document.querySelector("#app_document #content").removeChild(document.querySelector("#app_document #separator_" + num));
+            document.querySelector("#app_document #content").removeChild(document.querySelector("#app_document #pageNumber_" + num));
+            
+            // On focus la page précédente
+            var previous_num = num - 1;
+            document.querySelector("#app_document #editorPage_" + previous_num).focus();
+            
+            // On remet à jour l'ordre des pages
+            app_document.editor.refreshPageNumber();
+        },
+        
+        refreshPageNumber: function()
+        {
+            // Listing des parties du document
+            var pages = document.querySelectorAll("#app_document #content .page");
+            var headers = document.querySelectorAll("#app_document #content .header");
+            var footers = document.querySelectorAll("#app_document #content .footer");
+            var separators = document.querySelectorAll("#app_document #content .separator");
+            var pageNumbers = document.querySelectorAll("#app_document #content .pageNumber");
+            
+            // On met à jour les numéros des pages ainsi que les id
+            for(var i = 0; i < pages.length; i++)
+            {
+                var num = parseInt(i) + 1;
+                
+                // Mise à jour des numéros des pages
+                pageNumbers[i].querySelectorAll("o")[0].innerHTML = num;
+                pageNumbers[i].querySelectorAll("o")[1].innerHTML = pages.length;
+                
+                // Changement des ids
+                headers[i].id = "editorHeader_" + num;
+                headers[i].setAttribute("data-num", num);
+                
+                pages[i].id = "editorPage_" + num;
+                pages[i].setAttribute("data-num", num);
+                
+                footers[i].id = "editorFooter_" + num;
+                footers[i].setAttribute("data-num", num);
+                
+                separators[i].id = "separator_" + num;
+                
+                pageNumbers[i].id = "pageNumber_" + num;
+            }
+        },
+        
+        convertBr: function()
+        {
+            var page = app_document.page().contentWindow.document.body;
+            
+            for(var i = 0; i < page.childElementCount; i++)
+            {
+                if(page.childNodes[i].nodeName == "BR")
+                {
+                    page.childNodes[i].innerHTML = "<p><br /></p>";
+                }
+            }
+        },
+        
+        trapReturn: function(event)
+        {
+            if(event.keyCode == 13)
+            {
+                event.preventDefault();
+                
+                app_document.page().contentWindow.document.execCommand("insertHTML", false, "<p><br /></p>");
+                
+                console.log("convert");
+            }
         },
         
         event_method:
@@ -471,7 +589,7 @@ var app_document =
                 
                 var lastChild = app_document.page().contentWindow.document.body.lastChild;
                 
-                if(parseInt(getComputedStyle(app_document.page().contentWindow.document.body).height) + app_document.page().contentWindow.document.body.lastChild.offsetHeight > localStorage.getItem("app_document#size"))
+                if(app_document.page().contentWindow.document.body.lastChild.offsetTop + app_document.page().contentWindow.document.body.lastChild.offsetHeight > localStorage.getItem("app_document#size"))
                 {
                     var num = app_document.page().getAttribute("data-num");
                     var nextPage = parseInt(num) + 1;
@@ -491,12 +609,22 @@ var app_document =
             
             reachStartPage: function(event)
             {
+                var page = app_document.page();
                 
-            },
-            
-            focusPage: function(page)
-            {
+                var lastChild = page.contentWindow.document.body.lastChild;
                 
+                if(event.type == "keyup" && event.key == "Backspace")
+                {
+                    if(lastChild.innerHTML == "<br>" && page.id != "editorPage_1" && lastChild.offsetTop == 8)
+                    {
+                        var question = confirm("Cette page est vide, voulez-vous la supprimer ?");
+                        
+                        if(question)
+                        {
+                            app_document.editor.removePage(page);
+                        }
+                    }
+                }
             }
         }
     },
@@ -651,7 +779,7 @@ var app_document =
                             }
                             catch(err)
                             {
-                                console.error("Error parsing json : " + err);
+                                throw new DesktopExeption(err);
                             }
                             break;
                             
@@ -1241,7 +1369,6 @@ var app_document =
                     {
                         if(xhr.readyState == 4 && xhr.status === 200)
                         {
-                            console.log(xhr.responseText);
                             var state = xhr.responseText.split("~||]]", 1)[0];
                             var data = xhr.responseText.split("~||]]", 2)[1];
 					
@@ -1379,6 +1506,49 @@ var app_document =
         
         jump: function() // TODO
         {
+            var num = parseInt(app_document.page().getAttribute("data-num"));
+            var num_next = num + 1;
+            var last_num = document.querySelectorAll("#app_document #content .page").length;
+            
+            var list = document.querySelector("#app_document #content").childNodes;
+            
+            console.log(list);
+            
+            var headerAfterJump = list[num * 5]; // Header de la page suivante
+            
+            if(headerAfterJump == undefined) // Il n'y a pas de page après, c'est donc juste une création d'une nouvelle page
+            {
+                app_document.editor.addPage(num_next, "");
+            }
+            else
+            {
+                var newHeader = document.querySelector("#app_document #content #editorHeader_" + num).cloneNode(true);
+                newHeader.id = "editorHeader_" + last_num;
+                
+                var newPage = document.querySelector("#app_document #content #editorPage_" + num).cloneNode(false);
+                newPage.id = "editorPage_" + last_num;
+                
+                var newFooter = document.querySelector("#app_document #content #editorFooter_" + num).cloneNode(true);
+                newFooter.id = "editorFooter_" + last_num;
+                
+                var newSeparator = document.querySelector("#app_document #content #separator_" + num).cloneNode(true);
+                newSeparator.id = "separator_" + last_num;
+                
+                var newPageNumbers = document.querySelector("#app_document #content #pageNumber_" + num).cloneNode(true);
+                newPageNumbers.id = "pageNumber_" + last_num;
+                
+                document.querySelector("#app_document #content").insertBefore(newHeader, headerAfterJump);
+                document.querySelector("#app_document #content").insertBefore(newPage, headerAfterJump);
+                document.querySelector("#app_document #content").insertBefore(newFooter, headerAfterJump);
+                document.querySelector("#app_document #content").insertBefore(newSeparator, headerAfterJump);
+                document.querySelector("#app_document #content").insertBefore(newPageNumbers, headerAfterJump);
+                
+                // Initialisation de la nouvelle page
+                app_document.editor.initPage(newPage, "");
+                
+                // Mise à jour des pages
+                app_document.editor.refreshPageNumber();
+            }
         },
         
         special:
@@ -1552,6 +1722,18 @@ var app_document =
             * Détection du début de la page
             */
             app_document.editor.event_method.reachStartPage(event);
+            
+            
+            /*
+            * Permet de convertir les BR en P
+            */
+            app_document.editor.convertBr();
+            
+            
+            /*
+            * Permet de corriger le bug présent sous chrome
+            */
+            app_document.editor.trapReturn(event);
         },
         
         quickAccess: function(wht)

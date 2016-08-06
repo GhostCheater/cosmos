@@ -1,0 +1,719 @@
+@keyframes rotateIcon
+{
+    from
+    {
+        transform: rotate(0deg);
+    }
+    to
+    {
+        transform: rotate(-360deg);
+    }
+}
+
+#desktop #explorer
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    
+    color: #ededed;
+    
+    font-size: 1.5vh;
+}
+
+#desktop #explorer #path
+{
+    display: table;
+    
+    position: absolute;
+    top: 2vh;
+    left: 2vh;
+    max-width: 30vw;
+    min-width: 10vw;
+    height: 7vh;
+    
+    background-color: rgba(0, 0, 0, 0.3);
+    
+    border-radius: 5px;
+}
+
+#desktop #explorer #path p
+{
+    display: table-cell;
+    vertical-align: middle;
+    
+    text-align: center;
+}
+
+#desktop #explorer #path .directory
+{
+    transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    
+    width: 10vw;
+    
+    cursor: pointer;
+}
+#desktop #explorer #path .directory:hover
+{
+    background-color: rgba(255, 59, 0, 0.3);
+}
+
+#desktop #explorer #path .separator
+{
+    width: 4vw;
+}
+
+#desktop #explorer #actions
+{
+    display: table;
+    
+    position: absolute;
+    bottom: 2vh;
+    left: 2vh;
+    
+    width: 20vw;
+    height: 7vh;
+    
+    background-color: rgba(0, 0, 0, 0.3);
+    
+    border-radius: 5px;
+}
+
+#desktop #explorer #actions p
+{
+    transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    
+    display: table-cell;
+    vertical-align: middle;
+    
+    text-align: center;
+    
+    cursor: pointer;
+}
+#desktop #explorer #actions p:hover
+{
+    background-color: rgba(255, 59, 0, 0.3);
+}
+
+#desktop #explorer #actions p img
+{
+    height: 4vh;
+}
+
+#desktop #explorer #circle_center
+{
+    transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    
+    display: table;
+    
+    position: absolute;
+    top: calc(50% - 9vh - 1px);
+    left: calc(50% - 9vh - 1px);
+    height: 18vh;
+    width: 18vh;
+    
+    border-radius: 18vh;
+    
+    border: 2px solid white;
+    
+    background-color: rgba(255, 255, 255, 0.15);
+    
+    cursor: pointer;
+}
+
+#desktop #explorer #circle_center p
+{
+    display: table-cell;
+    vertical-align: middle;
+    
+    text-align: center;
+}
+
+#desktop #explorer #circle_center p img
+{
+    height: 12vh;
+    width: 12vh;
+}
+
+#desktop #explorer #circle_center p .animate
+{
+    animation-duration: 1.5s;
+    animation-timing-function: linear;
+    animation-name: rotateIcon;
+    animation-iteration-count: infinite;
+}
+
+#desktop #explorer .orbiting_files img
+{
+    height: 5vh;
+    width: 5vh;
+}
+
+#desktop #explorer .orbiting_files span
+{
+    display: table;   
+}
+
+#desktop #explorer .orbiting_files span p
+{
+    display: table-cell;
+    vertical-align: middle;
+    
+    text-align: center;
+}
+
+
+/*
+* Lignes d'orbites
+*/
+/*
+#desktop #explorer .secondOrbit
+{
+    position: absolute;
+    top: calc(50% - 40vh);
+    left: calc(50% - 40vh);
+    height: 80vh;
+    width: 80vh;
+    
+    border-radius: 80vh;
+    
+    border: 1px solid rgba(57, 75, 139, .5);
+}
+*/
+
+/*
+#desktop #explorer .thirdOrbit
+{
+    position: absolute;
+    top: calc(50% - 55vh);
+    left: calc(50% - 55vh);
+    height: 110vh;
+    width: 110vh;
+    
+    border-radius: 110vh;
+    
+    border: 1px solid rgba(57, 75, 139, .5);
+}
+*/
+
+
+/*
+* Orbites
+*/
+#desktop #explorer .orbiting_files .orbit_1
+{
+    position: absolute;
+    
+    height: 10vh;
+    width: 10vh;
+    
+    border-radius: 10vh;
+    
+    background-color: rgba(0, 0, 0, 0.15);
+    
+    border: 2px dotted rgb(57, 75, 139);
+    
+    top: calc(50% - 30vh);
+    left: calc(50% - 5vh - 1px);
+}
+
+#desktop #explorer .orbiting_files .orbit_2
+{
+    position: absolute;
+    
+    height: 10vh;
+    width: 10vh;
+    
+    border-radius: 10vh;
+    
+    background-color: rgba(0, 0, 0, 0.15);
+    
+    border: 2px dotted rgb(57, 75, 139);
+    
+    top: calc(50% - 22vh);
+    left: calc(50% - 23vh - 1px);
+}
+
+#desktop #explorer .orbiting_files .orbit_3
+{
+    position: absolute;
+    
+    height: 10vh;
+    width: 10vh;
+    
+    border-radius: 10vh;
+    
+    background-color: rgba(0, 0, 0, 0.15);
+    
+    border: 2px dotted rgb(57, 75, 139);
+    
+    top: calc(50% - 4.5vh);
+    left: calc(50% - 30vh - 1px);
+}
+
+#desktop #explorer .orbiting_files .orbit_4
+{
+    position: absolute;
+    
+    height: 10vh;
+    width: 10vh;
+    
+    border-radius: 10vh;
+    
+    background-color: rgba(0, 0, 0, 0.15);
+    
+    border: 2px dotted rgb(57, 75, 139);
+    
+    top: calc(50% + 21.8vh - 9vh);
+    left: calc(50% - 23vh - 1px);
+}
+
+#desktop #explorer .orbiting_files .orbit_5
+{
+    position: absolute;
+    
+    height: 10vh;
+    width: 10vh;
+    
+    border-radius: 10vh;
+    
+    background-color: rgba(0, 0, 0, 0.15);
+    
+    border: 2px dotted rgb(57, 75, 139);
+    
+    top: calc(50% + 20vh);
+    left: calc(50% - 5vh - 1px);
+}
+
+#desktop #explorer .orbiting_files .orbit_6
+{
+    position: absolute;
+    
+    height: 10vh;
+    width: 10vh;
+    
+    border-radius: 10vh;
+    
+    background-color: rgba(0, 0, 0, 0.15);
+    
+    border: 2px dotted rgb(57, 75, 139);
+    
+    top: calc(50% + 21.8vh - 9vh);
+    right: calc(50% - 22.2vh - 1px);
+}
+
+#desktop #explorer .orbiting_files .orbit_7
+{
+    position: absolute;
+    
+    height: 10vh;
+    width: 10vh;
+    
+    border-radius: 10vh;
+    
+    background-color: rgba(0, 0, 0, 0.15);
+    
+    border: 2px dotted rgb(57, 75, 139);
+    
+    top: calc(50% - 4.5vh);
+    right: calc(50% - 30vh - 1px);
+}
+
+#desktop #explorer .orbiting_files .orbit_8
+{
+    position: absolute;
+    
+    height: 10vh;
+    width: 10vh;
+    
+    border-radius: 10vh;
+    
+    background-color: rgba(0, 0, 0, 0.15);
+    
+    border: 2px dotted rgb(57, 75, 139);
+    
+    top: calc(50% - 22vh);
+    right: calc(50% - 23vh - 1px);
+}
+
+
+/*
+* Noms
+*/
+#desktop #explorer .orbiting_files .name_1
+{
+    position: absolute;
+    top: calc(50% - 33vh);
+    left: calc(50% - 7.5vh);
+    width: 15vh;
+    
+    border-bottom: 2px solid rgb(57, 75, 139);
+}
+
+#desktop #explorer .orbiting_files .name_2
+{
+    position: absolute;
+    top: calc(50% - 25vh);
+    left: calc(50% - 25.5vh);
+    width: 15vh;
+    
+    border-bottom: 2px solid rgb(57, 75, 139);
+}
+
+#desktop #explorer .orbiting_files .name_3
+{
+    position: absolute;
+    top: calc(50% - 7.5vh);
+    left: calc(50% - 32.5vh);
+    width: 15vh;
+    
+    border-bottom: 2px solid rgb(57, 75, 139);
+}
+
+#desktop #explorer .orbiting_files .name_4
+{
+    position: absolute;
+    top: calc(50% + 10vh);
+    left: calc(50% - 25.5vh);
+    width: 15vh;
+    
+    border-bottom: 2px solid rgb(57, 75, 139);
+}
+
+#desktop #explorer .orbiting_files .name_5
+{
+    position: absolute;
+    top: calc(50% + 17vh);
+    left: calc(50% - 7.5vh);
+    width: 15vh;
+    
+    border-bottom: 2px solid rgb(57, 75, 139);
+}
+
+#desktop #explorer .orbiting_files .name_6
+{
+    position: absolute;
+    top: calc(50% + 10vh);
+    right: calc(50% - 24.5vh);
+    width: 15vh;
+    
+    border-bottom: 2px solid rgb(57, 75, 139);
+}
+
+#desktop #explorer .orbiting_files .name_7
+{
+    position: absolute;
+    top: calc(50% - 7.5vh);
+    right: calc(50% - 32.5vh);
+    width: 15vh;
+    
+    border-bottom: 2px solid rgb(57, 75, 139);
+}
+
+#desktop #explorer .orbiting_files .name_8
+{
+    position: absolute;
+    top: calc(50% - 25vh);
+    right: calc(50% - 25.5vh);
+    width: 15vh;
+    
+    border-bottom: 2px solid rgb(57, 75, 139);
+}
+
+#desktop #explorer .orbiting_files .name
+{
+    border-radius: 15vh;
+}
+
+
+/*
+* Hover
+*/
+#desktop #explorer .orbiting_files div
+{
+    cursor: pointer;
+}
+
+#desktop #explorer .orbiting_files div .icon
+{
+    transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+}
+
+#desktop #explorer .orbiting_files div .name
+{
+    transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+}
+
+#desktop #explorer .orbiting_files div:hover .icon
+{
+    transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    
+    border: 2px solid white;
+}
+
+#desktop #explorer .orbiting_files div:hover .name
+{
+    transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    
+    border-bottom: 2px solid white;
+}
+
+/*
+* Couleurs
+*/
+#desktop #explorer .orbiting_files .color_red.icon{border: 2px solid #c13400;}
+#desktop #explorer .orbiting_files .color_red.name{border-bottom: 2px solid rgba(193, 52, 0, 0.5);}
+
+#desktop #explorer .orbiting_files .color_blue.icon{border: 2px solid #3f51b5;}
+#desktop #explorer .orbiting_files .color_blue.name{border-bottom: 2px solid rgba(63, 81, 181, 0.5);}
+
+#desktop #explorer .orbiting_files .color_green.icon{border: 2px solid #009688;}
+#desktop #explorer .orbiting_files .color_green.name{border-bottom: 2px solid rgba(0, 150, 136, 0.5);}
+
+#desktop #explorer .orbiting_files .color_grey.icon{border: 2px solid #607d8b;}
+#desktop #explorer .orbiting_files .color_grey.name{border-bottom: 2px solid rgba(96, 125, 139, 0.5);}
+
+#desktop #explorer .orbiting_files .color_orange.icon{border: 2px solid #ff9800;}
+#desktop #explorer .orbiting_files .color_orange.name{border-bottom: 2px solid rgba(255, 152, 0, 0.5);}
+
+#desktop #explorer .orbiting_files .color_purple.icon{border: 2px solid #673ab7;}
+#desktop #explorer .orbiting_files .color_purple.name{border-bottom: 2px solid rgba(103, 58, 183, 0.5);}
+
+
+/*
+* Sélection
+*/
+#desktop #explorer .orbiting_files .selected .icon
+{
+    border: 2px solid black;
+}
+
+#desktop #explorer .orbiting_files .selected .name
+{
+    border-bottom: 2px solid black;
+}
+
+/*
+* PopUp de l'explorateur
+*/
+#desktop #explorer #popUp_explorer
+{
+    position: absolute;
+    height: 40vh;
+    width: 17vw;
+    
+    background-color: white;
+    
+    border-radius: 5px;
+    
+    color: black;
+    
+    opacity: 0.95;
+    
+    display: none;
+    
+    border: 2px solid rgb(168, 169, 255);
+}
+
+
+/* Flêches */
+#desktop #explorer #popUp_explorer .arrow
+{
+    height: 5vh;
+    width: 5vh;
+}
+
+#desktop #explorer #popUp_explorer .arrow.up
+{
+    position: absolute;
+    top: calc(-3.6vh);
+    left: calc(50% - 2.5vh);
+}
+
+#desktop #explorer #popUp_explorer .arrow.left
+{
+    position: absolute;
+    top: calc(50% - 2.5vh);
+    left: calc(-3.6vh);
+}
+
+#desktop #explorer #popUp_explorer .arrow.right
+{
+    position: absolute;
+    top: calc(50% - 2.5vh);
+    right: calc(-3.6vh);
+}
+
+#desktop #explorer #popUp_explorer .arrow.down
+{
+    position: absolute;
+    bottom: calc(-3.5vh);
+    left: calc(50% - 2.5vh);
+}
+
+
+#desktop #explorer #popUp_explorer .header
+{
+    display: table;
+    
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25%;
+    width: 100%;
+    
+    background-color: rgb(168, 169, 255);
+    
+    border-top-left-radius: 1px;
+    border-top-right-radius: 1px;
+    
+    color: white;
+}
+
+#desktop #explorer #popUp_explorer .header p
+{
+    display: table-cell;
+    vertical-align: middle;
+    
+    text-align: center;
+}
+
+#desktop #explorer #popUp_explorer .header p img
+{
+    height: 5vh;
+}
+
+#desktop #explorer #popUp_explorer .infos
+{
+    display: table;
+    
+    position: absolute;
+    top: 25%;
+    left: 0;
+    height: 40%;
+    width: 100%;
+    
+    border-bottom: 1px solid rgb(168, 169, 255);
+    
+    font-size: 1.2vh;
+}
+
+#desktop #explorer #popUp_explorer .line
+{
+    display: table-row;
+    
+    height: 50%;
+}
+
+#desktop #explorer #popUp_explorer .line p
+{
+    display: table-cell;
+    vertical-align: middle;
+    
+    text-align: center;
+    
+    width: 25%;
+}
+
+#desktop #explorer #popUp_explorer .line p b
+{
+    color: rgb(168, 169, 255);
+}
+
+#desktop #explorer #popUp_explorer .line p img
+{
+    height: 3vh;
+}
+
+#desktop #explorer #popUp_explorer .actions
+{
+    display: table;
+    
+    position: absolute;
+    top: 65%;
+    left: 0;
+    height: 35%;
+    width: 100%;
+}
+
+#desktop #explorer #popUp_explorer .actions p
+{
+    transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    
+    font-size: 1.1vh;
+    
+    cursor: pointer;
+}
+#desktop #explorer #popUp_explorer .actions p:hover
+{    
+    background-color: rgba(255, 59, 0, 0.3);
+}
+
+/*
+* Positions de la popUp
+*/
+#desktop #explorer #popUp_explorer.orbit_1{top: calc(50% - 45vh);left: calc(50% - 17vw - 5vh - 2vw);}
+#desktop #explorer #popUp_explorer.orbit_1 .arrow{display: none;}
+#desktop #explorer #popUp_explorer.orbit_1 .arrow.right{display: block;}
+
+#desktop #explorer #popUp_explorer.orbit_2{top: calc(50% - 37vh);left: calc(50% - 17vw - 5vh - 2vw - 18.5vh);}
+#desktop #explorer #popUp_explorer.orbit_2 .arrow{display: none;}
+#desktop #explorer #popUp_explorer.orbit_2 .arrow.right{display: block;}
+
+#desktop #explorer #popUp_explorer.orbit_3{top: calc(50% - 19vh);left: calc(50% - 17vw - 5vh - 2vw - 25.5vh);}
+#desktop #explorer #popUp_explorer.orbit_3 .arrow{display: none;}
+#desktop #explorer #popUp_explorer.orbit_3 .arrow.right{display: block;}
+
+#desktop #explorer #popUp_explorer.orbit_4{bottom: calc(50% - 37vh);left: calc(50% - 17vw - 5vh - 2vw - 18.5vh);}
+#desktop #explorer #popUp_explorer.orbit_4 .arrow{display: none;}
+#desktop #explorer #popUp_explorer.orbit_4 .arrow.right{display: block;}
+
+#desktop #explorer #popUp_explorer.orbit_5{bottom: calc(50% - 45vh);left: calc(50% - 17vw - 5vh - 2vw);}
+#desktop #explorer #popUp_explorer.orbit_5 .arrow{display: none;}
+#desktop #explorer #popUp_explorer.orbit_5 .arrow.right{display: block;}
+
+#desktop #explorer #popUp_explorer.orbit_6{bottom: calc(50% - 37vh);right: calc(50% - 17vw - 5vh - 2vw - 18.5vh);}
+#desktop #explorer #popUp_explorer.orbit_6 .arrow{display: none;}
+#desktop #explorer #popUp_explorer.orbit_6 .arrow.left{display: block;}
+
+#desktop #explorer #popUp_explorer.orbit_7{top: calc(50% - 19vh);right: calc(50% - 17vw - 5vh - 2vw - 25.5vh);}
+#desktop #explorer #popUp_explorer.orbit_7 .arrow{display: none;}
+#desktop #explorer #popUp_explorer.orbit_7 .arrow.left{display: block;}
+
+#desktop #explorer #popUp_explorer.orbit_8{top: calc(50% - 37vh);right: calc(50% - 17vw - 5vh - 2vw - 18.5vh);}
+#desktop #explorer #popUp_explorer.orbit_8 .arrow{display: none;}
+#desktop #explorer #popUp_explorer.orbit_8 .arrow.left{display: block;}

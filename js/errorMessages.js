@@ -15,6 +15,11 @@ var MESSAGES =
         error: function(message)
         {
             
+        },
+        
+        info: function(message)
+        {
+            
         }
     },
     
