@@ -86,6 +86,8 @@
             {                
                 COSMOS.init();
                 EXPLORER.init();
+
+                WINDOW.trigger("app_document", "blue");
             };
             
             window.onerror = function()

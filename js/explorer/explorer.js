@@ -45,6 +45,11 @@ var EXPLORER =
 			xhr.send("c=Explorer&a=show_navBar");
         },
         
+        reduce: function(str)
+        {
+            return str;
+        },
+        
         list: function()
         {
             EXPLORER.triggerLoader("animate");
@@ -104,11 +109,11 @@ var EXPLORER =
                                         
                                         if(content[key][0][2] == "folder")
                                         {
-                                            name = content[key][0][0];
+                                            name = EXPLORER.actions.reduce(content[key][0][0]);
                                         }
                                         else
                                         {
-                                            name = content[key][0][0] + "." + content[key][0][3];
+                                            name = EXPLORER.actions.reduce(content[key][0][0] + "." + content[key][0][3]);
                                         }
                                         
                                         element.innerHTML = "" +
@@ -194,8 +199,8 @@ var EXPLORER =
                 document.querySelectorAll("#desktop #popUp_explorer .infos .line")[0].innerHTML = "<p>Chargement en cours...</p>";
                 document.querySelectorAll("#desktop #popUp_explorer .infos .line")[1].innerHTML = "";
                 
-                document.querySelectorAll("#desktop #popUp_explorer .actions .line")[0].innerHTML = "<p onclick='EXPLORER.actions.select(\""+orbit+"\")'><img src='images/explorer/actions/select.svg' /></p><p onclick='EXPLORER.actions.copy(\""+id+"\");'><img src='images/explorer/actions/copy.svg' /></p><p onclick='EXPLORER.actions.cut(\""+id+"\");'><img src='images/explorer/actions/cut.svg' /></p><p onclick='EXPLORER.actions.delete(\""+id+"\", \""+name+"\", \""+type+"\");'><img src='images/explorer/actions/delete.svg' /></p>";
-                document.querySelectorAll("#desktop #popUp_explorer .actions .line")[1].innerHTML = "<p onclick='EXPLORER.actions.call(\""+id+"\", \""+type+"\", \""+name+"\", \"workspace\")'><img src='images/explorer/actions/open.svg' /></p><p onclick='EXPLORER.actions.download(\""+id+"\")'><img src='images/explorer/actions/download.svg' /></p><p onclick='EXPLORER.actions.rename(\""+id+"\", \""+type+"\", \""+name+"\")'><img src='images/explorer/actions/rename.svg' /></p><p onclick='EXPLORER.actions.zip(\""+id+"\")'><img src='images/explorer/actions/zip.svg' /></p>";
+                document.querySelectorAll("#desktop #popUp_explorer .actions .line")[0].innerHTML = "<p onclick='EXPLORER.actions.select(\""+orbit+"\")' title='Sélectionner'><img src='images/explorer/actions/select.svg' /></p><p onclick='EXPLORER.actions.copy(\""+id+"\");' title='Copier'><img src='images/explorer/actions/copy.svg' /></p><p onclick='EXPLORER.actions.cut(\""+id+"\");' title='Couper'><img src='images/explorer/actions/cut.svg' /></p><p onclick='EXPLORER.actions.delete(\""+id+"\", \""+name+"\", \""+type+"\");' title='Supprimer'><img src='images/explorer/actions/delete.svg' /></p>";
+                document.querySelectorAll("#desktop #popUp_explorer .actions .line")[1].innerHTML = "<p onclick='EXPLORER.actions.call(\""+id+"\", \""+type+"\", \""+name+"\", \"workspace\")' title='Ouvrir'><img src='images/explorer/actions/open.svg' /></p><p onclick='EXPLORER.actions.download(\""+id+"\")' title='Télécharger'><img src='images/explorer/actions/download.svg' /></p><p onclick='EXPLORER.actions.rename(\""+id+"\", \""+type+"\", \""+name+"\")' title='Renommer'><img src='images/explorer/actions/rename.svg' /></p><p onclick='EXPLORER.actions.zip(\""+id+"\")' title='Compresser'><img src='images/explorer/actions/zip.svg' /></p>";
                 
                 // Chargement
                 var xhr = new XMLHttpRequest();

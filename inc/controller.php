@@ -20,7 +20,7 @@
             case "Edit":
                 require_once("controllers/cEdit.php");
                 
-                if(in_array($protoAction, array("load_preferences", "upload_image", "open_file", "show_image", "save_file", "update_historic"))) eval("cEdit::" . $protoAction . "('{$args}');");
+                if(in_array($protoAction, array("load_preferences", "upload_image", "open_file", "show_image", "save_file", "update_historic", "load_dico"))) eval("cEdit::" . $protoAction . "('{$args}');");
                 break;
 
             case "Explorer":

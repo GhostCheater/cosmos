@@ -11,10 +11,10 @@
     
     <body>
         <header>
-            <p style="width: 40%">
+            <p style="width: 20%">
                 <a href="index.php">Cosm<b>OS</b></a>
             </p>
-            <p style="font-size: 16px;text-align:center;width: 60%">
+            <p style="font-size: 16px;text-align:center;width: 80%">
                 <a href="about.php" class="selected">&Agrave; propos</a>
                 <a href="apps.php">Fonctionnalités</a>
                 <a href="prices.php">Prix</a>

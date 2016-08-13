@@ -20,12 +20,15 @@ var app_document =
         
         // Chargement de la toolbar
         this.preferences.load();
-        this.tab.load("insert");
+        this.tab.load("edit");
         this.update.states();
         
         // Initialisation de la liste des documents
         localStorage.setItem("app_document#files", "{}");
         localStorage.removeItem("app_document#current");
+
+        // Chargement du dictionnaire
+        app_document.editor.loadDico("fr");
         
         
         // On place le focus sur l'éditeur
@@ -312,7 +315,7 @@ var app_document =
                                         doc.id = "historic_" + key;
                                         doc.className = "part show";
                                         doc.style.width = "10vw";
-                                        doc.innerHTML = "<img onclick='app_document.documents.open(\""+key+"\", \""+content[key]["name"]+"\")' src='apps/app_document/images/files/doc.svg' style='height: 5vh;' /><br /><b>" + content[key]["name"] + "</b><br /> " + content[key]["date"];
+                                        doc.innerHTML = "<b>" + content[key]["name"] + "</b><br />" + content[key]["date"] + "<br /><img onclick='app_document.documents.open(\""+key+"\", \""+content[key]["name"]+"\")' src='apps/app_document/images/files/doc.svg' style='height: 2vh;' />";
 
                                         document.querySelector("#app_document #navBar #contentTabs #cT_files #historicFiles").appendChild(doc);
                                     }
@@ -568,17 +571,33 @@ var app_document =
                 }
             }
         },
-        
-        trapReturn: function(event)
+
+        loadDico: function(lang)
         {
-            if(event.keyCode == 13)
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "inc/controller.php", true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+            xhr.onreadystatechange = function()
             {
-                event.preventDefault();
-                
-                app_document.page().contentWindow.document.execCommand("insertHTML", false, "<p><br /></p>");
-                
-                console.log("convert");
+                if(xhr.status == 200 && xhr.readyState == 4)
+                {
+                    var state = xhr.responseText.split("~||]]", 1)[0];
+					var data = xhr.responseText.split("~||]]", 2)[1];
+					
+					switch(state)
+					{
+                        case "ok":
+                            localStorage.setItem("app_document#dico", data);
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
             }
+
+            xhr.send("c=Edit&a=load_dico&p=" + lang);
         },
         
         event_method:
@@ -794,6 +813,7 @@ var app_document =
         
         parse: function(data)
         {
+			var toParse = "";
             // Styles du document
             for(type in data["preferences_documents"])
             {
@@ -808,11 +828,15 @@ var app_document =
                                 ";font-size:"+app_document.convert.size_to_px(data["preferences_documents"][type]["size"])+"px"+
                                 ";" + bold + italic + underline;
                     
-                    style += "display: inline;vertical-align:middle;";
-                    
-                    document.querySelector("#app_document #navBar #preformated_"+type).style = [style];
-                }
+                    style += "height:8vh;";
+					
+					toParse += "<optgroup style='color: black;font-weight:normal;border-bottom:1px solid black;font-style: normal;' label='"+data["preferences_documents"][type]["name"]+"'>"
+					toParse += "<option data-tagO='"+data["preferences_documents"][type]["tagO"]+"' data-tagC='"+data["preferences_documents"][type]["tagC"]+"' onclick='app_document.edit.preformated(\""+type+"\")' id='preformated_"+type+"' style='"+style+"'>"+data["preferences_documents"][type]["name"]+"</option>";
+					toParse += "</optgroup>";
+				}
             }
+			
+			document.querySelector("#app_document #navBar #preformated_input").innerHTML = toParse;
             
             // Historique des fichiers
             for(key in data["historic"])
@@ -823,7 +847,7 @@ var app_document =
                     doc.id = "historic_" + key;
                     doc.className = "part show";
                     doc.style.width = "10vw";
-                    doc.innerHTML = "<img onclick='app_document.documents.open(\""+key+"\", \""+data["historic"][key]["name"]+"\")' src='apps/app_document/images/files/doc.svg' style='height: 5vh;' /><br /><b>" + data["historic"][key]["name"] + "</b><br /> " + data["historic"][key]["date"];
+                    doc.innerHTML = "<b>" + data["historic"][key]["name"] + "</b><br />"  + data["historic"][key]["date"] + "<br /><img onclick='app_document.documents.open(\""+key+"\", \""+data["historic"][key]["name"]+"\")' src='apps/app_document/images/files/doc.svg' style='height: 5vh;' />";
                 
                     document.querySelector("#app_document #navBar #contentTabs #cT_files #historicFiles").appendChild(doc);
                 }
@@ -943,48 +967,29 @@ var app_document =
         
         tree: function()
         {
-            var titles = app_document.page().contentWindow.document.querySelectorAll("p span font");
-            var preforms = document.querySelectorAll("#app_document #navBar .preformatedText");
-            var list = [];
+			var toAppend = "";
+			var list = [];
+			
+			for(var i = 0; i < document.querySelectorAll("#app_document .page").length; i++)
+			{
+				var page = document.querySelectorAll("#app_document .page")[i];
+				
+				for(var a = 0; a < page.contentWindow.document.body.querySelectorAll("h1,h2,h3,h4,h5,h6").length; a++)
+				{
+					var element = page.contentWindow.document.body.querySelectorAll("h1,h2,h3,h4,h5,h6")[a];
+					list.push([i, a, element.localName, element.innerHTML]);
+				}
+			}
+			
+			console.log(list);
             
             // Récupération de la liste des titres suivant les différents styles
-            for(var i = 0; i < titles.length; i++)
+            for(var i = 0; i < list.length; i++)
             {
-                var cStyle = getComputedStyle(titles[i]);
-                
-                for(var a = 0; a < preforms.length; a++)
-                {                    
-                    var cStyleTab = [
-                        cStyle.fontSize,
-                        cStyle.fontFamily,
-                        cStyle.color,
-                        (cStyle.fontWeight === "400" || cStyle.fontWeight === "normal") ? "normal" : "bold",
-                        cStyle.fontStyle
-                    ];
-                    
-                    var preformsTab = [
-                        preforms[a].style.fontSize,
-                        preforms[a].style.fontFamily,
-                        preforms[a].style.color,
-                        (preforms[a].style.fontWeight === "400" || preforms[a].style.fontWeight === "normal") ? "normal" : "bold",
-                        preforms[a].style.fontStyle
-                    ];
-                    
-                    if(preformsTab[0] === cStyleTab[0] && preformsTab[1] === cStyleTab[1] && preformsTab[2] === cStyleTab[2] && preformsTab[3] === cStyleTab[3] && preformsTab[4] === cStyleTab[4])
-                    {
-                        list.push([preforms[a].id, titles[i].textContent]);
-                    }
-                }
+				toAppend += "<span onclick='app_document.interaction.tree("+list[i][0]+", "+list[i][1]+")'><p class='pf_"+list[i][2]+"'>"+list[i][3]+"</p></span>";
             }
             
-            // Affichage de la liste des titres dans l'architecture
-            var toAppend = "";
-            
-            for(var i = 0, length = list.length; i < length; i++)
-            {
-                toAppend += "<span><p class='" + list[i][0].replace("preformated_", "") + "'>" + list[i][1] + "</p></span>";
-            }
-            
+            // Affichage de la liste des titres dans l'architecture            
             document.querySelector("#app_document #tree .titles").innerHTML = toAppend;
         }
     },
@@ -1222,17 +1227,22 @@ var app_document =
         /*
         * Texte et titres
         */
-        preformated: function(section, focused)
+        preformated: function(id)
         {
+			var preformated_select = document.querySelector("#app_document #navBar #preformated_input");
+			var section = preformated_select.querySelector("#preformated_" + id);
+			var tagO = section.getAttribute("data-tagO");
+			var tagC = section.getAttribute("data-tagC");
+			
             var page = app_document.page();
             
-            if(document.querySelector("#app_document #navBar #"+section))
+            if(section)
             {                
                 var range = page.contentWindow.document.createRange();
                 
                 if(page.contentWindow.document.getSelection().anchorOffset === page.contentWindow.document.getSelection().focusOffset && page.contentWindow.document.getSelection().anchorNode === page.contentWindow.document.getSelection().focusNode)
                 {
-                    // Aucun texte n'est sélectionné, on applique le style à la ligne
+                    // Aucun texte n'est sélectionné, on insère un titre sur le ligne
                     var sel = page.contentWindow.document.getSelection();
                     
                     range.setStart(sel.anchorNode, 0);
@@ -1240,13 +1250,41 @@ var app_document =
                     
                     sel.removeAllRanges();
                     sel.addRange(range);
+					
+					if(sel.anchorNode.data != null)
+					{
+						var selectedText = sel.anchorNode.data.substr(sel.anchorOffset, parseInt(sel.focusOffset) - parseInt(sel.anchorOffset));
+					
+						if(tagO != "" && tagC != "")
+						{
+							page.contentWindow.document.execCommand("insertHTML", false, tagO+selectedText+tagC);
+						}
+						else
+						{
+							page.contentWindow.document.execCommand("insertHTML", false, "<p>"+selectedText+"</p>");
+						}
+					}
+					else
+					{
+						page.contentWindow.document.execCommand("insertHTML", false, "<p></p>");
+					}
+					
+					var parent = page.contentWindow.document.getSelection().anchorNode.parentNode;
                 }
+				else
+				{
+					var sel = page.contentWindow.document.getSelection();
+					
+					var selectedText = sel.anchorNode.data.substr(sel.anchorOffset, parseInt(sel.focusOffset) - parseInt(sel.anchorOffset));
+					
+					page.contentWindow.document.execCommand("insertHTML", false, "<span>"+selectedText+"</span>");
+					page.contentWindow.document.body.focus();
+					
+					// On sélectionne le SPAN qui est l'élément PARENT
+					var parent = page.contentWindow.document.getSelection().anchorNode.parentNode;
+				}
                 
-                page.contentWindow.document.execCommand("removeFormat",false, null);
-                
-                page.contentWindow.document.execCommand("styleWithCSS", false, true);
-                
-                var style = document.querySelector("#app_document #navBar #"+section).style;
+                var style = section.style;
                 
                 var color = style.color;
                 var size = style.fontSize;
@@ -1255,38 +1293,22 @@ var app_document =
                 var bold = style.fontWeight;
                 var italic = style.fontStyle;
                 var underline = style.textDecoration;
-                
-                var size = app_document.convert.px_to_size(size);
-                
-                page.contentWindow.document.execCommand("fontSize", false, size);
-                
-                if(section !== "preformated_text")
-                {
-                    page.contentWindow.document.execCommand("formatBlock", false, "<p>");
-                }
-                
-                page.contentWindow.document.execCommand("foreColor", false, color);
-                page.contentWindow.document.execCommand("fontName", false, font);
-                
-                if(bold !== "normal"){ page.contentWindow.document.execCommand("bold", false, null); }
-                if(italic !== "normal"){ page.contentWindow.document.execCommand("italic", false, null); }
-                if(underline !== "none"){ page.contentWindow.document.execCommand("underline", false, null); }
-                
-                page.contentWindow.document.getSelection().collapseToEnd();
-                
-                page.focus();
-                
-                // Si le style est un titre, on applique un retour à la ligne et on remet en place le style de "Corps de texte"
-                if(section !== "preformated_text")
-                {
-                    page.contentWindow.document.execCommand("insertHTML", false, "<br>\001");
-                    app_document.edit.preformated("preformated_text");
-                    page.contentWindow.document.execCommand("insertHTML", false, "<br>\001");
-                    app_document.edit.preformated("preformated_text");
-                    page.contentWindow.document.execCommand("insertHTML", false, "\001");
-
-                    app_document.edit.preformated("preformated_text");
-                }
+				
+				parent.style.color = color;
+				parent.style.fontSize = size;
+				parent.style.fontFamily = font;
+				parent.style.fontWeight = bold;			
+				parent.style.fontStyle = italic;			
+				parent.style.textDecoration = underline;
+				
+				sel.collapseToEnd();
+				
+				if(id != "text")
+				{
+					app_document.page().contentWindow.document.execCommand("insertHTML", false, "<p></p>");
+				
+					app_document.edit.preformated("text");
+				}
             }
         },
         
@@ -1652,7 +1674,17 @@ var app_document =
             */
             app_document.update.tree();
             
-            app_document.page().contentWindow.document.execCommand("insertParagraph", false);
+            var range = app_document.page().contentWindow.document.getSelection();
+			
+			if(range.anchorNode.parentNode.toString() != "[object HTMLHeadingElement]" && range.anchorNode != null)
+			{
+				app_document.page().contentWindow.document.execCommand("formatBlock", false, "p");
+
+				if(range.anchorNode.toString() == "[object Text]")
+				{
+					app_document.page().contentWindow.document.execCommand("formatBlock", false, "p");
+				}
+			}
             
             
             /*
@@ -1675,9 +1707,7 @@ var app_document =
             
             /*
             * Mise à jour du QuickAccess
-            */
-            var range = app_document.page().contentWindow.document.getSelection();
-            
+            */            
             var toAnalyze = (range.anchorNode.toString() == "[object Text]") ? range.anchorNode.parentNode.toString() : range.anchorNode.toString();
             toAnalyze = (toAnalyze.indexOf("http://") != -1 || toAnalyze.indexOf("https://") != -1 || toAnalyze.indexOf("ftp://") != -1) ? "[object Link]" : toAnalyze;
             
@@ -1728,12 +1758,13 @@ var app_document =
             * Permet de convertir les BR en P
             */
             app_document.editor.convertBr();
-            
-            
-            /*
-            * Permet de corriger le bug présent sous chrome
-            */
-            app_document.editor.trapReturn(event);
+
+
+            // Complétion automatique
+            app_document.settings.autocomplete();
+
+            // Correction orthographique
+            app_document.settings.correction();
         },
         
         quickAccess: function(wht)
@@ -1915,6 +1946,67 @@ var app_document =
                 
                 app_document.page().focus();
             }
+        }
+    },
+	
+	interaction:
+	{
+		tree: function(num_page, num_node)
+		{			
+			var page = document.querySelectorAll("#app_document .page")[num_page];
+			
+			var title_to_focus = page.contentWindow.document.body.querySelectorAll("h1, h2, h3, h4, h5, h6")[num_node];
+			
+			var range = page.contentWindow.document.createRange();
+			range.setStart(title_to_focus, 0);
+			range.setEnd(title_to_focus, title_to_focus.innerHTML.length - 1);
+			
+			var sel = page.contentWindow.document.getSelection();
+			
+			console.log(sel);
+			
+			title_to_focus.focus();
+			
+			//page.focus();
+		}
+	},
+
+    settings:
+    {
+        autocomplete: function()
+        {
+            var dico = localStorage.getItem("app_document#dico");
+            var words = dico.split(",");
+
+            var currentWord = app_document.page().contentWindow.document.getSelection().anchorNode.textContent.replace("\\001", "");
+
+            //console.log(app_document.page().contentWindow.document.getSelection().anchorNode.data);
+
+            var suggestions = [];
+
+            // Test des mots
+            if(currentWord != "")
+            {
+                for(var i = 0; i < words; i++)
+                {
+                    if(words[i].indexOf(currentWord) == 0)
+                    {
+                        suggestions.push(words[i]);
+                    }
+
+                    if(suggestions.length > 10)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            //console.log(suggestions);
+        },
+
+        correction: function()
+        {
+
         }
     },
     

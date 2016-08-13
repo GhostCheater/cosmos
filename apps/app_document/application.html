@@ -38,7 +38,7 @@
             </div>
             
             <!-- Police : Police, Taille -->
-            <div class="part" style="width: 18vw;border-right: 1px solid rgb(210, 210, 210);" onchange="app_document.edit.setFont();">
+            <div class="part" style="width: 26vw;border-right: 1px solid rgb(210, 210, 210);" onchange="app_document.edit.setFont();">
                 <select class="input" style="width: 10vw;" id="fonts">
                     <option style="font-family: Arial">Arial</option>
                     <option style="font-family: Arial Black">Arial Black</option>
@@ -150,16 +150,13 @@
             </div>
             
             <!-- Préformaté -->
-            <div class="part" style="width: 28vw;border-right: 1px solid rgb(210, 210, 210);">
-                <input onclick="app_document.edit.preformated('preformated_text', document.activeElement);" tabindex="-1" type="button" value="Aa" class="preformatedText" id="preformated_text" readonly />&nbsp;&nbsp;
-                <input onclick="app_document.edit.preformated('preformated_title_1');" type="button" value="Aa" class="preformatedText" id="preformated_title_1" readonly />&nbsp;&nbsp;
-                <input onclick="app_document.edit.preformated('preformated_title_2');" type="button" value="Aa" class="preformatedText" id="preformated_title_2" readonly />&nbsp;&nbsp;
-                <input onclick="app_document.edit.preformated('preformated_title_3');" type="button" value="Aa" class="preformatedText" id="preformated_title_3" readonly />&nbsp;&nbsp;
-                <input onclick="app_document.edit.preformated('preformated_title_4');" type="button" value="Aa" class="preformatedText" id="preformated_title_4" readonly />
+            <div class="part" style="width: 16vw;border-right: 1px solid rgb(210, 210, 210);">
+				<select class="input" id="preformated_input">
+				</select>
             </div>
             
-            <div class="part" style="width: 6vw;">
-                <img class="actions_image" onclick="app_document.edit.search.trigger();" src="apps/app_document/images/edit/modification/find.svg" /><br />
+            <div class="part" style="width: 10vw;">
+                <img class="actions_image" onclick="app_document.edit.search.trigger();" src="apps/app_document/images/edit/modification/find.svg" style="margin-right: 5%;" />
                 <img class="actions_image" src="apps/app_document/images/edit/modification/find_replace.svg" />
             </div>
         </div>
@@ -262,11 +259,11 @@
         <div class="titlesTab" id="tT_edit">
             <div class="part" style="width: 5vw;">Actions</div>
             <div class="part" style="width: 12vw;">Presse-papiers</div>
-            <div class="part" style="width: 18vw;">Police</div>
+            <div class="part" style="width: 26vw;">Police</div>
             <div class="part" style="width: 7vw;">Style</div>
             <div class="part" style="width: 14vw;">Paragraphe</div>
-            <div class="part" style="width: 28vw;">Texte et titres</div>
-            <div class="part" style="width: 6vw;">Modification</div>
+            <div class="part" style="width: 16vw;">Texte et titres</div>
+            <div class="part" style="width: 10vw;">Modification</div>
         </div>
         <div class="titlesTab" id="tT_insert">
             <div class="part" style="width: 5vw;">Tableau</div>
@@ -393,11 +390,10 @@
 </div>
 <div id="references">
     <div class="head"><span>Références</span></div>
-    <div class="body"><div class="references">
-        <span><p>1. Blablabla</p></span>
-        <span><p>2. Blablabla</p></span>
-        <span><p>3. Blablabla</p></span>
-    </div></div>
+    <div class="body">
+		<div class="references">
+		</div>
+	</div>
 </div>
 
 <!-- Messages -->

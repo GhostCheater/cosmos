@@ -10,6 +10,14 @@
 * Commun
 */
 
+#app_document option:hover
+{
+	background-color: white;
+	text-shadow: 0 0 2px black;
+	
+	cursor: pointer;
+}
+
 /* Barre de navigation */
 #app_document #navBar
 {
@@ -143,11 +151,8 @@
     vertical-align: middle;
     
     text-align: center;
-}
 
-#app_document #navBar #contentTabs .contentTab .part.show
-{
-    font-size: 11px;
+    font-size: 0.9m;
 }
 
 #app_document #navBar #contentTabs .contentTab .part.current
@@ -171,6 +176,11 @@
 #app_document #navBar #contentTabs .contentTab .selected
 {
     background-color: rgba(255, 0, 0, 0.15);
+}
+
+#app_document #navBar #contentTabs #cT_files #historicFiles
+{
+    font-size: .8em;
 }
 
 #app_document #navBar #contentTabs #cT_files #currentFiles
@@ -691,12 +701,19 @@
 {
     display: table-cell;
     vertical-align: middle;
+	
+	cursor: pointer;
 }
 
-#app_document #tree .body .titles span p.title_1 {padding-left: 1vw;}
-#app_document #tree .body .titles span p.title_2 {padding-left: 2vw;}
-#app_document #tree .body .titles span p.title_3 {padding-left: 3vw;}
-#app_document #tree .body .titles span p.title_4 {padding-left: 4.3vw;}
+#app_document #tree .body .titles span p.pf_h1 {padding-left: 1vw;}
+#app_document #tree .body .titles span p.pf_h2 {padding-left: 2vw;}
+#app_document #tree .body .titles span p.pf_h3 {padding-left: 3vw;}
+#app_document #tree .body .titles span p.pf_h4 {padding-left: 4vw;}
+
+#app_document #tree .body .titles span p:hover
+{
+	color: orange;
+}
 
 #app_document #references
 {

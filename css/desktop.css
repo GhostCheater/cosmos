@@ -7,6 +7,10 @@
     src: url("roboto.ttf") format('truetype');
 }
 
+*
+{
+    outline: none;
+}
 
 *:not(input):not(textarea)
 {

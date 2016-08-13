@@ -20,7 +20,7 @@
     
     color: #ededed;
     
-    font-size: 1.5vh;
+    font-size: 1em;
 }
 
 #desktop #explorer #path
@@ -625,7 +625,7 @@
     
     border-bottom: 1px solid rgb(168, 169, 255);
     
-    font-size: 1.2vh;
+    font-size: 0.9em;
 }
 
 #desktop #explorer #popUp_explorer .line

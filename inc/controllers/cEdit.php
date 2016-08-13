@@ -166,5 +166,14 @@
                 die("error~||]]");
             }
         }
+
+        static function load_dico($lang)
+        {
+            $dico = file_get_contents("../apps/app_document/dico/".$lang.".txt");
+            
+            echo "ok~||]]";
+
+            echo $dico;
+        }
     }
 ?>
