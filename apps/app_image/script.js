@@ -164,6 +164,8 @@ var app_image =
     {
         open: function(hash, name)
         {
+            document.querySelector("#app_image #view p").innerHTML = "Chargement de l'image en cours...";
+            
             var xhr = new XMLHttpRequest();
             xhr.open("POST", "inc/controller.php", true);
             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");

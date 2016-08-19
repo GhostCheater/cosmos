@@ -1,3 +1,7 @@
+<?php
+    require_once("inc/secure.php");
+?>
+
 <!DOCTYPE html>
 <html>
     <head>

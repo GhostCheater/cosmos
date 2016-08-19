@@ -1,1 +1,5 @@
 *.data
+
+inc/home/
+js/home/
+css/home/

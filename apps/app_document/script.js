@@ -2,6 +2,8 @@
 
 var app_document = 
 {
+    dico: "",
+    
     init: function()
     {
         // Création de l'éditeur
@@ -20,7 +22,7 @@ var app_document =
         
         // Chargement de la toolbar
         this.preferences.load();
-        this.tab.load("edit");
+        this.tab.load("draw");
         this.update.states();
         
         // Initialisation de la liste des documents
@@ -315,7 +317,7 @@ var app_document =
                                         doc.id = "historic_" + key;
                                         doc.className = "part show";
                                         doc.style.width = "10vw";
-                                        doc.innerHTML = "<b>" + content[key]["name"] + "</b><br />" + content[key]["date"] + "<br /><img onclick='app_document.documents.open(\""+key+"\", \""+content[key]["name"]+"\")' src='apps/app_document/images/files/doc.svg' style='height: 2vh;' />";
+                                        doc.innerHTML = "<b>" + content[key]["name"] + "</b><br />" + content[key]["date"] + "<br /><img onclick='app_document.documents.open(\""+key+"\", \""+content[key]["name"]+"\")' src='apps/app_document/images/files/doc.svg' style='height: 5vh;' />";
 
                                         document.querySelector("#app_document #navBar #contentTabs #cT_files #historicFiles").appendChild(doc);
                                     }
@@ -563,11 +565,14 @@ var app_document =
         {
             var page = app_document.page().contentWindow.document.body;
             
+            var p = document.createElement("p");
+            p.innerHTML = "<br />";
+            
             for(var i = 0; i < page.childElementCount; i++)
             {
                 if(page.childNodes[i].nodeName == "BR")
                 {
-                    page.childNodes[i].innerHTML = "<p><br /></p>";
+                    page.childNodes[i] = p;
                 }
             }
         },
@@ -588,7 +593,7 @@ var app_document =
 					switch(state)
 					{
                         case "ok":
-                            localStorage.setItem("app_document#dico", data);
+                            app_document.dico = data;
                             break;
 
                         default:
@@ -743,7 +748,7 @@ var app_document =
     {
         load: function(tab)
         {
-            var tabs = ["files", "edit", "insert", "export", "draw", "settings"];
+            var tabs = ["files", "edit", "insert", "export", "template", "draw", "settings"];
             
             
             if(tabs.indexOf(tab) !== -1)
@@ -980,8 +985,6 @@ var app_document =
 					list.push([i, a, element.localName, element.innerHTML]);
 				}
 			}
-			
-			console.log(list);
             
             // Récupération de la liste des titres suivant les différents styles
             for(var i = 0; i < list.length; i++)
@@ -1439,41 +1442,6 @@ var app_document =
             }
         },
         
-        link:
-        {
-            open: function()
-            {
-                popup.open(
-                    "popup_doc_insert_link",
-                    "Insertion d'un lien",
-                    "<input type='text' placeholder='Lien...' id='input_doc_insert_link' /><br /><br /><span id='return_doc_insert_link'></span>",
-                    "<input type='button' class='button' value='Insérer' onclick='app_document.insert.link.put();' />"
-                );
-            },
-            
-            put: function()
-            {
-                var returnArea = document.querySelector("#return_doc_insert_link");
-                var url = document.querySelector("#input_doc_insert_link").value;
-                
-                var img = document.createElement("img");
-                
-                img.onload = function()
-                {
-                    returnArea.innerHTML = "Insertion du lien en cours...";
-                    
-                    app_document.page().contentWindow.document.execCommand("createLink", false, url);
-                };
-                
-                img.onerror = function()
-                {
-                    returnArea.innerHTML = "Le lien n'est pas accessible";
-                };
-                
-                img.src = url;
-            }
-        },
-        
         formula: // TODO : finish
         {
             open: function()
@@ -1534,8 +1502,6 @@ var app_document =
             
             var list = document.querySelector("#app_document #content").childNodes;
             
-            console.log(list);
-            
             var headerAfterJump = list[num * 5]; // Header de la page suivante
             
             if(headerAfterJump == undefined) // Il n'y a pas de page après, c'est donc juste une création d'une nouvelle page
@@ -1570,6 +1536,19 @@ var app_document =
                 
                 // Mise à jour des pages
                 app_document.editor.refreshPageNumber();
+            }
+        },
+        
+        note:
+        {
+            add: function()
+            {
+                var page = app_document.page();
+            },
+            
+            list: function()
+            {
+                
             }
         },
         
@@ -1676,7 +1655,7 @@ var app_document =
             
             var range = app_document.page().contentWindow.document.getSelection();
 			
-			if(range.anchorNode.parentNode.toString() != "[object HTMLHeadingElement]" && range.anchorNode != null)
+			if(range.anchorNode.parentNode.toString() != "[object HTMLHeadingElement]" && range.anchorNode != null && range.anchorNode.parentNode.toString() != "[object HTMLQuoteElement]")
 			{
 				app_document.page().contentWindow.document.execCommand("formatBlock", false, "p");
 
@@ -1707,9 +1686,32 @@ var app_document =
             
             /*
             * Mise à jour du QuickAccess
-            */            
-            var toAnalyze = (range.anchorNode.toString() == "[object Text]") ? range.anchorNode.parentNode.toString() : range.anchorNode.toString();
-            toAnalyze = (toAnalyze.indexOf("http://") != -1 || toAnalyze.indexOf("https://") != -1 || toAnalyze.indexOf("ftp://") != -1) ? "[object Link]" : toAnalyze;
+            */                        
+            // Première analyse
+            if(range.anchorNode.tagName == "BR" || range.anchorNode.tagName == undefined)
+            {
+                if(range.anchorNode.parentNode.tagName == "P")
+                {
+                    var toAnalyze = range.anchorNode.parentNode.parentNode.toString();
+                }
+                else
+                {
+                    var toAnalyze = range.anchorNode.parentNode.toString();
+                }
+            }
+            else
+            {
+                if(range.anchorNode.tagName == "P")
+                {
+                    var toAnalyze = range.anchorNode.parentNode.toString();
+                }
+                else
+                {
+                    var toAnalyze = range.anchorNode.toString();
+                }
+            }
+            
+            console.log(range.anchorNode);
             
             var element = document.querySelector("#app_document #quickAccess_popup .body span");
             
@@ -1731,10 +1733,6 @@ var app_document =
                     
                 case "[object HTMLTableCellElement]": // Tableau
                     this.quickAccess("table");
-                    break;
-                    
-                case "[object Link]": // Lien
-                    this.quickAccess("link");
                     break;
                     
                 default:
@@ -1793,10 +1791,6 @@ var app_document =
                     toAppend = "<p><img src='apps/app_document/images/quickAccess/jump/remove.svg' onclick='app_document.quickAccess.jump.remove();' /></p>";
                     break;
                     
-                case "link":
-                    toAppend = "<p><img src='apps/app_document/images/quickAccess/link/remove.svg' onclick='app_document.quickAccess.link.remove();' /></p>";
-                    break;
-                    
                 default:
                     break;
             }
@@ -1813,12 +1807,33 @@ var app_document =
             {
                 var range = app_document.page().contentWindow.document.getSelection();
                 
-                var element = (range.anchorNode.toString() == "[object Text]") ? range.anchorNode.parentNode.toString() : range.anchorNode.toString();
-                
-                if(element == "[object HTMLTableCellElement]")
+                if(range.anchorNode.tagName == "BR" || range.anchorNode.tagName == undefined)
                 {
-                    var parent = (range.anchorNode.toString() == "[object Text]") ? ((range.anchorNode.parentNode).parentNode).parentNode : (range.anchorNode.parentNode).parentNode;
-                                        
+                    if(range.anchorNode.parentNode.tagName == "P")
+                    {
+                        var element = range.anchorNode.parentNode.parentNode;
+                    }
+                    else
+                    {
+                        var element = range.anchorNode.parentNode;
+                    }
+                }
+                else
+                {
+                    if(range.anchorNode.tagName == "P")
+                    {
+                        var element = range.anchorNode.parentNode;
+                    }
+                    else
+                    {
+                        var element = range.anchorNode;
+                    }
+                }
+                
+                var parent = element.parentNode.parentNode;
+                
+                if(element.toString() == "[object HTMLTableCellElement]")
+                {                                        
                     for(var i = 0; i < parent.querySelectorAll("tr").length; i++)
                     {                        
                         var cell = document.createElement("td");
@@ -1835,12 +1850,33 @@ var app_document =
             {
                 var range = app_document.page().contentWindow.document.getSelection();
                 
-                var element = (range.anchorNode.toString() == "[object Text]") ? range.anchorNode.parentNode.toString() : range.anchorNode.toString();
-                
-                if(element == "[object HTMLTableCellElement]")
+                if(range.anchorNode.tagName == "BR" || range.anchorNode.tagName == undefined)
                 {
-                    var parent = (range.anchorNode.toString() == "[object Text]") ? ((range.anchorNode.parentNode).parentNode).parentNode : (range.anchorNode.parentNode).parentNode;
-                    
+                    if(range.anchorNode.parentNode.tagName == "P")
+                    {
+                        var element = range.anchorNode.parentNode.parentNode;
+                    }
+                    else
+                    {
+                        var element = range.anchorNode.parentNode;
+                    }
+                }
+                else
+                {
+                    if(range.anchorNode.tagName == "P")
+                    {
+                        var element = range.anchorNode.parentNode;
+                    }
+                    else
+                    {
+                        var element = range.anchorNode;
+                    }
+                }
+                
+                var parent = element.parentNode.parentNode;
+                
+                if(element.toString() == "[object HTMLTableCellElement]")
+                {                    
                     for(var i = 0; i < parent.querySelectorAll("tr").length; i++)
                     {
                         parent.querySelectorAll("tr")[i].removeChild(parent.querySelectorAll("tr")[i].lastChild);
@@ -1860,11 +1896,35 @@ var app_document =
             {
                 var range = app_document.page().contentWindow.document.getSelection();
                 
-                var element = (range.anchorNode.toString() == "[object Text]") ? range.anchorNode.parentNode.toString() : range.anchorNode.toString();
+                if(range.anchorNode.tagName == "BR" || range.anchorNode.tagName == undefined)
+                {
+                    if(range.anchorNode.parentNode.tagName == "P")
+                    {
+                        var element = range.anchorNode.parentNode.parentNode;
+                    }
+                    else
+                    {
+                        var element = range.anchorNode.parentNode;
+                    }
+                }
+                else
+                {
+                    if(range.anchorNode.tagName == "P")
+                    {
+                        var element = range.anchorNode.parentNode;
+                    }
+                    else
+                    {
+                        var element = range.anchorNode;
+                    }
+                }
                 
-                var parent = (range.anchorNode.toString() == "[object Text]") ? ((range.anchorNode.parentNode).parentNode).parentNode : (range.anchorNode.parentNode).parentNode;
+                var parent = element.parentNode.parentNode;
                 
-                if(element == "[object HTMLTableCellElement]")
+                console.log(element);
+                console.log(parent);
+                
+                if(element.toString() == "[object HTMLTableCellElement]")
                 {
                     // Compter le nombre de cellule par ligne
                     var nbCol = parent.querySelectorAll("tr td").length / parent.querySelectorAll("tr").length;
@@ -1891,16 +1951,35 @@ var app_document =
             {
                 var range = app_document.page().contentWindow.document.getSelection();
                 
-                var element = (range.anchorNode.toString() == "[object Text]") ? range.anchorNode.parentNode.toString() : range.anchorNode.toString();
+                if(range.anchorNode.tagName == "BR" || range.anchorNode.tagName == undefined)
+                {
+                    if(range.anchorNode.parentNode.tagName == "P")
+                    {
+                        var element = range.anchorNode.parentNode.parentNode;
+                    }
+                    else
+                    {
+                        var element = range.anchorNode.parentNode;
+                    }
+                }
+                else
+                {
+                    if(range.anchorNode.tagName == "P")
+                    {
+                        var element = range.anchorNode.parentNode;
+                    }
+                    else
+                    {
+                        var element = range.anchorNode;
+                    }
+                }
                 
-                var elmnt = (range.anchorNode.toString() == "[object Text]") ? (range.anchorNode.parentNode).parentNode : (range.anchorNode).parentNode;
+                var parent = element.parentNode.parentNode;
                 
-                var parent = (range.anchorNode.toString() == "[object Text]") ? ((range.anchorNode.parentNode).parentNode).parentNode : (range.anchorNode.parentNode).parentNode;
-                
-                if(element == "[object HTMLTableCellElement]")
+                if(element.toString() == "[object HTMLTableCellElement]")
                 {
                     // Suppression de la ligne
-                    parent.removeChild(elmnt);
+                    parent.removeChild(element.parentNode);
                     
                     // S'il n'y a plus de ligne, on supprime le tableau
                     if(parent.querySelectorAll("tr").length == 0)
@@ -1908,27 +1987,6 @@ var app_document =
                         app_document.page().contentWindow.document.body.removeChild(parent.parentNode);
                     }
                 }
-                
-                app_document.page().focus();
-            }
-        },
-        
-        link:
-        {
-            remove: function()
-            {
-                var range = app_document.page().contentWindow.document.createRange();
-                var sel = app_document.page().contentWindow.document.getSelection();
-                
-                range.setStart(sel.anchorNode, 0);
-                range.setEnd(sel.anchorNode, sel.anchorNode.textContent.length);
-
-                sel.removeAllRanges();
-                sel.addRange(range);
-                
-                app_document.page().contentWindow.document.execCommand("unlink", false, null);
-                
-                app_document.page().contentWindow.document.getSelection().collapseToEnd();
                 
                 app_document.page().focus();
             }
@@ -1958,16 +2016,17 @@ var app_document =
 			var title_to_focus = page.contentWindow.document.body.querySelectorAll("h1, h2, h3, h4, h5, h6")[num_node];
 			
 			var range = page.contentWindow.document.createRange();
+            
 			range.setStart(title_to_focus, 0);
-			range.setEnd(title_to_focus, title_to_focus.innerHTML.length - 1);
+			range.setEnd(title_to_focus, title_to_focus.childNodes.length);
 			
 			var sel = page.contentWindow.document.getSelection();
-			
-			console.log(sel);
-			
-			title_to_focus.focus();
-			
-			//page.focus();
+            
+            sel.removeAllRanges();
+            sel.addRange(range);
+            sel.collapseToEnd();
+            
+            page.focus();
 		}
 	},
 
@@ -1975,33 +2034,62 @@ var app_document =
     {
         autocomplete: function()
         {
-            var dico = localStorage.getItem("app_document#dico");
+            var autocomplete_area = document.querySelector("#app_document #autocomplete_area");
+            
+            autocomplete_area.innerHTML = "<p>Chargement...</p>";
+            
+            var dico = app_document.dico;
             var words = dico.split(",");
 
-            var currentWord = app_document.page().contentWindow.document.getSelection().anchorNode.textContent.replace("\\001", "");
-
-            //console.log(app_document.page().contentWindow.document.getSelection().anchorNode.data);
+            var currentBlock = app_document.page().contentWindow.document.getSelection().anchorNode.textContent.replace("\\001", "");
+            var currentWord = currentBlock.split(" ")[currentBlock.split(" ").length - 1];
+            var currentWordToSearch = currentWord.toLowerCase();
 
             var suggestions = [];
 
             // Test des mots
-            if(currentWord != "")
+            if(currentWordToSearch != "")
             {
-                for(var i = 0; i < words; i++)
+                for(var i = 0; i < words.length; i++)
                 {
-                    if(words[i].indexOf(currentWord) == 0)
+                    if(words[i].indexOf(currentWordToSearch) == 0)
                     {
                         suggestions.push(words[i]);
                     }
 
-                    if(suggestions.length > 10)
+                    if(suggestions.length > 4)
                     {
                         break;
                     }
                 }
             }
-
-            //console.log(suggestions);
+            
+            // Affichage des suggestions
+            var toAppend = "";
+            
+            if(suggestions.length != 0 && currentWordToSearch != "")
+            {
+                for(var i = 0; i < suggestions.length; i++)
+                {
+                    if(currentWord.charCodeAt(0) >= 65 && currentWord.charCodeAt(0) <= 90) // Majuscule au début du mot
+                    {
+                        toAppend += "<p>"+suggestions[i].replace(currentWordToSearch, "<b>"+currentWordToSearch.charAt(0).toUpperCase() + currentWordToSearch.slice(1)+"</b>")+"</p>";
+                    }
+                    else
+                    {
+                        toAppend += "<p>"+suggestions[i].replace(currentWordToSearch, "<b>"+currentWordToSearch+"</b>")+"</p>";
+                    }
+                }
+            }
+            else
+            {
+                if(currentWordToSearch != "")
+                {
+                    toAppend = "<p>Ajouter au dictionnaire (<b>"+currentWord+"</b>)</p>";
+                }
+            }
+            
+            autocomplete_area.innerHTML = toAppend;
         },
 
         correction: function()

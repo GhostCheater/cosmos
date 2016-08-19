@@ -14,7 +14,7 @@ var WINDOW =
 {
     trigger: function(app_id, app_color)
     {        
-        if(!document.querySelector("div#"+app_id))
+        if(!document.querySelector("#"+app_id))
         {
             /*
             * Définition de la fenêtre
@@ -183,11 +183,6 @@ var WINDOW =
             }, 2000); // 2s
             
             /*
-            * Affichage de la fenêtre
-            */
-            document.querySelector("section#desktop").appendChild(element);
-            
-            /*
             * Fermeture du panneau de droite
             */
             COSMOS.header.trigger.panel("apps");
@@ -206,6 +201,11 @@ var WINDOW =
             task.innerHTML = "<img src='apps/"+app_id+"/app.svg' />";
             task.setAttribute("onclick", "WINDOW.interact('" + app_id + "')");
             document.querySelector("header #apps").appendChild(task);
+            
+            /*
+            * Affichage de la fenêtre
+            */
+            document.querySelector("section#desktop").appendChild(element);
         }
     },
     

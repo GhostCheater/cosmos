@@ -1,0 +1,41 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 80 80" style="enable-background:new 0 0 80 80;" xml:space="preserve">
+    <line style="fill:none;stroke:#66798F;stroke-miterlimit:10;" x1="70" y1="32" x2="40" y2="40"></line>
+    <polyline style="fill:none;stroke:#66798F;stroke-miterlimit:10;" points="60,70 40,40 46,10 "></polyline>
+    <polyline style="fill:none;stroke:#66798F;stroke-miterlimit:10;" points="10,32 40,40 24,70 "></polyline>
+    <g>
+        <path style="fill:#8BB7F0;" d="M40,49.5c-5.238,0-9.5-4.262-9.5-9.5s4.262-9.5,9.5-9.5s9.5,4.262,9.5,9.5S45.238,49.5,40,49.5z"></path>
+        <g>
+            <path style="fill:#4E7AB5;" d="M40,31c4.963,0,9,4.037,9,9s-4.037,9-9,9s-9-4.037-9-9S35.037,31,40,31 M40,30c-5.523,0-10,4.477-10,10s4.477,10,10,10s10-4.477,10-10S45.523,30,40,30L40,30z"></path>
+        </g>
+    </g>
+    <g>
+        <circle style="fill:#BAE0BD;" cx="46" cy="10" r="7.5"></circle>
+        <g>
+            <path style="fill:#5E9C76;" d="M46,3c3.86,0,7,3.14,7,7s-3.14,7-7,7s-7-3.14-7-7S42.14,3,46,3 M46,2c-4.418,0-8,3.582-8,8s3.582,8,8,8s8-3.582,8-8S50.418,2,46,2L46,2z"></path>
+        </g>
+    </g>
+    <g>
+        <circle style="fill:#BAE0BD;" cx="70" cy="32" r="7.5"></circle>
+        <g>
+            <path style="fill:#5E9C76;" d="M70,25c3.86,0,7,3.14,7,7s-3.14,7-7,7s-7-3.14-7-7S66.14,25,70,25 M70,24c-4.418,0-8,3.582-8,8s3.582,8,8,8s8-3.582,8-8S74.418,24,70,24L70,24z"></path>
+        </g>
+    </g>
+    <g>
+        <circle style="fill:#BAE0BD;" cx="60" cy="70" r="7.5"></circle>
+        <g>
+            <path style="fill:#5E9C76;" d="M60,63c3.86,0,7,3.14,7,7s-3.14,7-7,7s-7-3.14-7-7S56.14,63,60,63 M60,62c-4.418,0-8,3.582-8,8s3.582,8,8,8s8-3.582,8-8S64.418,62,60,62L60,62z"></path>
+        </g>
+    </g>
+    <g>
+        <circle style="fill:#BAE0BD;" cx="24" cy="70" r="7.5"></circle>
+        <g>
+            <path style="fill:#5E9C76;" d="M24,63c3.86,0,7,3.14,7,7s-3.14,7-7,7s-7-3.14-7-7S20.14,63,24,63 M24,62c-4.418,0-8,3.582-8,8s3.582,8,8,8s8-3.582,8-8S28.418,62,24,62L24,62z"></path>
+        </g>
+    </g>
+    <g>
+        <circle style="fill:#BAE0BD;" cx="10" cy="32" r="7.5"></circle>
+        <g>
+            <path style="fill:#5E9C76;" d="M10,25c3.86,0,7,3.14,7,7s-3.14,7-7,7s-7-3.14-7-7S6.14,25,10,25 M10,24c-4.418,0-8,3.582-8,8s3.582,8,8,8s8-3.582,8-8S14.418,24,10,24L10,24z"></path>
+        </g>
+    </g>
+</svg>

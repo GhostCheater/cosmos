@@ -81,7 +81,20 @@ var COSMOS =
 	{        
         // Chargement des préférences et application à l'interface
         this.load_preferences();
+        
+        // Mise à jour de la session
+        this.updateSession();
 	},
+    
+    updateSession: function()
+    {
+        setInterval(function(){
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "inc/controller.php", true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");            
+            xhr.send("c=Session&a=update");
+        }, 1000 * 60)
+    },
     
     load_preferences: function()
     {
@@ -432,7 +445,7 @@ var COSMOS =
 																	type = "folder";
 																}
 																
-																toAppend += "<tr><td><img src='apps/app_explorer/images/types/" + type + ".svg' /></td><td>" + json[key][item][0] + "<br /><sub>" + json[key][item][3] + "</sub></td></tr>";
+																toAppend += "<tr><td><img src='images/explorer/types/" + type + ".svg' /></td><td>" + json[key][item][0] + "<br /><sub>" + json[key][item][3] + "</sub></td></tr>";
 															}
 														}
 													}
@@ -866,17 +879,17 @@ var COSMOS =
 											
 											var toAppend = "<select onchange='COSMOS.rightPanel.trigger.settings.submit.preview_fontSize(this);'>";
 											
-											var sizes = [8, 9, 10, 11, 12, 13, 14, 15, 16];
+											var sizes = [0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6];
 											
 											for(var i = 0; i < sizes.length; i++)
 											{
 												if(currentSize.indexOf(sizes[i]+"px") !== -1)
 												{
-													toAppend += "<option selected style='font-size: "+sizes[i]+"px;'>"+sizes[i]+"px</option>";
+													toAppend += "<option selected style='font-size: "+sizes[i]+"em;'>"+sizes[i]+"em</option>";
 												}
 												else
 												{
-													toAppend += "<option style='font-size: "+sizes[i]+"px;'>"+sizes[i]+"px</option>";
+													toAppend += "<option style='font-size: "+sizes[i]+"em;'>"+sizes[i]+"em</option>";
 												}
 											}
 											
@@ -1028,7 +1041,7 @@ var COSMOS =
 						{
 							if(xhr.status === 200 && xhr.readyState === 4)
 							{
-								document.location.href = "index.php?message=success_logout";
+								document.location.href = "connect.php?message=success_logout";
 							}
 						}
 						

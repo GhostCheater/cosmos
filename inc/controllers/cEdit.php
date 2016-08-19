@@ -10,6 +10,8 @@
         {
             $path = cEdit::relative_path();
             
+            cEdit::cleanHistoric();
+            
             try
             {
                 $data_preferences = file_get_contents("{$path}workspace/storage/{$_SESSION['session']['user']}/app_document.json");
@@ -165,6 +167,46 @@
             {
                 die("error~||]]");
             }
+            
+            // On supprime les fichiers qui n'existent plus
+            cEdit::cleanHistoric();
+        }
+        
+        static function cleanHistoric()
+        {
+            require("secure.php");
+            
+            $relative_path = cEdit::relative_path();
+            
+            // Récupération de tous les documents
+            $req = $bdd->prepare("SELECT hash FROM elements WHERE user = ? AND type = ?");
+            $req->execute(array(
+                $_SESSION['session']['user'],
+                "doc"
+            ));
+            
+            $result = $req->fetchAll();
+            
+            $list = array();
+            
+            for($i = 0; $i < count($result); $i++)
+            {
+                $list[] = $result[$i]["hash"];
+            }
+            
+            // Ouverture du fichier "Historique"
+            $historic = json_decode(file_get_contents("{$relative_path}workspace/storage/{$_SESSION['session']['user']}/app_document.json"), true);
+            
+            foreach($historic["historic"] as $hash => $value)
+            {
+                if(!in_array($hash, $list))
+                {
+                    unset($historic["historic"][$hash]);
+                }
+            }
+            
+            // On réécrit dans le fichier
+            file_put_contents("{$relative_path}workspace/storage/{$_SESSION['session']['user']}/app_document.json", json_encode($historic));
         }
 
         static function load_dico($lang)

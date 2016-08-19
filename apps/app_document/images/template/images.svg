@@ -1,0 +1,41 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 80 80" style="enable-background:new 0 0 80 80;" xml:space="preserve">
+    <g>
+        <rect x="2.5" y="2.5" style="fill:#FFC49C;" width="23" height="23"></rect>
+        <g>
+            <path style="fill:#A16A4A;" d="M25,3v22H3V3H25 M26,2H2v24h24V2L26,2z"></path>
+        </g>
+    </g>
+    <g>
+        <rect x="2.5" y="28.5" style="fill:#BAE0BD;" width="23" height="23"></rect>
+        <g>
+            <path style="fill:#5E9C76;" d="M25,29v22H3V29H25 M26,28H2v24h24V28L26,28z"></path>
+        </g>
+    </g>
+    <g>
+        <rect x="2.5" y="54.5" style="fill:#8BB7F0;" width="23" height="23"></rect>
+        <g>
+            <path style="fill:#4E7AB5;" d="M25,55v22H3V55H25 M26,54H2v24h24V54L26,54z"></path>
+        </g>
+    </g>
+    <g>
+
+        <rect x="8.343" y="60.343" transform="matrix(0.7071 -0.7071 0.7071 0.7071 -42.5685 29.2304)" style="fill:#FFEEA3;" width="11.314" height="11.314"></rect>
+    </g>
+    <g>
+        <rect x="8" y="60" style="fill:#FFEEA3;" width="12" height="12"></rect>
+    </g>
+    <rect x="34" y="12" style="fill:#788B9C;" width="44" height="2"></rect>
+    <rect x="34" y="38" style="fill:#788B9C;" width="44" height="2"></rect>
+    <rect x="34" y="64" style="fill:#788B9C;" width="44" height="2"></rect>
+    <polygon style="fill:#A16A4A;" points="18,14 14,18 19,25 25,25 25,20 "></polygon>
+    <circle style="fill:#FFFFFF;" cx="20" cy="8" r="2"></circle>
+    <polygon style="fill:#E09367;" points="22,25 3,25 3,20 10.5,12 "></polygon>
+    <path style="fill:#FFFFFF;" d="M14,40l-2.33-3.884C10.583,34.305,11.888,32,14,32l0,0c2.112,0,3.417,2.305,2.33,4.116L14,40z"></path>
+    <path style="fill:#FFFFFF;" d="M14,40l2.33,3.884C17.417,45.695,16.112,48,14,48h0c-2.112,0-3.417-2.305-2.33-4.116L14,40z"></path>
+    <path style="fill:#FFFFFF;" d="M14,40l-4.529,0.076C7.359,40.112,5.944,37.829,7,36l0,0c1.056-1.829,3.776-1.807,4.802,0.04L14,40z"></path>
+    <path style="fill:#FFFFFF;" d="M14,40l4.529-0.076C20.641,39.888,22.056,42.171,21,44l0,0c-1.056,1.829-3.776,1.807-4.802-0.04L14,40z"></path>
+    <path style="fill:#FFFFFF;" d="M14,40l-2.198,3.96C10.776,45.807,8.056,45.829,7,44l0,0c-1.056-1.829,0.359-4.112,2.471-4.076L14,40z"></path>
+    <path style="fill:#FFFFFF;" d="M14,40l2.198-3.96C17.224,34.193,19.944,34.171,21,36l0,0c1.056,1.829-0.359,4.112-2.471,4.076L14,40z"></path>
+    <circle style="fill:#FFEEA3;" cx="14" cy="40" r="3"></circle>
+    <circle style="fill:#FFFFFF;" cx="14" cy="66" r="3"></circle>
+</svg>

@@ -420,7 +420,7 @@
     display: table;
     
     position: relative;
-    left: 25%;
+    left: calc(25% - 0.5vw);
     max-height: 7%;
     height: 7%;
     width: 50%;
@@ -466,7 +466,7 @@
     display: table;
     
     position: relative;
-    left: 25%;
+    left: calc(25% - 0.5vw);
     max-height: 7%;
     height: 7%;
     width: 50%;
@@ -537,7 +537,7 @@
 #app_document #content .page
 {
     position: relative;
-    left: 25%;
+    left: calc(25% - 0.5vw);
     max-height: 150%;
     height: 150%;
     width: 50%;
@@ -807,6 +807,45 @@
     text-align: center;
 }
 
+#app_document #autocomplete_area
+{
+    display: table;
+    
+    position: absolute;
+    bottom: 1%;
+    left: 25%;
+    width: 50%;
+    height: 8.5%;
+    
+    background-color: rgba(0, 0, 0, 0.2);
+    
+    border-radius: 5px;
+}
+
+#app_document #autocomplete_area p
+{
+    transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    
+    display: table-cell;
+    vertical-align: middle;
+    
+    text-align: center;
+    
+    width: 20%;
+    
+    color: #3f51b5;
+    
+    cursor: pointer;
+}
+#app_document #autocomplete_area p:hover
+{
+    background-color: rgb(240, 240, 240);
+}
+
 
 /*
 * Disposition (1)
@@ -854,8 +893,8 @@
     box-shadow: 0 0 2px grey;
 }
 
-#app_document.dispo_1 .pos_edit_highlight{ left: 32vw; }
-#app_document.dispo_1 .pos_edit_color{ left: 35vw; }
+#app_document.dispo_1 .pos_edit_highlight{ left: 40.5vw; }
+#app_document.dispo_1 .pos_edit_color{ left: 42.5vw; }
 
 #app_document.dispo_1 #loaderArea
 {

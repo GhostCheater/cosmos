@@ -12,8 +12,9 @@
         <div class="tab" id="tab_files" onclick="app_document.tab.load('files');">Fichiers</div>
         <div class="tab" id="tab_edit" onclick="app_document.tab.load('edit');">&Eacute;dition</div>
         <div class="tab" id="tab_insert" onclick="app_document.tab.load('insert');">Insertion</div>
-        <div class="tab" id="tab_export" onclick="app_document.tab.load('export');">Exportation</div>
+        <div class="tab" id="tab_template" onclick="app_document.tab.load('template');">Mise en page</div>
         <div class="tab" id="tab_draw" onclick="app_document.tab.load('draw');">Dessin</div>
+        <div class="tab" id="tab_export" onclick="app_document.tab.load('export');">Exportation</div>
         <div class="tab" id="tab_settings" onclick="app_document.tab.load('settings');" style="border-right: 1px solid rgb(193, 193, 193);">Options</div>
     </div>
     <div id="contentTabs">
@@ -172,25 +173,15 @@
                 <img title="Insérer une image depuis une URL" onclick="app_document.insert.image.web();" src="apps/app_document/images/insert/images/insert_web.svg" />
             </div>
             
-            <!-- Lien -->
-            <div class="part" style="width: 5vw;border-right: 1px solid rgb(210, 210, 210);">
-                <img title="Insérer un lien" onclick="app_document.insert.link.open();" src="apps/app_document/images/insert/link/insert.svg" />
-            </div>
-            
             <!-- Formule -->
             <div class="part" style="width: 5vw;border-right: 1px solid rgb(210, 210, 210);">
                 <img title="Insérer une formule" onclick="app_document.insert.formula.open();" src="apps/app_document/images/insert/formula/insert.svg" />
             </div>
             
-            <!-- Paragraphe : Saut de page, bas de page, haut de page, champs spéciaux -->
-            <div class="part" style="width: 15vw;border-right: 1px solid rgb(210, 210, 210);">
-                <img title="Insérer une nouvelle page" onclick="app_document.insert.jump();" src="apps/app_document/images/insert/layout/jump.svg" style="margin-right: 5%;" />
-                <img title="Insérer un sommaire" onclick="app_document.insert.summary();" src="apps/app_document/images/insert/layout/summary.svg" />
-            </div>
-            
             <!-- Référence -->
-            <div class="part" style="width: 5vw; border-right: 1px solid rgb(210, 210, 210);">
-                <img title="Insérer une référence" onclick="app_document.insert.note();" src="apps/app_document/images/insert/note/insert.svg" />
+            <div class="part" style="width: 10vw; border-right: 1px solid rgb(210, 210, 210);">
+                <img title="Ajouter une référence" onclick="app_document.insert.note.add();" src="apps/app_document/images/insert/note/insert.svg" style="margin-right: 5%;" />
+                <img title="Liste des références" onclick="app_document.insert.note.list();" src="apps/app_document/images/insert/note/list.svg" />
             </div>
             
             <!-- Caractères spéciaux -->
@@ -215,7 +206,59 @@
                 <img onclick="" src="apps/app_document/images/export/history.svg" />
             </div>
         </div>
-        <div class="contentTab" id="cT_draw"></div>
+        <div class="contentTab" id="cT_draw">
+            <div class="part" style="width: 12vw;border-right: 1px solid rgb(210, 210, 210);">
+                <img title="Insérer un graphique en barre" onclick="" src="apps/app_document/images/draw/graph_bar.svg" style="margin-right: 5%;" />
+                <img title="Insérer un graphique en ligne" onclick="" src="apps/app_document/images/draw/graph_line.svg" style="margin-right: 5%;" />
+                <img title="Insérer un graphique 'camembert'" onclick="" src="apps/app_document/images/draw/graph_pie.svg" style="margin-right: 5%;" />
+            </div>
+            <div class="part" style="width: 12vw;border-right: 1px solid rgb(210, 210, 210);">
+                <img title="Insérer un diagramme 'Mind Map'" onclick="" src="apps/app_document/images/draw/diagram_mindMap.svg" style="margin-right: 5%;" />
+                <img title="Insérer un diagramme en ligne" onclick="" src="apps/app_document/images/draw/diagram_flow.svg" style="margin-right: 5%;" />
+                <img title="Insérer un diagramme 'camembert'" onclick="" src="apps/app_document/images/draw/diagram_workflow.svg" style="margin-right: 5%;" />
+            </div>
+            <div class="part" style="width: 19vw;border-right: 1px solid rgb(210, 210, 210);">
+                <img title="Insérer un diagramme " onclick="" src="apps/app_document/images/draw/form_ellipse.svg" style="margin-right: 5%;" />
+                <img title="Insérer un diagramme " onclick="" src="apps/app_document/images/draw/form_rectangle.svg" style="margin-right: 5%;" />
+                <img title="Insérer un diagramme " onclick="" src="apps/app_document/images/draw/form_circle.svg" style="margin-right: 5%;" />
+                <img title="Insérer un diagramme " onclick="" src="apps/app_document/images/draw/form_triangle.svg" style="margin-right: 5%;" />
+                <img title="Insérer un diagramme " onclick="" src="apps/app_document/images/draw/form_hexagon.svg" style="margin-right: 5%;" />
+                <img title="Insérer un diagramme " onclick="" src="apps/app_document/images/draw/form_rhombus.svg" />
+            </div>
+            <div class="part" style="width: 12vw;border-right: 1px solid rgb(210, 210, 210);">
+                <img title="Insérer un diagramme " onclick="" src="apps/app_document/images/draw/pencil_line.svg" style="margin-right: 5%;" />
+                <img title="Insérer un diagramme " onclick="" src="apps/app_document/images/draw/pencil_hand.svg" style="margin-right: 5%;" />
+                <img title="Insérer un diagramme " onclick="" src="apps/app_document/images/draw/pencil_text.svg" style="margin-right: 5%;" />
+            </div>
+            <div class="part" style="width: 19vw;border-right: 1px solid rgb(210, 210, 210);">
+                <img title="Insérer un diagramme " onclick="" src="apps/app_document/images/draw/arrow_1.svg" style="margin-right: 5%;" />
+                <img title="Insérer un diagramme " onclick="" src="apps/app_document/images/draw/arrow_2.svg" style="margin-right: 5%;" />
+                <img title="Insérer un diagramme " onclick="" src="apps/app_document/images/draw/arrow_3.svg" style="margin-right: 5%;" />
+                <img title="Insérer un diagramme " onclick="" src="apps/app_document/images/draw/arrow_4.svg" style="margin-right: 5%;" />
+                <img title="Insérer un diagramme " onclick="" src="apps/app_document/images/draw/arrow_5.svg" style="margin-right: 5%;" />
+                <img title="Insérer un diagramme " onclick="" src="apps/app_document/images/draw/arrow_6.svg" />
+            </div>
+        </div>
+        <div class="contentTab" id="cT_template">
+            <div class="part" style="width: 7vw;border-right: 1px solid rgb(210, 210, 210);">
+                <img title="Insérer une nouvelle page" onclick="app_document.template.jump();" src="apps/app_document/images/template/jump.svg" />
+            </div>
+            <div class="part" style="width: 7vw;border-right: 1px solid rgb(210, 210, 210);">
+                <img title="Insérer une page de garde" onclick="app_document.template.flyleaf.show();" src="apps/app_document/images/template/flyleaf.svg" />
+            </div>
+            <div class="part" style="width: 12vw;border-right: 1px solid rgb(210, 210, 210);">
+                <img title="Insérer un sommaire" onclick="app_document.template.index.summary();" src="apps/app_document/images/template/summary.svg" style="margin-right: 5%;" />
+                <img title="Insérer un index d'images" onclick="app_document.template.index.images();" src="apps/app_document/images/template/images.svg" style="margin-right: 5%;" />
+                <img title="Insérer une bibliographie" onclick="app_document.template.index.books();" src="apps/app_document/images/template/books.svg" />
+            </div>
+            <div class="part" style="width: 10vw;border-right: 1px solid rgb(210, 210, 210);">
+                <img title="Mettre en minuscule" onclick="app_document.template.case.lower();" src="apps/app_document/images/template/lowercase.svg" style="margin-right: 5%;" />
+                <img title="Mettre en majuscule" onclick="app_document.template.case.upper();" src="apps/app_document/images/template/uppercase.svg" />
+            </div>
+            <div class="part" style="width: 7vw;border-right: 1px solid rgb(210, 210, 210);">
+                <img title="Insérer une page de garde" onclick="app_document.template.chars();" src="apps/app_document/images/template/chars.svg" />
+            </div>
+        </div>
         <div class="contentTab" id="cT_settings">
             <div class="part" style="width: 7vw;">
                 <img class="settings_suggestions" onclick="" src="apps/app_document/images/settings/toggle_off.svg" />
@@ -268,10 +311,8 @@
         <div class="titlesTab" id="tT_insert">
             <div class="part" style="width: 5vw;">Tableau</div>
             <div class="part" style="width: calc(10vw + 1px);">Image</div>
-            <div class="part" style="width: calc(5vw + 1px);">Lien</div>
             <div class="part" style="width: 5vw;">Formule</div>
-            <div class="part" style="width: 15vw;">Mise en forme</div>
-            <div class="part" style="width: 5vw;">Référence</div>
+            <div class="part" style="width: 10vw;">Référence</div>
             <div class="part" style="width: 10vw;">Spécial</div>
         </div>
         <div class="titlesTab" id="tT_export">
@@ -279,7 +320,20 @@
             <div class="part" style="width: 12vw;">Exporter</div>
             <div class="part" style="width: 12vw;">Historique des modifications</div>
         </div>
-        <div class="titlesTab" id="tT_draw"></div>
+        <div class="titlesTab" id="tT_draw">
+            <div class="part" style="width: 12vw;">Graphiques</div>
+            <div class="part" style="width: 12vw;">Diagrammes</div>
+            <div class="part" style="width: 19vw;">Formes</div>
+            <div class="part" style="width: 12vw;">Pinceau</div>
+            <div class="part" style="width: 19vw;">Flêches</div>
+        </div>
+        <div class="titlesTab" id="tT_template">
+            <div class="part" style="width: 7vw;">Saut de page</div>
+            <div class="part" style="width: 7vw;">Page de garde</div>
+            <div class="part" style="width: 12vw;">Index</div>
+            <div class="part" style="width: 10vw;">Casse</div>
+            <div class="part" style="width: 7vw;">Caractères</div>
+        </div>
         <div class="titlesTab" id="tT_settings">
             <div class="part" style="width: 7vw;">Suggestions <indic style="color: #8BB7F0;font-weight: bold;cursor: pointer;" title="Les suggestions permettent de vous indiquer des informations par rapport à vos choix de styles (couleurs, tailles, etc...).">[?]</indic></div>
             <div class="part" style="width: 7vw;">Sauvegarde auto. <indic style="color: #8BB7F0;font-weight: bold;cursor: pointer;" title="Permet la sauvegarde automatique de votre fichier en cours d'édition toutes les 5 minutes.">[?]</indic></div>
@@ -330,7 +384,6 @@
             <p>
                 <img src="apps/app_document/images/insert/tab/insert.svg" style="margin-right: 5%;" onclick="app_document.insert.tab();" />
                 <img src="apps/app_document/images/insert/images/insert_local.svg" style="margin-right: 5%;" onclick="app_document.images.local();" />
-                <img src="apps/app_document/images/insert/link/insert.svg" style="margin-right: 5%;" onclick="app_document.insert.link.open();" />
                 <img src="apps/app_document/images/insert/formula/insert.svg" style="margin-right: 5%;" onclick="app_document.insert.formula.open();" />
                 <img src="apps/app_document/images/insert/special/insert_char.svg" onclick="app_document.insert.special.char.open();" />
             </p>
@@ -395,6 +448,9 @@
 		</div>
 	</div>
 </div>
+
+<!-- Zone d'autocomplétion -->
+<div id="autocomplete_area"></div>
 
 <!-- Messages -->
 <div id="messages"></div>

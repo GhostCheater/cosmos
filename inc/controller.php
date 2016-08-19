@@ -17,6 +17,12 @@
         
         switch($_POST['c'])
         {
+            case "Session":
+                require_once("controllers/cSession.php");
+                
+                if(in_array($protoAction, array("update"))) eval("cSession::" . $protoAction . "('{$args}');");
+                break;
+                
             case "Edit":
                 require_once("controllers/cEdit.php");
                 
